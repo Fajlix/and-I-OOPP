@@ -9,5 +9,7 @@ android:
     - extra-google-m2repository
     - extra-android-support
     - extra-google-google_play_services
+before_install:
+  – chmod +x gradlew
 script:
   - ./gradlew test
