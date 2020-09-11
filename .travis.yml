@@ -3,5 +3,5 @@ install: skip
 os: linux
 dist: trusty
 
-script:
-  - ./gradlew build --scan -s
+jdk:
+  - openjdk8
