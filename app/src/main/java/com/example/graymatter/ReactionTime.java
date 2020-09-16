@@ -1,6 +1,10 @@
 package com.example.graymatter;
 
 import android.os.Handler;
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class ReactionTime {
     private long startTime;
@@ -16,8 +20,9 @@ public class ReactionTime {
         startTime = 0;
     }
 
+
     //Call this to start a new reactionTest
-    public void StartTest() {
+    public void StartGame(final ReactionTestActivity parent) {
 
         // a random time between min- and maxWaitTime
         waitTime = Math.round(Math.random() * maxWaitTime) + minWaitTime;
@@ -34,6 +39,8 @@ public class ReactionTime {
                 startTime = System.currentTimeMillis();
                 if (running) {
                     //TODO here we change color to "clickColor"
+                    parent.setColorNow();
+
                     //just for debug atm
                     System.out.println("NOW");
                 }
@@ -42,7 +49,7 @@ public class ReactionTime {
 
     }
     //Call this to stop the reactionTest returns -1 if clicked to early
-    public int StopTest(){
+    public int StopGame(){
             int result;
             //makes sure that "click now" is not printed if clicked to early
             running = false;
