@@ -1,8 +1,10 @@
-package com.example.graymatter;
+package com.example.graymatter.Game;
 
 import android.os.Handler;
 
-public class ReactionTime {
+import com.example.graymatter.ReactionTestActivity;
+
+public class ReactionTime implements GameState{
     private long startTime;
     private long endTime;
     private long waitTime;
@@ -12,18 +14,19 @@ public class ReactionTime {
     private int minWaitTime = 500;
     private Handler handler = new Handler();
     private boolean running = false;
-    public ReactionTime(){
+    //TODO SHOULD NOT EXIST!!
+    private ReactionTestActivity parent;
+    public ReactionTime(ReactionTestActivity parent){
+        this.parent = parent;
         startTime = 0;
     }
 
+
     //Call this to start a new reactionTest
-    public void StartTest() {
+    public void StartGame() {
 
         // a random time between min- and maxWaitTime
         waitTime = Math.round(Math.random() * maxWaitTime) + minWaitTime;
-        //TODO here we change color to "Waitcolor"
-        //just for debug atm
-        System.out.println("ready");
         //This is used to make sure test is not stopped before waitTime is over
         running = true;
         // New thread that runs after waitTime
@@ -33,16 +36,15 @@ public class ReactionTime {
                 //sets startTime to current time
                 startTime = System.currentTimeMillis();
                 if (running) {
-                    //TODO here we change color to "clickColor"
-                    //just for debug atm
-                    System.out.println("NOW");
+                    // when the reaction text shows the screen to react to
+                    parent.showReactionScreen();
                 }
             }
         },waitTime);
 
     }
     //Call this to stop the reactionTest returns -1 if clicked to early
-    public int StopTest(){
+    public int StopGame(){
             int result;
             //makes sure that "click now" is not printed if clicked to early
             running = false;
@@ -55,8 +57,7 @@ public class ReactionTime {
             }
             // resets startTime
             startTime = 0;
-            //For debug purpose logs result
-            System.out.println(result);
+            // Showing your result and changing the screen
             return result;
     }
 }

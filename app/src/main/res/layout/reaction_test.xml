@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="#FFFFFF"
     android:clickable="true">
 
     <!--    <include
@@ -24,18 +24,31 @@
 
     <TextView
         android:id="@+id/reactionTestDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="412dp"
+        android:layout_height="733dp"
         android:layout_centerHorizontal="true"
+        android:background="#000000"
         android:clickable="true"
         android:fontFamily="monospace"
         android:gravity="center"
-        android:text="Press the screen when it turns white"
+        android:text="Press to start the game"
         android:textColor="#FFFFFF"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.645" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="174dp"
+        android:layout_height="242dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_flash_white"
+        tools:layout_editor_absoluteY="95dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
