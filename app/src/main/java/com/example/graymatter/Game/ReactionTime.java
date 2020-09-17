@@ -1,12 +1,10 @@
-package com.example.graymatter;
+package com.example.graymatter.Game;
 
 import android.os.Handler;
-import android.widget.ImageView;
-import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-public class ReactionTime {
+import com.example.graymatter.ReactionTestActivity;
+
+public class ReactionTime implements GameState{
     private long startTime;
     private long endTime;
     private long waitTime;
@@ -16,18 +14,19 @@ public class ReactionTime {
     private int minWaitTime = 500;
     private Handler handler = new Handler();
     private boolean running = false;
-    public ReactionTime(){
+    //TODO SHOULD NOT EXIST!!
+    private ReactionTestActivity parent;
+    public ReactionTime(ReactionTestActivity parent){
+        this.parent = parent;
         startTime = 0;
     }
 
 
     //Call this to start a new reactionTest
-    public void StartGame(final ReactionTestActivity parent) {
+    public void StartGame() {
 
         // a random time between min- and maxWaitTime
         waitTime = Math.round(Math.random() * maxWaitTime) + minWaitTime;
-        // shows the screen when you wait for the react test
-        parent.showWaitScreen();
         //This is used to make sure test is not stopped before waitTime is over
         running = true;
         // New thread that runs after waitTime
@@ -45,7 +44,7 @@ public class ReactionTime {
 
     }
     //Call this to stop the reactionTest returns -1 if clicked to early
-    public int StopGame(final ReactionTestActivity parent){
+    public int StopGame(){
             int result;
             //makes sure that "click now" is not printed if clicked to early
             running = false;
@@ -58,9 +57,7 @@ public class ReactionTime {
             }
             // resets startTime
             startTime = 0;
-            parent.setReactionTime(result);
             // Showing your result and changing the screen
-            parent.showResult();
             return result;
     }
 }

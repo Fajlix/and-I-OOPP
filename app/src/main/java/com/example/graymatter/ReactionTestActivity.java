@@ -6,13 +6,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import org.w3c.dom.Text;
+import com.example.graymatter.Game.ReactionTime;
 
 public class ReactionTestActivity extends AppCompatActivity {
     private ReactionTime reactionTime;
-    private int result;
     private ClickState clickState;
 
     // Different states to determine what will happen when the screen is touched
@@ -24,9 +22,8 @@ public class ReactionTestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final ReactionTestActivity rTA = this;
         setContentView(R.layout.reaction_test);
-        reactionTime = new ReactionTime();
+        reactionTime = new ReactionTime(this);
         clickState = ClickState.START_TIMER;
 
         final TextView reactionTestDescription = (TextView) findViewById(R.id.reactionTestDescription);
@@ -37,11 +34,14 @@ public class ReactionTestActivity extends AppCompatActivity {
                 switch (clickState)
                 {
                     case START_TIMER:
-                        reactionTime.StartGame(rTA);
+                        reactionTime.StartGame();
+                        // shows the screen when you wait for the react test
+                        showWaitScreen();
                         clickState = ClickState.STOP_TIMER;
                         break;
                     case STOP_TIMER:
-                        reactionTime.StopGame(rTA);
+                        int res = reactionTime.StopGame();
+                        showResult(res);
                         clickState = ClickState.START_TIMER;
                         break;
                 }
@@ -67,22 +67,18 @@ public class ReactionTestActivity extends AppCompatActivity {
     }
 
     // showing the result and the screen is back to black, if the user pressed to early the game will let the user know
-    public void showResult ()
+    public void showResult (int res)
     {
         final TextView reactionTestDescription = (TextView) findViewById(R.id.reactionTestDescription);
         reactionTestDescription.setTextColor(0xffffffff);
         reactionTestDescription.setBackgroundColor(0xff000000);
-        if (result <= 0)
+        if (res <= 0)
         {
             reactionTestDescription.setText("DIN FANSKAP KLICKADE FÖR TIDIGT");
         }
         else
         {
-            reactionTestDescription.setText("Your reaction time was " + result + " ms");
+            reactionTestDescription.setText("Your reaction time was " + res + " ms");
         }
-    }
-
-    public void setReactionTime(int result) {
-        this.result = result;
     }
 }
