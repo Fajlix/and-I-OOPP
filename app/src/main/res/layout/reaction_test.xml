@@ -31,7 +31,7 @@
         android:clickable="true"
         android:fontFamily="monospace"
         android:gravity="center"
-        android:text="Press the screen when it turns white"
+        android:text="Press to start the game"
         android:textColor="#FFFFFF"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"

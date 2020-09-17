@@ -26,9 +26,8 @@ public class ReactionTime {
 
         // a random time between min- and maxWaitTime
         waitTime = Math.round(Math.random() * maxWaitTime) + minWaitTime;
-        //TODO here we change color to "Waitcolor"
-        //just for debug atm
-        System.out.println("ready");
+        // shows the screen when you wait for the react test
+        parent.showWaitScreen();
         //This is used to make sure test is not stopped before waitTime is over
         running = true;
         // New thread that runs after waitTime
@@ -38,18 +37,15 @@ public class ReactionTime {
                 //sets startTime to current time
                 startTime = System.currentTimeMillis();
                 if (running) {
-                    //TODO here we change color to "clickColor"
-                    parent.setColorNow();
-
-                    //just for debug atm
-                    System.out.println("NOW");
+                    // when the reaction text shows the screen to react to
+                    parent.showReactionScreen();
                 }
             }
         },waitTime);
 
     }
     //Call this to stop the reactionTest returns -1 if clicked to early
-    public int StopGame(){
+    public int StopGame(final ReactionTestActivity parent){
             int result;
             //makes sure that "click now" is not printed if clicked to early
             running = false;
@@ -62,8 +58,9 @@ public class ReactionTime {
             }
             // resets startTime
             startTime = 0;
-            //For debug purpose logs result
-            System.out.println(result);
+            parent.setReactionTime(result);
+            // Showing your result and changing the screen
+            parent.showResult();
             return result;
     }
 }
