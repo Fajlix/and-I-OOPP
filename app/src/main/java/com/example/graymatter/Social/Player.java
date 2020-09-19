@@ -34,6 +34,19 @@ public class Player {
         this.userKey = userKey;
     }
 
+    private Player(int friendID, String userName, String imagePath, List<GameSession> playerHistory){
+        //assign public fields, mark others "0"
+    }
+
+    public static Player makePlayer(int userKey, int friendID, String email, String password, String userName){
+
+        this.userKey = userKey;
+    }
+
+    public static Player makePublicPlayer(int friendID, String userName, String imagePath, List<GameSession> playerHistory){
+        return new Player(friendID, userName, imagePath, playerHistory);
+    }
+
 
     public static Player getPlayer(int friendID, int userKey) implements Throwable{
         if(this.userKey = userKey){
