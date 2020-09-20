@@ -14,10 +14,7 @@ public class ReactionTime implements GameState{
     private int minWaitTime = 500;
     private Handler handler = new Handler();
     private boolean running = false;
-    //TODO SHOULD NOT EXIST!!
-    private ReactionTestActivity parent;
-    public ReactionTime(ReactionTestActivity parent){
-        this.parent = parent;
+    public ReactionTime(){
         startTime = 0;
     }
 
@@ -30,6 +27,7 @@ public class ReactionTime implements GameState{
         //This is used to make sure test is not stopped before waitTime is over
         running = true;
         // New thread that runs after waitTime
+        //TODO WE SHOULD NOT HAVE THREADS HERE
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -37,7 +35,7 @@ public class ReactionTime implements GameState{
                 startTime = System.currentTimeMillis();
                 if (running) {
                     // when the reaction text shows the screen to react to
-                    parent.showReactionScreen();
+                    Game.getInstance().notifyObservers();
                 }
             }
         },waitTime);
