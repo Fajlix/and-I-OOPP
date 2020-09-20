@@ -7,10 +7,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.graymatter.Game.Game;
 import com.example.graymatter.Game.ReactionTime;
 
 public class ReactionTestActivity extends AppCompatActivity {
-    private ReactionTime reactionTime;
     private ClickState clickState;
 
     // Different states to determine what will happen when the screen is touched
@@ -23,35 +23,38 @@ public class ReactionTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reaction_test);
-        reactionTime = new ReactionTime(this);
+        Game.getInstance().ChangeState(new ReactionTime(this));
         clickState = ClickState.START_TIMER;
 
-        final TextView reactionTestDescription = (TextView) findViewById(R.id.reactionTestDescription);
+        final TextView reactionTestDescription = findViewById(R.id.reactionTestDescription);
         // Listens on the clicks and then determines what to do depending on what state the screen is in
         reactionTestDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (clickState)
-                {
-                    case START_TIMER:
-                        reactionTime.StartGame();
-                        // shows the screen when you wait for the react test
-                        showWaitScreen();
-                        clickState = ClickState.STOP_TIMER;
-                        break;
-                    case STOP_TIMER:
-                        int res = reactionTime.StopGame();
-                        showResult(res);
-                        clickState = ClickState.START_TIMER;
-                        break;
-                }
+                startOrStopGame();
             }
         });
 
         // clicking on this should take the user to the main page
         ImageView reactionTestClose = (ImageView) findViewById(R.id.reactionTestClose);
     }
-
+    private void startOrStopGame(){
+        Game game = Game.getInstance();
+        switch (clickState)
+        {
+            case START_TIMER:
+                game.StartGame();
+                // shows the screen when you wait for the react test
+                showWaitScreen();
+                clickState = ClickState.STOP_TIMER;
+                break;
+            case STOP_TIMER:
+                int res = game.StopGame();
+                showResult(res);
+                clickState = ClickState.START_TIMER;
+                break;
+        }
+    }
     // shows the wait screen, before the reaction test is supposed to happen
     public void showWaitScreen() {
         final TextView reactionTestDescription = (TextView) findViewById(R.id.reactionTestDescription);

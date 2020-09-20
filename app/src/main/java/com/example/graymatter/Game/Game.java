@@ -1,13 +1,24 @@
 package com.example.graymatter.Game;
 
 public class Game {
+    private static Game game;
     private GameState gameState;
 
-    public void StartGame(){
+    private Game(){
 
     }
+    public static Game getInstance(){
+        if (game==null)
+            game = new Game();
+        return game;
+    }
+
+
+    public void StartGame(){
+        gameState.StartGame();
+    }
     public int StopGame(){
-        return 0;
+        return gameState.StopGame();
     }
     public void ChangeState(GameState gameState){
         this.gameState = gameState;
