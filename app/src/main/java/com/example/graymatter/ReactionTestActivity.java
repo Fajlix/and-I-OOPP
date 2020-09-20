@@ -29,7 +29,9 @@ public class ReactionTestActivity extends AppCompatActivity implements GameObser
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reaction_test);
+        // changes gamestate of game
         Game.getInstance().ChangeState(new ReactionTime());
+        // adds this as a observer of the game
         Game.getInstance().addObserver(this);
         clickState = ClickState.START_TIMER;
 

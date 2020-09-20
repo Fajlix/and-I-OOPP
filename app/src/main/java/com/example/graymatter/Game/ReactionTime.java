@@ -27,6 +27,7 @@ public class ReactionTime implements GameState{
         //This is used to make sure test is not stopped before waitTime is over
         running = true;
         // New thread that runs after waitTime
+        //TODO WE SHOULD NOT HAVE THREADS HERE
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
