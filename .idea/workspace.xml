@@ -10,10 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="945acc02-5fa4-411c-9acb-aab4339fd9bf" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/Game/GameObserver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/Game/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/ReactionTestActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/ReactionTestActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/reaction_test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/reaction_test.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,11 +182,11 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2599" y="165" key="#app/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600356331939" />
-    <state x="2685" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1600357642335">
+    <state x="2685" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1600617255583">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599923520346" />
-    <state x="2685" y="229" key="#com.intellij.ide.util.MemberChooser/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600357642335" />
+    <state x="2685" y="229" key="#com.intellij.ide.util.MemberChooser/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600617255583" />
     <state x="926" y="388" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1600353362379">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

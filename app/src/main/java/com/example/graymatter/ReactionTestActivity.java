@@ -8,10 +8,16 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.graymatter.Game.Game;
+import com.example.graymatter.Game.GameObserver;
 import com.example.graymatter.Game.ReactionTime;
 
-public class ReactionTestActivity extends AppCompatActivity {
+public class ReactionTestActivity extends AppCompatActivity implements GameObserver {
     private ClickState clickState;
+
+    @Override
+    public void update() {
+        showReactionScreen();
+    }
 
     // Different states to determine what will happen when the screen is touched
     enum ClickState
@@ -23,7 +29,8 @@ public class ReactionTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reaction_test);
-        Game.getInstance().ChangeState(new ReactionTime(this));
+        Game.getInstance().ChangeState(new ReactionTime());
+        Game.getInstance().addObserver(this);
         clickState = ClickState.START_TIMER;
 
         final TextView reactionTestDescription = findViewById(R.id.reactionTestDescription);
