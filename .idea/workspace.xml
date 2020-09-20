@@ -9,7 +9,10 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="945acc02-5fa4-411c-9acb-aab4339fd9bf" name="Default Changelist" comment="" />
+    <list default="true" id="945acc02-5fa4-411c-9acb-aab4339fd9bf" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,7 +75,10 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="SDK Location" />
     <property name="project.structure.proportion" value="0.17" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="PsdUISettings">
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -165,9 +171,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'reactionTest' into ReactionTestGUI&#10;&#10;# Conflicts:&#10;#&#9;app/src/main/java/com/example/graymatter/ui/home/HomeFragment.java&#10;#&#9;app/src/main/res/layout/fragment_home.xml" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2397" y="252" key="#PSD" timestamp="1600161925738">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="477" y="252" key="#PSD" timestamp="1600604870159">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="477" y="252" key="#PSD/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600604870159" />
     <state x="2397" y="252" key="#PSD/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600161925738" />
     <state x="2599" y="165" key="#app" timestamp="1600356331939">
       <screen x="1920" y="0" width="1920" height="1040" />
@@ -198,25 +205,29 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2477" y="64" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600099452223" />
-    <state width="1877" height="235" key="GridCell.Tab.0.bottom" timestamp="1600356533733">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1600604865221">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="235" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600353207425" />
+    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600604865221" />
+    <state width="1340" height="224" key="GridCell.Tab.0.bottom" timestamp="1600605379773">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1340" height="224" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600605379773" />
     <state width="1877" height="235" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600356533733" />
-    <state width="1877" height="235" key="GridCell.Tab.0.center" timestamp="1600356533733">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1340" height="224" key="GridCell.Tab.0.center" timestamp="1600605379773">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="235" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600353207425" />
+    <state width="1340" height="224" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600605379773" />
     <state width="1877" height="235" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600356533733" />
-    <state width="1877" height="235" key="GridCell.Tab.0.left" timestamp="1600356533733">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1340" height="224" key="GridCell.Tab.0.left" timestamp="1600605379773">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="235" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600353207425" />
+    <state width="1340" height="224" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600605379773" />
     <state width="1877" height="235" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600356533733" />
-    <state width="1877" height="235" key="GridCell.Tab.0.right" timestamp="1600356533733">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1340" height="224" key="GridCell.Tab.0.right" timestamp="1600605379773">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="235" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600353207425" />
+    <state width="1340" height="224" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600605379773" />
     <state width="1877" height="235" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600356533733" />
     <state x="667" y="261" key="IDE.errors.dialog" timestamp="1599918159964">
       <screen x="0" y="0" width="1920" height="1040" />
