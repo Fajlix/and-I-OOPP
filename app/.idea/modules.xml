@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-624135496/GrayMatter.iml" filepath="$PROJECT_DIR$/.idea/modules/-624135496/GrayMatter.iml" group="GrayMatter" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GrayMatter-app.iml" filepath="$PROJECT_DIR$/.idea/modules/GrayMatter-app.iml" group="GrayMatter/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-757477609/and-I-OOPP-GrayMatter.iml" filepath="$PROJECT_DIR$/.idea/modules/-757477609/and-I-OOPP-GrayMatter.iml" group="GrayMatter" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app.iml" group="GrayMatter/app" />
     </modules>
   </component>
