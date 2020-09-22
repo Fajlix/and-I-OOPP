@@ -29,12 +29,18 @@ public class Game {
     }
 
     public void StartGame(){
-        gameState.StartGame();
+        if (gameState != null)
+            gameState.StartGame();
     }
     public int StopGame(){
-        return gameState.StopGame();
+        if (gameState != null)
+            return gameState.StopGame();
+        return -1;
     }
     public void ChangeState(GameState gameState){
         this.gameState = gameState;
+    }
+    public GameState getGameState(){
+        return gameState;
     }
 }
