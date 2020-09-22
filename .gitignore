@@ -77,3 +77,5 @@ application/.idea/
 
 **/local.properties/
 local.properties
+
+app/.idea/workspace.xml
