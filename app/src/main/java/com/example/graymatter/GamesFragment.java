@@ -21,9 +21,7 @@ public class GamesFragment extends Fragment {
 
     public GamesFragment() {
         // Required empty public constructor
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
