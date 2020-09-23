@@ -10,21 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="945acc02-5fa4-411c-9acb-aab4339fd9bf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/ChimpTestActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/ChimpTestButton.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_number_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_number_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_number_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_number_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/chimp_test_button.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/main_page_button.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/chimp_test.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/reaction_test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/reaction_test.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/ChimpTestButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/ChimpTestButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/chimp_test_button.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +43,7 @@
       <list>
         <option value="Class" />
         <option value="Interface" />
+        <option value="layoutResourceFile" />
       </list>
     </option>
   </component>
@@ -227,11 +217,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Android JUnit.All in app (1)" />
-        <item itemvalue="Android JUnit.All in app" />
-        <item itemvalue="Android JUnit.All in app (2)" />
         <item itemvalue="Android JUnit.ReactionTimeTest.startAndStopTest" />
         <item itemvalue="Android JUnit.GameTest" />
+        <item itemvalue="Android JUnit.All in app (2)" />
+        <item itemvalue="Android JUnit.All in app (1)" />
+        <item itemvalue="Android JUnit.All in app" />
       </list>
     </recent_temporary>
   </component>
@@ -284,10 +274,18 @@
     </state>
     <state x="756" y="379" width="408" height="290" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040/-1280.48.1280.984@0.0.1920.1040" timestamp="1600363710150" />
     <state x="756" y="379" width="408" height="288" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599922675258" />
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1600869601507">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600869601507" />
     <state x="2460" y="275" key="AndroidCreateResourceDirectoryDialog" timestamp="1600355870650">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2460" y="275" key="AndroidCreateResourceDirectoryDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600355870650" />
+    <state x="540" y="275" key="AndroidCreateResourceFileDialog" timestamp="1600869621049">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="540" y="275" key="AndroidCreateResourceFileDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600869621049" />
     <state x="818" y="333" key="AndroidCreateXmlResourceDialog" timestamp="1599922273417">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -340,10 +338,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="667" y="261" key="IDE.errors.dialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599918159964" />
-    <state x="672" y="236" key="MultipleFileMergeDialog" timestamp="1600852977476">
+    <state x="672" y="236" key="MultipleFileMergeDialog" timestamp="1600869340413">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="672" y="236" key="MultipleFileMergeDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600852977476" />
+    <state x="672" y="236" key="MultipleFileMergeDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600869340413" />
     <state x="565" y="149" key="SettingsEditor" timestamp="1600852415734">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -356,13 +354,13 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="590" y="313" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/-1280.48.1280.984@0.0.1920.1040" timestamp="1600418908876" />
-    <state x="1920" y="0" width="1655" height="1026" key="dock-window-1" timestamp="1600853055265">
+    <state x="2175" y="0" width="1599" height="1026" maximized="true" key="dock-window-1" timestamp="1600869784359">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="1920" y="0" width="1655" height="1026" key="dock-window-1/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600853055265" />
-    <state x="737" y="233" key="git4idea.branch.GitSmartOperationDialog" timestamp="1600852972824">
+    <state x="2175" y="0" width="1599" height="1026" maximized="true" key="dock-window-1/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600869784359" />
+    <state x="737" y="233" key="git4idea.branch.GitSmartOperationDialog" timestamp="1600869337513">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="737" y="233" key="git4idea.branch.GitSmartOperationDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600852972824" />
+    <state x="737" y="233" key="git4idea.branch.GitSmartOperationDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600869337513" />
   </component>
 </project>
