@@ -10,7 +10,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="945acc02-5fa4-411c-9acb-aab4339fd9bf" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/ChimpTestActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/ChimpTestButton.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_number_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_number_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_number_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_number_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/chimp_test_button.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/main_page_button.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/reaction_test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/reaction_test.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,15 +54,13 @@
       <list>
         <option value="Class" />
         <option value="Interface" />
-        <option value="JUnit5 Test Class" />
-        <option value="JUnit4 Test Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="gameStructure" />
+        <entry key="$PROJECT_DIR$" value="mainGUI" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -73,32 +85,28 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SelectDeploymentTargetsDialog.selectedDevices" value="Pixel_2_API_30" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Groovy JUnit" value="groovy.util.GroovyTestCase" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
-    <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/test/java/com/example/graymatter/Game" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res" />
     <property name="project.structure.last.edited" value="SDK Location" />
     <property name="project.structure.proportion" value="0.17" />
-    <property name="project.structure.side.proportion" value="0.2" />
-  </component>
-  <component name="PsdUISettings">
-    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateTestDialog.RecentsKey">
-      <recent name="com.example.graymatter.Game" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.example.graymatter" />
     </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
-      <recent name="groovy.util.GroovyTestCase" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Emil\AndroidStudioProjects\and-I-OOPP\app\src\main\res" />
+      <recent name="C:\Users\Emil\AndroidStudioProjects\and-I-OOPP\app\src\main\res\drawable" />
+      <recent name="C:\Users\Emil\AndroidStudioProjects\and-I-OOPP\app\src\main\res\layout" />
+    </key>
+    <key name="android.template.1049029467">
+      <recent name="com.example.graymatter" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Emil\AndroidStudioProjects\and-I-OOPP\app\src\main\java\com\example\graymatter\Game" />
     </key>
   </component>
-  <component name="RunManager" selected="Android JUnit.All in app (2)">
+  <component name="RunManager" selected="Android App.app">
     <configuration name="All in app (1)" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
       <module name="app" />
       <option name="PACKAGE_NAME" value="" />
@@ -219,16 +227,13 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Android JUnit.All in app (2)" />
         <item itemvalue="Android JUnit.All in app (1)" />
-        <item itemvalue="Android JUnit.ReactionTimeTest.startAndStopTest" />
         <item itemvalue="Android JUnit.All in app" />
+        <item itemvalue="Android JUnit.All in app (2)" />
+        <item itemvalue="Android JUnit.ReactionTimeTest.startAndStopTest" />
         <item itemvalue="Android JUnit.GameTest" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="ServiceViewManager">
-    <option name="showServicesTree" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -256,31 +261,28 @@
     <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'reactionTest' into ReactionTestGUI&#10;&#10;# Conflicts:&#10;#&#9;app/src/main/java/com/example/graymatter/ui/home/HomeFragment.java&#10;#&#9;app/src/main/res/layout/fragment_home.xml" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="477" y="252" key="#PSD" timestamp="1600604870159">
+    <state x="477" y="252" key="#PSD" timestamp="1600852474243">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="477" y="252" key="#PSD/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600604870159" />
+    <state x="477" y="252" key="#PSD/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600852474243" />
     <state x="2397" y="252" key="#PSD/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600161925738" />
     <state x="2599" y="165" key="#app" timestamp="1600356331939">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2599" y="165" key="#app/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600356331939" />
-    <state x="2685" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1600707799646">
+    <state x="2685" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1600357642335">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599923520346" />
-    <state x="2685" y="229" key="#com.intellij.ide.util.MemberChooser/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600707799646" />
-    <state x="2545" y="183" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1600703098392">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="2545" y="183" key="#com.intellij.ide.util.TreeClassChooserDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600703098392" />
+    <state x="2685" y="229" key="#com.intellij.ide.util.MemberChooser/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600357642335" />
     <state x="926" y="388" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1600353362379">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="926" y="388" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600353362379" />
-    <state x="756" y="379" width="408" height="288" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1599922675258">
+    <state x="756" y="379" width="408" height="290" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1600363710150">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="756" y="379" width="408" height="290" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040/-1280.48.1280.984@0.0.1920.1040" timestamp="1600363710150" />
     <state x="756" y="379" width="408" height="288" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599922675258" />
     <state x="2460" y="275" key="AndroidCreateResourceDirectoryDialog" timestamp="1600355870650">
       <screen x="1920" y="0" width="1920" height="1040" />
@@ -294,73 +296,73 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2477" y="64" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600099452223" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1600604865221">
+    <state width="1877" height="255" key="GridCell.Tab.0.bottom" timestamp="1600853080937">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600604865221" />
-    <state width="938" height="281" key="GridCell.Tab.0.bottom" timestamp="1600711606414">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1877" height="305" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1280.48.1280.984@0.0.1920.1040" timestamp="1600431795820" />
+    <state width="1877" height="255" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600853080937" />
+    <state width="1877" height="235" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600356533733" />
+    <state width="1877" height="255" key="GridCell.Tab.0.center" timestamp="1600853080937">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1340" height="266" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600606284255" />
-    <state width="938" height="281" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600711606414" />
-    <state width="938" height="281" key="GridCell.Tab.0.center" timestamp="1600711606414">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1877" height="305" key="GridCell.Tab.0.center/0.0.1920.1040/-1280.48.1280.984@0.0.1920.1040" timestamp="1600431795819" />
+    <state width="1877" height="255" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600853080937" />
+    <state width="1877" height="235" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600356533733" />
+    <state width="1877" height="255" key="GridCell.Tab.0.left" timestamp="1600853080937">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1340" height="266" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600606284255" />
-    <state width="938" height="281" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600711606414" />
-    <state width="938" height="281" key="GridCell.Tab.0.left" timestamp="1600711606414">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1877" height="305" key="GridCell.Tab.0.left/0.0.1920.1040/-1280.48.1280.984@0.0.1920.1040" timestamp="1600431795819" />
+    <state width="1877" height="255" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600853080937" />
+    <state width="1877" height="235" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600356533733" />
+    <state width="1877" height="255" key="GridCell.Tab.0.right" timestamp="1600853080937">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1340" height="266" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600606284255" />
-    <state width="938" height="281" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600711606414" />
-    <state width="938" height="281" key="GridCell.Tab.0.right" timestamp="1600711606414">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1877" height="305" key="GridCell.Tab.0.right/0.0.1920.1040/-1280.48.1280.984@0.0.1920.1040" timestamp="1600431795820" />
+    <state width="1877" height="255" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600853080937" />
+    <state width="1877" height="235" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600356533733" />
+    <state width="1877" height="286" key="GridCell.Tab.1.bottom" timestamp="1600429410908">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1340" height="266" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600606284255" />
-    <state width="938" height="281" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600711606414" />
-    <state width="938" height="347" key="GridCell.Tab.1.bottom" timestamp="1600711604526">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1877" height="286" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1280.48.1280.984@0.0.1920.1040" timestamp="1600429410908" />
+    <state width="1877" height="286" key="GridCell.Tab.1.center" timestamp="1600429410908">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="347" key="GridCell.Tab.1.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600711604526" />
-    <state width="938" height="347" key="GridCell.Tab.1.center" timestamp="1600711604525">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1877" height="286" key="GridCell.Tab.1.center/0.0.1920.1040/-1280.48.1280.984@0.0.1920.1040" timestamp="1600429410908" />
+    <state width="1877" height="286" key="GridCell.Tab.1.left" timestamp="1600429410908">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="347" key="GridCell.Tab.1.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600711604525" />
-    <state width="938" height="347" key="GridCell.Tab.1.left" timestamp="1600711604525">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1877" height="286" key="GridCell.Tab.1.left/0.0.1920.1040/-1280.48.1280.984@0.0.1920.1040" timestamp="1600429410908" />
+    <state width="1877" height="286" key="GridCell.Tab.1.right" timestamp="1600429410908">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="347" key="GridCell.Tab.1.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600711604525" />
-    <state width="938" height="347" key="GridCell.Tab.1.right" timestamp="1600711604525">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state width="938" height="347" key="GridCell.Tab.1.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600711604525" />
+    <state width="1877" height="286" key="GridCell.Tab.1.right/0.0.1920.1040/-1280.48.1280.984@0.0.1920.1040" timestamp="1600429410908" />
     <state x="667" y="261" key="IDE.errors.dialog" timestamp="1599918159964">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="667" y="261" key="IDE.errors.dialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599918159964" />
-    <state x="565" y="149" key="SettingsEditor" timestamp="1600349797421">
+    <state x="672" y="236" key="MultipleFileMergeDialog" timestamp="1600852977476">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="565" y="149" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600349797421" />
-    <state x="2626" y="158" key="chooseDestDirectoryDialog" timestamp="1600705538214">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="672" y="236" key="MultipleFileMergeDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600852977476" />
+    <state x="565" y="149" key="SettingsEditor" timestamp="1600852415734">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="2626" y="158" key="chooseDestDirectoryDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600705538214" />
+    <state x="565" y="149" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600852415734" />
     <state x="358" y="218" width="1413" height="577" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1600349801251">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="358" y="218" width="1413" height="577" key="com.android.tools.idea.avdmanager.AvdListDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600349801251" />
-    <state x="2511" y="223" key="com.intellij.ide.util.TipDialog" timestamp="1600761219968">
+    <state x="590" y="313" key="com.intellij.ide.util.TipDialog" timestamp="1600418908876">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="590" y="313" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/-1280.48.1280.984@0.0.1920.1040" timestamp="1600418908876" />
+    <state x="1920" y="0" width="1655" height="1026" key="dock-window-1" timestamp="1600853055265">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2511" y="223" key="com.intellij.ide.util.TipDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600761219968" />
-    <state x="2581" y="83" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1600705538221">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="1920" y="0" width="1655" height="1026" key="dock-window-1/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600853055265" />
+    <state x="737" y="233" key="git4idea.branch.GitSmartOperationDialog" timestamp="1600852972824">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="2581" y="83" key="com.intellij.testIntegration.createTest.CreateTestDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600705538221" />
-    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1600614451683">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600614451683" />
+    <state x="737" y="233" key="git4idea.branch.GitSmartOperationDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600852972824" />
   </component>
 </project>
