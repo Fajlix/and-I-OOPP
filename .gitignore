@@ -76,3 +76,6 @@ application/.idea/
 
 
 **/local.properties/
+.idea/
+
+local.properties
