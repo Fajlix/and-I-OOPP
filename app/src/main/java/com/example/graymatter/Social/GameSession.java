@@ -28,4 +28,8 @@ public class GameSession {
         this.gameType = gameType;
         this.time = time;
     }
+
+    public GameSession(GameSession gameSession){
+        this(gameSession.gameID, gameSession.score, gameSession.gameType, gameSession.time);
+    }
 }
