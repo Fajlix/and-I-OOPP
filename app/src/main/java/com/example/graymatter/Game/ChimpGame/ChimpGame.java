@@ -1,4 +1,4 @@
-package com.example.graymatter.Game.ChimpTest;
+package com.example.graymatter.Game.ChimpGame;
 
 import com.example.graymatter.Game.Game;
 import com.example.graymatter.Game.GameState;
@@ -8,7 +8,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Arrays;
 
-public class ChimpTest implements GameState {
+public class ChimpGame implements GameState {
 
     private int numberQty; //amount of boxes to choose from at current stage, also serves as score.
     private int[] board = new int[40]; // The locations on which the numbers can appear, zeroes indicate empty spaces
@@ -16,7 +16,7 @@ public class ChimpTest implements GameState {
     private boolean numberVisibility;
     private boolean gameOver;
 
-    public ChimpTest(){
+    public ChimpGame(){
         gameOver = true;
         EventBus.getDefault().register(this);
     }
