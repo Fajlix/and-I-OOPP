@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +22,9 @@ import org.json.simple.parser.ParseException;
 
 public class PlayerMapper implements PlayerMapperInterface {
     String serverLocation;
-    JSONObject jsonObject;
+    private final String dbPath = "C:/Users/hanna/Documents/and-I-OOPP/json-server-lib";
+    //good for batch writing. bad for safety. idk
+    JSONObject toWrite;
 
     Random rand = new Random();
     Player currentPlayer;
@@ -52,24 +55,13 @@ public class PlayerMapper implements PlayerMapperInterface {
             for (int i = 0; i < arr.length(); i++){
                 JSONObject player = arr.getJSONObject(i);
                 if (player.getInt("userID") == (userID)){
-                    if(!restricted){
-                        int userKey = player.getInt("userKey");
-                        int userKey = player.getInt("userKey");
-
-                    }
-
-                        return
-
+                    return Optional.of(fetchPlayer(player, false));
                 }
             }
         } catch (ParseException | IOException | JSONException e) {
             e.printStackTrace();
         }
-
-    }
-
-    public Optional<Player> findRestricted(){
-
+        return Optional.empty();
     }
 
     Player makeFriend(int friendID) {
@@ -89,24 +81,6 @@ public class PlayerMapper implements PlayerMapperInterface {
     @Override
     public void update(Player player) throws PlayerMapperException {
 
-    }
-
-    /**
-     * Necessary to run before trying to access the Player database.
-     */
-    public void connectToServer() {
-        JSONParser parser = new JSONParser();
-        try {
-            Object obj = parser.parse(new FileReader("testPlayer.json"));
-            jsonObject = (JSONObject) obj;
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -140,6 +114,35 @@ public class PlayerMapper implements PlayerMapperInterface {
         if (isName(email)) throw new PlayerMapperException("Email is already being used!");
         currentFriendID++;
         Player player = Player.makePlayer(userKey, currentFriendID, email, password, userName);
+        JSONObject jsonPlayer = new JSONObject();
+        try {
+            jsonPlayer.put("userKey", userKey);
+            jsonPlayer.put("userID", player.getUserID());
+            jsonPlayer.put("email", email);
+            jsonPlayer.put("password", password);
+            jsonPlayer.put("userKey", userKey);
+            jsonPlayer.put("userKey", userKey);
+            jsonPlayer.put("userKey", userKey);
+            jsonPlayer.put("userKey", userKey);
+            JSONObject toMod = newRead();
+            JSONArray arr = toMod.getJSONArray("players").put(jsonPlayer);
+            /**
+            m = new LinkedHashMap(2);
+            m.put("type", "fax");
+            m.put("number", "212 555-1234");
+
+            // adding map to list
+            ja.add(m);
+
+            // putting phoneNumbers to JSONObject
+            jo.put("phoneNumbers", ja);
+            toMod.
+            toWrite =
+            enterData();
+             **/
+        } catch (JSONException | ParseException | IOException e) {
+            e.printStackTrace();
+        }
         JSONObject newPlayer = { "userKey": userKey, "age":30, "car":null };
 
 
@@ -148,20 +151,19 @@ public class PlayerMapper implements PlayerMapperInterface {
     }
 
     public void newDataEntry(){
-        jsonObject = new JSONObject();
+        toWrite = new JSONObject();
     }
 
     public void enterData() throws FileNotFoundException {
-        PrintWriter pw = new PrintWriter("C:/Users/hanna/Documents/and-I-OOPP/json-server-lib");
-        //TODO ?
-        pw.write(jsonObject.toString());
+        PrintWriter pw = new PrintWriter(dbPath);
+        pw.write(toWrite.toString());
         pw.flush();
         pw.close();
-        jsonObject = null;
+        toWrite = null;
     }
 
     public JSONObject newRead() throws IOException, ParseException {
-        Object obj = new JSONParser().parse(new FileReader("JSONExample.json"));
+        Object obj = new JSONParser().parse(new FileReader(dbPath));
         return (JSONObject) obj;
     }
 
@@ -169,54 +171,21 @@ public class PlayerMapper implements PlayerMapperInterface {
     //this and also findgame needs to iterateish
     private Player findPlayerFromStringField(String type, String value, boolean restricted) {
         //fult? alltså hela jävla metoden
-        if (!(type.equals("userName") || (type.equals("email")) || type.equals("userID")){
+        if (!(type.equals("userName") || type.equals("email"))){
             throw new IllegalArgumentException("String type is not 'userName', 'userID' nor 'email'");
         }
-        int userKey;
-        int userID;
-        String email;
-        String password;
-        String userName;
-        Image userImage;
-        List<Integer> friendUserIDs = new ArrayList<>();
-        List<GameSession> playerHistory;
-
         try {
-            JSONObject obj = newRead();
-            JSONArray arr = obj.getJSONArray("players");
+            JSONArray arr = newRead().getJSONArray("players");
             for (int i = 0; i < arr.length(); i++){
                 JSONObject player = arr.getJSONObject(i);
-                boolean g = false;
-                if (type.equals("userID")) {
-                    if(player.getInt("userID") == Integer.parseInt(value)) g = true;
-                } else if (player.getString(type).equals(value)) g = true;
-                if(!restricted){
-                    userKey = player.getInt("userKey");
-                    email = player.getString("email");
-                    password = player.getString("password");
-                    friendUserIDs = new ArrayList<>();
-                    JSONArray friendUserIDsPRE = player.getJSONArray("friendUserIDs");
-                    for (int o = 0; o < friendUserIDsPRE.length(); o++){
-                        friendUserIDs.add((Integer)friendUserIDsPRE.get(o));
-                    }
+                if (player.getString(type).equals(value)){
+                    return fetchPlayer(player, restricted);
                 }
-                //TODO get Image
-                userImage = null;
-                userID = player.getInt("userID");
-                userName = player.getString("userName");
-                playerHistory = new ArrayList<>();
-                JSONArray playerHistoryPRE = player.getJSONArray("friendUserIDs");
-                for (int o = 0; o < playerHistoryPRE.length(); o++){
-                    //nå
-                }
-                //close read?
-                if (restricted) return Player.makePlayer(userID, userName, userImage, playerHistory);
-                return Player.makePlayer(userKey, userID, email, password, userName, userImage, playerHistory, friendUserIDs);
-
             }
-        } catch (ParseException | IOException | JSONException | MissingAccessException e) {
+        } catch (ParseException | IOException | JSONException e) {
             e.printStackTrace();
         }
+        throw new InvalidParameterException("A matching Player could not be found");
     }
 
     private Player fetchPlayer(JSONObject player, boolean restricted) throws JSONException {
