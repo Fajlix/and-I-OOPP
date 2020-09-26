@@ -31,6 +31,8 @@ public class Player {
      *
      */
 
+    //TODO sort methods after: userinfo connections, getters, setter, constructors, friend handler, game session handler (first figure out REST structure)
+
 
 
     //tänk på bilderna!!!
@@ -93,13 +95,22 @@ public class Player {
         this(player.userKey, player.userID, player.userName, player.userImage, player.playerHistory);
     }
 */
+
+    // TODO some kind of factory? :/
+    //anyways, 1 constructor if many makemethods
     public static Player makePlayer(int userKey, int userID, String email, String password, String userName, Image userImage, List<GameSession> playerHistory, List<Integer> friendUserIDs) throws MissingAccessException {
         return new Player(userKey, userID, email, password, userName, userImage, playerHistory, friendUserIDs);
     }
 
-    public static Player makePublicPlayer(int userID, String userName, Image userImage, List<GameSession> playerHistory){
+    public static Player makePlayer(int userKey, int userID, String email, String password, String userName) throws MissingAccessException {
+        return new Player(userKey, userID, email, password, userName, userImage, playerHistory, friendUserIDs);
+    }
+
+    public static Player makePlayer(int userID, String userName, Image userImage, List<GameSession> playerHistory){
         return new Player(userID, userName, userImage, playerHistory);
     }
+
+
     //terrible idea
     /**
      * Returns the player, with userInfo field having UserInfo value if userKey matches, otherwise userInfo field null.
@@ -142,6 +153,10 @@ public class Player {
         return userInfo.getEmail(userKey);
     }
 
+    public static void passwordSafetyCheck(String password) {
+        UserInfo.passwordSafetyCheck(password);
+    }
+
     public int getUserID(){
         return userID;
     }
@@ -179,7 +194,7 @@ public class Player {
         this.userImage = image;
     }
 
-    //TODO getters, setters or equal for userName, userID, userKey, playerHistory
+    //TODO getters, setters or equal for userName, userID, userKey, playerHistory, equals, tostring
 
     //needs equals
 

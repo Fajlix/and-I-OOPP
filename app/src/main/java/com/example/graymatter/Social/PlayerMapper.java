@@ -1,20 +1,13 @@
 package com.example.graymatter.Social;
 
+import android.media.Image;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.text.ParseException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +16,7 @@ import java.util.Random;
 
 import org.json.*;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 public class PlayerMapper implements PlayerMapperInterface {
@@ -45,12 +39,36 @@ public class PlayerMapper implements PlayerMapperInterface {
 
     public PlayerMapper() {
         serverLocation = "http://localhost:3000";
+        //in db?
         currentFriendID = 0;
         listeners = new ArrayList<>();
     }
 
     @Override
-    public Optional<Player> find(int friendID) {
+    public Optional<Player> find(int userID) {
+        try {
+            JSONObject obj = newRead();
+            JSONArray arr = obj.getJSONArray("players");
+            for (int i = 0; i < arr.length(); i++){
+                JSONObject player = arr.getJSONObject(i);
+                if (player.getInt("userID") == (userID)){
+                    if(!restricted){
+                        int userKey = player.getInt("userKey");
+                        int userKey = player.getInt("userKey");
+
+                    }
+
+                        return
+
+                }
+            }
+        } catch (ParseException | IOException | JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public Optional<Player> findRestricted(){
 
     }
 
@@ -97,26 +115,175 @@ public class PlayerMapper implements PlayerMapperInterface {
      * @param userKey
      * @param friendID
      */
-    public void logIn(int userKey, int friendID) throws PlayerMapperException {
+    public void logIn(int userKey, int friendID, String password) throws PlayerMapperException {
         Optional<Player> temp = find(friendID);
+        Player player;
         if (temp.isPresent()) {
-            currentPlayer = temp.get();
+            player = temp.get();
         } else {
             throw new PlayerMapperException("FriendID does not match user in our database");
         }
-
+        player.isPasswordCorrect(password);
         notifyListenersLogin();
+        currentPlayer = player;
 
     }
 
     /**
      * För att skapa nytt konto och logga in.
      */
-    public void createNewAccountAndLogIn() {
+    public void createNewAccountAndLogIn(int userKey, String email, String password, String userName) throws MissingAccessException {
+        //check account creation conditions before creating account.
+        Player.passwordSafetyCheck(password);
+        if (isName(userName)) throw new PlayerMapperException("Username already taken!");
+        //ask if they want email login help?
+        if (isName(email)) throw new PlayerMapperException("Email is already being used!");
+        currentFriendID++;
+        Player player = Player.makePlayer(userKey, currentFriendID, email, password, userName);
+        JSONObject newPlayer = { "userKey": userKey, "age":30, "car":null };
+
+
 
 
     }
 
+    public void newDataEntry(){
+        jsonObject = new JSONObject();
+    }
+
+    public void enterData() throws FileNotFoundException {
+        PrintWriter pw = new PrintWriter("C:/Users/hanna/Documents/and-I-OOPP/json-server-lib");
+        //TODO ?
+        pw.write(jsonObject.toString());
+        pw.flush();
+        pw.close();
+        jsonObject = null;
+    }
+
+    public JSONObject newRead() throws IOException, ParseException {
+        Object obj = new JSONParser().parse(new FileReader("JSONExample.json"));
+        return (JSONObject) obj;
+    }
+
+
+    //this and also findgame needs to iterateish
+    private Player findPlayerFromStringField(String type, String value, boolean restricted) {
+        //fult? alltså hela jävla metoden
+        if (!(type.equals("userName") || (type.equals("email")) || type.equals("userID")){
+            throw new IllegalArgumentException("String type is not 'userName', 'userID' nor 'email'");
+        }
+        int userKey;
+        int userID;
+        String email;
+        String password;
+        String userName;
+        Image userImage;
+        List<Integer> friendUserIDs = new ArrayList<>();
+        List<GameSession> playerHistory;
+
+        try {
+            JSONObject obj = newRead();
+            JSONArray arr = obj.getJSONArray("players");
+            for (int i = 0; i < arr.length(); i++){
+                JSONObject player = arr.getJSONObject(i);
+                boolean g = false;
+                if (type.equals("userID")) {
+                    if(player.getInt("userID") == Integer.parseInt(value)) g = true;
+                } else if (player.getString(type).equals(value)) g = true;
+                if(!restricted){
+                    userKey = player.getInt("userKey");
+                    email = player.getString("email");
+                    password = player.getString("password");
+                    friendUserIDs = new ArrayList<>();
+                    JSONArray friendUserIDsPRE = player.getJSONArray("friendUserIDs");
+                    for (int o = 0; o < friendUserIDsPRE.length(); o++){
+                        friendUserIDs.add((Integer)friendUserIDsPRE.get(o));
+                    }
+                }
+                //TODO get Image
+                userImage = null;
+                userID = player.getInt("userID");
+                userName = player.getString("userName");
+                playerHistory = new ArrayList<>();
+                JSONArray playerHistoryPRE = player.getJSONArray("friendUserIDs");
+                for (int o = 0; o < playerHistoryPRE.length(); o++){
+                    //nå
+                }
+                //close read?
+                if (restricted) return Player.makePlayer(userID, userName, userImage, playerHistory);
+                return Player.makePlayer(userKey, userID, email, password, userName, userImage, playerHistory, friendUserIDs);
+
+            }
+        } catch (ParseException | IOException | JSONException | MissingAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Player fetchPlayer(JSONObject player, boolean restricted) throws JSONException {
+        int userKey;
+        int userID;
+        String email;
+        String password;
+        String userName;
+        Image userImage;
+        List<Integer> friendUserIDs = new ArrayList<>();
+        List<GameSession> playerHistory;
+        if(!restricted){
+            userKey = player.getInt("userKey");
+            email = player.getString("email");
+            password = player.getString("password");
+            friendUserIDs = fetchFriendUserIDs(player);
+        }
+        //TODO get Image
+        userImage = null;
+        userID = player.getInt("userID");
+        userName = player.getString("userName");
+        playerHistory = fetchPlayerHistory(player);
+        //close read?
+        if (restricted) return Player.makePlayer(userID, userName, userImage, playerHistory);
+        return Player.makePlayer(userKey, userID, email, password, userName, userImage, playerHistory, friendUserIDs);
+    }
+
+    public List<Integer> fetchFriendUserIDs (JSONObject player) throws JSONException {
+        List<Integer> friendUserIDs = new ArrayList<>();
+        JSONArray friendUserIDsPRE = player.getJSONArray("friendUserIDs");
+        for (int o = 0; o < friendUserIDsPRE.length(); o++){
+            friendUserIDs.add((Integer)friendUserIDsPRE.get(o));
+        }
+        return friendUserIDs;
+    }
+
+    public List<GameSession> fetchPlayerHistory (JSONObject player) throws JSONException {
+        List<GameSession> playerHistory = new ArrayList<>();
+        JSONArray playerHistoryPRE = player.getJSONArray("playerHistory");
+        for (int o = 0; o < playerHistoryPRE.length(); o++){
+            int gameID = playerHistoryPRE.getJSONObject(o).getInt("gameID");
+            int score = playerHistoryPRE.getJSONObject(o).getInt("score");
+            String gameType = playerHistoryPRE.getJSONObject(o).getString("gameType");
+            String time = playerHistoryPRE.getJSONObject(o).getString("time");
+            playerHistory.add(new GameSession(gameID, score, gameType, time));
+        }
+        return playerHistory;
+    }
+
+    //completely seperate getters? yh
+
+    public Player findByEmail(String email) {
+
+    }
+
+    private boolean isName(String userName) {
+
+    }
+
+    public boolean isEmail(String email) {
+
+    }
+
+    public void storeGameSession(GameSession gameSession){
+        currentPlayer.addGameSession(gameSession);
+        //store in database
+    }
 
     public int makeFriendID() {
         currentFriendID += 1;
@@ -163,7 +330,7 @@ public class PlayerMapper implements PlayerMapperInterface {
                 GameSession gameSession = new GameSession(gameID, score, gameType, time);
                 playerHistory.add(gameSession);
             }
-            Player player = Player.makePublicPlayer(friendID, userName, userImage, playerHistory);
+            Player player = Player.makePlayer(friendID, userName, userImage, playerHistory);
             players.add(player);
         }
         return players;

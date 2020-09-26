@@ -14,6 +14,7 @@ public class UserInfo {
     private String password;
     private List<Integer> friendUserIDs;
 
+
     UserInfo(int userKey, String email, String password, List<Integer> friendUserIDs) throws MissingAccessException {
         this.userKey = userKey;
         this.email = email;
@@ -47,8 +48,7 @@ public class UserInfo {
 
     protected void setPassword(int userKey, String oldPassword, String newPassword) throws MissingAccessException {
         safetyCheck(userKey);
-        if(this.password.equals(oldPassword)){
-            //TODO quality checks for password
+        if(this.password.equals(oldPassword) && passwordSafetyCheck(newPassword)){
             this.password = newPassword;
             return;
         }
@@ -85,14 +85,30 @@ public class UserInfo {
         }
     }
 
-
-}
-class MissingAccessException extends Exception {
-    public MissingAccessException(String exceptionLabel){
-        super(exceptionLabel);
+    //4 forloops might be smarter
+    public static boolean passwordSafetyCheck(String password){
+        if (password.length() < 8) return false;
+        char[] chArray = password.toCharArray();
+        for (char ch: chArray){
+            if (Character.isWhitespace(ch)) return false;
+        }
+        int num = 0;
+        int upC = 0;
+        int lowC = 0;
+        int spec = 0;
+        for (char ch: password.toCharArray()){
+            if (Character.isDigit(ch)) num = 1;
+            else if (Character.isAlphabetic(ch) && Character.isUpperCase(ch)) upC = 1;
+            else if (Character.isAlphabetic(ch) && Character.isLowerCase(ch)) lowC = 1;
+            else if (!Character.isLetterOrDigit(ch)) spec = 1;
+        }
+        return num + upC + lowC + spec == 4;
     }
 
-    public MissingAccessException(){
-        super();
+    public static String passwordNegativeFeedback(){
+        //must be updated with changed conditions
+        return "Password must be at minimum 8 characters and contain at least an uppercase letter, a lowercase letter, a number, and a special character";
     }
+
+
 }
