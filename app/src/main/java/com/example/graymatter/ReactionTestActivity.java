@@ -9,10 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.graymatter.Game.Game;
 import com.example.graymatter.Game.GameObserver;
+import com.example.graymatter.Game.GameState;
 import com.example.graymatter.Game.ReactionTime;
 
 public class ReactionTestActivity extends AppCompatActivity implements GameObserver {
     private ClickState clickState;
+    private Game game;
 
     @Override
     public void update() {
@@ -30,9 +32,10 @@ public class ReactionTestActivity extends AppCompatActivity implements GameObser
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reaction_test);
         // changes gamestate of game
-        Game.getInstance().ChangeState(new ReactionTime());
+        game = new Game();
+        game.ChangeState(new ReactionTime(game));
         // adds this as a observer of the game
-        Game.getInstance().addObserver(this);
+        game.addObserver(this);
         clickState = ClickState.START_TIMER;
 
         final TextView reactionTestDescription = findViewById(R.id.reactionTestDescription);
@@ -48,7 +51,6 @@ public class ReactionTestActivity extends AppCompatActivity implements GameObser
         ImageView reactionTestClose = (ImageView) findViewById(R.id.reactionTestClose);
     }
     private void startOrStopGame(){
-        Game game = Game.getInstance();
         switch (clickState)
         {
             case START_TIMER:
