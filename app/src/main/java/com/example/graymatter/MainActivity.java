@@ -10,9 +10,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.reaction_test);
+        setContentView(R.layout.chimp_test);
 
-        Intent intent = new Intent(this, ReactionTestActivity.class);
+        Intent intent = new Intent(this, ChimpTestActivity.class);
         startActivity(intent);
     }
 
