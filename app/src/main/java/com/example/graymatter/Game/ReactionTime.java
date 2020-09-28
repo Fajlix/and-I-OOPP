@@ -7,6 +7,7 @@ public class ReactionTime implements GameState{
     private long startTime;
     private long endTime;
     private long waitTime;
+    private Game game;
     //max wait time in ms
     public static int maxWaitTime = 3000;
     //min wait time in ms
@@ -15,9 +16,10 @@ public class ReactionTime implements GameState{
     private Timer timer;
     //
     private UpdateViewTask runningTask;
-    public ReactionTime(){
+    public ReactionTime(Game game){
         startTime = 0;
         timer = new Timer();
+        this.game = game;
     }
     //Call this to start a new reactionTest
     public void StartGame() {
@@ -26,7 +28,7 @@ public class ReactionTime implements GameState{
         waitTime = Math.round(Math.random() * maxWaitTime) + minWaitTime;
         //This is used to make sure test is not stopped before waitTime is over
         // New task that runs after waitTime
-        runningTask = new UpdateViewTask();
+        runningTask = new UpdateViewTask(game);
         timer.schedule(runningTask,waitTime);
     }
     //Call this to stop the reactionTest returns -1 if clicked to early
@@ -53,13 +55,16 @@ public class ReactionTime implements GameState{
     //TODO DOES THIS COUNT AS THREAD?? SAME PROBLEM?
     private class UpdateViewTask extends TimerTask {
         // a class that represents what should happen when the wait time is over
+        private Game game;
+        public UpdateViewTask(Game game){
+            this.game = game;
+        }
         @Override
         public void run() {
             //sets startTime to current time
             startTime = System.currentTimeMillis();
             // when the reaction text shows the screen to react to
-            Game.getInstance().notifyObservers();
+            game.notifyObservers();
         }
     }
 }
-

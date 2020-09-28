@@ -7,7 +7,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GameTest {
-    private Game game;
     private boolean observerMethodWasCalled;
     GameObserver gameObserver = new GameObserver() {
         @Override
@@ -17,41 +16,43 @@ public class GameTest {
     };
     @Before
     public void beforeTests(){
-        game = Game.getInstance();
-        observerMethodWasCalled = false;
-        Game.getInstance().addObserver(gameObserver);
-    }
-
-    @Test
-    public void getInstance() {
-        Game game2 = Game.getInstance();
-        assertEquals(game,game2);
     }
 
 
     @Test
     public void removeObserver() {
+        observerMethodWasCalled = false;
+        Game game = new Game();
+        game.addObserver(gameObserver);
         game.removeObserver(gameObserver);
+        game.notifyObservers();
+        assertFalse(observerMethodWasCalled);
     }
 
     @Test
     public void notifyObservers() {
-        Game.getInstance().notifyObservers();
+        Game game = new Game();
+        observerMethodWasCalled = false;
+        game.addObserver(gameObserver);
+        game.notifyObservers();
         assertTrue(observerMethodWasCalled);
     }
 
     @Test
     public void startGame() {
+        Game game = new Game();
         game.StartGame();
     }
 
     @Test
     public void stopGame() {
+        Game game = new Game();
         game.StopGame();
     }
 
     @Test
     public void changeState() {
+        Game game = new Game();
         GameState gameState1 = new GameState() {
             @Override
             public void StartGame() {
