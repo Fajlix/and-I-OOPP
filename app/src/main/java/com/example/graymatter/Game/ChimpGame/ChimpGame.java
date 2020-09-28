@@ -9,15 +9,16 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.Arrays;
 
 public class ChimpGame implements GameState {
-
+    private Game game;
     private int numberQty; //amount of boxes to choose from at current stage, also serves as score.
     private int[] board = new int[40]; // The locations on which the numbers can appear, zeroes indicate empty spaces
     private int nextNumber;
     private boolean numberVisibility;
     private boolean gameOver;
 
-    public ChimpGame(){
+    public ChimpGame(Game game){
         gameOver = true;
+        this.game = game;
         EventBus.getDefault().register(this);
     }
 
@@ -28,7 +29,7 @@ public class ChimpGame implements GameState {
         fillBoard();
         numberVisibility = true;
 
-        Game.getInstance().notifyObservers();
+        game.notifyObservers();
     }
 
     public int StopGame(){
@@ -65,7 +66,7 @@ public class ChimpGame implements GameState {
             gameOver = true;
         }
 
-        Game.getInstance().notifyObservers();
+        game.notifyObservers();
     }
 
     private void fillBoard(){

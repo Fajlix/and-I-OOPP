@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_flash_white"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_flash_white"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ReactionTestActivity">
+            android:name=".ChimpTestActivity">
         </activity>
     </application>
 

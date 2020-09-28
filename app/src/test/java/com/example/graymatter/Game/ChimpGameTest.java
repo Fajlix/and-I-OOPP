@@ -16,7 +16,8 @@ public class ChimpGameTest {
     int[] board;
     @Before
     public void setUp(){
-        chimpGame = new ChimpGame();
+        Game game = new Game();
+        chimpGame = new ChimpGame(game);
         chimpGame.StartGame();
         board = chimpGame.getBoard();
     }
@@ -102,7 +103,7 @@ public class ChimpGameTest {
             }
         }
 
-        assertTrue( chimpGame.getGameOver() );
+        assertTrue(chimpGame.getGameOver());
 
     }
 }

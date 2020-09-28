@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -12,15 +13,6 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 -->
-
-    <ImageView
-        android:id="@+id/reactionTestClose"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:clickable="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_close_white" />
 
     <TextView
         android:id="@+id/reactionTestDescription"
@@ -36,13 +28,11 @@
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/reactionTestLightning"
         android:layout_width="174dp"
         android:layout_height="242dp"
         app:layout_constraintBottom_toBottomOf="@+id/reactionTestDescription"
@@ -52,5 +42,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.102"
         app:srcCompat="@drawable/ic_flash_white" />
+
+    <ImageView
+        android:id="@+id/reactionTestClose"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:clickable="true"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_close_white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
