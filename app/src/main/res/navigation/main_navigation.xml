@@ -16,8 +16,8 @@
         android:label="fragment_games"
         tools:layout="@layout/fragment_games" >
         <action
-            android:id="@+id/action_gamesFragment_to_reactionTestFragment"
-            app:destination="@id/reactionTestFragment" />
+            android:id="@+id/action_gamesFragment_to_reactionTestActivity"
+            app:destination="@id/reactionTestActivity" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -25,8 +25,17 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
-        android:id="@+id/reactionTestFragment"
-        android:name="com.example.graymatter.ReactionTestFragment"
-        android:label="fragment_reaction_test"
-        tools:layout="@layout/fragment_reaction_test" />
+        android:id="@+id/reactionTestActivity"
+        android:name="com.example.graymatter.ReactionTestActivity"
+        android:label="ReactionTestActivity" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.graymatter.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.graymatter.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
 </navigation>
