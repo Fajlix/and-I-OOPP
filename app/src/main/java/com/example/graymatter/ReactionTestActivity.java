@@ -36,7 +36,7 @@ public class ReactionTestActivity extends AppCompatActivity implements GameObser
         clickState = ClickState.START_TIMER;
 
         final TextView reactionTestDescription = findViewById(R.id.reactionTestDescription);
-        // Listens on the clicks and then determines what to do depending on what state the screen is in
+        // Listens on the clicks and then determines what to do depending on what state the game is in
         reactionTestDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
