@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:clickable="true">
+    android:background="#0099cc"
+    tools:context=".ReactionTestFragment">
 
-    <!--    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
--->
+
+
+    <ImageView
+        android:id="@+id/reactionTestClose"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_close_white" />
 
     <TextView
         android:id="@+id/reactionTestDescription"
-        android:layout_width="419dp"
-        android:layout_height="739dp"
+        android:layout_width="412dp"
+        android:layout_height="733dp"
         android:layout_centerHorizontal="true"
         android:background="#000000"
         android:clickable="true"
@@ -28,29 +32,25 @@
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.645" />
 
     <ImageView
-        android:id="@+id/reactionTestLightning"
+        android:id="@+id/imageView7"
         android:layout_width="174dp"
         android:layout_height="242dp"
-        app:layout_constraintBottom_toBottomOf="@+id/reactionTestDescription"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.102"
+        app:layout_constraintTop_toTopOf="@+id/reactionTestDescription"
+        app:layout_constraintVertical_bias="0.104"
         app:srcCompat="@drawable/ic_flash_white" />
 
-    <ImageView
-        android:id="@+id/reactionTestClose"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:clickable="true"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_close_white" />
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

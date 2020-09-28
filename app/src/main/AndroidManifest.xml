@@ -19,9 +19,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ReactionTestActivity">
-        </activity>
-        <activity
             android:name=".ChimpTestActivity">
         </activity>
     </application>
