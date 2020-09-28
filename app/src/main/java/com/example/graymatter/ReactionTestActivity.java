@@ -10,12 +10,20 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.graymatter.Game.Game;
+import com.example.graymatter.Game.GameObserver;
+import com.example.graymatter.Game.GameState;
 import com.example.graymatter.Game.ReactionTime;
 
-public class ReactionTestActivity extends Fragment {
-    private ReactionTime reactionTime;
+public class ReactionTestActivity extends Fragment implements  GameObserver {
     private ClickState clickState;
     private TextView reactionTestDescription;
+    private Game game;
+
+    @Override
+    public void update() {
+        showReactionScreen();
+    }
 
     // Different states to determine what will happen when the screen is touched
     enum ClickState
@@ -28,7 +36,11 @@ public class ReactionTestActivity extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reaction_test, container, false);
         super.onCreate(savedInstanceState);
-        reactionTime = new ReactionTime(this);
+        // changes gameState of game
+        game = new Game();
+        game.ChangeState(new ReactionTime(game));
+        // adds this as a observer of the game
+        game.addObserver(this);
         clickState = ClickState.START_TIMER;
 
         reactionTestDescription = (TextView) view.findViewById(R.id.reactionTestDescription);
@@ -40,13 +52,13 @@ public class ReactionTestActivity extends Fragment {
                 switch (clickState)
                 {
                     case START_TIMER:
-                        reactionTime.StartGame();
+                        game.StartGame();
                         // shows the screen when you wait for the react test
                         showWaitScreen();
                         clickState = ClickState.STOP_TIMER;
                         break;
                     case STOP_TIMER:
-                        int res = reactionTime.StopGame();
+                        int res = game.StopGame();
                         showResult(res);
                         clickState = ClickState.START_TIMER;
                         break;
@@ -61,7 +73,6 @@ public class ReactionTestActivity extends Fragment {
 
         return view;
     }
-
     // shows the wait screen, before the reaction test is supposed to happen
 
     public void showWaitScreen() {
@@ -89,6 +100,4 @@ public class ReactionTestActivity extends Fragment {
             reactionTestDescription.setText("Your reaction time was " + res + " ms");
         }
     }
-
-
 }

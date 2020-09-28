@@ -13,7 +13,9 @@ UML: https://app.lucidchart.com/invitations/accept/4702ceec-7a5a-4edd-b7f8-291d4
 
 Figma: https://www.figma.com/file/dZAwYvpnDeZ90Yzpe6rPFB/Untitled?node-id=0%3A1
 
+RAD: https://www.overleaf.com/8941373582vnkbngvzxccj
 
+SDD: https://www.overleaf.com/9259949996jqnmtkrhpzxm
 
 
 
