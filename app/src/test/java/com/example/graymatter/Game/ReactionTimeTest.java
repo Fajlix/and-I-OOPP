@@ -8,8 +8,9 @@ import static org.junit.Assert.*;
 public class ReactionTimeTest {
     GameState reactionTime;
     @Before
-    public void setUp() throws Exception {
-        reactionTime = new ReactionTime();
+    public void setUp(){
+        Game game = new Game();
+        reactionTime = new ReactionTime(game);
     }
 
     @Test
@@ -18,8 +19,7 @@ public class ReactionTimeTest {
         int res = reactionTime.StopGame();
         assertEquals(res, -1);
         reactionTime.StartGame();
-        System.out.println("1");
-        Thread.sleep(ReactionTime.maxWaitTime);
+        Thread.sleep(ReactionTime.maxWaitTime + 100);
         assertTrue(reactionTime.StopGame()>0);
     }
 }
