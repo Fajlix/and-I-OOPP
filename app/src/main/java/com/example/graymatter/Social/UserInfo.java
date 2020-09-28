@@ -29,15 +29,15 @@ public class UserInfo {
         Collections.copy(this.friendUserIDs, infoToCopy.friendUserIDs);
     }
 
-    List<Integer> getFriendUserIDs(int userKey) throws MissingAccessException {
+    protected List<Integer> getFriendUserIDs(int userKey) throws MissingAccessException {
         safetyCheck(userKey);
         List<Integer> newList = new ArrayList<>();
         Collections.copy(newList, this.friendUserIDs);
         return newList;
     }
 
-    protected String getEmail(int userKey) throws MissingAccessException {
-        safetyCheck(userKey);
+    protected String getEmail() throws MissingAccessException {
+        //safetyCheck(userKey);
         return email;
     }
 
@@ -64,8 +64,8 @@ public class UserInfo {
         throw new MissingAccessException("Password is incorrect");
     }
 
-    protected void addFriend(int userKey, int friendUserID) throws MissingAccessException {
-        safetyCheck(userKey);
+    protected void addFriend(int friendUserID) throws MissingAccessException {
+        //safetyCheck(userKey);
         friendUserIDs.add(friendUserID);
     }
 
@@ -86,7 +86,7 @@ public class UserInfo {
     }
 
     //4 forloops might be smarter
-    public static boolean passwordSafetyCheck(String password){
+    protected static boolean passwordSafetyCheck(String password){
         if (password.length() < 8) return false;
         char[] chArray = password.toCharArray();
         for (char ch: chArray){
@@ -105,10 +105,17 @@ public class UserInfo {
         return num + upC + lowC + spec == 4;
     }
 
-    public static String passwordNegativeFeedback(){
+    protected static String passwordNegativeFeedback(){
         //must be updated with changed conditions
         return "Password must be at minimum 8 characters and contain at least an uppercase letter, a lowercase letter, a number, and a special character";
     }
 
 
+    public boolean isFriend(int userID) {
+        return friendUserIDs.contains(userID);
+    }
+
+    protected String getPassword() {
+        return password;
+    }
 }

@@ -3,6 +3,8 @@ package com.example.graymatter.Social;
 
 import android.media.Image;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,6 +17,7 @@ public class Player {
 
     //tveksam lösning
     private static String defaultPath = "";
+
     // possibly use userInfo to limit PlayerInfo and to ease privacy issues
     /**
      * Aggregate with additional information private to the user. Reached with correct userKey.
@@ -46,7 +49,7 @@ public class Player {
     //TODO does Player need to deepcopying stuff? Considering the database?
 
     /**constructor for Player with private userInfo
-     * @param userKey
+     *
      * @param userID
      * @param email
      * @param password
@@ -98,15 +101,19 @@ public class Player {
 
     // TODO some kind of factory? :/
     //anyways, 1 constructor if many makemethods
-    public static Player makePlayer(int userKey, int userID, String email, String password, String userName, Image userImage, List<GameSession> playerHistory, List<Integer> friendUserIDs) throws MissingAccessException {
+    //used for users
+    protected static Player makePlayer(int userKey, int userID, String email, String password, String userName, Image userImage, List<GameSession> playerHistory, List<Integer> friendUserIDs) throws MissingAccessException {
         return new Player(userKey, userID, email, password, userName, userImage, playerHistory, friendUserIDs);
     }
 
-    public static Player makePlayer(int userKey, int userID, String email, String password, String userName) throws MissingAccessException {
-        return new Player(userKey, userID, email, password, userName, userImage, playerHistory, friendUserIDs);
+    //used in the creation of new users
+    protected static Player makePlayer(int userKey, int userID, String email, String password, String userName) throws MissingAccessException {
+
+        return new Player(userKey, userID, email, password, userName, null, new ArrayList<GameSession>(), new ArrayList<Integer>());
     }
 
-    public static Player makePlayer(int userID, String userName, Image userImage, List<GameSession> playerHistory){
+    //used for non-user players
+    protected static Player makePlayer(int userID, String userName, Image userImage, List<GameSession> playerHistory){
         return new Player(userID, userName, userImage, playerHistory);
     }
 
@@ -132,28 +139,29 @@ public class Player {
     }
     */
 
-    public List<Integer> getFriendUserIDs(int userKey) throws MissingAccessException {
+    protected List<Integer> getFriendUserIDs(int userKey) throws MissingAccessException {
         return userInfo.getFriendUserIDs(userKey);
     }
 
 
-    public void setPassword(int userKey, String oldPassword, String newPassword) throws MissingAccessException {
+    protected void setPassword(int userKey, String oldPassword, String newPassword) throws MissingAccessException {
         userInfo.setPassword(userKey, oldPassword, newPassword);
     }
 
-    public void setEmail(int userKey, String password, String email) throws MissingAccessException {
+    protected void setEmail(int userKey, String password, String email) throws MissingAccessException {
         userInfo.setEmail(userKey, password, email);
     }
 
-    public boolean isPasswordCorrect(String password){
+    protected boolean isPasswordCorrect(String password){
         return userInfo.isPasswordCorrect(password);
     }
 
-    public String getEmail(int userKey) throws MissingAccessException {
-        return userInfo.getEmail(userKey);
+    public String getEmail() throws MissingAccessException {
+        return userInfo.getEmail();
     }
 
-    public static void passwordSafetyCheck(String password) {
+    //should be private
+    protected static void passwordSafetyCheck(String password) {
         UserInfo.passwordSafetyCheck(password);
     }
 
@@ -171,10 +179,11 @@ public class Player {
      * @param idToParse String value containing
      * @return int representing a valid userID.
      */
-    public static int parseUserIDorKey(String idToParse){
+    private static int parseUserIDorKey(String idToParse){
         int i = 0;
-        while(!Character.isDigit(idToParse.charAt(i))){
-            idToParse = idToParse.substring(1);
+        while(idToParse.charAt(i) == "0".charAt(0)){
+            idToParse = idToParse.substring(i);
+            i++;
         }
         int userID;
 
@@ -190,11 +199,11 @@ public class Player {
         return userImage;
     }
 
-    public void setUserImage(Image image){
+    protected void setUserImage(Image image){
         this.userImage = image;
     }
 
-    //TODO getters, setters or equal for userName, userID, userKey, playerHistory, equals, tostring
+    //TODO equals, tostring
 
     //needs equals
 
@@ -208,7 +217,26 @@ public class Player {
     }
 
 
-    //TODO
-    public void changeUserKey(int userKey, int i) {
+
+  /**  public void changeUserKey(int userKey, int i) {
+    }**/
+
+    public void addFriend(int userID) throws MissingAccessException {
+        userInfo.addFriend(userID);
+    }
+
+    public boolean isFriend(int userID) {
+        return userInfo.isFriend(userID);
+    }
+
+    protected String getPassword() {
+        return userInfo.getPassword();
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void addGameSession(GameSession gameSession) {
     }
 }

@@ -2,8 +2,6 @@ package com.example.graymatter.Social;
 
 import android.media.Image;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -21,17 +19,17 @@ import org.json.simple.parser.ParseException;
 
 
 public class PlayerMapper implements PlayerMapperInterface {
-    String serverLocation;
+    private String serverLocation;
     private final String dbPath = "C:/Users/hanna/Documents/and-I-OOPP/json-server-lib";
     //good for batch writing. bad for safety. idk
-    JSONObject toWrite;
+    private JSONObject toWrite;
 
-    Random rand = new Random();
+    private Random rand = new Random();
     Player currentPlayer;
-    int currentFriendID;
+    private int currentFriendID;
     GameSession currentGameSession;
     //orimligt???
-    List<Player> playersList;
+    //List<Player> playersList;
     //List<Player> friendBuffer;   ??? kanske
     //databasen
     //kanske bara läsa / skriva till fil med bufferedReader?
@@ -58,29 +56,97 @@ public class PlayerMapper implements PlayerMapperInterface {
                     return Optional.of(fetchPlayer(player, false));
                 }
             }
-        } catch (ParseException | IOException | JSONException e) {
+        } catch (ParseException | IOException | JSONException | MissingAccessException e) {
             e.printStackTrace();
         }
         return Optional.empty();
     }
 
-    Player makeFriend(int friendID) {
-        return null;
+    public Player getPlayer(int friendUserID) {
+        try {
+            JSONArray arr = newRead().getJSONArray("players");
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject player = arr.getJSONObject(i);
+                if (player.getInt("userID") == friendUserID) {
+                    return fetchPlayer(player, true);
+                }
+            }
+        } catch (ParseException | IOException | JSONException | MissingAccessException e) {
+            e.printStackTrace();
+        }
+        throw new InvalidParameterException("No Player matching userID");
     }
 
     @Override
     public void delete(Player player) throws PlayerMapperException {
-
+        newDataEntry();
+        try {
+            JSONArray arr = newRead().getJSONArray("players");
+            for (int i = 0; i < arr.length(); i++) {
+                if (arr.getJSONObject(i).getInt("userID") == player.getUserID()) {
+                    JSONArray nArr = (JSONArray) arr.remove(i);
+                    toWrite = newRead().put("players", nArr);
+                    enterData();
+                }
+            }
+        } catch (JSONException | ParseException | IOException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void insert(Player player) throws PlayerMapperException {
-
+        newDataEntry();
+        JSONObject nPlayer = new JSONObject();
+        try {
+            nPlayer.put("userName", player.getUserName());
+            nPlayer.put("email", player.getEmail());
+            nPlayer.put("password", player.getPassword());
+            nPlayer.put("userID", player.getUserID());
+            nPlayer.put("userImage", player.getUserImage().toString());
+            nPlayer.put("playerHistory", getPlayersUserHistoryAsJSONArray(player));
+            nPlayer.put("friendUserIDs", getPlayerHistoryAsJSONArray(player));
+            toWrite = newRead().accumulate("players", nPlayer);
+            enterData();
+        } catch (JSONException | ParseException | IOException | MissingAccessException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void update(Player player) throws PlayerMapperException {
+        newDataEntry();
+        try {
+            JSONArray arr = newRead().getJSONArray("players");
+            for (int i = 0; i < arr.length(); i++) {
+                if (arr.getJSONObject(i).getInt("userID") == player.getUserID()) {
+                    JSONObject nPlayer = arr.getJSONObject(i);
+                    nPlayer.put("userName", player.getUserName());
+                    nPlayer.put("email", player.getEmail());
+                    nPlayer.put("password", player.getPassword());
+                    nPlayer.put("userID", player.getUserID());
+                    nPlayer.put("userImage", player.getUserImage().toString());
+                    nPlayer.put("playerHistory", getPlayersUserHistoryAsJSONArray(player));
+                    nPlayer.put("friendUserIDs", getPlayerHistoryAsJSONArray(player));
+                    toWrite = newRead().accumulate("players", nPlayer);
+                    enterData();
+                }
+            }
+        } catch (JSONException | ParseException | IOException | MissingAccessException e){
+            e.printStackTrace();
+        }
+    }
 
+
+    //TODO
+    private JSONArray getPlayerHistoryAsJSONArray(Player player) {
+        JSONArray array = new JSONArray();
+        return array;
+    }
+
+    private JSONArray getPlayersUserHistoryAsJSONArray(Player player) {
+        JSONArray array = new JSONArray();
+        return array;
     }
 
     /**
@@ -114,47 +180,14 @@ public class PlayerMapper implements PlayerMapperInterface {
         if (isName(email)) throw new PlayerMapperException("Email is already being used!");
         currentFriendID++;
         Player player = Player.makePlayer(userKey, currentFriendID, email, password, userName);
-        JSONObject jsonPlayer = new JSONObject();
-        try {
-            jsonPlayer.put("userKey", userKey);
-            jsonPlayer.put("userID", player.getUserID());
-            jsonPlayer.put("email", email);
-            jsonPlayer.put("password", password);
-            jsonPlayer.put("userKey", userKey);
-            jsonPlayer.put("userKey", userKey);
-            jsonPlayer.put("userKey", userKey);
-            jsonPlayer.put("userKey", userKey);
-            JSONObject toMod = newRead();
-            JSONArray arr = toMod.getJSONArray("players").put(jsonPlayer);
-            /**
-            m = new LinkedHashMap(2);
-            m.put("type", "fax");
-            m.put("number", "212 555-1234");
-
-            // adding map to list
-            ja.add(m);
-
-            // putting phoneNumbers to JSONObject
-            jo.put("phoneNumbers", ja);
-            toMod.
-            toWrite =
-            enterData();
-             **/
-        } catch (JSONException | ParseException | IOException e) {
-            e.printStackTrace();
-        }
-        JSONObject newPlayer = { "userKey": userKey, "age":30, "car":null };
-
-
-
-
+        insert(player);
     }
 
-    public void newDataEntry(){
+    private void newDataEntry(){
         toWrite = new JSONObject();
     }
 
-    public void enterData() throws FileNotFoundException {
+    private void enterData() throws FileNotFoundException {
         PrintWriter pw = new PrintWriter(dbPath);
         pw.write(toWrite.toString());
         pw.flush();
@@ -162,7 +195,7 @@ public class PlayerMapper implements PlayerMapperInterface {
         toWrite = null;
     }
 
-    public JSONObject newRead() throws IOException, ParseException {
+    private JSONObject newRead() throws IOException, ParseException {
         Object obj = new JSONParser().parse(new FileReader(dbPath));
         return (JSONObject) obj;
     }
@@ -182,17 +215,19 @@ public class PlayerMapper implements PlayerMapperInterface {
                     return fetchPlayer(player, restricted);
                 }
             }
-        } catch (ParseException | IOException | JSONException e) {
+        } catch (ParseException | IOException | JSONException | MissingAccessException e) {
             e.printStackTrace();
         }
         throw new InvalidParameterException("A matching Player could not be found");
     }
 
-    private Player fetchPlayer(JSONObject player, boolean restricted) throws JSONException {
+
+
+    private Player fetchPlayer(JSONObject player, boolean restricted) throws JSONException, MissingAccessException {
         int userKey;
         int userID;
-        String email;
-        String password;
+        String email = null;
+        String password = null;
         String userName;
         Image userImage;
         List<Integer> friendUserIDs = new ArrayList<>();
@@ -210,10 +245,10 @@ public class PlayerMapper implements PlayerMapperInterface {
         playerHistory = fetchPlayerHistory(player);
         //close read?
         if (restricted) return Player.makePlayer(userID, userName, userImage, playerHistory);
-        return Player.makePlayer(userKey, userID, email, password, userName, userImage, playerHistory, friendUserIDs);
+        return Player.makePlayer(0, userID, email, password, userName, userImage, playerHistory, friendUserIDs);
     }
 
-    public List<Integer> fetchFriendUserIDs (JSONObject player) throws JSONException {
+    private List<Integer> fetchFriendUserIDs (JSONObject player) throws JSONException {
         List<Integer> friendUserIDs = new ArrayList<>();
         JSONArray friendUserIDsPRE = player.getJSONArray("friendUserIDs");
         for (int o = 0; o < friendUserIDsPRE.length(); o++){
@@ -222,7 +257,7 @@ public class PlayerMapper implements PlayerMapperInterface {
         return friendUserIDs;
     }
 
-    public List<GameSession> fetchPlayerHistory (JSONObject player) throws JSONException {
+    private List<GameSession> fetchPlayerHistory (JSONObject player) throws JSONException {
         List<GameSession> playerHistory = new ArrayList<>();
         JSONArray playerHistoryPRE = player.getJSONArray("playerHistory");
         for (int o = 0; o < playerHistoryPRE.length(); o++){
@@ -235,26 +270,31 @@ public class PlayerMapper implements PlayerMapperInterface {
         return playerHistory;
     }
 
+
     //completely seperate getters? yh
 
-    public Player findByEmail(String email) {
+//?
 
-    }
-
+    //TODO
     private boolean isName(String userName) {
-
+        return true;
     }
 
     public boolean isEmail(String email) {
-
+        return true;
     }
 
     public void storeGameSession(GameSession gameSession){
         currentPlayer.addGameSession(gameSession);
         //store in database
+
     }
 
-    public int makeFriendID() {
+    public String getEmail() throws MissingAccessException {
+        return currentPlayer.getEmail();
+    }
+
+    private int makeFriendID() {
         currentFriendID += 1;
         return currentFriendID;
     }
@@ -263,24 +303,37 @@ public class PlayerMapper implements PlayerMapperInterface {
      * @param userKey Application unique player ID
      */
     public void logOut(int userKey) {
-        currentPlayer.changeUserKey(userKey, 0);
+      //  currentPlayer.changeUserKey(userKey, 0);
         currentPlayer = null;  //näej pissdålig idé
         notifyListenersLogout();
     }
 
 
-    public List<Player> getUserFriends() {
+    private List<Player> getUserFriends() throws MissingAccessException {
         List<Player> friends = new ArrayList<>();
-        for (int friendID : currentPlayer.getFriendUserIDs()) {
-            friends.add(makeFriend(friendID));
+        for (int friendID : currentPlayer.getFriendUserIDs(0)) {
+            friends.add(getPlayer(friendID));
         }
         return friends;
     }
 
+    public void addFriend(int userID) throws MissingAccessException {
+        if(isFriend(userID)){
+            throw new InvalidParameterException("Already a friend!");
+        }
+        Optional<Player> friend = find(userID);
+        if (!friend.isPresent()){
+            throw new InvalidParameterException("No user with given userID");
+        }
+        currentPlayer.addFriend(userID);
+        update(currentPlayer);
+    }
+
+    private boolean isFriend(int userID){
+        return currentPlayer.isFriend(userID);
+    }
 
     /**
-     *
-     */
     private List<Player> getPlayers() throws JSONException {
         JSONArray playerArray = (JSONArray) jsonObject.get("players");
         List<Player> players = new ArrayList<>();
@@ -308,7 +361,7 @@ public class PlayerMapper implements PlayerMapperInterface {
     private void updatePlayersList() {
         this.playersList = getPlayers();
     }
-
+**/
     //Concerning listeners
 
     public void addListener(PlayerMapperListener listener) {
