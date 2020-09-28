@@ -18,6 +18,7 @@ public class ChimpGameTest {
     public void setUp(){
         Game game = new Game();
         chimpGame = new ChimpGame(game);
+        game.ChangeState(chimpGame);
         chimpGame.StartGame();
         board = chimpGame.getBoard();
     }
