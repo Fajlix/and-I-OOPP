@@ -6,20 +6,21 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ReactionTimeTest {
-    GameState reactionTime;
     @Before
     public void setUp(){
-        Game game = new Game();
-        reactionTime = new ReactionTime(game);
+
     }
 
     @Test
     public void startAndStopTest() throws InterruptedException {
+        Game game = new Game();
+        GameState reactionTime = new ReactionTime(game);
+        game.ChangeState(reactionTime);
         reactionTime.StartGame();
         int res = reactionTime.StopGame();
         assertEquals(res, -1);
         reactionTime.StartGame();
-        Thread.sleep(ReactionTime.maxWaitTime + 100);
+        Thread.sleep(ReactionTime.maxWaitTime + 1000);
         assertTrue(reactionTime.StopGame()>0);
     }
 }
