@@ -8,9 +8,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.graymatter.Game.ChimpGame.ChimpGame;
+import com.example.graymatter.Game.Game;
 import com.example.graymatter.Game.GameObserver;
 
 public class ChimpTestActivity extends AppCompatActivity implements GameObserver {
+    private TextView chimpTestDescription;
+    private Game game;
 
     @Override
     public void update() {
@@ -22,20 +26,25 @@ public class ChimpTestActivity extends AppCompatActivity implements GameObserver
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chimp_test);
 
-        final ChimpTestActivity CTA = this;
+        // changes the state of game
+        game = new Game();
+        game.ChangeState(new ChimpGame(game));
+        // adds this as a observer of the game
+        game.addObserver(this);
 
-        final TextView chimpTestDescription = findViewById(R.id.chimpTestDescription);
+        final ChimpTestActivity CTA = this;
+        final ChimpGame CG = new ChimpGame(game); // idk bout creating 2 ChimpGame?????
+        game.ChangeState(CG);
+
+        chimpTestDescription = (TextView) findViewById(R.id.chimpTestDescription);
+
+        // when the user press the screen, the test should start
         chimpTestDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ClearScreen();
-                GridView gridView = findViewById(R.id.chimpTestGrid);
-                gridView.bringToFront();
-                int[] test = {1, 0, 0, 1};
-                gridView.setAdapter(new ChimpTestGridAdapter(CTA, test));
-                gridView.setNumColumns(4);
-                gridView.setVerticalSpacing(10);
-                gridView.setHorizontalSpacing(50);
+                game.StartGame();
+                ShowBoard(CTA, CG);
 
             }
         });
@@ -44,6 +53,7 @@ public class ChimpTestActivity extends AppCompatActivity implements GameObserver
         ImageView reactionTestClose = (ImageView) findViewById(R.id.chimpTestClose);
     }
 
+    // clears the screen of all teh text and images to show the test
     public void ClearScreen ()
     {
         final TextView chimpTestDescription = findViewById(R.id.chimpTestDescription);
@@ -56,5 +66,15 @@ public class ChimpTestActivity extends AppCompatActivity implements GameObserver
         iconNumber2.setVisibility(View.GONE);
         iconNumber3.setVisibility(View.GONE);
         iconNumber4.setVisibility(View.GONE);
+    }
+
+    public void ShowBoard (ChimpTestActivity CTA, ChimpGame CG)
+    {
+        GridView gridView = findViewById(R.id.chimpTestGrid);
+        gridView.bringToFront();
+        gridView.setAdapter(new ChimpTestGridAdapter(CTA, CG.getBoard()));
+        gridView.setNumColumns(4);
+        gridView.setVerticalSpacing(10);
+        gridView.setHorizontalSpacing(50);
     }
 }

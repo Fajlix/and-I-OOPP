@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class ChimpGame implements GameState {
     private Game game;
     private int numberQty; //amount of boxes to choose from at current stage, also serves as score.
-    private int[] board = new int[40]; // The locations on which the numbers can appear, zeroes indicate empty spaces
+    private int[] board = new int[24]; // The locations on which the numbers can appear, zeroes indicate empty spaces
     private int nextNumber;
     private boolean numberVisibility;
     private boolean gameOver;
@@ -43,7 +43,7 @@ public class ChimpGame implements GameState {
             throw new RuntimeException("Attempt to select tile after game over");
         }
         int clickedTile = event.tileCoordinate;
-        if ( clickedTile<0 || clickedTile>39 ){
+        if ( clickedTile<0 || clickedTile>23 ){
             throw new RuntimeException("Input out of bounds");
         }
         if (board[clickedTile] == 0){ //Empty space clicked, do nothing
@@ -73,7 +73,7 @@ public class ChimpGame implements GameState {
         clearBoard();
         int placement;
         for (int i = 1; i <= numberQty; i++){
-            placement = (int)Math.round(Math.random()*40);
+            placement = (int)Math.round(Math.random()*23);
             while(board[placement] != 0){
                 placement += 1;
                 placement %= 40;
@@ -84,7 +84,7 @@ public class ChimpGame implements GameState {
     }
 
     private void clearBoard(){
-        for (int i = 0; i<40; i++){
+        for (int i = 0; i<24; i++){
             board[i] = 0;
         }
     }
@@ -93,7 +93,7 @@ public class ChimpGame implements GameState {
         if (gameOver){
             throw new RuntimeException("Attempt to get board after game over");
         }
-        int[] boardCopy = Arrays.copyOf(board, 40); //Maybe unnecessary to copy primitive type, don't know, IDE seems to think so
+        int[] boardCopy = Arrays.copyOf(board, 24); //Maybe unnecessary to copy primitive type, don't know, IDE seems to think so
         return boardCopy;
     }
 

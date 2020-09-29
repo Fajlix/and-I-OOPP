@@ -56,7 +56,7 @@ public class ChimpGameTest {
                     assertTrue(false);
             }
         }
-        assertTrue( zeroes == 36 && one && two && three && four );
+        assertTrue( zeroes == 20 && one && two && three && four );
     }
 
     @Test
@@ -67,7 +67,7 @@ public class ChimpGameTest {
         int posOfThree=-1;
         int posOfFour=-1;
 
-        for ( int i = 0 ; i < 40 ; i++ ) {
+        for ( int i = 0 ; i < 24 ; i++ ) {
             switch (board[i]){
                 case 1:
                     posOfOne = i;

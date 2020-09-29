@@ -8,8 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 
+import com.example.graymatter.Game.ChimpGame.ChimpGame;
+
 public class ChimpTestGridAdapter extends BaseAdapter {
     private Context context;
+    // array of the random spots of the tiles
     private int[] array;
 
     public ChimpTestGridAdapter(Context context, int[] array)
@@ -18,10 +21,11 @@ public class ChimpTestGridAdapter extends BaseAdapter {
         this.array = array;
     }
 
+    // how many tiles on the board
     @Override
     public int getCount ()
     {
-        return 4;
+        return 24;
     }
 
     public Object getItem(int position)
@@ -34,33 +38,36 @@ public class ChimpTestGridAdapter extends BaseAdapter {
         return 0;
     }
 
+    // initializes the view of each grid
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final ImageView imageView;
 
         if (convertView == null)
         {
             imageView = new ImageView(context);
-            //imageView.setPadding(15,5,8,8);
+            // imageView.setPadding(15,5,8,8);
         }
         else
         {
             imageView = (ImageView) convertView;
         }
-        imageView.setImageResource(thumbsIds[array[0]]);
+        imageView.setImageResource(thumbsIds[array[position]]);
 
+        // if the number in the array is a number, then assemble it with the right picture
         if (array[position] > 0)
         {
             imageView.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view) {
-                    imageView.setImageResource(thumbsIds[4]);
+                    imageView.setImageResource(thumbsIds[array[position]]);
                 }
             });
         }
+        // if there is a zero, assemble with the blank space
         else if (array[position] == 0)
-            imageView.setImageResource(thumbsIds[6]);
+            imageView.setImageResource(thumbsIds[0]);
 
         return imageView;
     }
