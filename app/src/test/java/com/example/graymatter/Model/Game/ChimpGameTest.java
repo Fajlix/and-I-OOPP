@@ -1,7 +1,7 @@
-package com.example.graymatter.Game;
+package com.example.graymatter.Model.Game;
 
-import com.example.graymatter.Game.ChimpGame.ChimpEvent;
-import com.example.graymatter.Game.ChimpGame.ChimpGame;
+import com.example.graymatter.Model.Game.ChimpGame.ChimpEvent;
+import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
 
 import org.greenrobot.eventbus.EventBus;
 import org.junit.Before;

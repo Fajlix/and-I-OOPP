@@ -1,4 +1,4 @@
-package com.example.graymatter;
+package com.example.graymatter.View.Fragments;
 
 import android.os.Bundle;
 
@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+
+import com.example.graymatter.R;
 
 
 public class ProfileFragment extends Fragment {

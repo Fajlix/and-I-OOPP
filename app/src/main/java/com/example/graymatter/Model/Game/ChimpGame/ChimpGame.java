@@ -1,7 +1,7 @@
-package com.example.graymatter.Game.ChimpGame;
+package com.example.graymatter.Model.Game.ChimpGame;
 
-import com.example.graymatter.Game.Game;
-import com.example.graymatter.Game.GameState;
+import com.example.graymatter.Model.Game.Game;
+import com.example.graymatter.Model.Game.GameState;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -28,7 +28,6 @@ public class ChimpGame implements GameState {
         numberQty = 4;
         fillBoard();
         numberVisibility = true;
-
         game.notifyObservers();
     }
 
@@ -65,8 +64,8 @@ public class ChimpGame implements GameState {
         else { //Incorrect number clicked
             gameOver = true;
         }
-
-        game.notifyObservers();
+        if (!gameOver)
+            game.notifyObservers();
     }
 
     private void fillBoard(){

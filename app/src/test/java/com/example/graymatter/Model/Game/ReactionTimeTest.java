@@ -1,4 +1,6 @@
-package com.example.graymatter.Game;
+package com.example.graymatter.Model.Game;
+
+import com.example.graymatter.Model.Game.ReactionGame.ReactionTime;
 
 import org.junit.Before;
 import org.junit.Test;

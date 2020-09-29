@@ -1,9 +1,12 @@
-package com.example.graymatter.Game;
+package com.example.graymatter.Model.Game.ReactionGame;
+
+import com.example.graymatter.Model.Game.Game;
+import com.example.graymatter.Model.Game.GameState;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ReactionTime implements GameState{
+public class ReactionTime implements GameState {
     private long startTime;
     private long endTime;
     private long waitTime;

@@ -1,19 +1,18 @@
-package com.example.graymatter;
+package com.example.graymatter.View;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.graymatter.R;
+import com.example.graymatter.View.FragmentChangeListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements FragmentChangeListener {
@@ -36,14 +35,14 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-               if(destination.getId() == R.id.reactionTestActivity){
+               if(destination.getId() == R.id.reactionTestActivity || destination.getId() == R.id.chimpGameActivity){
                    bottomNavigationView.setVisibility(View.GONE);
                }
                else bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
 
-        //Intent intent = new Intent(this, ReactionTestActivity.class);
+        //Intent intent = new Intent(this, ReactionGameFragment.class);
         //startActivity(intent);
     }
 
@@ -56,6 +55,6 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
 
     @Override
     public void chimpTestClicked() {
-        navController.navigate(R.id.chimpTestActivity);
+        navController.navigate(R.id.chimpGameActivity);
     }
 }

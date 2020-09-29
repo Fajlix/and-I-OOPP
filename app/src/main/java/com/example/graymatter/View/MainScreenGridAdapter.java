@@ -1,15 +1,13 @@
-package com.example.graymatter;
+package com.example.graymatter.View;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.example.graymatter.Game.ChimpGame.ChimpGame;
+import com.example.graymatter.R;
+import com.example.graymatter.View.FragmentChangeListener;
 
 public class MainScreenGridAdapter extends BaseAdapter {
     private Context context;

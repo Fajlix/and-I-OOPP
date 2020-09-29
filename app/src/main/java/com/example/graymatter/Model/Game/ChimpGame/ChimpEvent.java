@@ -1,4 +1,4 @@
-package com.example.graymatter.Game.ChimpGame;
+package com.example.graymatter.Model.Game.ChimpGame;
 
 public class
 ChimpEvent { //Where will you be when random chimp event?

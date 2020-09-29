@@ -1,4 +1,4 @@
-package com.example.graymatter;
+package com.example.graymatter.View;
 
 public interface FragmentChangeListener {
     public void reactionTestClicked();

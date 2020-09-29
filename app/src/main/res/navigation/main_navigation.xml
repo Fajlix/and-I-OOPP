@@ -7,42 +7,42 @@
 
     <fragment
         android:id="@+id/statisticsFragment"
-        android:name="com.example.graymatter.StatisticsFragment"
+        android:name="com.example.graymatter.View.Fragments.StatisticsFragment"
         android:label="fragment_statistics"
         tools:layout="@layout/fragment_statistics" />
     <fragment
         android:id="@+id/gamesFragment"
-        android:name="com.example.graymatter.GamesFragment"
+        android:name="com.example.graymatter.View.Fragments.GameFragments.GamesFragment"
         android:label="fragment_games"
         tools:layout="@layout/fragment_games" >
         <action
             android:id="@+id/action_gamesFragment_to_reactionTestActivity"
             app:destination="@id/reactionTestActivity" />
         <action
-            android:id="@+id/action_gamesFragment_to_chimpTestActivity"
-            app:destination="@id/chimpTestActivity" />
+            android:id="@+id/action_gamesFragment_to_chimpGameActivity"
+            app:destination="@id/chimpGameActivity" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.graymatter.ProfileFragment"
+        android:name="com.example.graymatter.View.Fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/reactionTestActivity"
-        android:name="com.example.graymatter.ReactionTestActivity"
+        android:name="com.example.graymatter.View.Fragments.ReactionGameFragment"
         android:label="ReactionTestActivity" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.graymatter.LoginFragment"
+        android:name="com.example.graymatter.View.Fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.graymatter.RegisterFragment"
+        android:name="com.example.graymatter.View.Fragments.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
-    <activity
-        android:id="@+id/chimpTestActivity"
-        android:name="com.example.graymatter.ChimpTestActivity"
-        android:label="ChimpTestActivity" />
+    <fragment
+        android:id="@+id/chimpGameActivity"
+        android:name="com.example.graymatter.View.Fragments.GameFragments.ChimpGameFragment"
+        android:label="ChimpGameActivity" />
 </navigation>

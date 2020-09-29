@@ -1,4 +1,4 @@
-package com.example.graymatter;
+package com.example.graymatter.View.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,15 +7,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.example.graymatter.Game.Game;
-import com.example.graymatter.Game.GameObserver;
-import com.example.graymatter.Game.GameState;
-import com.example.graymatter.Game.ReactionTime;
+import com.example.graymatter.Model.Game.Game;
+import com.example.graymatter.Model.Game.GameObserver;
+import com.example.graymatter.Model.Game.ReactionGame.ReactionTime;
+import com.example.graymatter.R;
 
-public class ReactionTestActivity extends Fragment implements  GameObserver {
+public class ReactionGameFragment extends Fragment implements  GameObserver {
     private ClickState clickState;
     private TextView reactionTestDescription;
     private Game game;
