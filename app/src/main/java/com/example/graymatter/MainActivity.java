@@ -53,4 +53,9 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     public void reactionTestClicked() {
         navController.navigate(R.id.reactionTestActivity);
     }
+
+    @Override
+    public void chimpTestClicked() {
+        navController.navigate(R.id.chimpTestActivity);
+    }
 }

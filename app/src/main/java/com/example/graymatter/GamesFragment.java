@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -39,35 +40,15 @@ public class GamesFragment extends Fragment {
 
         listener = (FragmentChangeListener)getContext();
 
+        final GamesFragment GF = this;
 
         //bottomNavigationView = (BottomNavigationView)getActivity().findViewById(R.id.bottomNavigationView);
 
+        GridView mainScreenGrid = (GridView) view.findViewById(R.id.mainScreenGrid);
+        mainScreenGrid.bringToFront();
+        mainScreenGrid.setAdapter(new MainScreenGridAdapter(getActivity()));
+        mainScreenGrid.setNumColumns(2);
 
-        ImageButton imageButton = (ImageButton)view.findViewById(R.id.imageButton11);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //bottomNavigationView.setVisibility(View.GONE);
-
-
-                listener.reactionTestClicked();
-
-
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id. fragment,new ReactionTestActivity());
-//                fragmentTransaction.addToBackStack(null);
-//                fragmentTransaction.commit();
-
-
-
-//                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//                fragmentTransaction.replace(R.id.fragment, new ProfileFragment());
-//                fragmentTransaction.commit();
-//
-            }
-        });
 
         return view;
     }

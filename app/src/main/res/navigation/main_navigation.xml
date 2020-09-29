@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_gamesFragment_to_reactionTestActivity"
             app:destination="@id/reactionTestActivity" />
+        <action
+            android:id="@+id/action_gamesFragment_to_chimpTestActivity"
+            app:destination="@id/chimpTestActivity" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -38,4 +41,8 @@
         android:name="com.example.graymatter.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
+    <activity
+        android:id="@+id/chimpTestActivity"
+        android:name="com.example.graymatter.ChimpTestActivity"
+        android:label="ChimpTestActivity" />
 </navigation>
