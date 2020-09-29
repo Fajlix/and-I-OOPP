@@ -73,7 +73,7 @@ public class ChimpGame implements GameState {
         clearBoard();
         int placement;
         for (int i = 1; i <= numberQty; i++){
-            placement = (int)Math.round(Math.random()*24);
+            placement = (int)Math.round(Math.random()*23);
             while(board[placement] != 0){
                 placement += 1;
                 placement %= 40;
