@@ -239,4 +239,16 @@ public class Player {
 
     public void addGameSession(GameSession gameSession) {
     }
+
+
+    /**
+     * sorta ugly
+     *
+     * @return friendUserIDs
+     */
+    public List<Integer> getFriendUserIDs() {
+        List<Integer> newFL = new ArrayList<>();
+        Collections.copy(newFL, userInfo.getFriendUserIDs());
+        return newFL;
+    }
 }

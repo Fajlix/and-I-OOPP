@@ -104,7 +104,7 @@ public class PlayerMapper implements PlayerMapperInterface {
             nPlayer.put("password", player.getPassword());
             nPlayer.put("userID", player.getUserID());
             nPlayer.put("userImage", player.getUserImage().toString());
-            nPlayer.put("playerHistory", getPlayersUserHistoryAsJSONArray(player));
+            nPlayer.put("playerHistory", getPlayerUserFriendIDsAsJSONArray(player));
             nPlayer.put("friendUserIDs", getPlayerHistoryAsJSONArray(player));
             toWrite = newRead().accumulate("players", nPlayer);
             enterData();
@@ -126,7 +126,7 @@ public class PlayerMapper implements PlayerMapperInterface {
                     nPlayer.put("password", player.getPassword());
                     nPlayer.put("userID", player.getUserID());
                     nPlayer.put("userImage", player.getUserImage().toString());
-                    nPlayer.put("playerHistory", getPlayersUserHistoryAsJSONArray(player));
+                    nPlayer.put("playerHistory", getPlayerUserFriendIDsAsJSONArray(player));
                     nPlayer.put("friendUserIDs", getPlayerHistoryAsJSONArray(player));
                     toWrite = newRead().accumulate("players", nPlayer);
                     enterData();
@@ -141,11 +141,20 @@ public class PlayerMapper implements PlayerMapperInterface {
     //TODO
     private JSONArray getPlayerHistoryAsJSONArray(Player player) {
         JSONArray array = new JSONArray();
+        for (GameSession gs: player.getPlayerHistory()){
+            JSONObject nGs = new JSONObject();
+            nGs.put("gameID", gs.getGameID());
+
+            array.put(nGs);
+        }
         return array;
     }
 
-    private JSONArray getPlayersUserHistoryAsJSONArray(Player player) {
+    private JSONArray getPlayerUserFriendIDsAsJSONArray(Player player) {
         JSONArray array = new JSONArray();
+        for (int i: player.getFriendUserIDs()){
+            array.put(i);
+        }
         return array;
     }
 

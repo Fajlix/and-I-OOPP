@@ -118,4 +118,9 @@ public class UserInfo {
     protected String getPassword() {
         return password;
     }
+
+    protected List<Integer> getFriendUserIDs(){
+        return friendUserIDs;
+    }
 }
+
