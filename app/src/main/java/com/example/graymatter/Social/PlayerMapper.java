@@ -2,31 +2,42 @@ package com.example.graymatter.Social;
 
 import android.media.Image;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.TimeZone;
 
 
-import org.json.*;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+//import org.json.*;
+
+//import org.json.simple.parser.JSONParser;
+//import org.json.simple.parser.ParseException;
 
 
 public class PlayerMapper implements PlayerMapperInterface {
     private String serverLocation;
-    private final String dbPath = "C:/Users/hanna/Documents/and-I-OOPP/json-server-lib";
+    private final String dbPath = "C:\\Users\\hanna\\Documents\\and-I-OOPP\\app\\src\\main\\java\\com\\example\\graymatter\\Social\\testPlayers.json";
     //good for batch writing. bad for safety. idk
     private JSONObject toWrite;
 
     private Random rand = new Random();
+
+
+
     Player currentPlayer;
     private int currentFriendID;
     GameSession currentGameSession;
@@ -223,10 +234,12 @@ public class PlayerMapper implements PlayerMapperInterface {
         toWrite = null;
     }
 
-    private JSONObject newRead() throws IOException, ParseException {
-        Object obj = new JSONParser().parse(new FileReader(dbPath));
-        return (JSONObject) obj;
+    //TODO
+    private Object newRead() throws IOException {
+        Gson gson = new Gson();
+        Object object = gson.fromJson(new FileReader("C:\\fileName.json"), Object.class);
     }
+
 
 
     //this and also findgame needs to iterateish
@@ -312,11 +325,33 @@ public class PlayerMapper implements PlayerMapperInterface {
 
     //TODO
     private boolean isUserName(String userName) {
-        return true;
+        try {
+            JSONArray arr = newRead().getJSONArray("players");
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject player = arr.getJSONObject(i);
+                if (player.getString("userName").equals(userName)) {
+                    return true;
+                }
+            }
+        } catch (ParseException | IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public boolean isEmail(String email) {
-        return true;
+        try {
+            JSONArray arr = newRead().getJSONArray("players");
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject player = arr.getJSONObject(i);
+                if (player.getString("email").equals(email)) {
+                    return true;
+                }
+            }
+        } catch (ParseException | IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public void storeGameSession(int score, String gameType) throws ParseException, JSONException, IOException {
@@ -455,6 +490,10 @@ public class PlayerMapper implements PlayerMapperInterface {
         for (PlayerMapperListener listener : listeners) {
             listener.notifyLogout();
         }
+    }
+
+    public boolean isLoggedIn() {
+        return (currentPlayer != null);
     }
 }
 
