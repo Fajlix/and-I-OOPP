@@ -6,11 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.InvalidParameterException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.TimeZone;
 
 
 import org.json.*;
@@ -56,13 +58,14 @@ public class PlayerMapper implements PlayerMapperInterface {
                     return Optional.of(fetchPlayer(player, false));
                 }
             }
-        } catch (ParseException | IOException | JSONException | MissingAccessException e) {
+        } catch (ParseException | IOException | JSONException | UserInfoException e) {
             e.printStackTrace();
         }
         return Optional.empty();
     }
 
     public Player getPlayer(int friendUserID) {
+        //TODO major dumbness. fix pls
         try {
             JSONArray arr = newRead().getJSONArray("players");
             for (int i = 0; i < arr.length(); i++) {
@@ -71,10 +74,10 @@ public class PlayerMapper implements PlayerMapperInterface {
                     return fetchPlayer(player, true);
                 }
             }
-        } catch (ParseException | IOException | JSONException | MissingAccessException e) {
+        } catch (IOException | JSONException | UserInfoException | ParseException e) {
             e.printStackTrace();
         }
-        throw new InvalidParameterException("No Player matching userID");
+        throw new PlayerMapperException("No Player matching userID");
     }
 
     @Override
@@ -108,7 +111,7 @@ public class PlayerMapper implements PlayerMapperInterface {
             nPlayer.put("friendUserIDs", getPlayerHistoryAsJSONArray(player));
             toWrite = newRead().accumulate("players", nPlayer);
             enterData();
-        } catch (JSONException | ParseException | IOException | MissingAccessException e){
+        } catch (JSONException | ParseException | IOException | UserInfoException e){
             e.printStackTrace();
         }
     }
@@ -132,19 +135,19 @@ public class PlayerMapper implements PlayerMapperInterface {
                     enterData();
                 }
             }
-        } catch (JSONException | ParseException | IOException | MissingAccessException e){
+        } catch (JSONException | ParseException | IOException | UserInfoException e){
             e.printStackTrace();
         }
     }
 
-
-    //TODO
-    private JSONArray getPlayerHistoryAsJSONArray(Player player) {
+    private JSONArray getPlayerHistoryAsJSONArray(Player player) throws JSONException, IOException, ParseException {
         JSONArray array = new JSONArray();
         for (GameSession gs: player.getPlayerHistory()){
             JSONObject nGs = new JSONObject();
-            nGs.put("gameID", gs.getGameID());
-
+            nGs.put("gameID", "" + gs.getDate().getYear() + "-" + gs.getDate().getMonthValue() + "-" + gs.getDate().getDayOfMonth() + "S" + newGameSessionNumber());
+            nGs.put("score", gs.getScore());
+            nGs.put("gameType", gs.getGameType());
+        //    nGs.put("time", gs.getTime());
             array.put(nGs);
         }
         return array;
@@ -161,34 +164,50 @@ public class PlayerMapper implements PlayerMapperInterface {
     /**
      * För att logga in på befintligt konto.
      *
-     * @param userKey
-     * @param friendID
+     *
+     * @param userName
+     * @param password
      */
-    public void logIn(int userKey, int friendID, String password) throws PlayerMapperException {
-        Optional<Player> temp = find(friendID);
+    public void logIn(String userName, String password) throws PlayerMapperException {
         Player player;
-        if (temp.isPresent()) {
-            player = temp.get();
-        } else {
-            throw new PlayerMapperException("FriendID does not match user in our database");
-        }
-        player.isPasswordCorrect(password);
-        notifyListenersLogin();
-        currentPlayer = player;
 
+        player = findPlayerFromStringField("userName", userName, false);
+
+        player.isPasswordCorrect(password);
+       // notifyListenersLogin();
+        currentPlayer = player;
     }
+
+    public void changeEmail(String password, String email) throws UserInfoException {
+        currentPlayer.setEmail(password, email);
+        update(currentPlayer);
+    }
+
+    public void changePassword(String oldPassword, String newPassword) throws UserInfoException {
+        currentPlayer.setPassword(oldPassword, newPassword);
+        update(currentPlayer);
+    }
+
+    public void changeUserImage(Image image){
+        currentPlayer.setUserImage(image);
+        update(currentPlayer);
+    }
+
+
+
+
 
     /**
      * För att skapa nytt konto och logga in.
      */
-    public void createNewAccountAndLogIn(int userKey, String email, String password, String userName) throws MissingAccessException {
+    public void createNewAccountAndLogIn(String email, String password, String userName) throws UserInfoException {
         //check account creation conditions before creating account.
         Player.passwordSafetyCheck(password);
-        if (isName(userName)) throw new PlayerMapperException("Username already taken!");
+        if (isUserName(userName)) throw new PlayerMapperException("Username already taken!");
         //ask if they want email login help?
-        if (isName(email)) throw new PlayerMapperException("Email is already being used!");
+        if (isUserName(email)) throw new PlayerMapperException("Email is already being used!");
         currentFriendID++;
-        Player player = Player.makePlayer(userKey, currentFriendID, email, password, userName);
+        Player player = Player.makePlayer(currentFriendID, email, password, userName);
         insert(player);
     }
 
@@ -214,7 +233,7 @@ public class PlayerMapper implements PlayerMapperInterface {
     private Player findPlayerFromStringField(String type, String value, boolean restricted) {
         //fult? alltså hela jävla metoden
         if (!(type.equals("userName") || type.equals("email"))){
-            throw new IllegalArgumentException("String type is not 'userName', 'userID' nor 'email'");
+            throw new PlayerMapperException("String type is not 'userName', 'userID' nor 'email'");
         }
         try {
             JSONArray arr = newRead().getJSONArray("players");
@@ -224,15 +243,15 @@ public class PlayerMapper implements PlayerMapperInterface {
                     return fetchPlayer(player, restricted);
                 }
             }
-        } catch (ParseException | IOException | JSONException | MissingAccessException e) {
+        } catch (ParseException | IOException | JSONException | UserInfoException e) {
             e.printStackTrace();
         }
-        throw new InvalidParameterException("A matching Player could not be found");
+        throw new PlayerMapperException("A matching Player could not be found");
     }
 
 
 
-    private Player fetchPlayer(JSONObject player, boolean restricted) throws JSONException, MissingAccessException {
+    private Player fetchPlayer(JSONObject player, boolean restricted) throws JSONException, UserInfoException {
         int userKey;
         int userID;
         String email = null;
@@ -242,7 +261,6 @@ public class PlayerMapper implements PlayerMapperInterface {
         List<Integer> friendUserIDs = new ArrayList<>();
         List<GameSession> playerHistory;
         if(!restricted){
-            userKey = player.getInt("userKey");
             email = player.getString("email");
             password = player.getString("password");
             friendUserIDs = fetchFriendUserIDs(player);
@@ -254,7 +272,7 @@ public class PlayerMapper implements PlayerMapperInterface {
         playerHistory = fetchPlayerHistory(player);
         //close read?
         if (restricted) return Player.makePlayer(userID, userName, userImage, playerHistory);
-        return Player.makePlayer(0, userID, email, password, userName, userImage, playerHistory, friendUserIDs);
+        return Player.makePlayer(userID, email, password, userName, userImage, playerHistory, friendUserIDs);
     }
 
     private List<Integer> fetchFriendUserIDs (JSONObject player) throws JSONException {
@@ -270,22 +288,30 @@ public class PlayerMapper implements PlayerMapperInterface {
         List<GameSession> playerHistory = new ArrayList<>();
         JSONArray playerHistoryPRE = player.getJSONArray("playerHistory");
         for (int o = 0; o < playerHistoryPRE.length(); o++){
-            int gameID = playerHistoryPRE.getJSONObject(o).getInt("gameID");
+            String idToFormat = playerHistoryPRE.getJSONObject(o).getString("gameID");
+            int gameID = Integer.parseInt(idToFormat.substring(0, idToFormat.indexOf("S")));
             int score = playerHistoryPRE.getJSONObject(o).getInt("score");
             String gameType = playerHistoryPRE.getJSONObject(o).getString("gameType");
-            String time = playerHistoryPRE.getJSONObject(o).getString("time");
-            playerHistory.add(new GameSession(gameID, score, gameType, time));
+            LocalDate date = LocalDate.parse(idToFormat.substring(idToFormat.indexOf("S") + 1));
+            //String time = playerHistoryPRE.getJSONObject(o).getString("time");
+            playerHistory.add(new GameSession(gameID, score, gameType, date));
         }
         return playerHistory;
     }
 
+    /*
+    public GameSession getGameSession(int gameID){
+        JSONObject db = newRead();
+        newRead(
+    }
+*/
 
     //completely seperate getters? yh
 
 //?
 
     //TODO
-    private boolean isName(String userName) {
+    private boolean isUserName(String userName) {
         return true;
     }
 
@@ -293,13 +319,35 @@ public class PlayerMapper implements PlayerMapperInterface {
         return true;
     }
 
-    public void storeGameSession(GameSession gameSession){
+    public void storeGameSession(int score, String gameType) throws ParseException, JSONException, IOException {
+        LocalDate date = LocalDate.now(TimeZone.getTimeZone(currentPlayer.getTimeZone()).toZoneId());
+        int year = date.getYear();
+        int month = date.getMonthValue();
+        int day = date.getDayOfMonth();
+        try {
+            JSONArray arr = newRead().getJSONArray("players");
+            JSONObject player;
+            for (int i = 0; i < arr.length(); i++) {
+                player = arr.getJSONObject(i);
+                if (player.getInt("userID") == currentPlayer.getUserID()) {
+                    break;
+                }
+            }
+        } catch (JSONException | IOException | ParseException e){
+            e.printStackTrace();
+        }
+
+        GameSession gameSession = new GameSession(newGameSessionNumber(), score, gameType, date);
         currentPlayer.addGameSession(gameSession);
         //store in database
-
+        update(currentPlayer);
     }
 
-    public String getEmail() throws MissingAccessException {
+    private int newGameSessionNumber() throws IOException, ParseException, JSONException {
+        return newRead().getInt("lastGameSessionID") + 1;
+    }
+
+    public String getEmail() throws UserInfoException {
         return currentPlayer.getEmail();
     }
 
@@ -309,37 +357,52 @@ public class PlayerMapper implements PlayerMapperInterface {
     }
 
     /**
-     * @param userKey Application unique player ID
+     * Log out the player. Purely handles database and currentPlayer parameter
      */
-    public void logOut(int userKey) {
+    public void logOut() {
       //  currentPlayer.changeUserKey(userKey, 0);
         currentPlayer = null;  //näej pissdålig idé
+        currentGameSession = null;
         notifyListenersLogout();
     }
 
 
-    private List<Player> getUserFriends() throws MissingAccessException {
+    private List<Player> getUserFriends() {
         List<Player> friends = new ArrayList<>();
-        for (int friendID : currentPlayer.getFriendUserIDs(0)) {
+        for (int friendID : currentPlayer.getFriendUserIDs()) {
             friends.add(getPlayer(friendID));
         }
         return friends;
     }
 
-    public void addFriend(int userID) throws MissingAccessException {
+    public void addFriend(int userID) throws UserInfoException {
         if(isFriend(userID)){
-            throw new InvalidParameterException("Already a friend!");
+            throw new PlayerMapperException("Already a friend!");
         }
         Optional<Player> friend = find(userID);
         if (!friend.isPresent()){
-            throw new InvalidParameterException("No user with given userID");
+            throw new PlayerMapperException("No user with given userID");
         }
         currentPlayer.addFriend(userID);
         update(currentPlayer);
     }
 
-    private boolean isFriend(int userID){
+    public void removeFriend(int userID) {
+        if(!isFriend(userID)){
+            throw new PlayerMapperException("Already not a friend!");
+        }
+        try {
+            currentPlayer.removeFriend(userID);
+
+        } catch (UserInfoException e){
+            e.printStackTrace();
+        }
+        update(currentPlayer);
+    }
+
+    public boolean isFriend(int userID){
         return currentPlayer.isFriend(userID);
+
     }
 
     /**
@@ -372,6 +435,7 @@ public class PlayerMapper implements PlayerMapperInterface {
     }
 **/
     //Concerning listeners
+    //prob not needed
 
     public void addListener(PlayerMapperListener listener) {
         listeners.add(listener);

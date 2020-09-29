@@ -3,8 +3,6 @@ package com.example.graymatter.Social;
 
 import android.media.Image;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +25,7 @@ public class Player {
      * Needed upon registration:
      */
     private String userName;
-
+    private String timeZone = "Europe/Stockholm";
 
     private int userID;
     /**
@@ -57,11 +55,11 @@ public class Player {
      * @param userImage
      * @param playerHistory
      * @param friendUserIDs
-     * @throws MissingAccessException
+     * @throws UserInfoException
      */
-    private Player(int userKey, int userID, String email, String password, String userName, Image userImage, List<GameSession> playerHistory, List<Integer> friendUserIDs) throws MissingAccessException {
+    private Player(int userID, String email, String password, String userName, Image userImage, List<GameSession> playerHistory, List<Integer> friendUserIDs) throws UserInfoException {
         this(userID, userName, userImage, playerHistory);
-        this.userInfo = new UserInfo(userKey, email, password, friendUserIDs);
+        this.userInfo = new UserInfo(email, password, friendUserIDs);
     }
 
     private Player(int userID, String userName, Image userImage, List<GameSession> playerHistory) {
@@ -102,14 +100,13 @@ public class Player {
     // TODO some kind of factory? :/
     //anyways, 1 constructor if many makemethods
     //used for users
-    protected static Player makePlayer(int userKey, int userID, String email, String password, String userName, Image userImage, List<GameSession> playerHistory, List<Integer> friendUserIDs) throws MissingAccessException {
-        return new Player(userKey, userID, email, password, userName, userImage, playerHistory, friendUserIDs);
+    protected static Player makePlayer(int userID, String email, String password, String userName, Image userImage, List<GameSession> playerHistory, List<Integer> friendUserIDs) throws UserInfoException {
+        return new Player(userID, email, password, userName, userImage, playerHistory, friendUserIDs);
     }
 
     //used in the creation of new users
-    protected static Player makePlayer(int userKey, int userID, String email, String password, String userName) throws MissingAccessException {
-
-        return new Player(userKey, userID, email, password, userName, null, new ArrayList<GameSession>(), new ArrayList<Integer>());
+    protected static Player makePlayer(int userID, String email, String password, String userName) throws UserInfoException {
+        return new Player(userID, email, password, userName, null, new ArrayList<GameSession>(), new ArrayList<Integer>());
     }
 
     //used for non-user players
@@ -123,7 +120,7 @@ public class Player {
      * Returns the player, with userInfo field having UserInfo value if userKey matches, otherwise userInfo field null.
      * @param userKey Dictates the anture of userInfo-field. If not intended to return UserInfo, userKey should be "".
      * @return this Player
-     * @throws MissingAccessException if
+     * @throws UserInfoException if
      */
     /*
     public Player getPlayer(String userKey) throws MissingAccessException {
@@ -138,25 +135,25 @@ public class Player {
         return this;
     }
     */
+/*
+    protected List<Integer> getFriendUserIDs() throws UserInfoException {
+        return userInfo.getFriendUserIDs();
+    }
+*/
 
-    protected List<Integer> getFriendUserIDs(int userKey) throws MissingAccessException {
-        return userInfo.getFriendUserIDs(userKey);
+    protected void setPassword(String oldPassword, String newPassword) throws UserInfoException {
+        userInfo.setPassword(oldPassword, newPassword);
     }
 
-
-    protected void setPassword(int userKey, String oldPassword, String newPassword) throws MissingAccessException {
-        userInfo.setPassword(userKey, oldPassword, newPassword);
-    }
-
-    protected void setEmail(int userKey, String password, String email) throws MissingAccessException {
-        userInfo.setEmail(userKey, password, email);
+    protected void setEmail(String password, String email) throws UserInfoException {
+        userInfo.setEmail(password, email);
     }
 
     protected boolean isPasswordCorrect(String password){
         return userInfo.isPasswordCorrect(password);
     }
 
-    public String getEmail() throws MissingAccessException {
+    protected String getEmail() throws UserInfoException {
         return userInfo.getEmail();
     }
 
@@ -221,7 +218,7 @@ public class Player {
   /**  public void changeUserKey(int userKey, int i) {
     }**/
 
-    public void addFriend(int userID) throws MissingAccessException {
+    public void addFriend(int userID) throws UserInfoException {
         userInfo.addFriend(userID);
     }
 
@@ -238,6 +235,7 @@ public class Player {
     }
 
     public void addGameSession(GameSession gameSession) {
+        playerHistory.add(gameSession);
     }
 
 
@@ -247,8 +245,15 @@ public class Player {
      * @return friendUserIDs
      */
     public List<Integer> getFriendUserIDs() {
-        List<Integer> newFL = new ArrayList<>();
-        Collections.copy(newFL, userInfo.getFriendUserIDs());
-        return newFL;
+        return userInfo.getFriendUserIDs();
+    }
+
+    public void removeFriend(int userID) throws UserInfoException{
+        userInfo.removeFriend(userID);
+    }
+
+    public String getTimeZone() {
+
+        return timeZone;
     }
 }

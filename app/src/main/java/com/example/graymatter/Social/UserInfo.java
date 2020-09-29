@@ -7,36 +7,31 @@ import java.util.List;
 //i wanted it to be protected, didn't work
 public class UserInfo {
 
-    //is this needed? TODO think
-    private int userKey;
 
     private String email;
     private String password;
     private List<Integer> friendUserIDs;
 
 
-    UserInfo(int userKey, String email, String password, List<Integer> friendUserIDs) throws MissingAccessException {
-        this.userKey = userKey;
+    UserInfo(String email, String password, List<Integer> friendUserIDs) {
         this.email = email;
         this.password = password;
         this.friendUserIDs = friendUserIDs;
     }
 
     protected UserInfo(UserInfo infoToCopy){
-        this.userKey = infoToCopy.userKey;
         this.email = infoToCopy.email;
         this.password = infoToCopy.password;
         Collections.copy(this.friendUserIDs, infoToCopy.friendUserIDs);
     }
 
-    protected List<Integer> getFriendUserIDs(int userKey) throws MissingAccessException {
-        safetyCheck(userKey);
+    protected List<Integer> getFriendUserIDs() {
         List<Integer> newList = new ArrayList<>();
         Collections.copy(newList, this.friendUserIDs);
         return newList;
     }
 
-    protected String getEmail() throws MissingAccessException {
+    protected String getEmail() throws UserInfoException {
         //safetyCheck(userKey);
         return email;
     }
@@ -46,44 +41,43 @@ public class UserInfo {
         return this.password.equals(password);
     }
 
-    protected void setPassword(int userKey, String oldPassword, String newPassword) throws MissingAccessException {
-        safetyCheck(userKey);
+    protected void setPassword(String oldPassword, String newPassword) throws UserInfoException {
         if(this.password.equals(oldPassword) && passwordSafetyCheck(newPassword)){
             this.password = newPassword;
             return;
         }
-        throw new MissingAccessException("Current password is incorrect");
+        throw new UserInfoException("Current password is incorrect");
     }
 
-    protected void setEmail(int userKey, String password, String email) throws MissingAccessException {
-        safetyCheck(userKey);
+    protected void setEmail(String password, String email) throws UserInfoException {
         if(this.password.equals(password)){
             this.email = email;
             return;
         }
-        throw new MissingAccessException("Password is incorrect");
+        throw new UserInfoException("Password is incorrect");
     }
 
-    protected void addFriend(int friendUserID) throws MissingAccessException {
+    protected void addFriend(int friendUserID) throws UserInfoException {
         //safetyCheck(userKey);
         friendUserIDs.add(friendUserID);
     }
 
-    protected void removeFriend(int userKey, int friendUserID) throws Exception {
-        safetyCheck(userKey);
+    protected void removeFriend(int friendUserID) throws UserInfoException {
         // does below work? TODO test
         if(!friendUserIDs.contains(friendUserID)){
-            throw new Exception("friendUserID does not match any of player´s friend");
+            throw new UserInfoException("friendUserID does not match any of player´s friend");
         }
         friendUserIDs.remove(friendUserID);
     }
 
     //can a method JUST check for exceptions?
+    /**
     private void safetyCheck(int userKey) throws MissingAccessException {
         if (this.userKey != userKey){
             throw new MissingAccessException("Unmatching userkey");
         }
     }
+     **/
 
     //4 forloops might be smarter
     protected static boolean passwordSafetyCheck(String password){
@@ -117,10 +111,6 @@ public class UserInfo {
 
     protected String getPassword() {
         return password;
-    }
-
-    protected List<Integer> getFriendUserIDs(){
-        return friendUserIDs;
     }
 }
 
