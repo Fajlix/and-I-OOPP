@@ -29,7 +29,7 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/reactionTestActivity"
-        android:name="com.example.graymatter.View.Fragments.ReactionGameFragment"
+        android:name="com.example.graymatter.View.Fragments.GameFragments.ReactionGameFragment"
         android:label="ReactionTestActivity" />
     <fragment
         android:id="@+id/loginFragment"

@@ -1,4 +1,4 @@
-package com.example.graymatter.View.Fragments;
+package com.example.graymatter.View.Fragments.GameFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
