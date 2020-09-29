@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_statistics" />
     <fragment
         android:id="@+id/gamesFragment"
-        android:name="com.example.graymatter.View.Fragments.GameFragments.GamesFragment"
+        android:name="com.example.graymatter.View.Fragments.GamesFragment"
         android:label="fragment_games"
         tools:layout="@layout/fragment_games" >
         <action

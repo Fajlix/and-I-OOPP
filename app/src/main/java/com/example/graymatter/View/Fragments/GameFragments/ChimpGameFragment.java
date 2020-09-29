@@ -35,7 +35,7 @@ public class ChimpGameFragment extends Fragment implements GameObserver {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.chimp_test, container, false);
+        View view = inflater.inflate(R.layout.fragment_chimp_game, container, false);
         super.onCreate(savedInstanceState);
         // changes gameState of game
         game = new Game();

@@ -1,4 +1,4 @@
-package com.example.graymatter.View.Fragments.GameFragments;
+package com.example.graymatter.View.Fragments;
 
 import android.os.Bundle;
 
