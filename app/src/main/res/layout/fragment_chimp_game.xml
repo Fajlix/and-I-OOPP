@@ -44,6 +44,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="208dp"
+        android:layout_marginLeft="130dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.337"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,21 +52,11 @@
         app:srcCompat="@drawable/ic_number_1" />
 
     <ImageView
-        android:id="@+id/iconNumber3"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="88dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_number_3" />
-
-    <ImageView
         android:id="@+id/iconNumber2"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="152dp"
+        android:layout_marginLeft="190dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,10 +64,23 @@
         app:srcCompat="@drawable/ic_number_2" />
 
     <ImageView
+        android:id="@+id/iconNumber3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="94dp"
+        android:layout_marginLeft="190dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_number_3" />
+
+    <ImageView
         android:id="@+id/iconNumber4"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="152dp"
+        android:layout_marginLeft="250dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.675"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,9 +88,10 @@
         app:srcCompat="@drawable/ic_number_4" />
 
     <ImageView
-        android:id="@+id/chimpTestClose"
+        android:id="@+id/chimpGameClose"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginLeft="365dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_close_white" />

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.Fragments.GameFragments.VisualGameFragment">
+
+    <TextView
+        android:id="@+id/visualGameDescription"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:clickable="true"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:text="Welcome to visual memory, mimic the pattern"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp" />
+
+    <ImageView
+        android:id="@+id/visualGameClose"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="365dp"
+        android:background="#000000"
+        android:foreground="@drawable/ic_close_white" />
+
+</FrameLayout>
