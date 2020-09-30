@@ -37,8 +37,8 @@ public class Player {
 
 
     //tänk på bilderna!!!
-  //  private String imagePath;
-    private Image userImage;
+    private String userImage;
+   // private Image userImage;
     private List<GameSession> playerHistory;
 
     private Player(){
@@ -57,12 +57,12 @@ public class Player {
      * @param friendUserIDs
      * @throws UserInfoException
      */
-    private Player(int userID, String email, String password, String userName, Image userImage, List<GameSession> playerHistory, List<Integer> friendUserIDs) throws UserInfoException {
+    private Player(int userID, String email, String password, String userName, String userImage, List<GameSession> playerHistory, List<Integer> friendUserIDs) throws UserInfoException {
         this(userID, userName, userImage, playerHistory);
         this.userInfo = new UserInfo(email, password, friendUserIDs);
     }
 
-    private Player(int userID, String userName, Image userImage, List<GameSession> playerHistory) {
+    private Player(int userID, String userName, String userImage, List<GameSession> playerHistory) {
         //assign public fields, mark others "0"
         this.userID = userID;
         this.userName = userName;
@@ -100,7 +100,7 @@ public class Player {
     // TODO some kind of factory? :/
     //anyways, 1 constructor if many makemethods
     //used for users
-    protected static Player makePlayer(int userID, String email, String password, String userName, Image userImage, List<GameSession> playerHistory, List<Integer> friendUserIDs) throws UserInfoException {
+    protected static Player makePlayer(int userID, String email, String password, String userName, String userImage, List<GameSession> playerHistory, List<Integer> friendUserIDs) throws UserInfoException {
         return new Player(userID, email, password, userName, userImage, playerHistory, friendUserIDs);
     }
 
@@ -110,7 +110,7 @@ public class Player {
     }
 
     //used for non-user players
-    protected static Player makePlayer(int userID, String userName, Image userImage, List<GameSession> playerHistory){
+    protected static Player makePlayer(int userID, String userName, String userImage, List<GameSession> playerHistory){
         return new Player(userID, userName, userImage, playerHistory);
     }
 
@@ -192,11 +192,11 @@ public class Player {
         return Math.abs(Integer.parseInt(idToParse));
     }
 
-    public Image getUserImage(){
+    public String getUserImage(){
         return userImage;
     }
 
-    protected void setUserImage(Image image){
+    protected void setUserImage(String image){
         this.userImage = image;
     }
 
@@ -255,5 +255,9 @@ public class Player {
     public String getTimeZone() {
 
         return timeZone;
+    }
+
+    public boolean sameEmail(String email) {
+        return userInfo.sameEmail(email);
     }
 }

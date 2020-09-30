@@ -112,5 +112,9 @@ public class UserInfo {
     protected String getPassword() {
         return password;
     }
+
+    public boolean sameEmail(String email) {
+        return this.email.equals(email);
+    }
 }
 
