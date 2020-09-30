@@ -10,22 +10,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.graymatter.Model.Game.ChimpGame.ChimpEvent;
 import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
 import com.example.graymatter.Model.Game.Game;
 import com.example.graymatter.Model.Game.GameObserver;
 import com.example.graymatter.R;
+import com.example.graymatter.ViewModel.ChimpGameViewModel;
+import com.example.graymatter.ViewModel.ReactionTimeViewModel;
 
 import org.greenrobot.eventbus.EventBus;
 
 public class ChimpGameFragment extends Fragment implements GameObserver {
-    private Game game;
     private GridView gridView;
     private ChimpGameGridAdapter chimpGameGridAdapter;
     private TextView chimpTestDescription;
     private ImageView chimpTestClose;
-
+    private ChimpGameViewModel chimpGameVM;
 
     @Override
     public void update() {
@@ -54,12 +56,11 @@ public class ChimpGameFragment extends Fragment implements GameObserver {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chimp_game, container, false);
         super.onCreate(savedInstanceState);
-        // changes gameState of game
-        game = new Game();
-        game.ChangeState(new ChimpGame(game));
-        // adds this as a observer of the game
-        game.addObserver(this);
+        chimpGameVM = new ViewModelProvider(this).get(ChimpGameViewModel.class);
+        chimpGameVM.init();
 
+
+        // changes gameState of game
         gridView = (GridView) view.findViewById(R.id.chimpTestGrid);
 
         chimpTestDescription = (TextView) view.findViewById(R.id.chimpTestDescription);
@@ -71,11 +72,12 @@ public class ChimpGameFragment extends Fragment implements GameObserver {
                 ShowBoard();
 
             }
+
         });
 
 
         // clicking on this should take the user to the main page
-        chimpTestClose = (ImageView) view.findViewById(R.id.chimpGameClose);
+        //ImageView reactionTestClose = (ImageView) view.findViewById(R.id.reactionTestClose);
 
 
 
@@ -119,7 +121,7 @@ public class ChimpGameFragment extends Fragment implements GameObserver {
     }
 
     private class ChimpGameGridAdapter extends BaseAdapter {
-        ChimpGame chimpGame = ((ChimpGame) game.getGameState());
+        ChimpGame chimpGame = new ChimpGame();
         // how many tiles on the board
         @Override
         public int getCount() {

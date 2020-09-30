@@ -1,37 +1,34 @@
 package com.example.graymatter.Model.Game.ChimpGame;
 
 import com.example.graymatter.Model.Game.Game;
-import com.example.graymatter.Model.Game.GameState;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Arrays;
 
-public class ChimpGame implements GameState {
-    private Game game;
+public class ChimpGame extends Game {
     private int numberQty; //amount of boxes to choose from at current stage, also serves as score.
     private int[] board = new int[24]; // The locations on which the numbers can appear, zeroes indicate empty spaces
     private int nextNumber;
     private boolean numberVisibility;
     private boolean gameOver;
 
-    public ChimpGame(Game game){
+    public ChimpGame(){
         gameOver = true;
-        this.game = game;
         EventBus.getDefault().register(this);
     }
 
 
-    public void StartGame(){
+    public void startGame(){
         gameOver = false;
         numberQty = 4;
         fillBoard();
         numberVisibility = true;
-        game.notifyObservers();
+        notifyObservers();
     }
 
-    public int StopGame(){
+    public int endGame(){
         gameOver = true;
         return numberQty;
     }
@@ -68,7 +65,7 @@ public class ChimpGame implements GameState {
         else { //Incorrect number clicked
             gameOver = true;
         }
-        game.notifyObservers();
+            notifyObservers();
     }
 
     private void fillBoard(){
@@ -111,5 +108,4 @@ public class ChimpGame implements GameState {
         boolean gameOverCopy = gameOver; //Maybe unnecessary to copy primitive type, don't know, IDE seems to think so
         return gameOverCopy;
     }
-
 }
