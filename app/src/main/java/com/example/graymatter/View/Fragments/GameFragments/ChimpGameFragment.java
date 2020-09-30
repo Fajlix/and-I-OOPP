@@ -38,7 +38,7 @@ public class ChimpGameFragment extends Fragment implements GameObserver {
         View view = inflater.inflate(R.layout.fragment_chimp_game, container, false);
         super.onCreate(savedInstanceState);
         // changes gameState of game
-        game = new Game();
+        /*game = new Game();
         game.ChangeState(new ChimpGame(game));
         // adds this as a observer of the game
         game.addObserver(this);
@@ -52,7 +52,8 @@ public class ChimpGameFragment extends Fragment implements GameObserver {
                 ShowBoard();
 
             }
-        });
+
+        });*/
 
 
         // clicking on this should take the user to the main page
@@ -99,7 +100,7 @@ public class ChimpGameFragment extends Fragment implements GameObserver {
     }
 
     private class ChimpGameGridAdapter extends BaseAdapter {
-        ChimpGame chimpGame = ((ChimpGame) game.getGameState());
+        ChimpGame chimpGame = new ChimpGame();
         // how many tiles on the board
         @Override
         public int getCount() {
