@@ -49,6 +49,10 @@ public class ChimpGame extends Game {
 
             if ( nextNumber == numberQty){ //The number clicked is the last number in the sequence, new round
                 numberQty++;
+                if (numberQty >= 25)
+                {
+                    gameOver = true;
+                }
                 nextNumber = 1;
                 fillBoard();
                 numberVisibility = true;
@@ -61,7 +65,6 @@ public class ChimpGame extends Game {
         else { //Incorrect number clicked
             gameOver = true;
         }
-        if (!gameOver)
             notifyObservers();
     }
 
@@ -72,7 +75,7 @@ public class ChimpGame extends Game {
             placement = (int)Math.round(Math.random()*23);
             while(board[placement] != 0){
                 placement += 1;
-                placement %= 40;
+                placement %= 24;
             }
             board[placement] = i;
         }
