@@ -33,7 +33,7 @@ import java.util.TimeZone;
 
 public class PlayerMapper implements PlayerMapperInterface {
     private String serverLocation;
-    private final String dbPath = "C:\\Users\\hanna\\Documents\\and-I-OOPP\\app\\src\\main\\java\\com\\example\\graymatter\\Social\\testPlayers.json";
+    private final String dbPath = "C:/Users/hanna/Documents/and-I-OOPP/app/src/main/java/com/example/graymatter/Social/testPlayers.json";
     //good for batch writing. bad for safety. idk
     private dbModel toWrite;
 
@@ -226,9 +226,10 @@ public class PlayerMapper implements PlayerMapperInterface {
         Player.passwordSafetyCheck(password);
         if (isUserName(userName)) throw new PlayerMapperException("Username already taken!");
         //ask if they want email login help?
-        if (isUserName(email)) throw new PlayerMapperException("Email is already being used!");
+        if (isEmail(email)) throw new PlayerMapperException("Email is already being used!");
         currentFriendID++;
         Player player = Player.makePlayer(currentFriendID, email, password, userName);
+        currentPlayer = player;
         insert(player);
     }
 
@@ -253,7 +254,8 @@ public class PlayerMapper implements PlayerMapperInterface {
 
     private dbModel newRead() throws IOException {
         Gson gson = new Gson();
-        return gson.fromJson(new FileReader(dbPath), dbModel.class);
+        Reader reader = new FileReader("C:/Users/hanna/Documents/and-I-OOPP/app/src/main/java/com/example/graymatter/Social/testPlayers.json");
+        return gson.fromJson(reader, dbModel.class);
     }
 
 

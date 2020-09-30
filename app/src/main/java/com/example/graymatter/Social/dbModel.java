@@ -5,10 +5,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class dbModel {
     public List<Player> players = new ArrayList<>();
-    int lastGameSessionNumber;
+    public Map<String, Integer> numbers;
 
     protected dbModel(){
     }
@@ -22,10 +23,20 @@ public class dbModel {
     }
 
     public int getLastGameSessionNumber() {
-        return lastGameSessionNumber;
+        return numbers.get("lastGameSessionNumber");
     }
 
     public void incLastGameSessionNumber(){
-        lastGameSessionNumber++;
+        Integer toInc = numbers.get("lastGameSessionNumber");
+        numbers.put("lastGameSessionNumber", toInc + 1);
+    }
+
+    public int getLastUserID() {
+        return numbers.get("lastUserID");
+    }
+
+    public void incLastUserID(){
+        Integer toInc = numbers.get("lastUserID");
+        numbers.put("lastUserID", toInc + 1);
     }
 }
