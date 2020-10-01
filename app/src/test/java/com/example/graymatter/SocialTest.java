@@ -32,16 +32,7 @@ public class SocialTest {
         testPlayer = new Player(346, 3, "a@hej.com", "losen123", "Jordgubben97", Image testImage, new ArrayList<GameSession>(), new ArrayList<Integer>);
     }**/
 
-    @Test
-    public void registrationTest(){
-        try {
-            testPlayerMapper.createNewAccountAndLogIn("johanna.j@gmail.com", "Hacker_2", "jordgubben97");
-        } catch (UserInfoException e) {
-            e.printStackTrace();
-        }
-        assertTrue(testPlayerMapper.isLoggedIn());
-    }
-
+/*
     @Test
     public void getPlayerTest(){
 
@@ -51,6 +42,7 @@ public class SocialTest {
     public void privacyBreachTest(){
 
     }
+    **/
 
     @Test
     public void deleteTest() throws UserInfoException {
