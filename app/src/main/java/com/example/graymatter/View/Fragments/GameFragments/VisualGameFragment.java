@@ -60,7 +60,7 @@ public class VisualGameFragment extends Fragment implements GameObserver {
         View view = inflater.inflate(R.layout.fragment_visual_game, container, false);
         super.onCreate(savedInstanceState);
         // changes gameState of game
-        game = new Game();
+        //game = new Game();
         //game.ChangeState(new VisualGame(game));
         // adds this as a observer of the game
         //game.addObserver(this);
@@ -72,7 +72,7 @@ public class VisualGameFragment extends Fragment implements GameObserver {
             @Override
             public void onClick(View view) {
                 ClearScreen();
-                game.StartGame();
+                //game.StartGame();
                 ShowBoard();
 
             }
