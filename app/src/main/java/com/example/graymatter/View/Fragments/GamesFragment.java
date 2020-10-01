@@ -37,7 +37,7 @@ public class GamesFragment extends Fragment {
         GridView mainScreenGrid = (GridView) view.findViewById(R.id.mainScreenGrid);
         mainScreenGrid.bringToFront();
         mainScreenGrid.setAdapter(new MainScreenGridAdapter(getActivity()));
-        mainScreenGrid.setNumColumns(2);
+        mainScreenGrid.setNumColumns(3);
 
 
         return view;

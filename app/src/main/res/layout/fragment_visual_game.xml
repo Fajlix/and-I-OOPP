@@ -5,6 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".View.Fragments.GameFragments.VisualGameFragment">
 
+    <GridView
+        android:id="@+id/visualGameGrid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+    </GridView>
+
     <TextView
         android:id="@+id/visualGameDescription"
         android:layout_width="match_parent"

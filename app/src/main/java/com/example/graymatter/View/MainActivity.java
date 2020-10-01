@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-               if(destination.getId() == R.id.reactionTestActivity || destination.getId() == R.id.chimpGameActivity){
+               if(destination.getId() == R.id.reactionTestActivity || destination.getId() == R.id.chimpGameActivity || destination.getId() == R.id.visualGameFragment){
                    bottomNavigationView.setVisibility(View.GONE);
                }
                else bottomNavigationView.setVisibility(View.VISIBLE);
@@ -56,5 +56,10 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     @Override
     public void chimpTestClicked() {
         navController.navigate(R.id.chimpGameActivity);
+    }
+
+    @Override
+    public void visualGameClicked() {
+        navController.navigate(R.id.visualGameFragment);
     }
 }

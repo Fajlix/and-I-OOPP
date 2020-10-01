@@ -76,7 +76,7 @@ public class ChimpGameFragment extends Fragment implements GameObserver {
 
 
         // clicking on this should take the user to the main page
-        chimpTestClose = (ImageView) view.findViewById(R.id.chimpGameClose);
+        //chimpTestClose = (ImageView) view.findViewById(R.id.chimpGameClose);
 
 
 

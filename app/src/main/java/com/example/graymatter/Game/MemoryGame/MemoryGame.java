@@ -1,19 +1,22 @@
 package com.example.graymatter.Game.MemoryGame;
 
+import com.example.graymatter.Model.Game.Game;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
 public class MemoryGame {
-
+    private Game game;
     private MemoryGrid grid; // The grid on which the selectable tiles are located
     private int level;
     private int lives;
     private boolean gameOver;
 
-    public MemoryGame(){
+    public MemoryGame(Game game){
         gameOver = true;
+        this.game = game;
         EventBus.getDefault().register(this);
     }
 
@@ -54,7 +57,7 @@ public class MemoryGame {
             default:
                 break;
         }
-    //TODO: notify observers
+        game.notifyObservers();
     }
 
     /*

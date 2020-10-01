@@ -12,6 +12,9 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.graymatter.Game.MemoryGame.MemoryEvent;
+import com.example.graymatter.Game.MemoryGame.MemoryGame;
+import com.example.graymatter.Game.MemoryGame.MemoryGrid;
 import com.example.graymatter.Model.Game.ChimpGame.ChimpEvent;
 import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
 import com.example.graymatter.Model.Game.Game;
@@ -24,14 +27,31 @@ public class VisualGameFragment extends Fragment implements GameObserver {
     private Game game;
     private GridView gridView;
     private VisualGameGridAdapter visualGameGridAdapter;
-    private TextView chimpTestDescription;
+    private TextView visualGameDescription;
+    private ImageView visualGameClose;
 
     @Override
     public void update() {
-        ShowBoard();
-        visualGameGridAdapter.notifyDataSetChanged();
-        gridView.setAdapter(visualGameGridAdapter);
+        MemoryGame memoryGame = ((MemoryGame) game.getGameState());
 
+        boolean isGameOver = memoryGame.getGameOver();
+        if (isGameOver == true)
+        {
+            int level = memoryGame.StopGame();
+            if(level >= 20)
+            {
+                completedGame(level);
+            }
+            else
+            {
+                lostGame(level);
+            }
+        }
+        else {
+            ShowBoard();
+            visualGameGridAdapter.notifyDataSetChanged();
+            gridView.setAdapter(visualGameGridAdapter);
+        }
     }
 
     @Override
@@ -45,10 +65,10 @@ public class VisualGameFragment extends Fragment implements GameObserver {
         // adds this as a observer of the game
         //game.addObserver(this);
 
-        gridView = (GridView) view.findViewById(R.id.chimpTestGrid);
+        gridView = (GridView) view.findViewById(R.id.visualGameGrid);
 
-        chimpTestDescription = (TextView) view.findViewById(R.id.chimpTestDescription);
-        chimpTestDescription.setOnClickListener(new View.OnClickListener() {
+        visualGameDescription = (TextView) view.findViewById(R.id.visualGameDescription);
+        visualGameDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ClearScreen();
@@ -60,7 +80,7 @@ public class VisualGameFragment extends Fragment implements GameObserver {
 
 
         // clicking on this should take the user to the main page
-        //ImageView reactionTestClose = (ImageView) view.findViewById(R.id.reactionTestClose);
+        ImageView visualGameClose = (ImageView) view.findViewById(R.id.visualGameClose);
 
 
 
@@ -68,7 +88,6 @@ public class VisualGameFragment extends Fragment implements GameObserver {
     }
 
     private void tileHasBeenClicked(View view){
-        TextView textView = view.findViewById(R.id.cardNumber);
         int n = 0;
         for (int i = 0; i < gridView.getChildCount(); i++) {
             if (gridView.getChildAt(i).equals(view))
@@ -77,22 +96,12 @@ public class VisualGameFragment extends Fragment implements GameObserver {
                 break;
             }
         }
-        int number = Integer.parseInt((String) textView.getText());
-        EventBus.getDefault().post(new ChimpEvent(n));
+        EventBus.getDefault().post(new MemoryEvent(n));
     }
 
     // clears the screen of all teh text and images to show the test
     public void ClearScreen() {
-
-        chimpTestDescription.setText("");
-        final ImageView iconNumber1 = this.getView().findViewById(R.id.iconNumber1);
-        final ImageView iconNumber2 = this.getView().findViewById(R.id.iconNumber2);
-        final ImageView iconNumber3 = this.getView().findViewById(R.id.iconNumber3);
-        final ImageView iconNumber4 = this.getView().findViewById(R.id.iconNumber4);
-        iconNumber1.setVisibility(View.GONE);
-        iconNumber2.setVisibility(View.GONE);
-        iconNumber3.setVisibility(View.GONE);
-        iconNumber4.setVisibility(View.GONE);
+        visualGameDescription.setText("");
     }
 
     public void ShowBoard() {
@@ -104,12 +113,12 @@ public class VisualGameFragment extends Fragment implements GameObserver {
     }
 
     private class VisualGameGridAdapter extends BaseAdapter {
-        ChimpGame chimpGame = ((ChimpGame) game.getGameState());
+        MemoryGame memoryGame = ((MemoryGame) game.getGameState());
         // how many tiles on the board
         @Override
         public int getCount() {
             //TODO baaaad
-            return chimpGame.getBoard().length;
+            return memoryGame.getGridAsArrayList().size();
         }
 
         public Object getItem(int position) {
@@ -122,27 +131,45 @@ public class VisualGameFragment extends Fragment implements GameObserver {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view1 = getLayoutInflater().inflate(R.layout.chimp_game_card, null);
-            TextView numberText = view1.findViewById(R.id.cardNumber);
+            View view1 = getLayoutInflater().inflate(R.layout.visual_game_card, null);
             ImageView imageView = view1.findViewById(R.id.whiteBackgroud);
-            if (chimpGame.getBoard()[position] != 0){
+            if (memoryGame.getGridAsArrayList().get(position).equals(MemoryGrid.TileState.CORRECTHIDDEN)) {
+                imageView.setImageResource(R.mipmap.ic_gray_memory_foreground);
                 view1.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
                         tileHasBeenClicked(v);
                     }
                 });
-                if (chimpGame.getNumberVisibility())
-                    numberText.setText(String.valueOf(chimpGame.getBoard()[position]));
-                else
-                    numberText.setVisibility(View.INVISIBLE);
             }
-            else{
-                numberText.setText("");
-                imageView.setImageResource(R.mipmap.ic_black_square_foreground);
+            else if (memoryGame.getGridAsArrayList().get(position).equals(MemoryGrid.TileState.CORRECTCHOSEN))
+            {
+                imageView.setImageResource(R.mipmap.ic_gray_memory_foreground);
+            }
+            else if (memoryGame.getGridAsArrayList().get(position).equals(MemoryGrid.TileState.INCORRECTHIDDEN))
+            {
+                imageView.setImageResource(R.mipmap.ic_gray_memory_foreground);
+            }
+            else if (memoryGame.getGridAsArrayList().get(position).equals(MemoryGrid.TileState.INCORRECTCHOSEN))
+            {
+                imageView.setImageResource(R.mipmap.ic_gray_memory_foreground);
             }
             return view1;
         }
 
+    }
+
+    public void lostGame (int level)
+    {
+        visualGameDescription.bringToFront();
+        visualGameClose.bringToFront();
+        visualGameDescription.setText("Game over... Your score was: " + level + " \n \nPress to play again");
+    }
+
+    public void completedGame (int level)
+    {
+        visualGameDescription.bringToFront();
+        visualGameClose.bringToFront();
+        visualGameDescription.setText("Wow you completed the game! You got the max score of: " + level + " \n \nPress to play again");
     }
 }

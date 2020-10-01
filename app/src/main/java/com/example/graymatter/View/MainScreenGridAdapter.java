@@ -64,12 +64,22 @@ public class MainScreenGridAdapter extends BaseAdapter {
                 }
             });
         }
+        if (position == 2)
+        {
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.visualGameClicked();
+                }
+            });
+        }
         return imageView;
     }
 
     // array of images
     public Integer[] thumbsIds = {
             R.mipmap.ic_red_x_foreground,
-            R.mipmap.ic_checkmark_foreground
+            R.mipmap.ic_checkmark_foreground,
+            R.mipmap.ic_10_foreground
     };
 }
