@@ -10,11 +10,10 @@ import static org.junit.Assert.*;
 
 public class MemoryGameTest {
 
-    GameState memory;
 
     @Before
     public void setUp(){
-        memory = new MemoryGame();
+        
 
     }
 
