@@ -92,8 +92,8 @@ public class VisualGameFragment extends Fragment implements GameObserver {
         return view;
     }
 
-    public void tileClicked (int n){
-        visualMemoryViewModel.tileHasBeenClicked(n);
+    public void tileClicked (View v){
+        visualMemoryViewModel.tileHasBeenClicked(v);
     }
 
     public void ClearScreen() {

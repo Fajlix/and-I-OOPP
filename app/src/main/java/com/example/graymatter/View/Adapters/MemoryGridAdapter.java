@@ -13,7 +13,6 @@ import com.example.graymatter.View.Fragments.GameFragments.VisualGameFragment;
 
 public class MemoryGridAdapter extends BaseAdapter {
     private int[] grid;
-    private boolean visibility = true;
     VisualGameFragment context;
     private MemoryGame memoryGame;
 
@@ -22,12 +21,8 @@ public class MemoryGridAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void setVisibility(boolean visibility){
-        this.visibility = visibility;
-    }
-
     public void tileHasBeenClicked(View v){
-        context.tileClicked(Integer.parseInt((String) textView.getText()));
+        context.tileClicked(v);
     }
 
     // how many tiles on the board
@@ -51,9 +46,13 @@ public class MemoryGridAdapter extends BaseAdapter {
         ImageView imageView = view.findViewById(R.id.whiteBackgroud);
 
         if (memoryGame.getGridAsArrayList().get(position).equals(MemoryGrid.TileState.CORRECTHIDDEN)) {
-            imageView.setImageResource(R.mipmap.ic_white_square_foreground);
-            if (!visibility)
-                imageView.setImageResource(R.mipmap.ic_gray_memory_foreground);
+            imageView.setImageResource(R.mipmap.ic_gray_memory_foreground);
+        }
+        else if (memoryGame.getGridAsArrayList().get(position).equals(MemoryGrid.TileState.CORRECTCHOSEN)) {
+            imageView.setImageResource(R.mipmap.ic_green_memory_foreground);
+        }
+        else if (memoryGame.getGridAsArrayList().get(position).equals(MemoryGrid.TileState.INCORRECTCHOSEN)) {
+            imageView.setImageResource(R.mipmap.ic_red_memory_foreground);
         }
         else if (memoryGame.getGridAsArrayList().get(position).equals(MemoryGrid.TileState.INCORRECTHIDDEN)) {
             imageView.setImageResource(R.mipmap.ic_gray_memory_foreground);

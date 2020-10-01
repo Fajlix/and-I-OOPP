@@ -13,7 +13,6 @@ public class MemoryGame extends Game{
     private int level;
     private int lives;
     private boolean gameOver;
-    boolean visibility;
 
     public MemoryGame(){
         gameOver = true;
@@ -25,7 +24,6 @@ public class MemoryGame extends Game{
         level = 1;
         lives = 3;
         grid = new MemoryGrid(level);
-        visibility = true;
     }
 
     public int endGame(){
@@ -81,11 +79,5 @@ public class MemoryGame extends Game{
 
     public boolean getGameOver(){
         return gameOver;
-    }
-
-    public boolean getVisibility ()
-    {
-        boolean visibilityCopy = visibility; //Maybe unnecessary to copy primitive type, don't know, IDE seems to think so
-        return visibilityCopy;
     }
 }

@@ -1,20 +1,26 @@
 package com.example.graymatter.ViewModel;
 
+import android.view.View;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.graymatter.Game.MemoryGame.MemoryEvent;
 import com.example.graymatter.Game.MemoryGame.MemoryGame;
+import com.example.graymatter.Game.MemoryGame.MemoryGrid;
+import com.example.graymatter.Game.MemoryGame.MemoryTile;
 import com.example.graymatter.Model.Game.ChimpGame.ChimpEvent;
 import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
+
+import java.util.ArrayList;
 
 public class VisualMemoryViewModel extends ViewModel {
     private MemoryGame memoryGame;
     private int level = 0;
     private MutableLiveData<Boolean> gameStarted = new MutableLiveData<>();
     private MutableLiveData<Boolean> gameOver = new MutableLiveData<>();
-    private MutableLiveData<int[]> grid = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<MemoryGrid.TileState>> grid = new MutableLiveData<>();
     private MutableLiveData<Boolean> visibility = new MutableLiveData<>();
 
     public void init(){
@@ -26,11 +32,11 @@ public class VisualMemoryViewModel extends ViewModel {
 
     public void startVisualGame(){
         memoryGame.startGame();
-        grid.setValue(chimpGame.getBoard());
+        grid.setValue(memoryGame.getGridAsArrayList());
         gameStarted.setValue(true);
     }
 
-    public LiveData<int[]> getGrid(){
+    public LiveData<ArrayList<MemoryGrid.TileState>> getGrid(){
         return grid;
     }
     public LiveData<Boolean> getGameStarted(){
@@ -52,13 +58,12 @@ public class VisualMemoryViewModel extends ViewModel {
             gameOver.setValue(true);
         }
         else {
-            grid.setValue(chimpGame.getBoard());
-            visibility.setValue(memoryGame.getVisibility());
+            grid.setValue(memoryGame.getGridAsArrayList());
         }
     }
 
 
-    public void tileHasBeenClicked(int number){
+    public void tileHasBeenClicked(View v){
         int [] numbers = grid.getValue();
         int res = 0;
         for (int i = 0; i < numbers.length; i++) {
