@@ -1,7 +1,5 @@
 package com.example.graymatter.Game.MemoryGame;
 
-import com.example.graymatter.Game.GameState;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
