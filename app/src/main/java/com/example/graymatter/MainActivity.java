@@ -1,6 +1,9 @@
 package com.example.graymatter;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -20,12 +23,14 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
 
     private BottomNavigationView bottomNavigationView;
     private NavController navController;
+    private Dialog friendsDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        friendsDialog = new Dialog(this);
 
         //Configures bottom navigation
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigationView);
@@ -43,8 +48,6 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
             }
         });
 
-        //Intent intent = new Intent(this, ReactionTestActivity.class);
-        //startActivity(intent);
     }
 
 
@@ -53,4 +56,14 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     public void reactionTestClicked() {
         navController.navigate(R.id.reactionTestActivity);
     }
+
+    @Override
+    public void friendsDialogClicked() {
+        friendsDialog.setContentView(R.layout.dialog_friends);
+
+
+        friendsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        friendsDialog.show();
+    }
+
 }
