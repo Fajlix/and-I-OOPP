@@ -64,10 +64,10 @@ public class VisualMemoryViewModel extends ViewModel {
 
 
     public void tileHasBeenClicked(View v){
-        int [] numbers = grid.getValue();
+        ArrayList<MemoryGrid.TileState> numbers = grid.getValue();
         int res = 0;
-        for (int i = 0; i < numbers.length; i++) {
-            if (numbers[i] == number)
+        for (int i = 0; i < numbers.size(); i++) {
+            if (numbers.get(i).equals(v));
             {
                 res = i;
                 break;

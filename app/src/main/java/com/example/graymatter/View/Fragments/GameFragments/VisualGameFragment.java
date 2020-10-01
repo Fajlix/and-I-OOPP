@@ -31,7 +31,7 @@ public class VisualGameFragment extends Fragment implements GameObserver {
     private MemoryGridAdapter visualGameGridAdapter;
     private TextView visualGameDescription;
     private ImageView visualGameClose;
-    private VisualMemoryViewModel visualMemoryViewModel;
+    private VisualMemoryViewModel visualMemoryVM;
 
     @Override
     public void update() {
@@ -77,7 +77,7 @@ public class VisualGameFragment extends Fragment implements GameObserver {
             @Override
             public void onClick(View view) {
                 ClearScreen();
-                //game.StartGame();
+                visualMemoryVM.startVisualGame();
                 ShowBoard();
 
             }
@@ -93,7 +93,7 @@ public class VisualGameFragment extends Fragment implements GameObserver {
     }
 
     public void tileClicked (View v){
-        visualMemoryViewModel.tileHasBeenClicked(v);
+        visualMemoryVM.tileHasBeenClicked(v);
     }
 
     public void ClearScreen() {
