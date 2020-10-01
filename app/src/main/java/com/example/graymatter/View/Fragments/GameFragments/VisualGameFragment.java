@@ -9,24 +9,16 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.graymatter.Game.MemoryGame.MemoryEvent;
-import com.example.graymatter.Game.MemoryGame.MemoryGame;
-import com.example.graymatter.Game.MemoryGame.MemoryGrid;
-import com.example.graymatter.Model.Game.ChimpGame.ChimpEvent;
-import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
-import com.example.graymatter.Model.Game.Game;
+import com.example.graymatter.Model.MemoryGame.MemoryGrid;
 import com.example.graymatter.Model.Game.GameObserver;
 import com.example.graymatter.R;
-import com.example.graymatter.View.Adapters.GridAdapter;
 import com.example.graymatter.View.Adapters.MemoryGridAdapter;
 import com.example.graymatter.ViewModel.VisualMemoryViewModel;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -36,11 +28,11 @@ public class VisualGameFragment extends Fragment implements GameObserver {
     private TextView visualGameDescription;
     private ImageView visualGameClose;
     private VisualMemoryViewModel visualMemoryVM;
+    private boolean visibility = true;
 
     @Override
     public void update() {
         visualGameGridAdapter.notifyDataSetChanged();
-
     }
 
     @Override
@@ -48,13 +40,17 @@ public class VisualGameFragment extends Fragment implements GameObserver {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_visual_game, container, false);
         super.onCreate(savedInstanceState);
-        // changes gameState of game
-        //game = new Game();
-        //game.ChangeState(new VisualGame(game));
-        // adds this as a observer of the game
-        //game.addObserver(this);
         visualMemoryVM = new ViewModelProvider(this).get(VisualMemoryViewModel.class);
         visualMemoryVM.init();
+        visualMemoryVM.getVisibility().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean _visibility) {
+                visibility = _visibility;
+                visualGameGridAdapter.setVisibility(_visibility);
+                visualGameGridAdapter.notifyDataSetChanged();
+
+            }
+        });
 
         visualMemoryVM.getGameOver().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
@@ -73,30 +69,13 @@ public class VisualGameFragment extends Fragment implements GameObserver {
             @Override
             public void onChanged(ArrayList<MemoryGrid.TileState> grid) {
                 visualGameGridAdapter = new MemoryGridAdapter(VisualGameFragment.this, grid);
+                visualGameGridAdapter.setVisibility(visibility);
                 gridView.setAdapter(visualGameGridAdapter);
+                gridView.setNumColumns(visualMemoryVM.getGridSize());
+                gridView.setVerticalSpacing(10);
+                gridView.setHorizontalSpacing(120/(visualMemoryVM.getGridSize()));
             }
         });
-
-        /* boolean isGameOver = memoryGame.getGameOver();
-        if (isGameOver == true)
-        {
-            int level = memoryGame.endGame();
-            if(level >= 20)
-            {
-                completedGame(level);
-            }
-            else
-            {
-                lostGame(level);
-            }
-        }
-        else {
-            ShowBoard();
-            visualGameGridAdapter.notifyDataSetChanged();
-            gridView.setAdapter(visualGameGridAdapter);
-        }
-
-        */
 
         visualGameDescription = (TextView) view.findViewById(R.id.visualGameDescription);
         visualGameDescription.setOnClickListener(new View.OnClickListener() {
@@ -110,17 +89,18 @@ public class VisualGameFragment extends Fragment implements GameObserver {
         });
 
         gridView = (GridView) view.findViewById(R.id.visualGameGrid);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!visibility)
+                    visualMemoryVM.tileHasBeenClicked(position);
+            }
+        });
 
         // clicking on this should take the user to the main page
-        ImageView visualGameClose = (ImageView) view.findViewById(R.id.visualGameClose);
-
-
+        //ImageView visualGameClose = (ImageView) view.findViewById(R.id.visualGameClose);
 
         return view;
-    }
-
-    public void tileClicked (View v){
-        visualMemoryVM.tileHasBeenClicked(v);
     }
 
     public void ClearScreen() {
@@ -129,57 +109,23 @@ public class VisualGameFragment extends Fragment implements GameObserver {
 
     public void ShowBoard() {
         gridView.bringToFront();
-        gridView.setNumColumns(4);
-        gridView.setVerticalSpacing(10);
-        gridView.setHorizontalSpacing(50);
+        gridView.setNumColumns(visualMemoryVM.getGridSize());
+        gridView.setVerticalSpacing(40);
+        gridView.setHorizontalSpacing(40);
     }
 
-    /* private class VisualGameGridAdapter extends BaseAdapter {
-        MemoryGame memoryGame = new MemoryGame();
-        // how many tiles on the board
-        @Override
-        public int getCount() {
-            //TODO baaaad
-            return memoryGame.getGridAsArrayList().size();
-        }
-
-        public Object getItem(int position) {
-            return null;
-        }
-
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view1 = getLayoutInflater().inflate(R.layout.visual_game_card, null);
-            ImageView imageView = view1.findViewById(R.id.whiteBackgroud);
-            imageView.setImageResource(R.mipmap.ic_gray_memory_foreground);
-            view1.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    tileHasBeenClicked(v);
-                }
-            });
-            return view1;
-        }
-
-    }
-
-     */
 
     public void showLostGame (int level)
     {
         visualGameDescription.bringToFront();
-        visualGameClose.bringToFront();
+        //visualGameClose.bringToFront();
         visualGameDescription.setText("Game over... Your score was: " + level + " \n \nPress to play again");
     }
 
     public void showWonGame (int level)
     {
         visualGameDescription.bringToFront();
-        visualGameClose.bringToFront();
+        //visualGameClose.bringToFront();
         visualGameDescription.setText("Wow you completed the game! You got the max score of: " + level + " \n \nPress to play again");
     }
 }

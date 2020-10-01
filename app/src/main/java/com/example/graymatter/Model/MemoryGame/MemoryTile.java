@@ -1,4 +1,4 @@
-package com.example.graymatter.Game.MemoryGame;
+package com.example.graymatter.Model.MemoryGame;
 
 public class MemoryTile {
 

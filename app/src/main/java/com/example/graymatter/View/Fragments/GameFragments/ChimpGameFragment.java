@@ -65,7 +65,6 @@ public class ChimpGameFragment extends Fragment{
         });
 
 
-        // changes gameState of game
         gridView = (GridView) view.findViewById(R.id.chimpTestGrid);
 
         chimpTestDescription = (TextView) view.findViewById(R.id.chimpTestDescription);

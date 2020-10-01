@@ -1,4 +1,7 @@
-package com.example.graymatter.Game.MemoryGame;
+package com.example.graymatter.Model.MemoryGame;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.graymatter.Model.Game.Game;
 
@@ -13,6 +16,7 @@ public class MemoryGame extends Game{
     private int level;
     private int lives;
     private boolean gameOver;
+    private boolean newGrid = false;
 
     public MemoryGame(){
         gameOver = true;
@@ -20,6 +24,7 @@ public class MemoryGame extends Game{
     }
 
     public void startGame(){
+        newGrid = true;
         gameOver = false;
         level = 1;
         lives = 3;
@@ -43,9 +48,11 @@ public class MemoryGame extends Game{
 
         switch (grid.getStatus()){
             case WON:
+                newGrid = true;
                 grid = new MemoryGrid(++level);
                 break;
             case LOST:
+                newGrid = true;
                 lives -= 1;
                 if (lives==0){
                     gameOver = true;
@@ -54,9 +61,9 @@ public class MemoryGame extends Game{
                 grid = new MemoryGrid(level);
                 break;
             default:
+                newGrid = false;
                 break;
         }
-        notifyObservers();
     }
 
     /*
@@ -67,6 +74,13 @@ public class MemoryGame extends Game{
 
     public ArrayList<MemoryGrid.TileState> getGridAsArrayList(){
         return grid.toArrayList();
+    }
+    public boolean getNewGrid(){
+        if (newGrid){
+            newGrid = false;
+            return true;
+        }
+        return false;
     }
 
     public MemoryGrid.TileState getTileState(int tileCoordinate){
