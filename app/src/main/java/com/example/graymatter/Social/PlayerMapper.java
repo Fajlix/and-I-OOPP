@@ -110,16 +110,19 @@ public class PlayerMapper implements PlayerMapperInterface {
         try {
             DataBaseModel nDb = newRead();
             List<Player> arr = nDb.getPlayers();
+            Player pToBe = null;
             for (Player p: arr) {
                 if (p.getUserID() == player.getUserID()) {
-                    if (!arr.remove(p)){
-                        throw new PlayerMapperException("Player not present");
-                    }
-                    nDb.setPlayers(arr);
-                    toWrite = nDb;
-                    enterData();
+                    pToBe = p;
+
                 }
             }
+            if (!arr.remove(pToBe)){
+                throw new PlayerMapperException("Player not present");
+            }
+            nDb.setPlayers(arr);
+            toWrite = nDb;
+            enterData();
         } catch (IOException e){
             e.printStackTrace();
         }

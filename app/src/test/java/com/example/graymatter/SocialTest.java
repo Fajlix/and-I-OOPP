@@ -56,8 +56,9 @@ public class SocialTest {
     public void deleteTest() throws UserInfoException {
         testPlayerMapper.logOut();
         testPlayerMapper.createNewAccountAndLogIn("shortlife@hotmail.se", "123Ninja_", "lana-del-rey-fan");
+        assertTrue(testPlayerMapper.isLoggedIn());
         testPlayerMapper.deleteAccount("123Ninja_");
-
+        assertFalse(testPlayerMapper.isLoggedIn());
     }
 
     @Test
