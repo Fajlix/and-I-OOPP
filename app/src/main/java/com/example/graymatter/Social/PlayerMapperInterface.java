@@ -7,5 +7,4 @@ public interface PlayerMapperInterface {
     void insert(Player player) throws PlayerMapperException;
     void update(Player player) throws PlayerMapperException;
     void delete(Player player) throws PlayerMapperException;
-
 }

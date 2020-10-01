@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="4" />
+  </component>
   <component name="AndroidLayouts">
     <shared>
       <config />
@@ -10,18 +13,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="945acc02-5fa4-411c-9acb-aab4339fd9bf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/Game/GameObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/Game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/Game/ReactionTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/Game/ReactionTime.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/ReactionTestActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/ReactionTestActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/Social/PlayerMapperInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/Social/PlayerMapperInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/example/graymatter/SocialTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/com/example/graymatter/SocialTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_API_30" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_API_29" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -42,8 +48,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -74,21 +80,116 @@
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SelectDeploymentTargetsDialog.selectedDevices" value="Pixel_2_API_30" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="SDK Location" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/java/com/example/graymatter/Social" />
+    <property name="project.structure.last.edited" value="Dependencies" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.externalDependencies" />
   </component>
   <component name="PsdUISettings">
+    <option name="MODULE_TAB" value="Properties" />
+    <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
     <option name="LAST_EDITED_BUILD_TYPE" value="release" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hanna\Documents\and-I-OOPP\app\src\main" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.example.graymatter" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\hanna\Documents\and-I-OOPP\app\src\main\java\com\example\graymatter\Social" />
+    </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Android App.app">
+    <configuration name="SocialTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.graymatter.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.graymatter" />
+      <option name="MAIN_CLASS_NAME" value="com.example.graymatter.SocialTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SocialTest.addAndRemoveFriend" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.graymatter.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.graymatter" />
+      <option name="MAIN_CLASS_NAME" value="com.example.graymatter.SocialTest" />
+      <option name="METHOD_NAME" value="addAndRemoveFriend" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SocialTest.changesTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.graymatter.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.graymatter" />
+      <option name="MAIN_CLASS_NAME" value="com.example.graymatter.SocialTest" />
+      <option name="METHOD_NAME" value="changesTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SocialTest.findTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.graymatter.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.graymatter" />
+      <option name="MAIN_CLASS_NAME" value="com.example.graymatter.SocialTest" />
+      <option name="METHOD_NAME" value="findTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SocialTest.logInAndOutTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.graymatter.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.graymatter" />
+      <option name="MAIN_CLASS_NAME" value="com.example.graymatter.SocialTest" />
+      <option name="METHOD_NAME" value="logInAndOutTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -147,6 +248,15 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Android JUnit.SocialTest" />
+        <item itemvalue="Android JUnit.SocialTest.logInAndOutTest" />
+        <item itemvalue="Android JUnit.SocialTest.addAndRemoveFriend" />
+        <item itemvalue="Android JUnit.SocialTest.findTest" />
+        <item itemvalue="Android JUnit.SocialTest.changesTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -174,31 +284,43 @@
     <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'reactionTest' into ReactionTestGUI&#10;&#10;# Conflicts:&#10;#&#9;app/src/main/java/com/example/graymatter/ui/home/HomeFragment.java&#10;#&#9;app/src/main/res/layout/fragment_home.xml" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="477" y="252" key="#PSD" timestamp="1600604870159">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="570" y="108" width="1145" height="538" key="#PSD" timestamp="1601405097388">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="570" y="108" width="1145" height="538" key="#PSD/0.0.1920.1050@0.0.1920.1050" timestamp="1601405097388" />
     <state x="477" y="252" key="#PSD/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600604870159" />
     <state x="2397" y="252" key="#PSD/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600161925738" />
     <state x="2599" y="165" key="#app" timestamp="1600356331939">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2599" y="165" key="#app/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600356331939" />
-    <state x="2685" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1600617255583">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="765" y="231" key="#com.intellij.ide.util.MemberChooser" timestamp="1601398084158">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="765" y="231" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1601398084158" />
     <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599923520346" />
     <state x="2685" y="229" key="#com.intellij.ide.util.MemberChooser/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600617255583" />
     <state x="926" y="388" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1600353362379">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="926" y="388" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600353362379" />
-    <state x="756" y="379" width="408" height="288" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1599922675258">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="756" y="383" width="410" height="291" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1601057448823">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="756" y="383" width="410" height="291" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1050@0.0.1920.1050" timestamp="1601057448823" />
     <state x="756" y="379" width="408" height="288" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599922675258" />
-    <state x="2460" y="275" key="AndroidCreateResourceDirectoryDialog" timestamp="1600355870650">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="-1659" y="3" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1601559842215">
+      <screen x="-1920" y="3" width="1920" height="1050" />
     </state>
+    <state x="-1659" y="3" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1050/-1920.3.1920.1050@-1920.3.1920.1050" timestamp="1601559842215" />
+    <state x="697" y="238" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1601492741482">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="697" y="238" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1050@0.0.1920.1050" timestamp="1601492741482" />
+    <state x="-1380" y="281" key="AndroidCreateResourceDirectoryDialog" timestamp="1601560010149">
+      <screen x="-1920" y="3" width="1920" height="1050" />
+    </state>
+    <state x="-1380" y="281" key="AndroidCreateResourceDirectoryDialog/0.0.1920.1050/-1920.3.1920.1050@-1920.3.1920.1050" timestamp="1601560010149" />
     <state x="2460" y="275" key="AndroidCreateResourceDirectoryDialog/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600355870650" />
     <state x="818" y="333" key="AndroidCreateXmlResourceDialog" timestamp="1599922273417">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -208,45 +330,109 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2477" y="64" key="CommitChangelistDialog2/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600099452223" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1600604865221">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="390" height="548" key="DebuggerActiveHint" timestamp="1601403483631">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state width="390" height="548" key="DebuggerActiveHint/0.0.1920.1050@0.0.1920.1050" timestamp="1601403483631" />
+    <state x="740" y="278" key="FileChooserDialogImpl" timestamp="1601301027335">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="740" y="278" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1601301027335" />
     <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600604865221" />
-    <state width="1340" height="266" key="GridCell.Tab.0.bottom" timestamp="1600606284255">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1875" height="171" key="GridCell.Tab.0.bottom" timestamp="1601571095976">
+      <screen x="-1920" y="3" width="1920" height="1050" />
     </state>
+    <state width="1875" height="171" key="GridCell.Tab.0.bottom/0.0.1920.1050/-1920.3.1920.1050@-1920.3.1920.1050" timestamp="1601571095976" />
+    <state width="1875" height="336" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1601501014795" />
     <state width="1340" height="266" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600606284255" />
     <state width="1877" height="235" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600356533733" />
-    <state width="1340" height="266" key="GridCell.Tab.0.center" timestamp="1600606284255">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1875" height="171" key="GridCell.Tab.0.center" timestamp="1601571095976">
+      <screen x="-1920" y="3" width="1920" height="1050" />
     </state>
+    <state width="1875" height="171" key="GridCell.Tab.0.center/0.0.1920.1050/-1920.3.1920.1050@-1920.3.1920.1050" timestamp="1601571095976" />
+    <state width="1875" height="336" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1601501014795" />
     <state width="1340" height="266" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600606284255" />
     <state width="1877" height="235" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600356533733" />
-    <state width="1340" height="266" key="GridCell.Tab.0.left" timestamp="1600606284255">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1875" height="171" key="GridCell.Tab.0.left" timestamp="1601571095976">
+      <screen x="-1920" y="3" width="1920" height="1050" />
     </state>
+    <state width="1875" height="171" key="GridCell.Tab.0.left/0.0.1920.1050/-1920.3.1920.1050@-1920.3.1920.1050" timestamp="1601571095976" />
+    <state width="1875" height="336" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1601501014795" />
     <state width="1340" height="266" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600606284255" />
     <state width="1877" height="235" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600356533733" />
-    <state width="1340" height="266" key="GridCell.Tab.0.right" timestamp="1600606284255">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1875" height="171" key="GridCell.Tab.0.right" timestamp="1601571095976">
+      <screen x="-1920" y="3" width="1920" height="1050" />
     </state>
+    <state width="1875" height="171" key="GridCell.Tab.0.right/0.0.1920.1050/-1920.3.1920.1050@-1920.3.1920.1050" timestamp="1601571095976" />
+    <state width="1875" height="336" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1601501014795" />
     <state width="1340" height="266" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600606284255" />
     <state width="1877" height="235" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600356533733" />
+    <state width="1875" height="332" key="GridCell.Tab.1.bottom" timestamp="1601555457701">
+      <screen x="-1920" y="3" width="1920" height="1050" />
+    </state>
+    <state width="1875" height="332" key="GridCell.Tab.1.bottom/0.0.1920.1050/-1920.3.1920.1050@-1920.3.1920.1050" timestamp="1601555457701" />
+    <state width="1875" height="336" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1601501014795" />
+    <state width="1875" height="332" key="GridCell.Tab.1.center" timestamp="1601555457701">
+      <screen x="-1920" y="3" width="1920" height="1050" />
+    </state>
+    <state width="1875" height="332" key="GridCell.Tab.1.center/0.0.1920.1050/-1920.3.1920.1050@-1920.3.1920.1050" timestamp="1601555457701" />
+    <state width="1875" height="336" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1601501014795" />
+    <state width="1875" height="332" key="GridCell.Tab.1.left" timestamp="1601555457701">
+      <screen x="-1920" y="3" width="1920" height="1050" />
+    </state>
+    <state width="1875" height="332" key="GridCell.Tab.1.left/0.0.1920.1050/-1920.3.1920.1050@-1920.3.1920.1050" timestamp="1601555457701" />
+    <state width="1875" height="336" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1601501014795" />
+    <state width="1875" height="332" key="GridCell.Tab.1.right" timestamp="1601555457701">
+      <screen x="-1920" y="3" width="1920" height="1050" />
+    </state>
+    <state width="1875" height="332" key="GridCell.Tab.1.right/0.0.1920.1050/-1920.3.1920.1050@-1920.3.1920.1050" timestamp="1601555457701" />
+    <state width="1875" height="336" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1601501014795" />
     <state x="667" y="261" key="IDE.errors.dialog" timestamp="1599918159964">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="667" y="261" key="IDE.errors.dialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1599918159964" />
-    <state x="565" y="149" key="SettingsEditor" timestamp="1600349797421">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="565" y="150" key="SettingsEditor" timestamp="1601072405694">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="565" y="150" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1601072405694" />
     <state x="565" y="149" key="SettingsEditor/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600349797421" />
-    <state x="358" y="218" width="1413" height="577" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1600349801251">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="358" y="220" width="1413" height="583" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1601072338353">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="358" y="220" width="1413" height="583" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1601072338353" />
     <state x="358" y="218" width="1413" height="577" key="com.android.tools.idea.avdmanager.AvdListDialog/1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1600349801251" />
-    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1600614451683">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="636" y="312" key="psd.add.library.dependency.panel.dimension" timestamp="1601403660750">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="636" y="312" key="psd.add.library.dependency.panel.dimension/0.0.1920.1050@0.0.1920.1050" timestamp="1601403660750" />
+    <state x="701" y="152" key="refactoring.ChangeSignatureDialog" timestamp="1601407431161">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="701" y="152" key="refactoring.ChangeSignatureDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1601407431161" />
+    <state x="623" y="227" width="672" height="685" key="search.everywhere.popup" timestamp="1601452595416">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="623" y="227" width="672" height="685" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1601452595416" />
     <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1600614451683" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-method">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/graymatter/Social/PlayerMapper.java</url>
+          <line>145</line>
+          <properties class="com.example.graymatter.Social.PlayerMapper" method="update">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="AndroidJUnit">
+        <watch expression="dbPath.value" />
+        <watch expression="dbPath.value" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
