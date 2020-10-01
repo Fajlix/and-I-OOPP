@@ -25,7 +25,9 @@ public class ChimpGameFragment extends Fragment{
 
     public void update() {
         chimpGameGridAdapter.notifyDataSetChanged();
+
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -110,14 +112,14 @@ public class ChimpGameFragment extends Fragment{
     {
         chimpTestDescription.bringToFront();
         //chimpTestClose.bringToFront();
-        chimpTestDescription.setText("Game over... Your score was: " + score);
+        chimpTestDescription.setText("Game over... Your score was: " + score + " \n \nPress to play again");
     }
 
     public void showWonGame (int score)
     {
         chimpTestDescription.bringToFront();
         //chimpTestClose.bringToFront();
-        chimpTestDescription.setText("Wow you completed the game! You got the max score of: " + score);
+        chimpTestDescription.setText("Wow you completed the game! You got the max score of: " + score + " \n \nPress to play again");
     }
 
 
