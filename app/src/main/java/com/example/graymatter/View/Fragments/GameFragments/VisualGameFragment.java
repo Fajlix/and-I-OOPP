@@ -1,6 +1,9 @@
 package com.example.graymatter.View.Fragments.GameFragments;
 
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.fragment.app.Fragment;
 
 import com.example.graymatter.Model.Game.ChimpGame.ChimpEvent;
 import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
@@ -19,47 +20,30 @@ import com.example.graymatter.R;
 
 import org.greenrobot.eventbus.EventBus;
 
-public class ChimpGameFragment extends Fragment implements GameObserver {
+public class VisualGameFragment extends Fragment implements GameObserver {
     private Game game;
     private GridView gridView;
-    private ChimpGameGridAdapter chimpGameGridAdapter;
+    private VisualGameGridAdapter visualGameGridAdapter;
     private TextView chimpTestDescription;
-    private ImageView chimpTestClose;
 
     @Override
     public void update() {
-        ChimpGame chimpGame = ((ChimpGame) game.getGameState());
+        ShowBoard();
+        visualGameGridAdapter.notifyDataSetChanged();
+        gridView.setAdapter(visualGameGridAdapter);
 
-        boolean isGameOver = chimpGame.getGameOver();
-        if (isGameOver == true)
-        {
-            int numberQty = chimpGame.StopGame();
-            if(numberQty >= 25)
-            {
-                completedGame(numberQty);
-            }
-            else
-            {
-                lostGame(numberQty);
-            }
-        }
-        else {
-            ShowBoard();
-            chimpGameGridAdapter.notifyDataSetChanged();
-            gridView.setAdapter(chimpGameGridAdapter);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_chimp_game, container, false);
+        View view = inflater.inflate(R.layout.fragment_visual_game, container, false);
         super.onCreate(savedInstanceState);
         // changes gameState of game
         game = new Game();
-        game.ChangeState(new ChimpGame(game));
+        //game.ChangeState(new VisualGame(game));
         // adds this as a observer of the game
-        game.addObserver(this);
+        //game.addObserver(this);
 
         gridView = (GridView) view.findViewById(R.id.chimpTestGrid);
 
@@ -76,7 +60,7 @@ public class ChimpGameFragment extends Fragment implements GameObserver {
 
 
         // clicking on this should take the user to the main page
-        chimpTestClose = (ImageView) view.findViewById(R.id.chimpGameClose);
+        //ImageView reactionTestClose = (ImageView) view.findViewById(R.id.reactionTestClose);
 
 
 
@@ -113,13 +97,13 @@ public class ChimpGameFragment extends Fragment implements GameObserver {
 
     public void ShowBoard() {
         gridView.bringToFront();
-        chimpGameGridAdapter = new ChimpGameGridAdapter();
+        visualGameGridAdapter = new VisualGameFragment.VisualGameGridAdapter();
         gridView.setNumColumns(4);
         gridView.setVerticalSpacing(10);
         gridView.setHorizontalSpacing(50);
     }
 
-    private class ChimpGameGridAdapter extends BaseAdapter {
+    private class VisualGameGridAdapter extends BaseAdapter {
         ChimpGame chimpGame = ((ChimpGame) game.getGameState());
         // how many tiles on the board
         @Override
@@ -160,19 +144,5 @@ public class ChimpGameFragment extends Fragment implements GameObserver {
             return view1;
         }
 
-    }
-
-    public void lostGame (int score)
-    {
-        chimpTestDescription.bringToFront();
-        chimpTestClose.bringToFront();
-        chimpTestDescription.setText("Game over... Your score was: " + score + " \n \nPress to play again");
-    }
-
-    public void completedGame (int score)
-    {
-        chimpTestDescription.bringToFront();
-        chimpTestClose.bringToFront();
-        chimpTestDescription.setText("Wow you completed the game! You got the max score of: " + score + " \n \nPress to play again");
     }
 }
