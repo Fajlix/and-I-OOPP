@@ -85,13 +85,12 @@ public class ChimpGameFragment extends Fragment{
 
         return view;
     }
+
     public void tileClicked(int n){
         chimpGameVM.tileHasBeenClicked(n);
     }
 
-
-
-    // clears the screen of all teh text and images to show the test
+    // clears the screen of all the text and images to show the test
     public void ClearStartScreen() {
 
         chimpTestDescription.setText("");

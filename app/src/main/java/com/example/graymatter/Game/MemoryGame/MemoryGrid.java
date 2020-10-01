@@ -49,6 +49,7 @@ public class MemoryGrid {
         if (!tile.isChosen()){
             if (tile.isCorrect()){
                 correctTilesRemaining -= 1;
+                visibility = false;
                 if (correctTilesRemaining == 0){ // Chosen tile was the last correct tile
                     status = Status.WON;
                 }

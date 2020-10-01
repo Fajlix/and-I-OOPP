@@ -7,27 +7,28 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
-public class MemoryGame {
-    private Game game;
+public class MemoryGame extends Game{
+
     private MemoryGrid grid; // The grid on which the selectable tiles are located
     private int level;
     private int lives;
     private boolean gameOver;
+    boolean visibility;
 
-    public MemoryGame(Game game){
+    public MemoryGame(){
         gameOver = true;
-        this.game = game;
         EventBus.getDefault().register(this);
     }
 
-    public void StartGame(){
+    public void startGame(){
         gameOver = false;
         level = 1;
         lives = 3;
         grid = new MemoryGrid(level);
+        visibility = true;
     }
 
-    public int StopGame(){
+    public int endGame(){
         gameOver = true;
         return level;
     }
@@ -57,7 +58,7 @@ public class MemoryGame {
             default:
                 break;
         }
-        game.notifyObservers();
+        notifyObservers();
     }
 
     /*
@@ -80,5 +81,11 @@ public class MemoryGame {
 
     public boolean getGameOver(){
         return gameOver;
+    }
+
+    public boolean getVisibility ()
+    {
+        boolean visibilityCopy = visibility; //Maybe unnecessary to copy primitive type, don't know, IDE seems to think so
+        return visibilityCopy;
     }
 }

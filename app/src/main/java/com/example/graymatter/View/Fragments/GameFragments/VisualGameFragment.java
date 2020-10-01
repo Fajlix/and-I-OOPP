@@ -20,24 +20,27 @@ import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
 import com.example.graymatter.Model.Game.Game;
 import com.example.graymatter.Model.Game.GameObserver;
 import com.example.graymatter.R;
+import com.example.graymatter.View.Adapters.GridAdapter;
+import com.example.graymatter.View.Adapters.MemoryGridAdapter;
+import com.example.graymatter.ViewModel.VisualMemoryViewModel;
 
 import org.greenrobot.eventbus.EventBus;
 
 public class VisualGameFragment extends Fragment implements GameObserver {
-    private Game game;
     private GridView gridView;
-    private VisualGameGridAdapter visualGameGridAdapter;
+    private MemoryGridAdapter visualGameGridAdapter;
     private TextView visualGameDescription;
     private ImageView visualGameClose;
+    private VisualMemoryViewModel visualMemoryViewModel;
 
     @Override
     public void update() {
-        MemoryGame memoryGame = ((MemoryGame) game.getGameState());
+        visualGameGridAdapter.notifyDataSetChanged();
 
-        boolean isGameOver = memoryGame.getGameOver();
+       /* boolean isGameOver = memoryGame.getGameOver();
         if (isGameOver == true)
         {
-            int level = memoryGame.StopGame();
+            int level = memoryGame.endGame();
             if(level >= 20)
             {
                 completedGame(level);
@@ -52,6 +55,8 @@ public class VisualGameFragment extends Fragment implements GameObserver {
             visualGameGridAdapter.notifyDataSetChanged();
             gridView.setAdapter(visualGameGridAdapter);
         }
+
+        */
     }
 
     @Override
@@ -87,33 +92,23 @@ public class VisualGameFragment extends Fragment implements GameObserver {
         return view;
     }
 
-    private void tileHasBeenClicked(View view){
-        int n = 0;
-        for (int i = 0; i < gridView.getChildCount(); i++) {
-            if (gridView.getChildAt(i).equals(view))
-            {
-                n = i;
-                break;
-            }
-        }
-        EventBus.getDefault().post(new MemoryEvent(n));
+    public void tileClicked (int n){
+        visualMemoryViewModel.tileHasBeenClicked(n);
     }
 
-    // clears the screen of all teh text and images to show the test
     public void ClearScreen() {
         visualGameDescription.setText("");
     }
 
     public void ShowBoard() {
         gridView.bringToFront();
-        visualGameGridAdapter = new VisualGameFragment.VisualGameGridAdapter();
         gridView.setNumColumns(4);
         gridView.setVerticalSpacing(10);
         gridView.setHorizontalSpacing(50);
     }
 
-    private class VisualGameGridAdapter extends BaseAdapter {
-        MemoryGame memoryGame = ((MemoryGame) game.getGameState());
+    /* private class VisualGameGridAdapter extends BaseAdapter {
+        MemoryGame memoryGame = new MemoryGame();
         // how many tiles on the board
         @Override
         public int getCount() {
@@ -133,31 +128,19 @@ public class VisualGameFragment extends Fragment implements GameObserver {
         public View getView(int position, View convertView, ViewGroup parent) {
             View view1 = getLayoutInflater().inflate(R.layout.visual_game_card, null);
             ImageView imageView = view1.findViewById(R.id.whiteBackgroud);
-            if (memoryGame.getGridAsArrayList().get(position).equals(MemoryGrid.TileState.CORRECTHIDDEN)) {
-                imageView.setImageResource(R.mipmap.ic_gray_memory_foreground);
-                view1.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        tileHasBeenClicked(v);
-                    }
-                });
-            }
-            else if (memoryGame.getGridAsArrayList().get(position).equals(MemoryGrid.TileState.CORRECTCHOSEN))
-            {
-                imageView.setImageResource(R.mipmap.ic_gray_memory_foreground);
-            }
-            else if (memoryGame.getGridAsArrayList().get(position).equals(MemoryGrid.TileState.INCORRECTHIDDEN))
-            {
-                imageView.setImageResource(R.mipmap.ic_gray_memory_foreground);
-            }
-            else if (memoryGame.getGridAsArrayList().get(position).equals(MemoryGrid.TileState.INCORRECTCHOSEN))
-            {
-                imageView.setImageResource(R.mipmap.ic_gray_memory_foreground);
-            }
+            imageView.setImageResource(R.mipmap.ic_gray_memory_foreground);
+            view1.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    tileHasBeenClicked(v);
+                }
+            });
             return view1;
         }
 
     }
+
+     */
 
     public void lostGame (int level)
     {
