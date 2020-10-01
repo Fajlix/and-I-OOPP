@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_gamesFragment_to_chimpGameActivity"
             app:destination="@id/chimpGameActivity" />
+        <action
+            android:id="@+id/action_gamesFragment_to_visualGameFragment"
+            app:destination="@id/visualGameFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -45,4 +48,9 @@
         android:id="@+id/chimpGameActivity"
         android:name="com.example.graymatter.View.Fragments.GameFragments.ChimpGameFragment"
         android:label="ChimpGameActivity" />
+    <fragment
+        android:id="@+id/visualGameFragment"
+        android:name="com.example.graymatter.View.Fragments.GameFragments.VisualGameFragment"
+        android:label="fragment_visual_game"
+        tools:layout="@layout/fragment_visual_game" />
 </navigation>

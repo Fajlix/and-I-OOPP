@@ -1,4 +1,4 @@
-package com.example.graymatter.Game.MemoryGame;
+package com.example.graymatter.Model.MemoryGame;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,7 +68,7 @@ public class MemoryGrid {
         return new MemoryTile(grid.get(x).get(y));
     }
 
-    private int size(int level){
+    public static int size(int level){
 
         switch(level){ // decides the size of (one side of) the square grid based on level
             case 1: case 2:
@@ -140,7 +140,6 @@ public class MemoryGrid {
                 gridArrayList.add(getState(y));
             }
         }
-
         return gridArrayList;
     }
 

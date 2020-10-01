@@ -92,7 +92,7 @@ public class ReactionGameFragment extends Fragment{
         reactionTestDescription.setBackgroundColor(0xff000000);
         if (res <= 0)
         {
-            reactionTestDescription.setText("DIN FANSKAP KLICKADE FÖR TIDIGT");
+            reactionTestDescription.setText("You pressed to early");
         }
         else
         {

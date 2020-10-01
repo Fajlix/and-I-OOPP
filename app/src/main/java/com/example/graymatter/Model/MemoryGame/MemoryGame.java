@@ -1,30 +1,37 @@
-package com.example.graymatter.Game.MemoryGame;
+package com.example.graymatter.Model.MemoryGame;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import com.example.graymatter.Model.Game.Game;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
-public class MemoryGame {
+public class MemoryGame extends Game{
 
     private MemoryGrid grid; // The grid on which the selectable tiles are located
     private int level;
     private int lives;
     private boolean gameOver;
+    private boolean newGrid = false;
 
     public MemoryGame(){
         gameOver = true;
         EventBus.getDefault().register(this);
     }
 
-    public void StartGame(){
+    public void startGame(){
+        newGrid = true;
         gameOver = false;
         level = 1;
         lives = 3;
         grid = new MemoryGrid(level);
     }
 
-    public int StopGame(){
+    public int endGame(){
         gameOver = true;
         return level;
     }
@@ -41,9 +48,11 @@ public class MemoryGame {
 
         switch (grid.getStatus()){
             case WON:
+                newGrid = true;
                 grid = new MemoryGrid(++level);
                 break;
             case LOST:
+                newGrid = true;
                 lives -= 1;
                 if (lives==0){
                     gameOver = true;
@@ -52,9 +61,9 @@ public class MemoryGame {
                 grid = new MemoryGrid(level);
                 break;
             default:
+                newGrid = false;
                 break;
         }
-    //TODO: notify observers
     }
 
     /*
@@ -65,6 +74,13 @@ public class MemoryGame {
 
     public ArrayList<MemoryGrid.TileState> getGridAsArrayList(){
         return grid.toArrayList();
+    }
+    public boolean getNewGrid(){
+        if (newGrid){
+            newGrid = false;
+            return true;
+        }
+        return false;
     }
 
     public MemoryGrid.TileState getTileState(int tileCoordinate){

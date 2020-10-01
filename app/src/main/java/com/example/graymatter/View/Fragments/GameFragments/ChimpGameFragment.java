@@ -65,7 +65,6 @@ public class ChimpGameFragment extends Fragment{
         });
 
 
-        // changes gameState of game
         gridView = (GridView) view.findViewById(R.id.chimpTestGrid);
 
         chimpTestDescription = (TextView) view.findViewById(R.id.chimpTestDescription);
@@ -79,16 +78,18 @@ public class ChimpGameFragment extends Fragment{
         });
         // clicking on this should take the user to the main page
         //ImageView reactionTestClose = (ImageView) view.findViewById(R.id.reactionTestClose);
+        //chimpTestClose = (ImageView) view.findViewById(R.id.chimpGameClose);
+
+
 
         return view;
     }
+
     public void tileClicked(int n){
         chimpGameVM.tileHasBeenClicked(n);
     }
 
-
-
-    // clears the screen of all teh text and images to show the test
+    // clears the screen of all the text and images to show the test
     public void ClearStartScreen() {
 
         chimpTestDescription.setText("");

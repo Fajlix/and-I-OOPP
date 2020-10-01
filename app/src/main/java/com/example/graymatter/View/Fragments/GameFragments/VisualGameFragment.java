@@ -3,35 +3,36 @@ package com.example.graymatter.View.Fragments.GameFragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.graymatter.Model.Game.ChimpGame.ChimpEvent;
-import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
-import com.example.graymatter.Model.Game.Game;
+import com.example.graymatter.Model.MemoryGame.MemoryGrid;
 import com.example.graymatter.Model.Game.GameObserver;
 import com.example.graymatter.R;
+import com.example.graymatter.View.Adapters.MemoryGridAdapter;
+import com.example.graymatter.ViewModel.VisualMemoryViewModel;
 
-import org.greenrobot.eventbus.EventBus;
+import java.util.ArrayList;
 
 public class VisualGameFragment extends Fragment implements GameObserver {
-    private Game game;
     private GridView gridView;
-    private VisualGameGridAdapter visualGameGridAdapter;
-    private TextView chimpTestDescription;
+    private MemoryGridAdapter visualGameGridAdapter;
+    private TextView visualGameDescription;
+    private ImageView visualGameClose;
+    private VisualMemoryViewModel visualMemoryVM;
+    private boolean visibility = true;
 
     @Override
     public void update() {
-        ShowBoard();
         visualGameGridAdapter.notifyDataSetChanged();
-        gridView.setAdapter(visualGameGridAdapter);
-
     }
 
     @Override
@@ -39,110 +40,92 @@ public class VisualGameFragment extends Fragment implements GameObserver {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_visual_game, container, false);
         super.onCreate(savedInstanceState);
-        // changes gameState of game
-        //game = new Game();
-        //game.ChangeState(new VisualGame(game));
-        // adds this as a observer of the game
-        //game.addObserver(this);
+        visualMemoryVM = new ViewModelProvider(this).get(VisualMemoryViewModel.class);
+        visualMemoryVM.init();
+        visualMemoryVM.getVisibility().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean _visibility) {
+                visibility = _visibility;
+                visualGameGridAdapter.setVisibility(_visibility);
+                visualGameGridAdapter.notifyDataSetChanged();
 
-        gridView = (GridView) view.findViewById(R.id.chimpTestGrid);
+            }
+        });
 
-        chimpTestDescription = (TextView) view.findViewById(R.id.chimpTestDescription);
-        chimpTestDescription.setOnClickListener(new View.OnClickListener() {
+        visualMemoryVM.getGameOver().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean gameOver) {
+                if (gameOver)
+                {
+                    int levelQty = visualMemoryVM.getLevel();
+                    if(levelQty >= 20)
+                        showWonGame(levelQty);
+                    else
+                        showLostGame(levelQty);
+                }
+            }
+        });
+        visualMemoryVM.getGrid().observe(getViewLifecycleOwner(), new Observer<ArrayList<MemoryGrid.TileState>>() {
+            @Override
+            public void onChanged(ArrayList<MemoryGrid.TileState> grid) {
+                visualGameGridAdapter = new MemoryGridAdapter(VisualGameFragment.this, grid);
+                visualGameGridAdapter.setVisibility(visibility);
+                gridView.setAdapter(visualGameGridAdapter);
+                gridView.setNumColumns(visualMemoryVM.getGridSize());
+                gridView.setVerticalSpacing(10);
+                gridView.setHorizontalSpacing(120/(visualMemoryVM.getGridSize()));
+            }
+        });
+
+        visualGameDescription = (TextView) view.findViewById(R.id.visualGameDescription);
+        visualGameDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ClearScreen();
-                //game.StartGame();
+                visualMemoryVM.startVisualGame();
                 ShowBoard();
 
             }
         });
 
+        gridView = (GridView) view.findViewById(R.id.visualGameGrid);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!visibility)
+                    visualMemoryVM.tileHasBeenClicked(position);
+            }
+        });
 
         // clicking on this should take the user to the main page
-        //ImageView reactionTestClose = (ImageView) view.findViewById(R.id.reactionTestClose);
-
-
+        //ImageView visualGameClose = (ImageView) view.findViewById(R.id.visualGameClose);
 
         return view;
     }
 
-    private void tileHasBeenClicked(View view){
-        TextView textView = view.findViewById(R.id.cardNumber);
-        int n = 0;
-        for (int i = 0; i < gridView.getChildCount(); i++) {
-            if (gridView.getChildAt(i).equals(view))
-            {
-                n = i;
-                break;
-            }
-        }
-        int number = Integer.parseInt((String) textView.getText());
-        EventBus.getDefault().post(new ChimpEvent(n));
-    }
-
-    // clears the screen of all teh text and images to show the test
     public void ClearScreen() {
-
-        chimpTestDescription.setText("");
-        final ImageView iconNumber1 = this.getView().findViewById(R.id.iconNumber1);
-        final ImageView iconNumber2 = this.getView().findViewById(R.id.iconNumber2);
-        final ImageView iconNumber3 = this.getView().findViewById(R.id.iconNumber3);
-        final ImageView iconNumber4 = this.getView().findViewById(R.id.iconNumber4);
-        iconNumber1.setVisibility(View.GONE);
-        iconNumber2.setVisibility(View.GONE);
-        iconNumber3.setVisibility(View.GONE);
-        iconNumber4.setVisibility(View.GONE);
+        visualGameDescription.setText("");
     }
 
     public void ShowBoard() {
         gridView.bringToFront();
-        visualGameGridAdapter = new VisualGameFragment.VisualGameGridAdapter();
-        gridView.setNumColumns(4);
-        gridView.setVerticalSpacing(10);
-        gridView.setHorizontalSpacing(50);
+        gridView.setNumColumns(visualMemoryVM.getGridSize());
+        gridView.setVerticalSpacing(40);
+        gridView.setHorizontalSpacing(40);
     }
 
-    private class VisualGameGridAdapter extends BaseAdapter {
-        //ChimpGame chimpGame = ((ChimpGame) game.getGameState());
-        // how many tiles on the board
-        @Override
-        public int getCount() {
-            //TODO baaaad
-            return 0;//chimpGame.getBoard().length;
-        }
 
-        public Object getItem(int position) {
-            return null;
-        }
+    public void showLostGame (int level)
+    {
+        visualGameDescription.bringToFront();
+        //visualGameClose.bringToFront();
+        visualGameDescription.setText("Game over... Your score was: " + level + " \n \nPress to play again");
+    }
 
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view1 = getLayoutInflater().inflate(R.layout.chimp_game_card, null);
-            TextView numberText = view1.findViewById(R.id.cardNumber);
-            ImageView imageView = view1.findViewById(R.id.whiteBackgroud);
-            /*if (chimpGame.getBoard()[position] != 0){
-                view1.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        tileHasBeenClicked(v);
-                    }
-                });
-                if (chimpGame.getNumberVisibility())
-                    numberText.setText(String.valueOf(chimpGame.getBoard()[position]));
-                else
-                    numberText.setVisibility(View.INVISIBLE);
-            }
-            else{
-                numberText.setText("");
-                imageView.setImageResource(R.mipmap.ic_black_square_foreground);
-            }*/
-            return view1;
-        }
-
+    public void showWonGame (int level)
+    {
+        visualGameDescription.bringToFront();
+        //visualGameClose.bringToFront();
+        visualGameDescription.setText("Wow you completed the game! You got the max score of: " + level + " \n \nPress to play again");
     }
 }
