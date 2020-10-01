@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GamesFragment">
+    tools:context=".View.Fragments.GamesFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,18 +15,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.gridlayout.widget.GridLayout
+        <GridView
+            android:id="@+id/mainScreenGrid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:columnCount="2">
-
-            <ImageButton
-                android:id="@+id/imageButton11"
-                android:layout_width="205dp"
-                android:layout_height="197dp"
-                tools:src="@tools:sample/avatars" />
-
-        </androidx.gridlayout.widget.GridLayout>
+            android:layout_height="wrap_content" />
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
