@@ -1,9 +1,0 @@
-{
-	"players": [
-		{ "userName": "Mathilda97", "email": "mat@gmail.com", "password": "yihha123", "userID": 1, "userImage": "", 
-		"playerHistory": [
-			{ "gameID": 1, "score": 785, "gameType": "reactionTest", "time": "" }
-		], "friendUserIDs": [2, 71]
-		}
-	]		
-}

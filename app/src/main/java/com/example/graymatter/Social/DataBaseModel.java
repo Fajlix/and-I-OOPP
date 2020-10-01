@@ -7,36 +7,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class dbModel {
+public class DataBaseModel {
     public List<Player> players = new ArrayList<>();
     public Map<String, Integer> numbers;
 
-    protected dbModel(){
+    protected DataBaseModel(){
     }
 
     protected List<Player> getPlayers() {
         return players;
     }
 
-    public void setPlayers(List<Player> players) {
+    protected void setPlayers(List<Player> players) {
         this.players = players;
     }
 
-    public int getLastGameSessionNumber() {
+    protected int getLastGameSessionNumber() {
         return numbers.get("lastGameSessionNumber");
     }
 
-    public void incLastGameSessionNumber(){
+    protected void incLastGameSessionNumber(){
         Integer toInc = numbers.get("lastGameSessionNumber");
         numbers.put("lastGameSessionNumber", toInc + 1);
     }
 
-    public int getLastUserID() {
+    protected int getLastUserID() {
         return numbers.get("lastUserID");
     }
 
-    public void incLastUserID(){
+    protected void incLastUserID(){
         Integer toInc = numbers.get("lastUserID");
         numbers.put("lastUserID", toInc + 1);
+    }
+
+    protected int getCurrentPlayer(){
+        return numbers.get("currentPlayer");
     }
 }

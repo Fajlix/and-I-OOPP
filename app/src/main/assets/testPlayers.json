@@ -1,0 +1,62 @@
+{
+  "players": [
+    {
+      "userInfo": {
+        "email": "1337manneeeeen@gmail.com",
+        "password": "hejNej88*",
+        "friendUserIDs": [
+          2,
+          71
+        ]
+      },
+      "userName": "Tuff-tuff22oHalvt",
+      "timeZone": "Europe/Stockholm",
+      "userID": 15,
+      "userImage": "",
+      "playerHistory": [
+        {
+          "score": 128,
+          "gameType": "chimpTest",
+          "gameID": 33
+        }
+      ]
+    },
+    {
+      "userInfo": {
+        "email": "mat@gmail.com",
+        "password": "yihha123",
+        "friendUserIDs": [
+          2,
+          71
+        ]
+      },
+      "userName": "Mathilda97",
+      "timeZone": "Europe/Stockholm",
+      "userID": 1,
+      "userImage": "",
+      "playerHistory": [
+        {
+          "score": 785,
+          "gameType": "reactionTest",
+          "gameID": 1
+        }
+      ]
+    },
+    {
+      "userInfo": {
+        "email": "shortlife@hotmail.se",
+        "password": "123Ninja_",
+        "friendUserIDs": []
+      },
+      "userName": "lana-del-rey-fan",
+      "timeZone": "Europe/Stockholm",
+      "userID": 16,
+      "playerHistory": []
+    }
+  ],
+  "numbers": {
+    "lastGameSessionNumber": 33,
+    "lastUserID": 15,
+    "currentPlayer": 1
+  }
+}

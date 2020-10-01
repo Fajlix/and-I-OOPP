@@ -13,8 +13,9 @@ public class UserInfo {
     private List<Integer> friendUserIDs;
 
 
-    UserInfo(String email, String password, List<Integer> friendUserIDs) {
+    UserInfo(String email, String password, List<Integer> friendUserIDs) throws UserInfoException {
         this.email = email;
+        if (!passwordSafetyCheck(password)) throw new UserInfoException(passwordNegativeFeedback());
         this.password = password;
         this.friendUserIDs = friendUserIDs;
     }
@@ -27,8 +28,8 @@ public class UserInfo {
 
     protected List<Integer> getFriendUserIDs() {
         List<Integer> newList = new ArrayList<>();
-        Collections.copy(newList, this.friendUserIDs);
-        return newList;
+       // Collections.copy(newList, this.friendUserIDs);
+        return friendUserIDs;//newList;
     }
 
     protected String getEmail() throws UserInfoException {
@@ -42,15 +43,18 @@ public class UserInfo {
     }
 
     protected void setPassword(String oldPassword, String newPassword) throws UserInfoException {
-        if(this.password.equals(oldPassword) && passwordSafetyCheck(newPassword)){
-            this.password = newPassword;
-            return;
+        if(!isPasswordCorrect(oldPassword)){
+            throw new UserInfoException("Current password is incorrect");
         }
-        throw new UserInfoException("Current password is incorrect");
+        if(!passwordSafetyCheck(newPassword)){
+            throw new UserInfoException(passwordNegativeFeedback());
+        }
+        this.password = newPassword;
+
     }
 
     protected void setEmail(String password, String email) throws UserInfoException {
-        if(this.password.equals(password)){
+        if(isPasswordCorrect(password)){
             this.email = email;
             return;
         }
@@ -67,7 +71,7 @@ public class UserInfo {
         if(!friendUserIDs.contains(friendUserID)){
             throw new UserInfoException("friendUserID does not match any of player´s friend");
         }
-        friendUserIDs.remove(friendUserID);
+        friendUserIDs.remove((Integer) friendUserID);
     }
 
     //can a method JUST check for exceptions?

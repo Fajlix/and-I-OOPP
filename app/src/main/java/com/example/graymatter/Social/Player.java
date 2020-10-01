@@ -252,7 +252,7 @@ public class Player {
         userInfo.removeFriend(userID);
     }
 
-    public String getTimeZone() {
+    protected String getTimeZone() {
 
         return timeZone;
     }

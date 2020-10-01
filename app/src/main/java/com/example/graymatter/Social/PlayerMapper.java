@@ -1,28 +1,22 @@
 package com.example.graymatter.Social;
 
-import android.media.Image;
 import android.net.ParseException;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Reader;
+import java.io.Writer;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.TimeZone;
@@ -33,17 +27,26 @@ import java.util.TimeZone;
 
 public class PlayerMapper implements PlayerMapperInterface {
     private String serverLocation;
-    private final String dbPath = "C:/Users/hanna/Documents/and-I-OOPP/app/src/main/java/com/example/graymatter/Social/testPlayers.json";
+    private final String dbPath = "src/main/assets/testPlayers.json";
     //good for batch writing. bad for safety. idk
-    private dbModel toWrite;
+    private DataBaseModel toWrite;
+    Gson gson = new Gson();
+ /*   FileWriter writer;
+    {
+        try {
+            writer = new FileWriter(dbPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }**/
 
     private Random rand = new Random();
 
 
 
-    Player currentPlayer;
+    public Player currentPlayer;
     private int currentFriendID;
-    GameSession currentGameSession;
+    public GameSession currentGameSession;
     //orimligt???
     //List<Player> playersList;
     //List<Player> friendBuffer;   ??? kanske
@@ -58,14 +61,21 @@ public class PlayerMapper implements PlayerMapperInterface {
         serverLocation = "http://localhost:3000";
         //in db?
         currentFriendID = 0;
+            try {
+                if (newRead().getCurrentPlayer() != 0) {
+                    Optional<Player> player = find(newRead().getCurrentPlayer());
+                    if (player.isPresent()) currentPlayer = player.get();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+        }
         listeners = new ArrayList<>();
     }
 
     @Override
     public Optional<Player> find(int userID) {
         try {
-            dbModel obj =  newRead();
-
+            DataBaseModel obj =  newRead();
             for (Player p : obj.players){
 
                 if (p.getUserID() == (userID)){
@@ -98,7 +108,7 @@ public class PlayerMapper implements PlayerMapperInterface {
     public void delete(Player player) throws PlayerMapperException {
         newDataEntry();
         try {
-            dbModel nDb = newRead();
+            DataBaseModel nDb = newRead();
             List<Player> arr = nDb.getPlayers();
             for (Player p: arr) {
                 if (p.getUserID() == player.getUserID()) {
@@ -120,7 +130,7 @@ public class PlayerMapper implements PlayerMapperInterface {
         newDataEntry();
         try {
 
-            dbModel dbModel = newRead();
+            DataBaseModel dbModel = newRead();
             dbModel.getPlayers().add(player);
             toWrite = dbModel;
             enterData();
@@ -133,13 +143,16 @@ public class PlayerMapper implements PlayerMapperInterface {
     public void update(Player player) throws PlayerMapperException {
         newDataEntry();
         try {
-            dbModel nDb = newRead();
+            DataBaseModel nDb = newRead();
             List<Player> arr = nDb.getPlayers();
             for (Player p : arr) {
                 if (p.getUserID() == player.getUserID()) {
-                    nDb.getPlayers().add(p);
+                    arr.remove(p);
+                    arr.add(player);
+                    nDb.players = arr;
                     toWrite = nDb;
                     enterData();
+                    return;
                 }
             }
         } catch (IOException | ParseException e){
@@ -178,8 +191,9 @@ public class PlayerMapper implements PlayerMapperInterface {
     public void logIn(String userName, String password) throws PlayerMapperException {
         //might be highly unnecessary
         Optional<Player> player = Optional.empty();
+        DataBaseModel nDb = null;
         try {
-            dbModel nDb = newRead();
+            nDb = newRead();
             for (Player p : nDb.getPlayers()){
                 if (p.getUserName().equals(userName)){
                     player = Optional.of(p);
@@ -197,6 +211,14 @@ public class PlayerMapper implements PlayerMapperInterface {
         player.get().isPasswordCorrect(password);
        // notifyListenersLogin();
         currentPlayer = player.get();
+        nDb.numbers.put("currentPlayer",player.get().getUserID());
+        newDataEntry();
+        toWrite = nDb;
+        try {
+            enterData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void changeEmail(String password, String email) throws UserInfoException {
@@ -214,10 +236,6 @@ public class PlayerMapper implements PlayerMapperInterface {
         update(currentPlayer);
     }
 
-
-
-
-
     /**
      * För att skapa nytt konto och logga in.
      */
@@ -227,35 +245,59 @@ public class PlayerMapper implements PlayerMapperInterface {
         if (isUserName(userName)) throw new PlayerMapperException("Username already taken!");
         //ask if they want email login help?
         if (isEmail(email)) throw new PlayerMapperException("Email is already being used!");
-        currentFriendID++;
-        Player player = Player.makePlayer(currentFriendID, email, password, userName);
-        currentPlayer = player;
-        insert(player);
-    }
-
-    private void newDataEntry(){
-        toWrite = new dbModel();
-    }
-
-    private void enterData() throws FileNotFoundException {
-        Gson gson = new Gson();
+        DataBaseModel db = null;
         try {
-            gson.toJson(toWrite, new FileWriter(dbPath));
+            db = newRead();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        /*PrintWriter pw = new PrintWriter(dbPath);
-        pw.write(toWrite.toString());
-        pw.flush();
-        pw.close();*/
-        toWrite = null;
+        if (db == null) throw new AssertionError();
+        db.incLastUserID();
+        Player player = Player.makePlayer(db.getLastUserID(), email, password, userName);
+        insert(player);
+        logIn(userName, password);
+
+    }
+
+    //TODO
+    public void deleteAccount(String password){
+        currentPlayer.isPasswordCorrect(password);
+        delete(currentPlayer);
+        currentPlayer = null;
+        try {
+            toWrite = newRead();
+            toWrite.numbers.put("currentPlayer", 0);
+            enterData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void newDataEntry(){
+        //toWrite = new dbModel();
+    }
+
+    private void enterData() throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Writer writer = new FileWriter(dbPath);
+        gson.toJson(toWrite, writer);
+        // PrintWriter pw = new PrintWriter(dbPath);
+       // pw.write(toWrite.toString());
+       // pw.flush();
+       // pw.close();
+        writer.flush();
+        writer.close();
+        //toWrite = null;
     }
 
 
-    private dbModel newRead() throws IOException {
-        Gson gson = new Gson();
-        Reader reader = new FileReader("C:/Users/hanna/Documents/and-I-OOPP/app/src/main/java/com/example/graymatter/Social/testPlayers.json");
-        return gson.fromJson(reader, dbModel.class);
+    private DataBaseModel newRead() throws IOException {
+       // Gson gson = new Gson();
+        Reader reader = new FileReader(dbPath);
+
+        DataBaseModel toReturn = gson.fromJson(reader, DataBaseModel.class);
+        reader.close();
+        return toReturn;
     }
 
 
@@ -341,10 +383,10 @@ public class PlayerMapper implements PlayerMapperInterface {
 
 //?
 
-    //TODO
-    private boolean isUserName(String userName) {
+
+    public boolean isUserName(String userName) {
         try {
-            dbModel nDb = newRead();
+            DataBaseModel nDb = newRead();
             for (Player p: nDb.getPlayers()) {
                 if (p.getUserName().equals(userName)) {
                     return true;
@@ -358,7 +400,7 @@ public class PlayerMapper implements PlayerMapperInterface {
 
     public boolean isEmail(String email) {
         try {
-            dbModel nDb = newRead();
+            DataBaseModel nDb = newRead();
             for (Player p: nDb.getPlayers()) {
                 if(p.sameEmail(email)){
                     return true;
@@ -370,12 +412,14 @@ public class PlayerMapper implements PlayerMapperInterface {
         return false;
     }
 
+
+    //TODO testing / remodeling
     public void storeGameSession(int score, String gameType) throws ParseException, JSONException, IOException {
         LocalDate date = LocalDate.now(TimeZone.getTimeZone(currentPlayer.getTimeZone()).toZoneId());
         int year = date.getYear();
         int month = date.getMonthValue();
         int day = date.getDayOfMonth();
-        dbModel nDb;
+        DataBaseModel nDb;
         try {
             nDb = newRead();
 
@@ -398,7 +442,7 @@ public class PlayerMapper implements PlayerMapperInterface {
     }
 
     private int newGameSessionNumber() throws IOException, ParseException, JSONException {
-        dbModel nDb = newRead();
+        DataBaseModel nDb = newRead();
         return nDb.getLastGameSessionNumber();
     }
 
@@ -429,7 +473,7 @@ public class PlayerMapper implements PlayerMapperInterface {
         }
         return friends;
     }
-
+    //TODO friend list should update at app startup
     public void addFriend(int userID) throws UserInfoException {
         if(isFriend(userID)){
             throw new PlayerMapperException("Already a friend!");
@@ -439,7 +483,9 @@ public class PlayerMapper implements PlayerMapperInterface {
             throw new PlayerMapperException("No user with given userID");
         }
         currentPlayer.addFriend(userID);
+        friend.get().addFriend(currentPlayer.getUserID());
         update(currentPlayer);
+        update(friend.get());
     }
 
     public void removeFriend(int userID) {
@@ -448,11 +494,20 @@ public class PlayerMapper implements PlayerMapperInterface {
         }
         try {
             currentPlayer.removeFriend(userID);
-
         } catch (UserInfoException e){
             e.printStackTrace();
         }
         update(currentPlayer);
+        Optional<Player> friend = find(userID);
+        if (!friend.isPresent()){
+            throw new PlayerMapperException("No user with given userID");
+        }
+        try {
+            friend.get().removeFriend(currentPlayer.getUserID());
+        } catch (UserInfoException e) {
+            e.printStackTrace();
+        }
+        update(friend.get());
     }
 
     public boolean isFriend(int userID){
