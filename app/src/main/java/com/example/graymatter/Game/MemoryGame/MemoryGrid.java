@@ -115,8 +115,20 @@ public class MemoryGrid {
         return statusCopy;
     }
 
+
     public enum TileState {
         CORRECTHIDDEN, CORRECTCHOSEN, INCORRECTHIDDEN, INCORRECTCHOSEN
+    }
+
+    public TileState getTileState(int tileCoordinate){
+        int x = tileCoordinate / size;
+        if (x >= size){
+            throw new RuntimeException("Grid access input out of bounds");
+        }
+        int y = tileCoordinate % size;
+
+        MemoryTile tile = this.get(x,y);
+        return getState(tile);
     }
 
     public ArrayList<TileState> toArrayList(){
@@ -125,22 +137,28 @@ public class MemoryGrid {
 
         for (Vector<MemoryTile> x : grid) {
             for (MemoryTile y : x) {
-                if ( y.isCorrect() ){
-                    if (y.isChosen()){
-                        gridArrayList.add(TileState.CORRECTCHOSEN);
-                    } else {
-                        gridArrayList.add(TileState.CORRECTHIDDEN);
-                    }
-                } else {
-                    if (y.isChosen()){
-                        gridArrayList.add(TileState.INCORRECTCHOSEN);
-                    } else {
-                        gridArrayList.add(TileState.INCORRECTHIDDEN);
-                    }
-                }
+                gridArrayList.add(getState(y));
             }
         }
 
         return gridArrayList;
+    }
+
+    private TileState getState(MemoryTile tile) {
+
+        if ( tile.isCorrect() ){
+            if (tile.isChosen()){
+                return TileState.CORRECTCHOSEN;
+            } else {
+                return TileState.CORRECTHIDDEN;
+            }
+        } else {
+            if (tile.isChosen()){
+                return TileState.INCORRECTCHOSEN;
+            } else {
+                return TileState.INCORRECTHIDDEN;
+            }
+        }
+
     }
 }

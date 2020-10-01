@@ -7,7 +7,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
-public class MemoryGame implements GameState {
+public class MemoryGame {
 
     private MemoryGrid grid; // The grid on which the selectable tiles are located
     private int level;
@@ -61,27 +61,23 @@ public class MemoryGame implements GameState {
 
     /*
     *
-    *  Following internal class and method used by GUI to get information to display
+    *  Following internal class and methods used by GUI to get information to display
     *
      */
-    public class MemoryInfoPackage { // Class with copies of relevant data for View/Controller
 
-        public boolean gameOverInfo;
-        public ArrayList<MemoryGrid.TileState> gridInfo;
-        public int levelInfo;
-
-        private MemoryInfoPackage() {
-            gameOverInfo = gameOver;
-            gridInfo = grid.toArrayList();
-            levelInfo = level;
-        }
+    public ArrayList<MemoryGrid.TileState> getGridAsArrayList(){
+        return grid.toArrayList();
     }
 
-    public MemoryInfoPackage getInfo() { // Method for View/Controller to receive needed information
-
-        return new MemoryInfoPackage();
-
+    public MemoryGrid.TileState getTileState(int tileCoordinate){
+        return grid.getTileState(tileCoordinate);
     }
 
+    public int getLevel(){
+        return level;
+    }
 
+    public boolean getGameOver(){
+        return gameOver;
+    }
 }
