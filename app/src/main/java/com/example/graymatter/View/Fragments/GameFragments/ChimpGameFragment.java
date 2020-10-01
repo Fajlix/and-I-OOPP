@@ -26,7 +26,6 @@ public class ChimpGameFragment extends Fragment implements GameObserver {
     private TextView chimpTestDescription;
     private ImageView chimpTestClose;
 
-
     @Override
     public void update() {
         ChimpGame chimpGame = ((ChimpGame) game.getGameState());
@@ -44,11 +43,13 @@ public class ChimpGameFragment extends Fragment implements GameObserver {
                 lostGame(numberQty);
             }
         }
-
-        ShowBoard();
-        chimpGameGridAdapter.notifyDataSetChanged();
-        gridView.setAdapter(chimpGameGridAdapter);
+        else {
+            ShowBoard();
+            chimpGameGridAdapter.notifyDataSetChanged();
+            gridView.setAdapter(chimpGameGridAdapter);
+        }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -165,13 +166,13 @@ public class ChimpGameFragment extends Fragment implements GameObserver {
     {
         chimpTestDescription.bringToFront();
         chimpTestClose.bringToFront();
-        chimpTestDescription.setText("Game over... Your score was: " + score);
+        chimpTestDescription.setText("Game over... Your score was: " + score + " \n \nPress to play again");
     }
 
     public void completedGame (int score)
     {
         chimpTestDescription.bringToFront();
         chimpTestClose.bringToFront();
-        chimpTestDescription.setText("Wow you completed the game! You got the max score of: " + score);
+        chimpTestDescription.setText("Wow you completed the game! You got the max score of: " + score + " \n \nPress to play again");
     }
 }
