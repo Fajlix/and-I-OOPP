@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.graymatter.R;
+import com.example.graymatter.View.FragmentChangeListener;
 
 
 public class ProfileFragment extends Fragment {
