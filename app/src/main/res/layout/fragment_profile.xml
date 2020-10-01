@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragmentProfile"
@@ -9,22 +9,145 @@
     android:orientation="vertical"
     android:gravity="center">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="115dp"
+        android:layout_height="115dp"
+        android:layout_marginBottom="440dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="250dp">
+
+            <ImageView
+                android:id="@+id/imageViewProfile"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:scaleType="centerCrop" />
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.cardview.widget.CardView>
+
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewProfileName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Profile"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal"
+        android:text="Rasmus"
+        android:textAlignment="center"
         android:textColor="#000"
         android:textSize="25dp"
-        android:textAlignment="center"
-        android:gravity="center_horizontal" />
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/textViewUsername"
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:text="Rasmus123"
+        android:textColor="#000"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.32999998" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="Username:"
+        android:textColor="#000"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.328" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="Email:"
+        android:textColor="#000"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="Score:"
+        android:textColor="#000"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewScore"
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:text="9000"
+        android:textColor="#000"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView7"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewEmailAdress"
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:text="Rasmus@mail.wa"
+        android:textColor="#000"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewScore"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUsername"
+        app:layout_constraintVertical_bias="0.5" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="579dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="249dp"
+        android:layout_marginTop="300dp"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
 
         <Button
             android:id="@+id/btnFriends"
@@ -37,7 +160,9 @@
             android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textSize="20dp"
-            tools:ignore="RtlCompat" />
+            tools:ignore="RtlCompat"
+            android:drawableEnd="@drawable/ic_baseline_more_horiz_24"
+            />
 
         <Button
             android:id="@+id/btnSettings"
@@ -50,7 +175,8 @@
             android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textSize="20dp"
-            tools:ignore="RtlCompat" />
+            tools:ignore="RtlCompat"
+            android:drawableEnd="@drawable/ic_baseline_more_horiz_24" />
 
         <Button
             android:id="@+id/btnStreak"
@@ -63,20 +189,9 @@
             android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textSize="20dp"
-            tools:ignore="RtlCompat" />
-
-        <Button
-            android:id="@+id/btnAccountInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:text="      Account Information"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textSize="20dp"
-            tools:ignore="RtlCompat" />
+            tools:ignore="RtlCompat"
+            android:drawableEnd="@drawable/ic_baseline_more_horiz_24"/>
 
     </LinearLayout>
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
