@@ -16,10 +16,8 @@ public class ChimpGameTest {
     int[] board;
     @Before
     public void setUp(){
-        Game game = new Game();
-        chimpGame = new ChimpGame(game);
-        game.ChangeState(chimpGame);
-        chimpGame.StartGame();
+        chimpGame = new ChimpGame();
+        chimpGame.startGame();
         board = chimpGame.getBoard();
     }
 
@@ -89,7 +87,7 @@ public class ChimpGameTest {
         EventBus.getDefault().post(new ChimpEvent(posOfThree));
         EventBus.getDefault().post(new ChimpEvent(posOfFour));
 
-        assertTrue( chimpGame.StopGame() == 5 );
+        assertTrue( chimpGame.endGame() == 5 );
 
 
     }
