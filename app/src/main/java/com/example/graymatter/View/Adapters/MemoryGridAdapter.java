@@ -11,12 +11,14 @@ import com.example.graymatter.Game.MemoryGame.MemoryGrid;
 import com.example.graymatter.R;
 import com.example.graymatter.View.Fragments.GameFragments.VisualGameFragment;
 
+import java.util.ArrayList;
+
 public class MemoryGridAdapter extends BaseAdapter {
-    private int[] grid;
+    private ArrayList<MemoryGrid.TileState> grid;
     VisualGameFragment context;
     private MemoryGame memoryGame;
 
-    public MemoryGridAdapter(VisualGameFragment context, int[] grid) {
+    public MemoryGridAdapter(VisualGameFragment context, ArrayList<MemoryGrid.TileState> grid) {
         this.grid = grid;
         this.context = context;
     }
@@ -28,7 +30,7 @@ public class MemoryGridAdapter extends BaseAdapter {
     // how many tiles on the board
     @Override
     public int getCount() {
-        return grid.length;
+        return grid.size();
     }
 
     public Object getItem(int position) {

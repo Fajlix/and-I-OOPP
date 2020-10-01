@@ -3,6 +3,8 @@ package com.example.graymatter.View.Fragments.GameFragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,8 @@ import com.example.graymatter.ViewModel.VisualMemoryViewModel;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+
 public class VisualGameFragment extends Fragment implements GameObserver {
     private GridView gridView;
     private MemoryGridAdapter visualGameGridAdapter;
@@ -37,7 +41,43 @@ public class VisualGameFragment extends Fragment implements GameObserver {
     public void update() {
         visualGameGridAdapter.notifyDataSetChanged();
 
-       /* boolean isGameOver = memoryGame.getGameOver();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_visual_game, container, false);
+        super.onCreate(savedInstanceState);
+        // changes gameState of game
+        //game = new Game();
+        //game.ChangeState(new VisualGame(game));
+        // adds this as a observer of the game
+        //game.addObserver(this);
+        visualMemoryVM = new ViewModelProvider(this).get(VisualMemoryViewModel.class);
+        visualMemoryVM.init();
+
+        visualMemoryVM.getGameOver().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean gameOver) {
+                if (gameOver)
+                {
+                    int levelQty = visualMemoryVM.getLevel();
+                    if(levelQty >= 20)
+                        showWonGame(levelQty);
+                    else
+                        showLostGame(levelQty);
+                }
+            }
+        });
+        visualMemoryVM.getGrid().observe(getViewLifecycleOwner(), new Observer<ArrayList<MemoryGrid.TileState>>() {
+            @Override
+            public void onChanged(ArrayList<MemoryGrid.TileState> grid) {
+                visualGameGridAdapter = new MemoryGridAdapter(VisualGameFragment.this, grid);
+                gridView.setAdapter(visualGameGridAdapter);
+            }
+        });
+
+        /* boolean isGameOver = memoryGame.getGameOver();
         if (isGameOver == true)
         {
             int level = memoryGame.endGame();
@@ -57,20 +97,6 @@ public class VisualGameFragment extends Fragment implements GameObserver {
         }
 
         */
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_visual_game, container, false);
-        super.onCreate(savedInstanceState);
-        // changes gameState of game
-        //game = new Game();
-        //game.ChangeState(new VisualGame(game));
-        // adds this as a observer of the game
-        //game.addObserver(this);
-
-        gridView = (GridView) view.findViewById(R.id.visualGameGrid);
 
         visualGameDescription = (TextView) view.findViewById(R.id.visualGameDescription);
         visualGameDescription.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +109,7 @@ public class VisualGameFragment extends Fragment implements GameObserver {
             }
         });
 
+        gridView = (GridView) view.findViewById(R.id.visualGameGrid);
 
         // clicking on this should take the user to the main page
         ImageView visualGameClose = (ImageView) view.findViewById(R.id.visualGameClose);
@@ -142,14 +169,14 @@ public class VisualGameFragment extends Fragment implements GameObserver {
 
      */
 
-    public void lostGame (int level)
+    public void showLostGame (int level)
     {
         visualGameDescription.bringToFront();
         visualGameClose.bringToFront();
         visualGameDescription.setText("Game over... Your score was: " + level + " \n \nPress to play again");
     }
 
-    public void completedGame (int level)
+    public void showWonGame (int level)
     {
         visualGameDescription.bringToFront();
         visualGameClose.bringToFront();
