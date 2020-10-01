@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.graymatter.R;
@@ -22,27 +23,8 @@ public class ChimpGameFragment extends Fragment{
     private ImageView chimpTestClose;
     private ChimpGameViewModel chimpGameVM;
 
-    @Override
     public void update() {
-        ChimpGame chimpGame = ((ChimpGame) game.getGameState());
-
-        boolean isGameOver = chimpGame.getGameOver();
-        if (isGameOver == true)
-        {
-            int numberQty = chimpGame.StopGame();
-            if(numberQty >= 25)
-            {
-                completedGame(numberQty);
-            }
-            else
-            {
-                lostGame(numberQty);
-            }
-        }
-
-        ShowBoard();
         chimpGameGridAdapter.notifyDataSetChanged();
-        gridView.setAdapter(chimpGameGridAdapter);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +34,34 @@ public class ChimpGameFragment extends Fragment{
         chimpGameVM = new ViewModelProvider(this).get(ChimpGameViewModel.class);
         chimpGameVM.init();
 
+        chimpGameVM.getGameOver().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean gameOver) {
+                if (gameOver)
+                {
+                    int numberQty = chimpGameVM.getScore();
+                    if(numberQty >= 25)
+                        showWonGame(numberQty);
+                    else
+                        showLostGame(numberQty);
+                }
+            }
+        });
+        chimpGameVM.getGrid().observe(getViewLifecycleOwner(), new Observer<int[]>() {
+            @Override
+            public void onChanged(int[] grid) {
+                chimpGameGridAdapter = new GridAdapter(ChimpGameFragment.this,grid);
+                gridView.setAdapter(chimpGameGridAdapter);
+            }
+        });
+        chimpGameVM.getVisibility().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean visibility) {
+                if (chimpGameGridAdapter != null)
+                    chimpGameGridAdapter.setVisibility(visibility);
+            }
+        });
+
 
         // changes gameState of game
         gridView = (GridView) view.findViewById(R.id.chimpTestGrid);
@@ -60,27 +70,24 @@ public class ChimpGameFragment extends Fragment{
         chimpTestDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClearScreen();
+                ClearStartScreen();
                 chimpGameVM.startChimpGame();
                 ShowBoard();
-
             }
-
         });
-
-
         // clicking on this should take the user to the main page
         //ImageView reactionTestClose = (ImageView) view.findViewById(R.id.reactionTestClose);
 
-
-
         return view;
+    }
+    public void tileClicked(int n){
+        chimpGameVM.tileHasBeenClicked(n);
     }
 
 
 
     // clears the screen of all teh text and images to show the test
-    public void ClearScreen() {
+    public void ClearStartScreen() {
 
         chimpTestDescription.setText("");
         final ImageView iconNumber1 = this.getView().findViewById(R.id.iconNumber1);
@@ -95,22 +102,21 @@ public class ChimpGameFragment extends Fragment{
 
     public void ShowBoard() {
         gridView.bringToFront();
-        chimpGameGridAdapter = new GridAdapter(chimpGameVM.getGrid());
         gridView.setNumColumns(4);
         gridView.setVerticalSpacing(10);
         gridView.setHorizontalSpacing(50);
     }
-    public void lostGame (int score)
+    public void showLostGame (int score)
     {
         chimpTestDescription.bringToFront();
-        chimpTestClose.bringToFront();
+        //chimpTestClose.bringToFront();
         chimpTestDescription.setText("Game over... Your score was: " + score);
     }
 
-    public void completedGame (int score)
+    public void showWonGame (int score)
     {
         chimpTestDescription.bringToFront();
-        chimpTestClose.bringToFront();
+        //chimpTestClose.bringToFront();
         chimpTestDescription.setText("Wow you completed the game! You got the max score of: " + score);
     }
 

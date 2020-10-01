@@ -40,7 +40,7 @@ public class VisualGameFragment extends Fragment implements GameObserver {
         View view = inflater.inflate(R.layout.fragment_visual_game, container, false);
         super.onCreate(savedInstanceState);
         // changes gameState of game
-        game = new Game();
+        //game = new Game();
         //game.ChangeState(new VisualGame(game));
         // adds this as a observer of the game
         //game.addObserver(this);
@@ -52,7 +52,7 @@ public class VisualGameFragment extends Fragment implements GameObserver {
             @Override
             public void onClick(View view) {
                 ClearScreen();
-                game.StartGame();
+                //game.StartGame();
                 ShowBoard();
 
             }
@@ -104,12 +104,12 @@ public class VisualGameFragment extends Fragment implements GameObserver {
     }
 
     private class VisualGameGridAdapter extends BaseAdapter {
-        ChimpGame chimpGame = ((ChimpGame) game.getGameState());
+        //ChimpGame chimpGame = ((ChimpGame) game.getGameState());
         // how many tiles on the board
         @Override
         public int getCount() {
             //TODO baaaad
-            return chimpGame.getBoard().length;
+            return 0;//chimpGame.getBoard().length;
         }
 
         public Object getItem(int position) {
@@ -125,7 +125,7 @@ public class VisualGameFragment extends Fragment implements GameObserver {
             View view1 = getLayoutInflater().inflate(R.layout.chimp_game_card, null);
             TextView numberText = view1.findViewById(R.id.cardNumber);
             ImageView imageView = view1.findViewById(R.id.whiteBackgroud);
-            if (chimpGame.getBoard()[position] != 0){
+            /*if (chimpGame.getBoard()[position] != 0){
                 view1.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
@@ -140,7 +140,7 @@ public class VisualGameFragment extends Fragment implements GameObserver {
             else{
                 numberText.setText("");
                 imageView.setImageResource(R.mipmap.ic_black_square_foreground);
-            }
+            }*/
             return view1;
         }
 

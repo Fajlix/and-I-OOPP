@@ -14,7 +14,7 @@ public class ReactionTimeViewModel extends ViewModel {
     private UpdateViewTask task;
     // A timer that holds tasks
     private Timer timer;
-    MutableLiveData<Boolean> mIsWaiting = new MutableLiveData<>();
+    private MutableLiveData<Boolean> mIsWaiting = new MutableLiveData<>();
     private int score = 0;
 
     public void init(){

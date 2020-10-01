@@ -9,18 +9,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.graymatter.R;
+import com.example.graymatter.View.Fragments.GameFragments.ChimpGameFragment;
 
-import java.util.ArrayList;
 
 public class GridAdapter extends BaseAdapter {
     private int[] grid;
     private boolean visibility = true;
+    ChimpGameFragment context;
 
-    public GridAdapter(int[] grid) {
+    public GridAdapter(ChimpGameFragment context, int[] grid) {
         this.grid = grid;
+        this.context = context;
     }
     public void setVisibility(boolean visibility){
         this.visibility = visibility;
+    }
+    public void tileHasBeenClicked(View v){
+        TextView textView = v.findViewById(R.id.cardNumber);
+        context.tileClicked(Integer.parseInt((String) textView.getText()));
     }
 
     // how many tiles on the board
@@ -43,10 +49,15 @@ public class GridAdapter extends BaseAdapter {
         TextView numberText = view.findViewById(R.id.cardNumber);
         ImageView imageView = view.findViewById(R.id.whiteBackgroud);
         if (grid[position] != 0){
-            if (visibility)
-                numberText.setText(String.valueOf(grid));
-            else
+            numberText.setText(String.valueOf(grid[position]));
+            if (!visibility)
                 numberText.setVisibility(View.INVISIBLE);
+            view.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    tileHasBeenClicked(v);
+                }
+            });
         }
         else{
             numberText.setText("");
