@@ -1,5 +1,6 @@
-package com.example.graymatter.Game;
+package com.example.graymatter.Game.Memory;
 
+import com.example.graymatter.Game.GameState;
 import com.example.graymatter.Game.MemoryGame.MemoryGame;
 
 import org.junit.Before;

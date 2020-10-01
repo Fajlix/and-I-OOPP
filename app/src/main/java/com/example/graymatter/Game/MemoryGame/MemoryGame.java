@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class MemoryGame implements GameState {
 
-    private MemoryGrid grid;
+    private MemoryGrid grid; // The grid on which the selectable tiles are located
     private int level;
     private int lives;
     private boolean gameOver;
@@ -36,10 +36,10 @@ public class MemoryGame implements GameState {
         if (gameOver) {
             throw new RuntimeException("Attempt to select tile after game over");
         }
-        int x = event.x;
-        int y = event.y;
+        int tileCoordinate = event.tileCoordinate;
 
-        grid.choose(x, y);
+
+        grid.choose(tileCoordinate);
 
         switch (grid.getStatus()){
             case WON:
@@ -59,11 +59,16 @@ public class MemoryGame implements GameState {
     //TODO: notify observers
     }
 
-    public class MemoryInfoPackage {
+    /*
+    *
+    *  Following internal class and method used by GUI to get information to display
+    *
+     */
+    public class MemoryInfoPackage { // Class with copies of relevant data for View/Controller
 
-        boolean gameOverInfo;
-        ArrayList<MemoryGrid.TileState> gridInfo;
-        int levelInfo;
+        public boolean gameOverInfo;
+        public ArrayList<MemoryGrid.TileState> gridInfo;
+        public int levelInfo;
 
         private MemoryInfoPackage() {
             gameOverInfo = gameOver;
@@ -72,7 +77,7 @@ public class MemoryGame implements GameState {
         }
     }
 
-    public MemoryInfoPackage getInfo() {
+    public MemoryInfoPackage getInfo() { // Method for View/Controller to receive needed information
 
         return new MemoryInfoPackage();
 

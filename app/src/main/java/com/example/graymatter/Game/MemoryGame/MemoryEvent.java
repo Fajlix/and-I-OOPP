@@ -2,13 +2,11 @@ package com.example.graymatter.Game.MemoryGame;
 
 public class MemoryEvent {
 
-    public int x;
-    public int y;
+    public int tileCoordinate;
 
-    public MemoryEvent(int x, int y){
+    public MemoryEvent(int tileCoordinate){
 
-        this.x = x;
-        this.y = y;
+        this.tileCoordinate = tileCoordinate;
 
     }
 }

@@ -14,10 +14,12 @@ public class MemoryGrid {
     private int tries = 4;
     private Status status = Status.ACTIVE;
     private int correctTilesRemaining;
+    private int size;
 
     public MemoryGrid(int level) {
+        if (level > 30) throw new RuntimeException("Illegal superhuman visual memory");
 
-        int size = size(level);
+        size = size(level);
         correctTilesRemaining = level+2;
 
         grid = new Vector<>();
@@ -33,24 +35,32 @@ public class MemoryGrid {
         }
     }
 
-    public void choose(int x, int y){
+    public void choose(int tileCoordinate){
+
+        // Method translates one dimensional tile coordinate to two dimensional coordinates
+        int x = tileCoordinate / size;
+        if (x >= size){
+            throw new RuntimeException("Grid access input out of bounds");
+        }
+        int y = tileCoordinate % size;
+
         MemoryTile tile = grid.get(x).get(y);
 
         if (!tile.isChosen()){
             if (tile.isCorrect()){
                 correctTilesRemaining -= 1;
-                if (correctTilesRemaining == 0){
+                if (correctTilesRemaining == 0){ // Chosen tile was the last correct tile
                     status = Status.WON;
                 }
             } else {
                 tries -= 1;
-                if (tries == 0){
+                if (tries == 0){ // Player has chosen four incorrect tiles
                     status = Status.LOST;
                 }
             }
         }
 
-        tile.choose();
+        tile.markChosen();
     }
 
     public MemoryTile get(int x, int y){
@@ -60,7 +70,7 @@ public class MemoryGrid {
 
     private int size(int level){
 
-        switch(level){
+        switch(level){ // decides the size of (one side of) the square grid based on level
             case 1: case 2:
                 return 3;
 
@@ -98,7 +108,7 @@ public class MemoryGrid {
         Collections.shuffle(sequence);
 
         return sequence;
-    }
+    } // Creates a random sequence of memory tiles for the grid
 
     public Status getStatus(){
         Status statusCopy = status;

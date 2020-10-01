@@ -2,6 +2,11 @@ package com.example.graymatter.Game.MemoryGame;
 
 public class MemoryTile {
 
+    /*
+    *
+    *  Class represents a single tile in the visual memory game's grid.
+    *
+     */
 
     final public Boolean correct;
     private boolean chosen = false;
@@ -16,7 +21,7 @@ public class MemoryTile {
         this.chosen = memorytile.chosen;
     }
 
-    public void choose(){
+    public void markChosen(){
         chosen = true;
     }
 
