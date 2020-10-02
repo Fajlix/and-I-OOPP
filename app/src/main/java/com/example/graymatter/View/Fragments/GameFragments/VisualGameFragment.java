@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.example.graymatter.Model.MemoryGame.MemoryGrid;
 import com.example.graymatter.R;
 import com.example.graymatter.View.Adapters.MemoryGridAdapter;
-import com.example.graymatter.ViewModel.VisualMemoryViewModel;
+import com.example.graymatter.ViewModel.MemoryGameViewModel;
 
 import java.util.ArrayList;
 
@@ -26,7 +26,7 @@ public class VisualGameFragment extends Fragment {
     private MemoryGridAdapter visualGameGridAdapter;
     private TextView visualGameDescription;
     private ImageView visualGameClose;
-    private VisualMemoryViewModel visualMemoryVM;
+    private MemoryGameViewModel visualMemoryVM;
     private boolean visibility = true;
 
 
@@ -35,7 +35,7 @@ public class VisualGameFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_visual_game, container, false);
         super.onCreate(savedInstanceState);
-        visualMemoryVM = new ViewModelProvider(this).get(VisualMemoryViewModel.class);
+        visualMemoryVM = new ViewModelProvider(this).get(MemoryGameViewModel.class);
         visualMemoryVM.init();
         visualMemoryVM.getVisibility().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
