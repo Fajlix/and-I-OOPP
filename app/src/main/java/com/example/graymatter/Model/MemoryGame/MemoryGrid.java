@@ -76,7 +76,7 @@ public class MemoryGrid {
      * @param level the level this grid is made for
      * @return the length of one side of the square grid
      */
-    private static int size(int level){
+    public static int size(int level){
 
         switch(level){
             case 1: case 2:
