@@ -30,8 +30,6 @@ public class GamesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_games, container, false);
 
-        final GamesFragment GF = this;
-
         //bottomNavigationView = (BottomNavigationView)getActivity().findViewById(R.id.bottomNavigationView);
 
         GridView mainScreenGrid = (GridView) view.findViewById(R.id.mainScreenGrid);
