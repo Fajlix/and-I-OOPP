@@ -17,11 +17,14 @@ public class ReactionTimeViewModel extends ViewModel {
     private MutableLiveData<Boolean> mIsWaiting = new MutableLiveData<>();
     private int score = 0;
 
+    //Initializes the VM with a new instance of a game and sets start values for some attributes
     public void init(){
         reactionTimeGame = new ReactionTimeGame();
         timer = new Timer();
     }
-
+    // Starts a new reactionGame and starts a timer task which runs after randWaitTime
+    // It also sets the Mutable live data boolean waiting to true to notify observers that the
+    // View should be waiting for the time it should display their reactNow gui
     public void startReactionGame(){
         reactionTimeGame.startGame();
         // New task that runs after waitTime
@@ -30,7 +33,8 @@ public class ReactionTimeViewModel extends ViewModel {
         timer.schedule(task, reactionTimeGame.getRandWaitTime());
     }
     public void endReactionTimeGame(){
-        // removes task from the timer when
+        // removes task from the timer if the game ended to early so that the run method in the
+        // timer task is called one time to much.
         if (task != null)
             task.cancel();
         score = reactionTimeGame.endGame();
