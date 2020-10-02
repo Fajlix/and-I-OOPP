@@ -78,8 +78,8 @@ public class MainScreenGridAdapter extends BaseAdapter {
 
     // array of images
     public Integer[] thumbsIds = {
-            R.mipmap.ic_red_x_foreground,
-            R.mipmap.ic_checkmark_foreground,
-            R.mipmap.ic_10_foreground
+            R.mipmap.ic_reaction_test_logo_foreground,
+            R.mipmap.ic_chimp_test_logo_foreground,
+            R.mipmap.ic_visual_memory_game_logo_foreground
     };
 }
