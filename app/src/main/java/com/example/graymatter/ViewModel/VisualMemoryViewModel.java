@@ -1,7 +1,5 @@
 package com.example.graymatter.ViewModel;
 
-import android.view.View;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -34,6 +32,7 @@ public class VisualMemoryViewModel extends ViewModel {
     public void startVisualGame(){
         memoryGame.startGame();
         grid.setValue(memoryGame.getGridAsArrayList());
+        visibility.setValue(true);
         gameStarted.setValue(true);
         task = new DelayedTask();
         timer.schedule(task, 1000);
@@ -61,6 +60,7 @@ public class VisualMemoryViewModel extends ViewModel {
     private void update(){
         if (memoryGame.getGameOver()) {
             level = memoryGame.endGame();
+            gameStarted.setValue(false);
             gameOver.setValue(true);
         }
         else {

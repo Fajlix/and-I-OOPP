@@ -15,14 +15,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.graymatter.Model.MemoryGame.MemoryGrid;
-import com.example.graymatter.Model.Game.GameObserver;
 import com.example.graymatter.R;
 import com.example.graymatter.View.Adapters.MemoryGridAdapter;
 import com.example.graymatter.ViewModel.VisualMemoryViewModel;
 
 import java.util.ArrayList;
 
-public class VisualGameFragment extends Fragment implements GameObserver {
+public class VisualGameFragment extends Fragment {
     private GridView gridView;
     private MemoryGridAdapter visualGameGridAdapter;
     private TextView visualGameDescription;
@@ -30,10 +29,6 @@ public class VisualGameFragment extends Fragment implements GameObserver {
     private VisualMemoryViewModel visualMemoryVM;
     private boolean visibility = true;
 
-    @Override
-    public void update() {
-        visualGameGridAdapter.notifyDataSetChanged();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
