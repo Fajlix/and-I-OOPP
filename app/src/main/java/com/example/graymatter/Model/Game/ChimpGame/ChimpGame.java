@@ -100,12 +100,10 @@ public class ChimpGame extends Game {
         if (gameOver){
             throw new RuntimeException("Attempt to get number visibility after game over");
         }
-        boolean numberVisibilityCopy = numberVisibility; //Maybe unnecessary to copy primitive type, don't know, IDE seems to think so
-        return numberVisibilityCopy;
+        return numberVisibility;
     }
 
     public boolean getGameOver(){
-        boolean gameOverCopy = gameOver; //Maybe unnecessary to copy primitive type, don't know, IDE seems to think so
-        return gameOverCopy;
+        return gameOver;
     }
 }

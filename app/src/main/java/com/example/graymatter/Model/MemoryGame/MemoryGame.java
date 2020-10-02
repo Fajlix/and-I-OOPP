@@ -9,6 +9,15 @@ import java.util.ArrayList;
 
 public class MemoryGame extends Game{
 
+    /*-------------------------------------------------------------------------------------------
+     *
+     *  This class describes the logic for a game where the player is shown a grid of tiles for a second,
+     *  and then has to select which tiles in the grid were coloured.
+     *
+     *  it is designed to test the player's visual memory.
+     *
+     * --------------------------------------------------------------------------------------------*/
+
     private MemoryGrid grid; // The grid on which the selectable tiles are located
     private int level;
     private int lives;
@@ -33,6 +42,10 @@ public class MemoryGame extends Game{
         return level;
     }
 
+    /**
+     * Method to respond to player choosing a tile, called through an event bus
+     * @param event holds data about which tile has been chosen
+     */
     @Subscribe
     public void onMemoryEvent(MemoryEvent event){
         if (gameOver) {
@@ -40,15 +53,14 @@ public class MemoryGame extends Game{
         }
         int tileCoordinate = event.tileCoordinate;
 
-
         grid.choose(tileCoordinate);
 
         switch (grid.getStatus()){
-            case WON:
+            case WON: //All correct tiles chosen
                 newGrid = true;
                 grid = new MemoryGrid(++level);
                 break;
-            case LOST:
+            case LOST: //Too many wrong answers on current grid
                 newGrid = true;
                 lives -= 1;
                 if (lives==0){
@@ -65,7 +77,7 @@ public class MemoryGame extends Game{
 
     /*
     *
-    *  Following internal class and methods used by GUI to get information to display
+    *  Following methods used by GUI to get data to display
     *
      */
 

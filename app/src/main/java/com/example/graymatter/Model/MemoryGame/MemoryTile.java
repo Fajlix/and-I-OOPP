@@ -26,13 +26,7 @@ public class MemoryTile {
     }
 
     public boolean isChosen(){
-        boolean chosenCopy = chosen;
-        return chosenCopy;
-    }
-
-    public boolean isCorrect(){
-        boolean correctCopy = correct;
-        return correctCopy;
+        return chosen;
     }
 
 }

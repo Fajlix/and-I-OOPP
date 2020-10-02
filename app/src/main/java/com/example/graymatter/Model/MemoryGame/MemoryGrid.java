@@ -26,7 +26,7 @@ public class MemoryGrid {
 
         ArrayList<MemoryTile> sequence = tileSequence(size, correctTilesRemaining);
 
-        for (int i=0 ; i<size ; i++){
+        for (int i=0 ; i<size ; i++){ //creates the actual grid as a vector of vectors
             Vector<MemoryTile> row = new Vector<>();
             for ( int j = 0 ; j<size ; j++){
                 row.add(sequence.get(i*size+j));
@@ -35,9 +35,13 @@ public class MemoryGrid {
         }
     }
 
+    /**
+     * Method marks a tile as chosen and decides if the player has won or lost the current grid
+     * @param tileCoordinate an index for the position of the chosen tile
+     */
     public void choose(int tileCoordinate){
 
-        // Method translates one dimensional tile coordinate to two dimensional coordinates
+        // One dimensional tile coordinate to two dimensional coordinates
         int x = tileCoordinate / size;
         if (x >= size){
             throw new RuntimeException("Grid access input out of bounds");
@@ -47,7 +51,7 @@ public class MemoryGrid {
         MemoryTile tile = grid.get(x).get(y);
 
         if (!tile.isChosen()){
-            if (tile.isCorrect()){
+            if (tile.correct){
                 correctTilesRemaining -= 1;
                 if (correctTilesRemaining == 0){ // Chosen tile was the last correct tile
                     status = Status.WON;
@@ -68,9 +72,13 @@ public class MemoryGrid {
         return new MemoryTile(grid.get(x).get(y));
     }
 
-    public static int size(int level){
+    /** Method to decide the size of the grid
+     * @param level the level this grid is made for
+     * @return the length of one side of the square grid
+     */
+    private static int size(int level){
 
-        switch(level){ // decides the size of (one side of) the square grid based on level
+        switch(level){
             case 1: case 2:
                 return 3;
 
@@ -94,25 +102,30 @@ public class MemoryGrid {
         }
     }
 
-    private ArrayList<MemoryTile> tileSequence(int size, int correctQty){
+    /**
+     * Method to decide on a random sequence of correct and incorrect memory tiles for current level
+     * @param size the side length of the square grid
+     * @param correctQty the number of tiles to be marked as correct
+     * @return a sequence of MemoryTile objects
+     */
+    private ArrayList<MemoryTile> tileSequence(int size, int correctQty) {
 
         ArrayList<MemoryTile> sequence = new ArrayList<>();
 
-        for (int i = 0; i < correctQty; i++){
+        for (int i = 0; i < correctQty; i++) {
             sequence.add(new MemoryTile(true));
         }
-        for (int i = correctQty; i < size*size ; i++) {
+        for (int i = correctQty; i < size * size; i++) {
             sequence.add(new MemoryTile(false));
         }
 
         Collections.shuffle(sequence);
 
         return sequence;
-    } // Creates a random sequence of memory tiles for the grid
+    }
 
     public Status getStatus(){
-        Status statusCopy = status;
-        return statusCopy;
+        return status;
     }
 
 
@@ -145,7 +158,7 @@ public class MemoryGrid {
 
     private TileState getState(MemoryTile tile) {
 
-        if ( tile.isCorrect() ){
+        if ( tile.correct ){
             if (tile.isChosen()){
                 return TileState.CORRECTCHOSEN;
             } else {
