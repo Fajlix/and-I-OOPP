@@ -1,6 +1,8 @@
 package com.example.graymatter.Social;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -16,6 +18,7 @@ public class PlayerAccess {
     public PlayerAccess(String dbPath){
         playerMapper = new PlayerMapper(dbPath);
         //TODO get current player locally somehow
+        updatePlayer();
     }
 
 
@@ -56,6 +59,13 @@ public class PlayerAccess {
         Player player = Player.makePlayer(getNewUserID(), email, password, userName);
         playerMapper.insert(player);
         logIn(userName, password);
+    }
+
+    /**
+     * Log out the player.
+     */
+    public void logOut() {
+        currentPlayer = null;  //näej pissdålig idé
     }
 
     public void deleteAccount(String password){
@@ -122,6 +132,18 @@ public class PlayerAccess {
         return false;
     }
 
+    public boolean isFriend(int userID){
+        return currentPlayer.isFriend(userID);
+    }
+
+    /**
+     *
+     * @return true if anyone is logged in to the app.
+     */
+    public boolean isLoggedIn() {
+        return (currentPlayer != null);
+    }
+
     private int getNewUserID() {
         int topUserID = 0;
         for (Player p: playerMapper.get()){ //should throw exception if empty?
@@ -132,6 +154,10 @@ public class PlayerAccess {
         return topUserID + 1;
     }
 
+    //user-specific getters
+    public String getEmail() throws UserInfoException {
+        return currentPlayer.getEmail();
+    }
 
     //Changes Player parameters
 
@@ -164,5 +190,64 @@ public class PlayerAccess {
     public void changeUserImage(String image){
         currentPlayer.setUserImage(image);
         playerMapper.update(currentPlayer);
+    }
+
+    //Related to friends
+
+    public void addFriend(int userID) throws UserInfoException {
+        if(isFriend(userID)){
+            throw new DataMapperException("Already a friend!");
+        }
+        Optional<Player> friend = playerMapper.find(userID);
+        if (!friend.isPresent()){
+            throw new DataMapperException("No user with given userID");
+        }
+        currentPlayer.addFriend(userID);
+        friend.get().addFriend(currentPlayer.getUserID());
+        playerMapper.update(currentPlayer);
+        playerMapper.update(friend.get());
+    }
+
+    public void removeFriend(int userID) {
+        //check if the relationship even exists. Throw exception since isFriend == true indicated frontend error.
+        if(!isFriend(userID)){
+            throw new DataMapperException("Already not a friend!");
+        }
+        //removes friend from user´s friend list
+        try {
+            currentPlayer.removeFriend(userID);
+        } catch (UserInfoException e){
+            e.printStackTrace();
+        }
+        playerMapper.update(currentPlayer);
+        //removes user from friend´s friend list
+        Optional<Player> friend = playerMapper.find(userID);
+        if (!friend.isPresent()){
+            throw new DataMapperException("No user with given userID");
+        }
+        try {
+            friend.get().removeFriend(currentPlayer.getUserID());
+        } catch (UserInfoException e) {
+            e.printStackTrace();
+        }
+        playerMapper.update(friend.get());
+    }
+
+    private List<Player> getFriends(){
+        List<Player> friends = new ArrayList<>();
+        for (int friendID : currentPlayer.getFriendUserIDs()) {
+            Optional<Player> friend = playerMapper.find(friendID);
+            if(!friend.isPresent()){
+                //should you throw other class´ exception?
+                updatePlayer();
+            } else {
+                friends.add(friend.get());
+            }
+        }
+        return friends;
+    }
+
+    private void updatePlayer(){
+        //TODO friend list should update at app startup
     }
 }

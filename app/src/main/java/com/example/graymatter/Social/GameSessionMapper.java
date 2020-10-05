@@ -94,6 +94,17 @@ public class GameSessionMapper implements DataMapper<GameSession>{
         }
     }
 
+    @Override
+    public List<GameSession> get() {
+        List<GameSession> gameSessions = null;
+        try {
+            gameSessions = getDBGameSessions();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return gameSessions;
+    }
+
     private List<GameSession> getDBGameSessions() throws IOException {
         Reader reader = new FileReader(dbPath);
 
@@ -102,17 +113,11 @@ public class GameSessionMapper implements DataMapper<GameSession>{
         return dbM.getGameSessions();
     }
 
-    private DataBaseModel getDB() throws IOException {
-        Reader reader = new FileReader(dbPath);
-
-        DataBaseModel dbM = gson.fromJson(reader, DataBaseModel.class);
-        reader.close();
-        return dbM;
-    }
-
     private void enterData(List<GameSession> nGameSessions) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        DataBaseModel nDb = getDB();
+        Reader reader = new FileReader(dbPath);
+        DataBaseModel nDb = gson.fromJson(reader, DataBaseModel.class);
+        reader.close();
         nDb.setGameSessions(nGameSessions);
         Writer writer = new FileWriter(dbPath);
         gson.toJson(nDb, writer);
