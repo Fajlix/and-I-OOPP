@@ -26,4 +26,24 @@ public class DataBaseModel {
     public void setGameSessions(List<GameSession> arr) {
         gameSessions = arr;
     }
+
+    public <T> List<?> get(Class<? extends BaseDataMapper> aClass) {
+        switch (aClass){
+            case Player.class:
+                return getPlayers();
+            case GameSession.class:
+                return getGameSessions();
+            default:
+                return null;
+        }
+    }
+    public <T> void set(List<T> field) {
+        switch (field.getClass()){
+            case List<Player>.class:
+                setPlayers((List<Player>) field);
+                return;
+            case List<GameSession>.class:
+                setGameSessions((List<GameSession>) field);
+        }
+    }
 }
