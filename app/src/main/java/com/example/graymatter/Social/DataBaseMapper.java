@@ -1,5 +1,6 @@
 package com.example.graymatter.Social;
 
+import java.util.List;
 import java.util.Optional;
 
 public class DataBaseMapper implements DataMapper<DataBaseModel> {
@@ -21,5 +22,10 @@ public class DataBaseMapper implements DataMapper<DataBaseModel> {
     @Override
     public void insert(DataBaseModel obj) {
 
+    }
+
+    @Override
+    public List<DataBaseModel> get() {
+        return null;
     }
 }

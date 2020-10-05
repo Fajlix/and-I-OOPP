@@ -101,14 +101,10 @@ public class PlayerAccess {
      * @return true if username is taken.
      */
     public boolean isUserName(String userName) {
-        try {
-            for (Player p: playerMapper.get()) {
-                if (p.getUserName().equals(userName)) {
-                    return true;
-                }
+        for (Player p: playerMapper.get()) {
+            if (p.getUserName().equals(userName)) {
+                return true;
             }
-        } catch ( IOException e) {
-            e.printStackTrace();
         }
         return false;
     }
@@ -119,15 +115,11 @@ public class PlayerAccess {
      * @return true if email is already in use.
      */
     public boolean isEmail(String email) {
-        try {
-            for (Player p:playerMapper.get()) {
-                //dedicated method sameEmail because of privacy concerns in Player
-                if(p.sameEmail(email)){
-                    return true;
-                }
+        for (Player p:playerMapper.get()) {
+            //dedicated method sameEmail because of privacy concerns in Player
+            if(p.sameEmail(email)){
+                return true;
             }
-        } catch ( IOException e) {
-            e.printStackTrace();
         }
         return false;
     }

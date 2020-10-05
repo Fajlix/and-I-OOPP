@@ -11,10 +11,6 @@ import java.util.List;
  */
 public class Player {
 
-    //tveksam lösning
-    private static String defaultPath = "";
-
-    // possibly use userInfo to limit PlayerInfo and to ease privacy issues
     /**
      * Aggregate with additional information private to the user. Reached with correct userKey.
      */
@@ -26,18 +22,13 @@ public class Player {
 
 
     private int userID;
-    /**
-     *
-     */
 
     //TODO sort methods after: userinfo connections, getters, setter, constructors, friend handler, game session handler (first figure out REST structure)
-
-
 
     //tänk på bilderna!!!
     private String userImage;
    // private Image userImage;
-    private List<GameSession> playerHistory;
+    private List<Integer> playerHistory;
 
     private Player(){
 
@@ -45,23 +36,8 @@ public class Player {
     //TODO does Player need to deepcopying stuff? Considering the database?
 
     /**constructor for Player with private userInfo
-     *
-     * @param userID
-     * @param email
-     * @param password
-     * @param userName
-     * @param userImage
-     * @param playerHistory
-     * @param friendUserIDs
-     * @throws UserInfoException
      */
-    private Player(int userID, String email, String password, String userName, String userImage, List<GameSession> playerHistory, List<Integer> friendUserIDs) throws UserInfoException {
-        this(userID, userName, userImage, playerHistory);
-        this.userInfo = new UserInfo(email, password, friendUserIDs);
-    }
-
-    private Player(int userID, String userName, String userImage, List<GameSession> playerHistory) {
-        //assign public fields, mark others "0"
+    private Player(int userID, String email, String password, String userName, String userImage, List<Integer> playerHistory, List<Integer> friendUserIDs) throws UserInfoException {
         this.userID = userID;
         this.userName = userName;
         this.userImage = userImage;
@@ -71,9 +47,11 @@ public class Player {
         } catch (IOException e) {
             userImage = ImageIO.read(new File(defaultPath));
         }*/
-
         this.playerHistory = playerHistory;
-
+        //dumb?
+        if(email != null && password != null && friendUserIDs != null){
+            this.userInfo = new UserInfo(email, password, friendUserIDs);
+        }
     }
 
     //living dangerously
@@ -86,58 +64,28 @@ public class Player {
         Collections.copy(this.playerHistory, player.playerHistory);
     }
 
-    // halfmode bc deepy copy needs to be taken in considiration but first: how is this used? privacy issues.
-/*
-    public Player (Player player) throws MissingAccessException {
-        UserInfo userInfo = new UserInfo()
-        //mycket fishy med Image nedan, ingen copy
-        this(player.userKey, player.userID, player.userName, player.userImage, player.playerHistory);
-    }
-*/
-
     // TODO some kind of factory? :/
     //anyways, 1 constructor if many makemethods
     //used for users
-    protected static Player makePlayer(int userID, String email, String password, String userName, String userImage, List<GameSession> playerHistory, List<Integer> friendUserIDs) throws UserInfoException {
+    protected static Player makePlayer(int userID, String email, String password, String userName, String userImage, List<Integer> playerHistory, List<Integer> friendUserIDs) throws UserInfoException {
         return new Player(userID, email, password, userName, userImage, playerHistory, friendUserIDs);
     }
 
     //used in the creation of new users
     protected static Player makePlayer(int userID, String email, String password, String userName) throws UserInfoException {
-        return new Player(userID, email, password, userName, null, new ArrayList<GameSession>(), new ArrayList<Integer>());
+        return new Player(userID, email, password, userName, null, new ArrayList<Integer>(), new ArrayList<Integer>());
     }
 
     //used for non-user players
-    protected static Player makePlayer(int userID, String userName, String userImage, List<GameSession> playerHistory){
-        return new Player(userID, userName, userImage, playerHistory);
-    }
-
-
-    //terrible idea
-    /**
-     * Returns the player, with userInfo field having UserInfo value if userKey matches, otherwise userInfo field null.
-     * @param userKey Dictates the anture of userInfo-field. If not intended to return UserInfo, userKey should be "".
-     * @return this Player
-     * @throws UserInfoException if
-     */
-    /*
-    public Player getPlayer(String userKey) throws MissingAccessException {
-        if(userKey.equals("")){
-            Player player = (this);
-            player.userInfo = null;
-            return player;
+    protected static Player makePlayer(int userID, String userName, String userImage, List<Integer> playerHistory){
+        try {
+            return new Player(userID, null, null, userName, userImage, playerHistory, null);
+        } catch (UserInfoException e) {
+            e.printStackTrace();
         }
-        if(this.userKey == parseUserID(userKey)){
-            throw new MissingAccessException("Userkey does not match");
-        }
-        return this;
+        //TODO no
+        return null;
     }
-    */
-/*
-    protected List<Integer> getFriendUserIDs() throws UserInfoException {
-        return userInfo.getFriendUserIDs();
-    }
-*/
 
     protected void setPassword(String oldPassword, String newPassword) throws UserInfoException {
         userInfo.setPassword(oldPassword, newPassword);
@@ -165,30 +113,6 @@ public class Player {
     }
 
 
-    //TODO Parserthingies
-
-    //Here or in PlayerMapper?
-    //also could do more possibly
-    /**
-     * Parses userIDs to drop beginning zeroes. Parses String to int. Draws absolute from value since used Integer.parseInt() allows *+* and *-*, does not mean that using method with *+* or *-* signs is recommended.
-     * @param idToParse String value containing
-     * @return int representing a valid userID.
-     */
-    private static int parseUserIDorKey(String idToParse){
-        int i = 0;
-        while(idToParse.charAt(i) == "0".charAt(0)){
-            idToParse = idToParse.substring(i);
-            i++;
-        }
-        int userID;
-
-        for(char ch: idToParse.toCharArray()){
-            if(Character.isAlphabetic(ch)){
-                throw new NumberFormatException("Invalid userIDformat");
-            }
-        }
-        return Math.abs(Integer.parseInt(idToParse));
-    }
 
     public String getUserImage(){
         return userImage;
@@ -198,25 +122,28 @@ public class Player {
         this.userImage = image;
     }
 
-    //TODO equals, tostring
-
-    //needs equals
-
-
-
-
-
-
-    public List<GameSession> getPlayerHistory() {
-        return playerHistory;
+    @Override
+    public boolean equals(Object o){
+        if (this == o){
+            return true;
+        }
+        if (o == null){
+            return false;
+        }
+        if (getClass() != o.getClass()){
+            return false;
+        }
+        Player p = (Player) o;
+        return userID == p.userID;
     }
 
+    public List<Integer> getPlayerHistory() {
+        List<Integer> nL = new ArrayList<>();
+        Collections.copy(nL, this.playerHistory);
+        return nL;
+    }
 
-
-  /**  public void changeUserKey(int userKey, int i) {
-    }**/
-
-    public void addFriend(int userID) throws UserInfoException {
+    public void addFriend(int userID) {
         userInfo.addFriend(userID);
     }
 
@@ -224,18 +151,9 @@ public class Player {
         return userInfo.isFriend(userID);
     }
 
-    protected String getPassword() {
-        return userInfo.getPassword();
-    }
-
     public String getUserName() {
         return userName;
     }
-
-    public void addGameSession(GameSession gameSession) {
-        playerHistory.add(gameSession);
-    }
-
 
     /**
      * sorta ugly

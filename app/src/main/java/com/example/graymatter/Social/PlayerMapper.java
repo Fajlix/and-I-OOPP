@@ -67,9 +67,8 @@ public final class PlayerMapper implements DataMapper<Player> {
     @Override
     public Optional<Player> find(int userID) {
         try {
-            DataBaseModel obj =  newRead();
-            for (Player p : obj.players){
-
+            List<Player> obj = newRead().getPlayers();
+            for (Player p : obj){
                 if (p.getUserID() == (userID)){
                     return Optional.of(p);
                 }

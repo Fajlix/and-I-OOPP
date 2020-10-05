@@ -13,13 +13,7 @@
       "timeZone": "Europe/Stockholm",
       "userID": 15,
       "userImage": "",
-      "playerHistory": [
-        {
-          "score": 128,
-          "gameType": "chimpTest",
-          "gameID": 33
-        }
-      ]
+      "playerHistory": [ 33 ]
     },
     {
       "userInfo": {
@@ -34,18 +28,19 @@
       "timeZone": "Europe/Stockholm",
       "userID": 1,
       "userImage": "",
-      "playerHistory": [
-        {
-          "score": 785,
-          "gameType": "reactionTest",
-          "gameID": 1
-        }
-      ]
+      "playerHistory": [ 1 ]
     }
   ],
-  "numbers": {
-    "lastGameSessionNumber": 33,
-    "lastUserID": 15,
-    "currentPlayer": 1
-  }
+  "gameSessions": [
+    {
+      "score": 785,
+      "gameType": "reactionTest",
+      "gameID": 1
+    },         
+    {
+      "score": 128,
+      "gameType": "chimpTest",
+      "gameID": 33
+    }
+  ]
 }

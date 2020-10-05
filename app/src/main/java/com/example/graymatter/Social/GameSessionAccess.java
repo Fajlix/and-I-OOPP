@@ -6,6 +6,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class GameSessionAccess {
 
@@ -13,31 +14,20 @@ public class GameSessionAccess {
 
     public GameSessionAccess(String dbPath){
         gsMapper = new GameSessionMapper(dbPath);
-        //TODO get current player locally somehow
     }
 
-    //TODO testing / remodeling
-    public void storeGameSession(int score, String gameType) throws ParseException, JSONException, IOException {
+    public void storeGameSession(int score, String gameType) throws ParseException {
         LocalDate date = LocalDate.now(); //solve timezone stuff
         GameSession gs = new GameSession(getNewGameID(), score, gameType, date);
-        DataBaseModel nDb;
-        try {
-            nDb = newRead();
+        gsMapper.insert(gs);
+    }
 
-            for (Player p : nDb.getPlayers()) {
-                if (p.getUserID() == currentPlayer.getUserID()) {
-                    break;
-                }
-            }
-            GameSession gameSession = new GameSession(newGameSessionNumber(), score, gameType, date);
-            currentPlayer.addGameSession(gameSession);
-            nDb.incLastGameSessionNumber();
-            //store in database
-            toWrite = nDb;
-            enterData();
-            update(currentPlayer);
-        } catch (IOException e){
-            e.printStackTrace();
+    protected void removeGameSession(int gameID){
+        Optional<GameSession> gs = gsMapper.find(gameID);
+        if (!gs.isPresent()){
+            throw new DataMapperException("gameID does not match GameSession");
+        } else {
+            gsMapper.delete(gs.get());
         }
     }
 
