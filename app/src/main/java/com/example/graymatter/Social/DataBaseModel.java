@@ -1,15 +1,13 @@
 package com.example.graymatter.Social;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class DataBaseModel {
-    public List<Player> players = new ArrayList<>();
-    public Map<String, Integer> numbers;
+    private List<Player> players = new ArrayList<>();
+    private Map<String, Integer> numbers;
+    private List<GameSession> gameSessions;
 
     protected DataBaseModel(){
     }
@@ -42,5 +40,13 @@ public class DataBaseModel {
 
     protected int getCurrentPlayer(){
         return numbers.get("currentPlayer");
+    }
+
+    protected List<GameSession> getGameSessions() {
+        return gameSessions;
+    }
+
+    public void setGameSessions(List<GameSession> arr) {
+        gameSessions = arr;
     }
 }

@@ -1,9 +1,6 @@
 package com.example.graymatter.Social;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
  * Respresenting a game session, associated from a Player.

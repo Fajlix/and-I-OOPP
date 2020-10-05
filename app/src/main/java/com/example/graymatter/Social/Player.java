@@ -1,8 +1,6 @@
 package com.example.graymatter.Social;
 
 
-import android.media.Image;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +23,7 @@ public class Player {
      * Needed upon registration:
      */
     private String userName;
-    private String timeZone = "Europe/Stockholm";
+
 
     private int userID;
     /**
@@ -250,11 +248,6 @@ public class Player {
 
     public void removeFriend(int userID) throws UserInfoException{
         userInfo.removeFriend(userID);
-    }
-
-    protected String getTimeZone() {
-
-        return timeZone;
     }
 
     public boolean sameEmail(String email) {
