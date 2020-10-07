@@ -14,6 +14,9 @@ public class ChimpGame extends Game {
     private boolean numberVisibility;
     private boolean gameOver;
 
+
+    private final String gameName = "ChimpGame";
+
     public ChimpGame(){
         gameOver = true;
         EventBus.getDefault().register(this);
@@ -105,5 +108,10 @@ public class ChimpGame extends Game {
 
     public boolean getGameOver(){
         return gameOver;
+    }
+
+
+    public String getGameName() {
+        return gameName;
     }
 }
