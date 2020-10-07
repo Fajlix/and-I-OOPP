@@ -12,8 +12,8 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Optional;
 
-public class BaseDataMapper<T> implements DataMapper<T> {
-
+public class BaseDataMapper<T>/* implements DataMapper<T> */{
+/*
     String dbPath;
     Gson gson = new Gson();
 
@@ -116,5 +116,5 @@ public class BaseDataMapper<T> implements DataMapper<T> {
         writer.flush();
         writer.close();
     }
-
+*/
 }

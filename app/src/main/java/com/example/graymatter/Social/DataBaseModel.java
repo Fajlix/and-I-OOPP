@@ -26,7 +26,7 @@ public class DataBaseModel {
     public void setGameSessions(List<GameSession> arr) {
         gameSessions = arr;
     }
-
+/*
     public <T> List<?> get(Class<? extends BaseDataMapper> aClass) {
         switch (aClass){
             case Player.class:
@@ -46,4 +46,5 @@ public class DataBaseModel {
                 setGameSessions((List<GameSession>) field);
         }
     }
+*/
 }
