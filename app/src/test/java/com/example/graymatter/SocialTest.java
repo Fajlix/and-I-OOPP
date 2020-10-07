@@ -1,8 +1,8 @@
 package com.example.graymatter;
 
+import com.example.graymatter.Social.LocalDataMapper;
 import com.example.graymatter.Social.Player;
 import com.example.graymatter.Social.PlayerAccess;
-import com.example.graymatter.Social.PlayerMapper;
 import com.example.graymatter.Social.UserInfoException;
 import com.example.graymatter.Social.DataBaseModel;
 import com.google.gson.Gson;
@@ -54,7 +54,7 @@ public class SocialTest {
 
     @Test
     public void changesTest() throws UserInfoException {
-        testPlayerAccess.logIn("Tuff-tuff22oHalvt", "losen358");
+        testPlayerAccess.logIn("Tuff-tuff22oHalvt", "hejNej88*");
         testPlayerAccess.changeEmail("hejNej88*", "1337pojken@gmail.com");
         assertEquals(testPlayerAccess.getEmail(), "1337pojken@gmail.com");
         testPlayerAccess.changePassword("hejNej88*", "loseN-458");
@@ -67,41 +67,41 @@ public class SocialTest {
 
     @Test
     public void gettersTest() throws UserInfoException {
-        testPlayerAccess.logIn("Tuff-tuff22oHalvt", "losen358");
+        testPlayerAccess.logIn("Tuff-tuff22oHalvt", "hejNej88*");
         assertEquals(testPlayerAccess.getEmail(), "1337manneeeeen@gmail.com");
         assertEquals(testPlayerAccess.currentPlayer.getUserID(), 15);
         assertEquals(testPlayerAccess.currentPlayer.getUserName(), "Tuff-tuff22oHalvt");
     }
 
     @Test
-    public void addAndRemoveFriend() throws UserInfoException, FileNotFoundException {
-        testPlayerAccess.logIn("Tuff-tuff22oHalvt", "losen358");
+    public void addAndRemoveFriend() throws UserInfoException {
+        testPlayerAccess.logIn("Tuff-tuff22oHalvt", "hejNej88*");
         //test addition of friend
         testPlayerAccess.addFriend(1);
-        assertTrue(testPlayerAccess.find(15).get().getFriendUserIDs().contains(1));
-        assertTrue(testPlayerAccess.find(1).get().getFriendUserIDs().contains(15));
+        assertTrue(testPlayerAccess.playerMapper.find(15).get().getFriendUserIDs().contains(1));
+        assertTrue(testPlayerAccess.playerMapper.find(1).get().getFriendUserIDs().contains(15));
         //test removal of friend
         testPlayerAccess.removeFriend(1);
-        assertFalse(testPlayerAccess.find(15).get().getFriendUserIDs().contains(1));
-        assertFalse(testPlayerAccess.find(1).get().getFriendUserIDs().contains(15));
+        assertFalse(testPlayerAccess.playerMapper.find(15).get().getFriendUserIDs().contains(1));
+        assertFalse(testPlayerAccess.playerMapper.find(1).get().getFriendUserIDs().contains(15));
 
     }
 
     @Test
     public void findTest(){
-        assertEquals(1, testPlayerAccess.find(1).get().getUserID());
+        assertEquals(1, testPlayerAccess.playerMapper.find(1).get().getUserID());
     }
 
     @Test
     public void readGsonTest() throws FileNotFoundException {
         Gson gson = new Gson();
         DataBaseModel nDb = gson.fromJson(new FileReader(path), DataBaseModel.class);
-        assertEquals((Integer) nDb.numbers.get("lastUserID"),(Integer) 15);
+        assertEquals( LocalDataMapper.getCurrentPlayerUserID(), 15);
     }
 
     @Test
     public void logInAndOutTest() throws FileNotFoundException {
-        testPlayerAccess.logIn("Mathilda97", "losen123");
+        testPlayerAccess.logIn("Mathilda97", "yihha123");
         assertEquals(testPlayerAccess.currentPlayer.getUserID(), 1);
         testPlayerAccess.logOut();
     }

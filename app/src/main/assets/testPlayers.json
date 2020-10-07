@@ -10,10 +10,12 @@
         ]
       },
       "userName": "Tuff-tuff22oHalvt",
-      "timeZone": "Europe/Stockholm",
       "userID": 15,
       "userImage": "",
-      "playerHistory": [ 33 ]
+      "playerHistory": [
+        34,
+        35
+      ]
     },
     {
       "userInfo": {
@@ -25,22 +27,32 @@
         ]
       },
       "userName": "Mathilda97",
-      "timeZone": "Europe/Stockholm",
       "userID": 1,
       "userImage": "",
-      "playerHistory": [ 1 ]
+      "playerHistory": [
+      ]
     }
   ],
   "gameSessions": [
     {
-      "score": 785,
-      "gameType": "reactionTest",
-      "gameID": 1
-    },         
+      "score": 611,
+      "gameType": "ChimpGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 7
+      },
+      "gameID": 34
+    },
     {
-      "score": 128,
-      "gameType": "chimpTest",
-      "gameID": 33
+      "score": 670,
+      "gameType": "ReactionTimeGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 7
+      },
+      "gameID": 35
     }
   ]
 }

@@ -11,13 +11,18 @@ import java.util.Optional;
 public class PlayerAccess {
 
     //can be static?
-    PlayerMapper playerMapper;
-    Player currentPlayer;
+    public PlayerMapper playerMapper;
+    public Player currentPlayer;
 
 
     public PlayerAccess(String dbPath){
         playerMapper = new PlayerMapper(dbPath);
-        //TODO get current player locally somehow
+        Optional<Player> optionalPlayer = playerMapper.find(LocalDataMapper.getCurrentPlayerUserID());
+        if (optionalPlayer.isPresent()){
+            currentPlayer = optionalPlayer.get();
+        } else {
+            currentPlayer = null; //TODO mmm
+        }
         updatePlayer();
     }
 
@@ -241,5 +246,12 @@ public class PlayerAccess {
 
     private void updatePlayer(){
         //TODO friend list should update at app startup
+    }
+
+    //related to GameSessions (though only by ID)
+
+    protected void storeGameID(int gameID) {
+        currentPlayer.addGameID(gameID);
+        playerMapper.update(currentPlayer);
     }
 }

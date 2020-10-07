@@ -8,11 +8,11 @@ import java.time.LocalDate;
 public class GameSession {
 
 
-    int score;
-    String gameType;
+    private int score;
+    private String gameType;
    // LocalTime time; interesting?
-    LocalDate date;
-    int gameID;
+    private LocalDate date;
+    private int gameID;
 
 
 
@@ -22,7 +22,7 @@ public class GameSession {
      * @param score Not below 0. Normated with Neurån scoring.
      * @param gameType String representing game type. Needs to formatted likewise for every game entry from same game.
      */
-    public GameSession(int gameID, int score, String gameType, LocalDate date){
+    protected GameSession(int gameID, int score, String gameType, LocalDate date){
         /* should be in database
         this.date = LocalDate.parse(gameID.substring(0,gameID.indexOf("S")));
         this.gameID = gameID.substring(gameID.indexOf("S") + 1);
@@ -53,7 +53,7 @@ public class GameSession {
      * Copy constructor
      * @param gameSession gameSession to be copies
      */
-    public GameSession(GameSession gameSession){
+    protected GameSession(GameSession gameSession){
         this(gameSession.gameID, gameSession.score, gameSession.gameType, gameSession.date);
     }
 
@@ -70,7 +70,7 @@ public class GameSession {
     }
 
     public LocalDate getDate() {
-        return date;
+        return date;  //should deepcopy
     }
 /*
     public String getTime() {

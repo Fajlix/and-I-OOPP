@@ -171,4 +171,11 @@ public class Player {
     public boolean sameEmail(String email) {
         return userInfo.sameEmail(email);
     }
+
+    /**
+     * For storing new games.
+     */
+    protected void addGameID(int gameID){
+        playerHistory.add(gameID);
+    }
 }

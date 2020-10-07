@@ -5,14 +5,11 @@ import android.net.ParseException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONException;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -53,13 +50,9 @@ public final class PlayerMapper implements DataMapper<Player> {
         this.dbPath = dbPath; // "src/main/assets/testPlayers.json"
         //in db?
         currentFriendID = 0;
-            try {
-                if (newRead().getCurrentPlayer() != 0) {
-                    Optional<Player> player = find(newRead().getCurrentPlayer());
-                    if (player.isPresent()) currentPlayer = player.get();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (LocalDataMapper.getCurrentPlayerUserID() != 0) {
+            Optional<Player> player = find(LocalDataMapper.getCurrentPlayerUserID());
+            if (player.isPresent()) currentPlayer = player.get();
         }
         //listeners = new ArrayList<>();
     }
