@@ -8,7 +8,7 @@ import java.util.List;
 public class UserInfo {
 
 
-    private String email;
+    private String email; //emailSafetyCheck() should be a thing
     private String password;
     private List<Integer> friendUserIDs;
 
@@ -61,8 +61,7 @@ public class UserInfo {
         throw new UserInfoException("Password is incorrect");
     }
 
-    protected void addFriend(int friendUserID) throws UserInfoException {
-        //safetyCheck(userKey);
+    protected void addFriend(int friendUserID) {
         friendUserIDs.add(friendUserID);
     }
 

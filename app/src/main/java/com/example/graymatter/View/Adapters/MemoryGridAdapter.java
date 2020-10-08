@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.example.graymatter.Model.MemoryGame.MemoryGrid;
+import com.example.graymatter.Model.Game.MemoryGame.MemoryGrid;
 import com.example.graymatter.R;
 import com.example.graymatter.View.Fragments.GameFragments.MemoryGameFragment;
 

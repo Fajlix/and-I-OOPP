@@ -4,13 +4,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.graymatter.Model.MemoryGame.MemoryEvent;
-import com.example.graymatter.Model.MemoryGame.MemoryGame;
-import com.example.graymatter.Model.MemoryGame.MemoryGrid;
+import com.example.graymatter.Model.Game.MemoryGame.MemoryEvent;
+import com.example.graymatter.Model.Game.MemoryGame.MemoryGame;
+import com.example.graymatter.Model.Game.MemoryGame.MemoryGrid;
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+
+//TODO: Show current level and lives
 
 public class MemoryGameViewModel extends ViewModel {
     private MemoryGame memoryGame;

@@ -1,4 +1,4 @@
-package com.example.graymatter.Model.MemoryGame;
+package com.example.graymatter.Model.Game.MemoryGame;
 
 import com.example.graymatter.Model.Game.Game;
 
@@ -7,16 +7,13 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
+/**
+ *  This class describes the logic for a game where the player is shown a grid of tiles for a second,
+ *  and then has to select which tiles in the grid were coloured.
+ *
+ *  it is designed to test the player's visual memory.
+ */
 public class MemoryGame extends Game{
-
-    /*-------------------------------------------------------------------------------------------
-     *
-     *  This class describes the logic for a game where the player is shown a grid of tiles for a second,
-     *  and then has to select which tiles in the grid were coloured.
-     *
-     *  it is designed to test the player's visual memory.
-     *
-     * --------------------------------------------------------------------------------------------*/
 
     private MemoryGrid grid; // The grid on which the selectable tiles are located
     private int level;
@@ -86,6 +83,7 @@ public class MemoryGame extends Game{
     public ArrayList<MemoryGrid.TileState> getGridAsArrayList(){
         return grid.toArrayList();
     }
+
     public boolean getNewGrid(){
         if (newGrid){
             newGrid = false;
@@ -100,6 +98,10 @@ public class MemoryGame extends Game{
 
     public int getLevel(){
         return level;
+    }
+
+    public int getLives() {
+        return lives;
     }
 
     public boolean getGameOver(){

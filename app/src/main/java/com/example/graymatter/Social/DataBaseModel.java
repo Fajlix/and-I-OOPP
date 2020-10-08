@@ -1,15 +1,12 @@
 package com.example.graymatter.Social;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class DataBaseModel {
-    public List<Player> players = new ArrayList<>();
-    public Map<String, Integer> numbers;
+    private List<Player> players = new ArrayList<>();
+    private List<GameSession> gameSessions;
 
     protected DataBaseModel(){
     }
@@ -22,25 +19,32 @@ public class DataBaseModel {
         this.players = players;
     }
 
-    protected int getLastGameSessionNumber() {
-        return numbers.get("lastGameSessionNumber");
+    protected List<GameSession> getGameSessions() {
+        return gameSessions;
     }
 
-    protected void incLastGameSessionNumber(){
-        Integer toInc = numbers.get("lastGameSessionNumber");
-        numbers.put("lastGameSessionNumber", toInc + 1);
+    public void setGameSessions(List<GameSession> arr) {
+        gameSessions = arr;
     }
-
-    protected int getLastUserID() {
-        return numbers.get("lastUserID");
+/*
+    public <T> List<?> get(Class<? extends BaseDataMapper> aClass) {
+        switch (aClass){
+            case Player.class:
+                return getPlayers();
+            case GameSession.class:
+                return getGameSessions();
+            default:
+                return null;
+        }
     }
-
-    protected void incLastUserID(){
-        Integer toInc = numbers.get("lastUserID");
-        numbers.put("lastUserID", toInc + 1);
+    public <T> void set(List<T> field) {
+        switch (field.getClass()){
+            case List<Player>.class:
+                setPlayers((List<Player>) field);
+                return;
+            case List<GameSession>.class:
+                setGameSessions((List<GameSession>) field);
+        }
     }
-
-    protected int getCurrentPlayer(){
-        return numbers.get("currentPlayer");
-    }
+*/
 }

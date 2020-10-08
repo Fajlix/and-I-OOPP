@@ -14,7 +14,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.graymatter.Model.MemoryGame.MemoryGrid;
+import com.example.graymatter.Model.Game.MemoryGame.MemoryGrid;
 import com.example.graymatter.R;
 import com.example.graymatter.View.Adapters.MemoryGridAdapter;
 import com.example.graymatter.ViewModel.MemoryGameViewModel;

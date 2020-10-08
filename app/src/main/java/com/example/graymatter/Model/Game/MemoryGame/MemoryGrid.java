@@ -1,9 +1,13 @@
-package com.example.graymatter.Model.MemoryGame;
+package com.example.graymatter.Model.Game.MemoryGame;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Vector;
 
+/**
+ * Class represents a grid for the visual memory test.
+ * The grid holds the tiles that can be selected by the player to
+ */
 public class MemoryGrid {
 
     public enum Status{
@@ -16,11 +20,15 @@ public class MemoryGrid {
     private int correctTilesRemaining;
     private int size;
 
+    /**
+     * Creates a new grid
+     * @param level The level the grid's attributes are to be based on.
+     */
     public MemoryGrid(int level) {
         if (level > 30) throw new RuntimeException("Illegal superhuman visual memory");
 
         size = size(level);
-        correctTilesRemaining = level+2;
+        correctTilesRemaining = level+2; // The tiles the player must remember starts at 3 and increases by one for each level progressed.
 
         grid = new Vector<>();
 
@@ -68,7 +76,6 @@ public class MemoryGrid {
     }
 
     public MemoryTile get(int x, int y){
-
         return new MemoryTile(grid.get(x).get(y));
     }
 
@@ -128,7 +135,9 @@ public class MemoryGrid {
         return status;
     }
 
-
+    /**
+     * enum to describe the complete state of a tile, meant for view to decide how to display the tile.
+     */
     public enum TileState {
         CORRECTHIDDEN, CORRECTCHOSEN, INCORRECTHIDDEN, INCORRECTCHOSEN
     }

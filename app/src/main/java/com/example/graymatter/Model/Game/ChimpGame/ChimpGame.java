@@ -13,6 +13,7 @@ public class ChimpGame extends Game {
     private int nextNumber;
     private boolean numberVisibility;
     private boolean gameOver;
+    //TODO: lives
 
     public ChimpGame(){
         gameOver = true;
