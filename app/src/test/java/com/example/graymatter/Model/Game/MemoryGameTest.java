@@ -1,10 +1,8 @@
 package com.example.graymatter.Model.Game;
 
-import android.service.quicksettings.Tile;
-
-import com.example.graymatter.Model.MemoryGame.MemoryEvent;
-import com.example.graymatter.Model.MemoryGame.MemoryGame;
-import com.example.graymatter.Model.MemoryGame.MemoryGrid;
+import com.example.graymatter.Model.Game.MemoryGame.MemoryEvent;
+import com.example.graymatter.Model.Game.MemoryGame.MemoryGame;
+import com.example.graymatter.Model.Game.MemoryGame.MemoryGrid;
 
 import org.greenrobot.eventbus.EventBus;
 import org.junit.Before;

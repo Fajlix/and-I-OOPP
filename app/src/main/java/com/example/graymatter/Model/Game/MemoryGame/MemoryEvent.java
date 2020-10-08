@@ -1,4 +1,4 @@
-package com.example.graymatter.Model.MemoryGame;
+package com.example.graymatter.Model.Game.MemoryGame;
 
 /**
  * Class to represent an event that the visual memory test model needs to account for.

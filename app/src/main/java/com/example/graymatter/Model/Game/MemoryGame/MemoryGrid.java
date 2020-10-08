@@ -1,4 +1,4 @@
-package com.example.graymatter.Model.MemoryGame;
+package com.example.graymatter.Model.Game.MemoryGame;
 
 import java.util.ArrayList;
 import java.util.Collections;
