@@ -1,16 +1,46 @@
-//copy of testPlayer.json in case of contents going missing during testing
 {
-	"players": [
-		{ "userName": "Mathilda97", "userID": 1, "userImage": "", 
-		"playerHistory": [
-			{ "gameID": 1, "score": 785, "gameType": "reactionTest", "time": "" }
-		], "userInfo": {"email": "mat@gmail.com", "password": "yihha123", "friendUserIDs": [2, 71]}
-		},
-		{ "userName": "Tuff-tuff22oHalvt", "userID": 15, "userImage": "", 
-		"playerHistory": [
-			{ "gameID": 33, "score": 128, "gameType": "chimpTest", "time": "" }
-		], "userInfo": {"email": "1337manneeeeen@gmail.com", "password": "hejNej88*", "friendUserIDs": [2, 71]}
-		}
-	],
-	"numbers": {"lastGameSessionNumber": 33, "lastUserID": 15, "currentPlayer": 2}		
+  "players": [
+    {
+      "userInfo": {
+        "email": "1337manneeeeen@gmail.com",
+        "password": "hejNej88*",
+        "friendUserIDs": [
+          2,
+          71
+        ]
+      },
+      "userName": "Tuff-tuff22oHalvt",
+      "timeZone": "Europe/Stockholm",
+      "userID": 15,
+      "userImage": "",
+      "playerHistory": [ 33 ]
+    },
+    {
+      "userInfo": {
+        "email": "mat@gmail.com",
+        "password": "yihha123",
+        "friendUserIDs": [
+          2,
+          71
+        ]
+      },
+      "userName": "Mathilda97",
+      "timeZone": "Europe/Stockholm",
+      "userID": 1,
+      "userImage": "",
+      "playerHistory": [ 1 ]
+    }
+  ],
+  "gameSessions": [
+    {
+      "score": 785,
+      "gameType": "reactionTest",
+      "gameID": 1
+    },         
+    {
+      "score": 128,
+      "gameType": "chimpTest",
+      "gameID": 33
+    }
+  ]
 }
