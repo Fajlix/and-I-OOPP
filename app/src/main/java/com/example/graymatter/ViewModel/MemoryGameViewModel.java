@@ -71,6 +71,7 @@ public class MemoryGameViewModel extends ViewModel {
             gameOver.setValue(true);
         }
         else {
+            memoryGame.getGridAsArrayList();
             visibility.setValue(memoryGame.getNewGrid());
             grid.setValue(memoryGame.getGridAsArrayList());
             if (visibility.getValue() != null && visibility.getValue())
@@ -83,7 +84,6 @@ public class MemoryGameViewModel extends ViewModel {
 
     //This method should be called from the gui that is being used when a tile has been clicked
     public void tileHasBeenClicked(int number){
-
         memoryGame.onMemoryEvent(new MemoryEvent(number));
         update();
     }

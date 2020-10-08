@@ -48,7 +48,7 @@ public class ChimpGame extends Game {
         }
         else if (board[clickedTile] == nextNumber){ //Correct number clicked
 
-            if ( nextNumber == numberQty){ //The number clicked is the last number in the sequence, new round
+            if (nextNumber == numberQty){ //The number clicked is the last number in the sequence, new round
                 numberQty++;
                 if (numberQty >= 25)
                 {

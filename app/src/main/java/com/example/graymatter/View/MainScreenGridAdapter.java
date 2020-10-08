@@ -7,7 +7,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.example.graymatter.R;
-import com.example.graymatter.View.FragmentChangeListener;
 
 public class MainScreenGridAdapter extends BaseAdapter {
     private Context context;
