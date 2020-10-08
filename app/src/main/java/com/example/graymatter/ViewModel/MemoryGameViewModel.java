@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+//TODO: Show current level and lives
+
 public class MemoryGameViewModel extends ViewModel {
     private MemoryGame memoryGame;
     private int level = 0;
