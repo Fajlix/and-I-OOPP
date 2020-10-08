@@ -50,7 +50,7 @@
         android:label="ChimpGameActivity" />
     <fragment
         android:id="@+id/visualGameFragment"
-        android:name="com.example.graymatter.View.Fragments.GameFragments.VisualGameFragment"
+        android:name="com.example.graymatter.View.Fragments.GameFragments.MemoryGameFragment"
         android:label="fragment_visual_game"
         tools:layout="@layout/fragment_visual_game" />
 </navigation>

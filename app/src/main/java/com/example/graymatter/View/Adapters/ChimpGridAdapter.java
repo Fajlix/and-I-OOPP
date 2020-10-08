@@ -1,6 +1,5 @@
 package com.example.graymatter.View.Adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,21 +11,17 @@ import com.example.graymatter.R;
 import com.example.graymatter.View.Fragments.GameFragments.ChimpGameFragment;
 
 
-public class GridAdapter extends BaseAdapter {
+public class ChimpGridAdapter extends BaseAdapter {
     private int[] grid;
     private boolean visibility = true;
     ChimpGameFragment context;
 
-    public GridAdapter(ChimpGameFragment context, int[] grid) {
+    public ChimpGridAdapter(ChimpGameFragment context, int[] grid) {
         this.grid = grid;
         this.context = context;
     }
     public void setVisibility(boolean visibility){
         this.visibility = visibility;
-    }
-    public void tileHasBeenClicked(View v){
-        TextView textView = v.findViewById(R.id.cardNumber);
-        context.tileClicked(Integer.parseInt((String) textView.getText()));
     }
 
     // how many tiles on the board
@@ -52,12 +47,6 @@ public class GridAdapter extends BaseAdapter {
             numberText.setText(String.valueOf(grid[position]));
             if (!visibility)
                 numberText.setVisibility(View.INVISIBLE);
-            view.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    tileHasBeenClicked(v);
-                }
-            });
         }
         else{
             numberText.setText("");

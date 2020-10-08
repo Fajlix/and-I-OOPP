@@ -21,7 +21,7 @@ import com.example.graymatter.ViewModel.MemoryGameViewModel;
 
 import java.util.ArrayList;
 
-public class VisualGameFragment extends Fragment {
+public class MemoryGameFragment extends Fragment {
     private GridView gridView;
     private MemoryGridAdapter visualGameGridAdapter;
     private TextView visualGameDescription;
@@ -63,7 +63,7 @@ public class VisualGameFragment extends Fragment {
         visualMemoryVM.getGrid().observe(getViewLifecycleOwner(), new Observer<ArrayList<MemoryGrid.TileState>>() {
             @Override
             public void onChanged(ArrayList<MemoryGrid.TileState> grid) {
-                visualGameGridAdapter = new MemoryGridAdapter(VisualGameFragment.this, grid);
+                visualGameGridAdapter = new MemoryGridAdapter(MemoryGameFragment.this, grid);
                 visualGameGridAdapter.setVisibility(visibility);
                 gridView.setAdapter(visualGameGridAdapter);
                 gridView.setNumColumns(visualMemoryVM.getGridSize());
@@ -87,7 +87,7 @@ public class VisualGameFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!visibility)
+                if (!visualMemoryVM.getVisibility().getValue())
                     visualMemoryVM.tileHasBeenClicked(position);
             }
         });
