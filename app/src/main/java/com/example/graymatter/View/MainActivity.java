@@ -6,14 +6,19 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ScrollView;
+import android.widget.Scroller;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.graymatter.R;
 import com.example.graymatter.View.FragmentChangeListener;
@@ -23,14 +28,17 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
 
     private BottomNavigationView bottomNavigationView;
     private NavController navController;
-    private Dialog friendsDialog;
+    private Dialog friendsDialog, settingsDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        friendsDialog = new Dialog(this);
+
+        friendsDialog = new FriendsDialog(this);
+        settingsDialog = new Dialog(this);
+
 
         //Configures bottom navigation
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigationView);
@@ -61,9 +69,15 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     public void friendsDialogClicked() {
         friendsDialog.setContentView(R.layout.dialog_friends);
 
-
         friendsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         friendsDialog.show();
+    }
+    @Override
+    public void settingsDialogClicked() {
+        settingsDialog.setContentView(R.layout.dialog_settings);
+
+        settingsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        settingsDialog.show();
     }
 
 

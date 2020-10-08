@@ -161,7 +161,6 @@
             android:textAllCaps="false"
             android:textSize="20dp"
             tools:ignore="RtlCompat"
-            android:drawableEnd="@drawable/ic_baseline_more_horiz_24"
             />
 
         <Button
@@ -175,8 +174,7 @@
             android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textSize="20dp"
-            tools:ignore="RtlCompat"
-            android:drawableEnd="@drawable/ic_baseline_more_horiz_24" />
+            tools:ignore="RtlCompat" />
 
         <Button
             android:id="@+id/btnStreak"
@@ -189,8 +187,7 @@
             android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textSize="20dp"
-            tools:ignore="RtlCompat"
-            android:drawableEnd="@drawable/ic_baseline_more_horiz_24"/>
+            tools:ignore="RtlCompat" />
 
     </LinearLayout>
 
