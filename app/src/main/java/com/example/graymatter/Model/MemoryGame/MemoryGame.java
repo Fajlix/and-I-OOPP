@@ -22,6 +22,8 @@ public class MemoryGame extends Game{
     private int level;
     private int lives;
     private boolean gameOver;
+    //TODO fix this faking shit plzz
+    //TODO Do we need eventbus still?
     private boolean newGrid = false;
 
     public MemoryGame(){
