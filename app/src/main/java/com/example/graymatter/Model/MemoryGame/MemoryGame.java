@@ -98,6 +98,10 @@ public class MemoryGame extends Game{
         return level;
     }
 
+    public int getLives() {
+        return lives;
+    }
+
     public boolean getGameOver(){
         return gameOver;
     }
