@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.graymatter.R;
 import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.View.FriendsDialog;
+import com.example.graymatter.ViewModel.ProfileViewModel;
 
 
 public class ProfileFragment extends Fragment {
@@ -41,6 +42,8 @@ public class ProfileFragment extends Fragment {
          profileName = (TextView)view.findViewById(R.id.textViewProfileName);
 
 
+        final ProfileViewModel profileViewModel = new ProfileViewModel();
+        profileViewModel.init();
 
 
 
@@ -50,7 +53,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 //listener.friendsDialogClicked();
 
-                Dialog friendsDialog = new FriendsDialog(getContext());
+                Dialog friendsDialog = new FriendsDialog(getContext(), profileViewModel.getFriends());
 
                 //friendsDialog.setContentView(R.layout.dialog_friends);
 

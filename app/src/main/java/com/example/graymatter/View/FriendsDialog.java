@@ -19,11 +19,12 @@ public class FriendsDialog extends Dialog {
 
     RecyclerView recyclerView;
 
-    String[] names = {"Stefan", "Olof", "Vin"};
+    String[] names;
     int[] images = {1,2,3};
 
-    public FriendsDialog(@NonNull Context context) {
+    public FriendsDialog(@NonNull Context context, String[] names) {
         super(context);
+        this.names = names;
 
     }
 

@@ -2,23 +2,6 @@
   "players": [
     {
       "userInfo": {
-        "email": "1337manneeeeen@gmail.com",
-        "password": "hejNej88*",
-        "friendUserIDs": [
-          2,
-          71
-        ]
-      },
-      "userName": "Tuff-tuff22oHalvt",
-      "userID": 15,
-      "userImage": "",
-      "playerHistory": [
-        34,
-        35
-      ]
-    },
-    {
-      "userInfo": {
         "email": "mat@gmail.com",
         "password": "yihha123",
         "friendUserIDs": [
@@ -29,7 +12,22 @@
       "userName": "Mathilda97",
       "userID": 1,
       "userImage": "",
+      "playerHistory": []
+    },
+    {
+      "userInfo": {
+        "email": "1337manneeeeen@gmail.com",
+        "password": "hejNej88*",
+        "friendUserIDs": [
+          1
+        ]
+      },
+      "userName": "Tuff-tuff22oHalvt",
+      "userID": 15,
+      "userImage": "",
       "playerHistory": [
+        34,
+        35
       ]
     }
   ],

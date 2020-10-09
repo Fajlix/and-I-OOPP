@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
         setContentView(R.layout.activity_main);
 
 
-        friendsDialog = new FriendsDialog(this);
+        //friendsDialog = new FriendsDialog(this);
         settingsDialog = new Dialog(this);
 
 

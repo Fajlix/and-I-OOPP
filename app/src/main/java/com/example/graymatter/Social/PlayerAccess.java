@@ -17,7 +17,7 @@ public class PlayerAccess {
 
     public PlayerAccess(String dbPath){
         playerMapper = new PlayerMapper(dbPath);
-        Optional<Player> optionalPlayer = playerMapper.find(LocalDataMapper.getCurrentPlayerUserID());
+        Optional<Player> optionalPlayer = playerMapper.find(15);
         if (optionalPlayer.isPresent()){
             currentPlayer = optionalPlayer.get();
         } else {
@@ -230,7 +230,7 @@ public class PlayerAccess {
         playerMapper.update(friend.get());
     }
 
-    private List<Player> getFriends(){
+    public List<Player> getFriends(){
         List<Player> friends = new ArrayList<>();
         for (int friendID : currentPlayer.getFriendUserIDs()) {
             Optional<Player> friend = playerMapper.find(friendID);
