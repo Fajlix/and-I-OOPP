@@ -6,18 +6,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.example.graymatter.Model.MemoryGame.MemoryGrid;
+import com.example.graymatter.Model.Game.MemoryGame.MemoryGrid;
 import com.example.graymatter.R;
-import com.example.graymatter.View.Fragments.GameFragments.VisualGameFragment;
+import com.example.graymatter.View.Fragments.GameFragments.MemoryGameFragment;
 
 import java.util.ArrayList;
 
 public class MemoryGridAdapter extends BaseAdapter {
     private ArrayList<MemoryGrid.TileState> grid;
     private boolean visibility = true;
-    VisualGameFragment context;
+    MemoryGameFragment context;
 
-    public MemoryGridAdapter(VisualGameFragment context, ArrayList<MemoryGrid.TileState> grid) {
+    public MemoryGridAdapter(MemoryGameFragment context, ArrayList<MemoryGrid.TileState> grid) {
         this.grid = grid;
         this.context = context;
     }

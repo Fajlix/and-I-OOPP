@@ -13,6 +13,7 @@ public class ChimpGame extends Game {
     private int nextNumber;
     private boolean numberVisibility;
     private boolean gameOver;
+    //TODO: lives
 
     public ChimpGame(){
         gameOver = true;
@@ -47,7 +48,7 @@ public class ChimpGame extends Game {
         }
         else if (board[clickedTile] == nextNumber){ //Correct number clicked
 
-            if ( nextNumber == numberQty){ //The number clicked is the last number in the sequence, new round
+            if (nextNumber == numberQty){ //The number clicked is the last number in the sequence, new round
                 numberQty++;
                 if (numberQty >= 25)
                 {
@@ -100,12 +101,10 @@ public class ChimpGame extends Game {
         if (gameOver){
             throw new RuntimeException("Attempt to get number visibility after game over");
         }
-        boolean numberVisibilityCopy = numberVisibility; //Maybe unnecessary to copy primitive type, don't know, IDE seems to think so
-        return numberVisibilityCopy;
+        return numberVisibility;
     }
 
     public boolean getGameOver(){
-        boolean gameOverCopy = gameOver; //Maybe unnecessary to copy primitive type, don't know, IDE seems to think so
-        return gameOverCopy;
+        return gameOver;
     }
 }
