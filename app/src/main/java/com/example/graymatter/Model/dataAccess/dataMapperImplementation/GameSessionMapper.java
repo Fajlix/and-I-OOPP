@@ -1,7 +1,10 @@
-package com.example.graymatter.Social;
+package com.example.graymatter.Model.dataAccess.dataMapperImplementation;
 
 import android.net.ParseException;
 
+import com.example.graymatter.Model.dataAccess.dataMapper.DataMapper;
+import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
+import com.example.graymatter.Model.dataAccess.social.GameSession;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -13,13 +16,13 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Optional;
 
-public class GameSessionMapper implements DataMapper<GameSession>{
+public class GameSessionMapper implements DataMapper<GameSession> {
     //parametriserad mapper?? går det?
     String dbPath;
     Gson gson = new Gson();
 
 
-    protected GameSessionMapper(String dbPath){
+    public GameSessionMapper(String dbPath){
         this.dbPath = dbPath;
       //  this.gson = gson; hmm
     }

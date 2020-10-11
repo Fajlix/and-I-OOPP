@@ -1,7 +1,11 @@
-package com.example.graymatter.Social;
+package com.example.graymatter.Model.dataAccess.dataMapperImplementation;
 
 import android.net.ParseException;
 
+import com.example.graymatter.Model.dataAccess.dataMapper.DataMapper;
+import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
+
+import com.example.graymatter.Model.dataAccess.social.Player;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -12,7 +16,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
+
 
 
 public final class PlayerMapper implements DataMapper<Player> {
@@ -20,22 +24,11 @@ public final class PlayerMapper implements DataMapper<Player> {
     //good for batch writing. bad for safety. idk
     private DataBaseModel toWrite;
     Gson gson = new Gson();
- /*   FileWriter writer;
-    {
-        try {
-            writer = new FileWriter(dbPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }**/
-
-    private Random rand = new Random();
 
 
 
-    public Player currentPlayer;
-    private int currentFriendID;
-    public GameSession currentGameSession;
+  //  public Player currentPlayer;
+
     //orimligt???
     //List<Player> playersList;
     //List<Player> friendBuffer;   ??? kanske
@@ -44,16 +37,13 @@ public final class PlayerMapper implements DataMapper<Player> {
 
     //batch reading??
 
-    List<PlayerMapperListener> listeners;
 
     public PlayerMapper(String dbPath) {
         this.dbPath = dbPath; // "src/main/assets/testPlayers.json"
-        //in db?
-        currentFriendID = 0;
-        if (LocalDataMapper.getCurrentPlayerUserID() != 0) {
+       /* if (LocalDataMapper.getCurrentPlayerUserID() != 0) {
             Optional<Player> player = find(LocalDataMapper.getCurrentPlayerUserID());
             if (player.isPresent()) currentPlayer = player.get();
-        }
+        }*/
         //listeners = new ArrayList<>();
     }
 

@@ -1,4 +1,4 @@
-package com.example.graymatter.Social;
+package com.example.graymatter.Model.dataAccess.social;
 
 public class UserInfoException extends Exception {
     public UserInfoException(String exceptionLabel){

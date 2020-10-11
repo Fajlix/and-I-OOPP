@@ -1,4 +1,4 @@
-package com.example.graymatter.Social;
+package com.example.graymatter.Model.dataAccess.dataMapper;
 
 public class DataMapperException extends RuntimeException {
 

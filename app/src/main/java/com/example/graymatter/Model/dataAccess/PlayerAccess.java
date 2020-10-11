@@ -1,6 +1,13 @@
-package com.example.graymatter.Social;
+package com.example.graymatter.Model.dataAccess;
 
-import java.io.IOException;
+import com.example.graymatter.Model.dataAccess.dataMapper.DataMapper;
+import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
+import com.example.graymatter.Model.dataAccess.dataMapperImplementation.LocalDataMapper;
+import com.example.graymatter.Model.dataAccess.dataMapperImplementation.PlayerMapper;
+import com.example.graymatter.Model.dataAccess.social.Player;
+import com.example.graymatter.Model.dataAccess.social.UserInfoException;
+import com.example.graymatter.Model.dataAccess.dataMapperImplementation.DataBaseModel;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -10,8 +17,10 @@ import java.util.Optional;
  */
 public class PlayerAccess {
 
-    //can be static?
-    public PlayerMapper playerMapper;
+    private DataMapper<Player> playerMapper;
+    /**
+     * can be null, if null - not logged in
+     */
     public Player currentPlayer;
 
 
@@ -35,8 +44,7 @@ public class PlayerAccess {
      */
     public void logIn(String userName, String password) throws DataMapperException {
         //might be highly unnecessary
-        Optional<Player> player = Optional.empty();
-        DataBaseModel nDb = null;
+        Optional<Player> player;
         player = findByUserName(userName);
         if (!player.isPresent()){
             throw new DataMapperException("Wrong username!");
@@ -82,7 +90,7 @@ public class PlayerAccess {
 
     //Checks database for different parameters
 
-    private Optional<Player> findByUserName(String userName) {
+    public Optional<Player> findByUserName(String userName) {
         for (Player p :playerMapper.get()){
             if(p.getUserName().equals(userName)){
                 return Optional.of(p);
@@ -230,7 +238,7 @@ public class PlayerAccess {
         playerMapper.update(friend.get());
     }
 
-    private List<Player> getFriends(){
+    public List<Player> getFriends(){
         List<Player> friends = new ArrayList<>();
         for (int friendID : currentPlayer.getFriendUserIDs()) {
             Optional<Player> friend = playerMapper.find(friendID);
@@ -244,8 +252,20 @@ public class PlayerAccess {
         return friends;
     }
 
+    /**
+     * removes friendUserIDs of deleted accounts
+     */
     private void updatePlayer(){
-        //TODO friend list should update at app startup
+        for (int friendID : currentPlayer.getFriendUserIDs()){
+            Optional<Player> friend = playerMapper.find(friendID);
+            if (!friend.isPresent()){
+                try {
+                    currentPlayer.removeFriend(friendID);
+                } catch (UserInfoException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     //related to GameSessions (though only by ID)

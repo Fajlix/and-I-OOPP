@@ -1,4 +1,4 @@
-package com.example.graymatter.Social;
+package com.example.graymatter.Model.dataAccess.social;
 
 import java.util.ArrayList;
 import java.util.Collections;

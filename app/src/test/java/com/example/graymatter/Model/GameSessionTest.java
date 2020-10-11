@@ -1,9 +1,7 @@
 package com.example.graymatter.Model;
 
-import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
-import com.example.graymatter.Social.GameSessionAccess;
+import com.example.graymatter.Model.dataAccess.GameSessionAccess;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 

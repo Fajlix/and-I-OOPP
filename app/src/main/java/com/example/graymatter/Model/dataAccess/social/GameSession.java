@@ -1,4 +1,4 @@
-package com.example.graymatter.Social;
+package com.example.graymatter.Model.dataAccess.social;
 
 import java.time.LocalDate;
 
@@ -22,11 +22,7 @@ public class GameSession {
      * @param score Not below 0. Normated with Neurån scoring.
      * @param gameType String representing game type. Needs to formatted likewise for every game entry from same game.
      */
-    protected GameSession(int gameID, int score, String gameType, LocalDate date){
-        /* should be in database
-        this.date = LocalDate.parse(gameID.substring(0,gameID.indexOf("S")));
-        this.gameID = gameID.substring(gameID.indexOf("S") + 1);
-        */
+    public GameSession(int gameID, int score, String gameType, LocalDate date){
         this.date = date;
         this.gameID = gameID;
         this.score = score;

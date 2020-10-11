@@ -1,10 +1,10 @@
 package com.example.graymatter;
 
-import com.example.graymatter.Social.LocalDataMapper;
-import com.example.graymatter.Social.Player;
-import com.example.graymatter.Social.PlayerAccess;
-import com.example.graymatter.Social.UserInfoException;
-import com.example.graymatter.Social.DataBaseModel;
+import com.example.graymatter.Model.dataAccess.dataMapperImplementation.LocalDataMapper;
+import com.example.graymatter.Model.dataAccess.social.Player;
+import com.example.graymatter.Model.dataAccess.PlayerAccess;
+import com.example.graymatter.Model.dataAccess.social.UserInfoException;
+import com.example.graymatter.Model.dataAccess.dataMapperImplementation.DataBaseModel;
 import com.google.gson.Gson;
 
 import org.junit.Test;

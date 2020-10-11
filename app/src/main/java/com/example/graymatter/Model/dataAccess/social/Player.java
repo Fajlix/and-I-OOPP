@@ -1,4 +1,4 @@
-package com.example.graymatter.Social;
+package com.example.graymatter.Model.dataAccess.social;
 
 
 import java.util.ArrayList;
@@ -67,17 +67,17 @@ public class Player {
     // TODO some kind of factory? :/
     //anyways, 1 constructor if many makemethods
     //used for users
-    protected static Player makePlayer(int userID, String email, String password, String userName, String userImage, List<Integer> playerHistory, List<Integer> friendUserIDs) throws UserInfoException {
+    public static Player makePlayer(int userID, String email, String password, String userName, String userImage, List<Integer> playerHistory, List<Integer> friendUserIDs) throws UserInfoException {
         return new Player(userID, email, password, userName, userImage, playerHistory, friendUserIDs);
     }
 
     //used in the creation of new users
-    protected static Player makePlayer(int userID, String email, String password, String userName) throws UserInfoException {
+    public static Player makePlayer(int userID, String email, String password, String userName) throws UserInfoException {
         return new Player(userID, email, password, userName, null, new ArrayList<Integer>(), new ArrayList<Integer>());
     }
 
     //used for non-user players
-    protected static Player makePlayer(int userID, String userName, String userImage, List<Integer> playerHistory){
+    public static Player makePlayer(int userID, String userName, String userImage, List<Integer> playerHistory){
         try {
             return new Player(userID, null, null, userName, userImage, playerHistory, null);
         } catch (UserInfoException e) {
@@ -87,24 +87,23 @@ public class Player {
         return null;
     }
 
-    protected void setPassword(String oldPassword, String newPassword) throws UserInfoException {
+    public void setPassword(String oldPassword, String newPassword) throws UserInfoException {
         userInfo.setPassword(oldPassword, newPassword);
     }
 
-    protected void setEmail(String password, String email) throws UserInfoException {
+    public void setEmail(String password, String email) throws UserInfoException {
         userInfo.setEmail(password, email);
     }
 
-    protected boolean isPasswordCorrect(String password){
+    public boolean isPasswordCorrect(String password){
         return userInfo.isPasswordCorrect(password);
     }
 
-    protected String getEmail() throws UserInfoException {
+    public String getEmail() throws UserInfoException {
         return userInfo.getEmail();
     }
 
-    //should be private
-    protected static void passwordSafetyCheck(String password) {
+    public static void passwordSafetyCheck(String password) {
         UserInfo.passwordSafetyCheck(password);
     }
 
@@ -118,7 +117,7 @@ public class Player {
         return userImage;
     }
 
-    protected void setUserImage(String image){
+    public void setUserImage(String image){
         this.userImage = image;
     }
 
@@ -175,7 +174,7 @@ public class Player {
     /**
      * For storing new games.
      */
-    protected void addGameID(int gameID){
+    public void addGameID(int gameID){
         playerHistory.add(gameID);
     }
 }

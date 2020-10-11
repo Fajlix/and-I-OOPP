@@ -1,16 +1,18 @@
-package com.example.graymatter.Social;
+package com.example.graymatter.Model.dataAccess;
 
 import android.net.ParseException;
 
-import org.json.JSONException;
+import com.example.graymatter.Model.dataAccess.dataMapper.DataMapper;
+import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
+import com.example.graymatter.Model.dataAccess.dataMapperImplementation.GameSessionMapper;
+import com.example.graymatter.Model.dataAccess.social.GameSession;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
 
 public class GameSessionAccess {
 
-    private GameSessionMapper gsMapper;
+    private DataMapper<GameSession> gsMapper;
     private PlayerAccess playerAccess;
 
     public GameSessionAccess(String dbPath){
