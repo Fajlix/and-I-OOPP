@@ -84,6 +84,7 @@ public class MemoryGame extends Game{
     public ArrayList<MemoryGrid.TileState> getGridAsArrayList(){
         return grid.toArrayList();
     }
+
     public boolean getNewGrid(){
         if (newGrid){
             newGrid = false;

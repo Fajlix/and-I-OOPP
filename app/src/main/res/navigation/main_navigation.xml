@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_gamesFragment_to_visualGameFragment"
             app:destination="@id/visualGameFragment" />
+        <action
+            android:id="@+id/action_gamesFragment_to_towerOfHanoiFragment"
+            app:destination="@id/towerOfHanoiFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -53,4 +56,8 @@
         android:name="com.example.graymatter.View.Fragments.GameFragments.VisualGameFragment"
         android:label="fragment_visual_game"
         tools:layout="@layout/fragment_visual_game" />
+    <fragment
+        android:id="@+id/towerOfHanoiFragment"
+        android:name="com.example.graymatter.View.Fragments.GameFragments.TowerOfHanoiFragment"
+        android:label="TowerOfHanoiFragment" />
 </navigation>

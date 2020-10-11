@@ -14,8 +14,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.graymatter.R;
+import com.example.graymatter.View.Adapters.RecyclerViewAdapter;
 import com.example.graymatter.View.FragmentChangeListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -47,10 +50,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
                else bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
-
     }
-
-
 
     @Override
     public void reactionTestClicked() {
@@ -75,5 +75,10 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     @Override
     public void visualGameClicked() {
         navController.navigate(R.id.visualGameFragment);
+    }
+
+    @Override
+    public void towerOfHanoiClicked() {
+        navController.navigate(R.id.towerOfHanoiFragment);
     }
 }
