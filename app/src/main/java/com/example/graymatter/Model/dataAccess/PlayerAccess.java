@@ -17,7 +17,7 @@ import java.util.Optional;
  */
 public class PlayerAccess {
 
-    private DataMapper<Player> playerMapper;
+    public DataMapper<Player> playerMapper;
     /**
      * can be null, if null - not logged in
      */
@@ -273,5 +273,19 @@ public class PlayerAccess {
     protected void storeGameID(int gameID) {
         currentPlayer.addGameID(gameID);
         playerMapper.update(currentPlayer);
+    }
+
+    /**
+     *
+     * @param gameID to find owner of
+     * @return int userID of user who owns input gamesession ID
+     */
+    public int getGameIDOwner(int gameID) {
+        for (Player player :playerMapper.get()){
+            if (player.getPlayerHistory().contains(gameID)){
+                return player.getUserID();
+            }
+        }
+        return 0;
     }
 }

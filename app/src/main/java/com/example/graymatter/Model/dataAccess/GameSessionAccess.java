@@ -8,11 +8,15 @@ import com.example.graymatter.Model.dataAccess.dataMapperImplementation.GameSess
 import com.example.graymatter.Model.dataAccess.social.GameSession;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class GameSessionAccess {
 
-    private DataMapper<GameSession> gsMapper;
+    private static DataMapper<GameSession> gsMapper;
     private PlayerAccess playerAccess;
 
     public GameSessionAccess(String dbPath){
@@ -56,5 +60,24 @@ public class GameSessionAccess {
             return opGameSession.get();
         }
         throw new DataMapperException("gameId does not match GameSession in database.");
+    }
+
+    public static Map<Integer, Integer> getAllScoresIdentifiable(){
+        Map<Integer, Integer> scores = new HashMap<>();
+        for (GameSession gs: gsMapper.get()){
+            scores.put(gs.getGameID(), gs.getScore());
+        }
+        return scores;
+    }
+
+    public List<GameSession> getGameSessionsByType(String gameType) {
+        List<GameSession> gs = gsMapper.get();
+        List<GameSession> nGs = new ArrayList<>();
+        for (GameSession session : gs){
+            if (session.getGameType().equals(gameType)){
+                nGs.add(session);
+            }
+        }
+        return nGs;
     }
 }

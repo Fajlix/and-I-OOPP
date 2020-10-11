@@ -137,9 +137,9 @@ public class Player {
     }
 
     public List<Integer> getPlayerHistory() {
-        List<Integer> nL = new ArrayList<>();
-        Collections.copy(nL, this.playerHistory);
-        return nL;
+       // List<Integer> nL = new ArrayList<>();
+       // Collections.copy(nL, this.playerHistory);
+        return new ArrayList<>(this.playerHistory);
     }
 
     public void addFriend(int userID) {
