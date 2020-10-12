@@ -43,7 +43,7 @@ public class ProfileFragment extends Fragment {
 
 
         final ProfileViewModel profileViewModel = new ProfileViewModel();
-        profileViewModel.init();
+        profileViewModel.init(getContext());
 
 
 

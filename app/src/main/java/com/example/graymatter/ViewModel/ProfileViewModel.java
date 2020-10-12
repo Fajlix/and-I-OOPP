@@ -1,5 +1,6 @@
 package com.example.graymatter.ViewModel;
 
+import android.content.Context;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModel;
@@ -16,20 +17,19 @@ public class ProfileViewModel extends ViewModel {
 
     String[] friends;
     int[] friendsImages;
+    Context context;
 
     private PlayerAccess playerAccess;
 
-    public void init(){
-        playerAccess = new PlayerAccess("src/main/assets/testPlayers.json");
-
-
-
+    public void init(Context context){
+        this.context = context;
+        playerAccess = new PlayerAccess("src/main/assets/testPlayers.json", context);
     }
 
     public String[] getFriends(){
-        String[] names = new String[playerAccess.getFriends().size()];
-        for (int i = 0; i < playerAccess.getFriends().size(); i++) {
-            names[i] = playerAccess.getFriends().get(i).getUserName();
+        String[] names = new String[playerAccess.getFriends(context).size()];
+        for (int i = 0; i < playerAccess.getFriends(context).size(); i++) {
+            names[i] = playerAccess.getFriends(context).get(i).getUserName();
         }
 
         return names;

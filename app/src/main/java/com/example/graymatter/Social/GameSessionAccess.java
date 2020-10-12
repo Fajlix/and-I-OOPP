@@ -15,7 +15,7 @@ public class GameSessionAccess {
 
     public GameSessionAccess(String dbPath){
         gsMapper = new GameSessionMapper(dbPath);
-        playerAccess = new PlayerAccess(dbPath);
+        //playerAccess = new PlayerAccess(dbPath);
     }
 
     public void storeGameSession(int score, String gameType) throws ParseException {
