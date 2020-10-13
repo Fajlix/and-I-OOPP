@@ -1,5 +1,6 @@
 package com.example.graymatter.View.Adapters;
 
+import android.animation.AnimatorSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,18 +42,17 @@ public class ChimpGridAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chimp_game_card, null);
-        TextView numberText = view.findViewById(R.id.cardNumber);
-        ImageView imageView = view.findViewById(R.id.whiteBackgroud);
+        TextView cardFront = view.findViewById(R.id.card_front);
         if (grid[position] != 0){
-            numberText.setText(String.valueOf(grid[position]));
+            cardFront.setBackgroundColor(0xFFFFFFFF);
+            cardFront.setText(String.valueOf(grid[position]));
             if (!visibility)
-                numberText.setVisibility(View.INVISIBLE);
+                cardFront.setTextColor(0xFFFFFFFF);
         }
         else{
-            numberText.setText("");
-            imageView.setImageResource(R.mipmap.ic_black_square_foreground);
+            cardFront.setText("");
+            cardFront.setBackgroundColor(0x00000000);
         }
         return view;
     }
-
 }
