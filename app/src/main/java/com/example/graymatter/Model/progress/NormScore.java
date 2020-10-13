@@ -50,8 +50,13 @@ public class NormScore {
         */
     }
 
-
-    public static int[] normScores(int[] scores){
+    /**
+     *
+     * @param scores sorted with top scores at high indexes
+     * @return
+     */
+    public static int[][] normScores(int[] scores){
+        //what part of the gameDB does each game represent?
         double chunks = 1000.0 /(double)scores.length;
         int[] normScores = new int[scores.length];
         int sameCount = 1;
@@ -72,7 +77,10 @@ public class NormScore {
             }
         }
         normScores[scores.length-1] = (int)chunks* (scores.length-1);
-        return normScores;
+        int[][] scoresAndNormatedScores = new int[2][scores.length];
+        scoresAndNormatedScores[0] = scores;
+        scoresAndNormatedScores[1] = normScores;
+        return scoresAndNormatedScores;
     }
 
     private static double findAverage(int [] array){

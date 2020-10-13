@@ -19,8 +19,6 @@ public class ChimpGame extends Game {
     private final String gameName = "ChimpGame";
 
 
-    private final String gameName = "ChimpGame";
-
     public ChimpGame(){
         gameOver = true;
         EventBus.getDefault().register(this);

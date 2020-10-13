@@ -14,7 +14,8 @@
       "userImage": "",
       "playerHistory": [
         34,
-        35
+        35,
+        38
       ]
     },
     {
@@ -30,6 +31,10 @@
       "userID": 1,
       "userImage": "",
       "playerHistory": [
+        36,
+        37,
+        39,
+        2
       ]
     }
   ],

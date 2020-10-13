@@ -80,4 +80,8 @@ public class GameSessionAccess {
         }
         return nGs;
     }
+
+    public int getGameOwnerUserID(int gameID){
+        return playerAccess.getGameIDOwner(gameID);
+    }
 }
