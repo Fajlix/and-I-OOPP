@@ -51,4 +51,13 @@ public class ProgressTest {
             System.out.println(entry.getValue());
         }
     }
+
+    @Test
+    public void friendsTopScores(){
+        Map<Integer, Integer> scoreMap = ScoreFront.getSelectGlobalTopScores(1, 3, "ChimpGame");
+        for (Map.Entry<Integer, Integer> entry : scoreMap.entrySet()) {
+            System.out.print(entry.getKey());
+            System.out.println(entry.getValue());
+        }
+    }
 }

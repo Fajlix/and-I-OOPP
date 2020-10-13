@@ -1,4 +1,4 @@
-package com.example.graymatter;
+package com.example.graymatter.Model;
 
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.LocalDataMapper;
 import com.example.graymatter.Model.dataAccess.social.Player;

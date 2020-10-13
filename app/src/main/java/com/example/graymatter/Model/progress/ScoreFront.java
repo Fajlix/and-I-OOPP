@@ -5,6 +5,7 @@ import com.example.graymatter.Model.dataAccess.PlayerAccess;
 import com.example.graymatter.Model.dataAccess.social.GameSession;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -30,11 +31,11 @@ public class ScoreFront {
      *     where the userID key matches the player of the mapped GameSession. Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboardd position.
      * Integer UserID can be used to receive additional information about the Player of the matching GameSession. Additional information retained from PlayerAccess.
      */
-    public static Map<Integer, Integer> getSelectGlobalTopScores(int resultTop, int resultsLow, String gameType){
+    public static int[][] getSelectGlobalTopScores(int resultTop, int resultsLow, String gameType){
         if(resultsLow < resultTop){
             throw new IllegalArgumentException("Top placement can not be below low placement!");
         }
-        List<GameSession> gameSessions = gsa.getGameSessionsByType(gameType);                //TODO getGameSessionsByType should return Map<gameID, score>
+        List<GameSession> gameSessions = gsa.getGameSessionsByType(gameType);
         if(gameSessions.size() < resultsLow){
             resultsLow = gameSessions.size();
         }
@@ -56,8 +57,36 @@ public class ScoreFront {
         return selectGlobalTopScores;
     }
 
-    public static Map<Integer, GameSession> getSelectFriendTopScores(int resultTop, int resultsLow, String gameType){
-        return new HashMap<>();
+    /**
+     *
+     * @param resultTop Top placement, not index, beginning the span of Map rows to return.
+     * @param resultsLow Low placement, not index, ending the span of Map rows to return.
+     * @param gameType String retained from game class representing the type of the game.
+     * @return int[][] containing int[0] being a list of gameIDs, int[1] normScores, int[2] userIDs
+     */
+    public static int[][] getSelectFriendTopScores(int resultTop, int resultsLow, String gameType){
+        //check for illegal resultspan
+        if(resultsLow < resultTop){
+            throw new IllegalArgumentException("Top placement can not be below low placement!");
+        }
+        //sort out games of nonmatching gametypes
+        List<GameSession> gameSessions = gsa.getGameSessionsByType(gameType);
+        if(gameSessions.size() < resultsLow){
+            resultsLow = gameSessions.size();
+        }
+        //below: normArrays[0] = gameIDs, normArrays[1] = normScores, normArrays[2] = ownerUserIDs
+        //norm the results
+        int[][] normArrays = normProcess(gameType);
+        //find owners of gameIDs
+        int[][] normArraysWOwners = new int[3][];
+        //first two columns are copied from normArrays
+        normArraysWOwners[0] = normArrays[0];
+        normArraysWOwners[1] = normArrays[1];
+        normArraysWOwners[2] = findGameOwners(normArrays[0]);
+        //filter out non-friends
+        int[][] friendTopScores = filterFriends(normArraysWOwners);
+        //cut out the unwanted rankings and return
+        return cutOutSelectedTopListPart(friendTopScores, resultTop, resultsLow, 3);
     }
 
     public static Map<Integer, Integer> getSelectGlobalTopPersonas(int resultTop, int resultsLow, int resultsAmount){
@@ -74,4 +103,74 @@ public class ScoreFront {
     private static void sortGameSessionsByScore(List<GameSession> bfGS){
         //TODO sorting algoritm
     }
+
+    private static int[][] normProcess(String gameType){
+        List<GameSession> gameSessions = gsa.getGameSessionsByType(gameType);                //TODO getGameSessionsByType should return Map<gameID, score>
+        Map<Integer, Integer> selectGlobalTopScores = new HashMap<>();
+        sortGameSessionsByScore(gameSessions);
+        int[] scores = new int[gameSessions.size()];
+        int[] gameID = new int[gameSessions.size()];
+        for (int i = 0; i < gameSessions.size(); i++) {
+            scores[i] = gameSessions.get(i).getScore();
+            gameID[i] = gameSessions.get(i).getGameID();
+        }
+        int[] normScores = NormScore.normScores(scores);
+
+        int[][] toReturn = new int[2][scores.length];
+        toReturn[0] = gameID;
+        toReturn[1] = normScores;
+        return toReturn;
+    }
+
+    private static int[] findGameOwners(int[] gameIDs){
+
+    }
+
+    /**
+     *
+     * @param notJustFriends 3-column int matrix where notJustFriends[0] =
+     * @return
+     */
+    private static int[][] filterFriends(int[][] notJustFriends){
+        //start with Map because array needs determined length
+        /*Map<Integer, Integer> friends = new HashMap<>();
+        for (int i = 0; i < notJustFriends[0].length; i++) {
+            if(pa.currentPlayer.getFriendUserIDs().contains(notJustFriends[0][i])){
+                friends.put(notJustFriends[1][i], notJustFriends[1][i]);
+            }
+        }*/
+        int[][] justFriends = new int[notJustFriends.length][notJustFriends.length];
+        for (int i = 0; i < notJustFriends[0].length; i++) {
+            if(pa.currentPlayer.getFriendUserIDs().contains(notJustFriends[0][i])){
+                justFriends[0][i] = notJustFriends[0][i];
+                justFriends[1][i] = notJustFriends[1][i];
+                justFriends[2][i] = notJustFriends[2][i];
+            }
+        }
+        //convert to array
+        /*int[][] friendsArray = new int[2][friends.size()];
+        int i = 0;
+        for (Map.Entry<Integer, Integer> entry : friends.entrySet()) {
+            friendsArray[0][i] = entry.getKey();
+            friendsArray[1][i] = entry.getValue();
+            i++;
+        }
+        return friendsArray;*/
+        return justFriends;
+    }
+
+    private static int[][] cutOutSelectedTopListPart(int[][] unCut, int resultTop, int resultsLow, int colUnCut){
+        int[][] cut = new int[colUnCut][1+resultsLow-resultTop];
+        //the newIndex where we in friendSelectedTopScores place what's on oldIndex in friendTopScores
+        int newI = 0;
+        for (int oldI = resultTop-1; oldI < resultsLow; oldI++) {
+            for (int col = 0; col < colUnCut; col++) {
+                cut[col][newI] = unCut[col][oldI];
+            }
+            newI++;
+        }
+        return cut;
+    }
+
+
 }
