@@ -24,31 +24,16 @@ public class StatisticsTabFragment extends Fragment {
 
 
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statistics_tab, container, false);
 
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
-        TabItem friendsTab = view.findViewById(R.id.friendsTab);
-        TabItem globalsTab = view.findViewById(R.id.globalTab);
         final ViewPager viewPager = view.findViewById(R.id.viewPager);
 
 
-        PagerAdapter pagerAdapter = new PagerAdapter(getFragmentManager(), tabLayout.getTabCount());
+        PagerAdapter pagerAdapter = new PagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
 
 
