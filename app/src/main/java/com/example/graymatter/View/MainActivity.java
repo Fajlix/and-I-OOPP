@@ -13,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
+import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.graymatter.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
         navController = Navigation.findNavController(this,  R.id.fragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
+
         //Listens to navigation and hides/shows the bottomNavigationView depending on fragment
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
@@ -52,7 +54,13 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
 
     @Override
     public void reactionTestClicked() {
-        navController.navigate(R.id.reactionTestActivity);
+        //TODO maby should be diffrent methods
+        if(navController.getCurrentDestination().getLabel().equals("fragment_statistics")){
+            navController.navigate(R.id.statisticsTabFragment);
+        }
+        else navController.navigate(R.id.reactionTestActivity);
+
+
     }
 
     @Override
