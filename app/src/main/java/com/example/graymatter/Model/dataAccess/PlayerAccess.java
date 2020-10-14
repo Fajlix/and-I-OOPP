@@ -288,4 +288,8 @@ public class PlayerAccess {
         }
         return 0;
     }
+
+    public int getPBSize() {
+        return playerMapper.get().size();
+    }
 }

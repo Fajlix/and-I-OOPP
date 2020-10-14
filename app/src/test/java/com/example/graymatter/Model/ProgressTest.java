@@ -33,31 +33,38 @@ public class ProgressTest {
     @Test
     public void normScoresTest(){
         int[] sortedScores = Sort.sort(scores);
-        int[] normScores = NormScore.normScores(sortedScores);
+        int[][] normScores = NormScore.normScores(sortedScores);
         int[] normScoresComp = new int[]{0, 50, 150, 150, 250, 250, 300, 350, 475, 475, 475, 550, 750, 750, 750, 750, 750, 750, 900, 950};
-        Assert.assertEquals(sortedScores.length, normScores.length);
+        Assert.assertEquals(sortedScores.length, normScores[0].length);
         for (int i = 0; i < sortedScores.length; i++) {
             //System.out.print(sortedScores[i]);
             //System.out.println(" " + normScores[i]);
-            Assert.assertEquals(normScores[i], normScoresComp[i]);
+            Assert.assertEquals(normScores[1][i], normScoresComp[i]);
         }
     }
 
     @Test
     public void globalTopScoresTest(){
-        Map<Integer, Integer> scoreMap = ScoreFront.getSelectGlobalTopScores(1, 5, "ChimpGame");
-        for (Map.Entry<Integer, Integer> entry : scoreMap.entrySet()) {
-            System.out.print(entry.getKey());
-            System.out.println(entry.getValue());
+        int[][] scores = ScoreFront.getSelectGlobalTopScores(1, 7, "ChimpGame");
+        for (int i = 0; i < scores[0].length; i++) {
+            System.out.println(scores[0][i] + " " + scores[1][i] + " " + scores[2][i]);
         }
     }
 
     @Test
-    public void friendsTopScores(){
-        Map<Integer, Integer> scoreMap = ScoreFront.getSelectGlobalTopScores(1, 3, "ChimpGame");
-        for (Map.Entry<Integer, Integer> entry : scoreMap.entrySet()) {
-            System.out.print(entry.getKey());
-            System.out.println(entry.getValue());
+    public void friendsTopScoresTest(){
+        int[][] scores = ScoreFront.getSelectFriendTopScores(1, 15, "ChimpGame");
+        for (int i = 0; i < scores[0].length; i++) {
+            System.out.println(scores[0][i] + " " + scores[1][i] + " " + scores[2][i]);
         }
     }
+
+    @Test
+    public void friendPersonaScoresTest(){
+        int i = (int) 99.9;
+        System.out.println(i);
+
+    }
+
+
 }

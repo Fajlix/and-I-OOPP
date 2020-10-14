@@ -7,6 +7,7 @@ import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.DataBaseModel;
 import com.google.gson.Gson;
 
+import org.junit.Assert;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -104,5 +105,10 @@ public class SocialTest {
         testPlayerAccess.logIn("Mathilda97", "yihha123");
         assertEquals(testPlayerAccess.currentPlayer.getUserID(), 1);
         testPlayerAccess.logOut();
+    }
+
+    @Test
+    public void findGameOwnerTest(){
+        Assert.assertEquals(testPlayerAccess.getGameIDOwner(39), 1);
     }
 }

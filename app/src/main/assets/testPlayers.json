@@ -5,6 +5,7 @@
         "email": "1337manneeeeen@gmail.com",
         "password": "hejNej88*",
         "friendUserIDs": [
+          1,
           2,
           71
         ]
@@ -23,6 +24,7 @@
         "email": "mat@gmail.com",
         "password": "yihha123",
         "friendUserIDs": [
+          15,
           2,
           71
         ]

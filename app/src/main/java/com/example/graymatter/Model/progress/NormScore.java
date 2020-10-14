@@ -53,7 +53,7 @@ public class NormScore {
     /**
      *
      * @param scores sorted with top scores at high indexes
-     * @return
+     * @return int[][]: int[0] original scores, int[1] normated scores
      */
     public static int[][] normScores(int[] scores){
         //what part of the gameDB does each game represent?

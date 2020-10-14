@@ -16,94 +16,202 @@ public class ScoreFront {
     private static GameSessionAccess gsa = new GameSessionAccess("src/main/assets/testPlayers.json"); //comes from somewhere?
     private static PlayerAccess pa = new PlayerAccess("src/main/assets/testPlayers.json"); //same
 
-    public static void storeGameSession(int unNorm, String gameType){
-        //int normScore = NormScore.normScore(unNorm, gameType);
-       // gsa.storeGameSession(normScore, gameType);
+
+    /**
+     * Returns a leaderboard of gamesessions, corresponding normated scores and players from a particular gameType, with only games played by the user marked as currentUser in local cache. Cut after argument input.
+     * @param resultTop Top placement, not index, beginning the span of Map rows to return.
+     * @param resultLow Low placement, not index, ending the span of Map rows to return.
+     * @param gameType String retained from game class representing the type of the game.
+     * @return int[][] containing int[0] being a list of gameIDs, int[1] normScores, int[2] userIDs. Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboard position.
+     * Normated scores are given as an int above or equal to zero, below 1000.
+     * int userID can be used to receive additional information about the Player of the matching GameSession. Additional information retained from PlayerAccess.
+     */
+    public static int[][] getSelectFriendTopScores(int resultTop, int resultLow, String gameType){
+        //check if the resultspan is legal
+        if(resultLow < resultTop){
+            throw new IllegalArgumentException("Top placement can not be below low placement!");
+        }
+        //get sorted matrix with gameowners, normated topscores and gameIDs
+        int[][] normArraysWOwners = getGlobalTopScores(gameType);
+        //filter out non-friends
+        int[][] friendTopScores = filterFriends(normArraysWOwners);
+        //check for illegal resultspan
+        resultLow = legalResultSpan(resultTop, resultLow, friendTopScores[0].length);
+        //cut out the unwanted rankings and return
+        return cutOutSelectedTopListPart(friendTopScores, resultTop, resultLow, 3);
     }
 
     /**
-     * Returns a leaderboard of results from a particular gameType, with only games played by the user marked as currentUser in local cache. Cut after argument input.
+     * Returns a leaderboard of gamesessions, corresponding normated scores and players from a particular gameType, cut after argument input.
      * @param resultTop Top placement, not index, beginning the span of Map rows to return.
-     * @param resultsLow Low placement, not index, ending the span of Map rows to return.
+     * @param resultLow Low placement, not index, ending the span of Map rows to return.
      * @param gameType String retained from game class representing the type of the game.
      * @return int[][] containing int[0] being a list of gameIDs, int[1] normScores, int[2] userIDs. Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboard position.
+     * Normated scores are given as an int above or equal to zero, below 1000.
      * int userID can be used to receive additional information about the Player of the matching GameSession. Additional information retained from PlayerAccess.
      */
-    public static int[][] getSelectFriendTopScores(int resultTop, int resultsLow, String gameType){
-        //sort out games of nonmatching gametypes
-        List<GameSession> gameSessions = gsa.getGameSessionsByType(gameType);
-        //check for illegal resultspan
-        resultsLow = legalResultSpan(resultTop, resultsLow, gameSessions.size());
+    public static int[][] getSelectGlobalTopScores(int resultTop, int resultLow, String gameType){
+        //much similar to getSelectFriendTopScores. See above for closer commenting
+        if(resultLow < resultTop){
+            throw new IllegalArgumentException("Top placement can not be below low placement!");
+        }
+        int[][] normArraysWOwners = getGlobalTopScores(gameType);
+        resultLow = legalResultSpan(resultTop, resultLow, normArraysWOwners[0].length);
+        return cutOutSelectedTopListPart(normArraysWOwners, resultTop, resultLow, 3);
+    }
+
+    private static int[][] getGlobalTopScores(String gameType){
         //below: normArrays[0] = gameIDs, normArrays[1] = normScores, normArrays[2] = ownerUserIDs
         //sort and norm the results
-        int[][] normArrays = convertAndNorm(gameType);
+        int[][] normArrays = findAndNorm(gameType);
         //find owners of gameIDs
         int[][] normArraysWOwners = new int[3][];
         //first two columns are copied from normArrays
         normArraysWOwners[0] = normArrays[0];
         normArraysWOwners[1] = normArrays[1];
         normArraysWOwners[2] = findGameOwners(normArrays[0]);
-        //filter out non-friends
-        int[][] friendTopScores = filterFriends(normArraysWOwners);
-        //cut out the unwanted rankings and return
-        return cutOutSelectedTopListPart(friendTopScores, resultTop, resultsLow, 3);
+        return normArraysWOwners;
     }
 
     /**
-     * Returns a leaderboard of results from a particular gameType, cut after argument input.
+     * Returns a leaderboard of players and corresponding normated scores. Based on persona, a.k.a. overall topscoring player.
      * @param resultTop Top placement, not index, beginning the span of Map rows to return.
-     * @param resultsLow Low placement, not index, ending the span of Map rows to return.
-     * @param gameType String retained from game class representing the type of the game.
-     * @return int[][] containing int[0] being a list of gameIDs, int[1] normScores, int[2] userIDs. Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboard position.
+     * @param resultLow Low placement, not index, ending the span of Map rows to return.
+     * @param legalGameTypes A String of gameTypes, seperated by space " ". Retained from TODO this should have dedicated method either in GameSessionAccess or some formal legal shell above
+     * @return int[][] containing int[0] being a list of userIDs, int[1] normScores. Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboard position.
+     * Normated scores are given as an int above or equal to zero, below 1000.
      * int userID can be used to receive additional information about the Player of the matching GameSession. Additional information retained from PlayerAccess.
      */
-    public static int[][] getSelectGlobalTopScores(int resultTop, int resultsLow, String gameType){
-        List<GameSession> gameSessions = gsa.getGameSessionsByType(gameType);
-        resultsLow = legalResultSpan(resultTop, resultsLow, gameSessions.size());
-        int[][] normArrays = convertAndNorm(gameType);
-        int[][] normArraysWOwners = new int[3][];
-        normArraysWOwners[0] = normArrays[0];
-        normArraysWOwners[1] = normArrays[1];
-        normArraysWOwners[2] = findGameOwners(normArrays[0]);
-        return cutOutSelectedTopListPart(normArraysWOwners, resultTop, resultsLow, 3);
+    public static int[][] getSelectGlobalTopPersonas(int resultTop, int resultLow, String legalGameTypes){
+        if(resultLow < resultTop){
+            throw new IllegalArgumentException("Top placement can not be below low placement!");
+        }
+        int[][] normArrayWOwners = getGlobalTopPersonas(legalGameTypes);
+        resultLow = legalResultSpan(resultTop, resultLow, pa.getPBSize());
+        return cutOutSelectedTopListPart(normArrayWOwners, resultTop, resultLow, 3);
+
+    }
+
+
+
+    public static int[][] getSelectFriendTopPersonas(int resultTop, int resultLow, String legalGameTypes){
+        if(resultLow < resultTop){
+            throw new IllegalArgumentException("Top placement can not be below low placement!");
+        }
+        int[][] normArrayWOwners = getGlobalTopPersonas(legalGameTypes);
+        //cut out nonfriends from leaderboard
+        int[][] justfriends = filterFriends(normArrayWOwners);  //TODO doesn't work for tworow matrix
+        resultLow = legalResultSpan(resultTop, resultLow, justfriends.length);
+        return cutOutSelectedTopListPart(normArrayWOwners, resultTop, resultLow, 3);
     }
 
     /**
      *
-     * @param resultTop
-     * @param resultsLow
-     * @param resultsAmount
-     * @param legalGameTypes A String of gameTypes, seperated by space " "
-     * @return
+     * @param legalGameTypes A String of gameTypes, seperated by space " ". Retained from
+     * @return twocolumn matrix, int[0] containing userIDs, int[1] norm scores
      */
-    public static int[][] getSelectGlobalTopPersonas(int resultTop, int resultsLow, int resultsAmount, String legalGameTypes){
-        resultsLow = legalResultSpan(resultTop, resultsLow, resultsAmount);
+    private static int[][] getGlobalTopPersonas(String legalGameTypes){
         String[] gameTypes = legalGameTypes.split(" ");
-        int[][] normArray = new int[2][];
+        int[][] normArray = new int[gameTypes.length*2][];
+        int newNAI = 0;
         for (String gameType : gameTypes) {
-            int[][] addArray = convertAndNorm(gameType);
+            //normArray[0] gameIDs, normArray[1] norm scores
+            int[][] addArray = findAndNorm(gameType);
+            //int[][] addArray = new int[2][];
+            //gameSession removed from index 0, leaves room for userIDs
+            addArray[0] = findGameOwners(addArray[0]);
+            //remove all entries except one from same users
+            addArray = removeAllButPersonalTopScores(addArray);
             int sI = normArray.length;
-            normArray[0] = Arrays.copyOf(normArray[0], addArray.length);
-            normArray[1] = Arrays.copyOf(normArray[1], addArray.length);
-            for (int i = sI; i < normArray[0].length; i++) {
-                normArray[0][i] = addArray[0][i-sI];
-                normArray[1][i] = addArray[1][i-sI];
-            }
+            //put addArray as new columns in normArray
+            normArray[newNAI] = addArray[0];
+            normArray[newNAI+1] = addArray[1];
+            newNAI += 2;
         }
-        int[][] normArraysWOwners = new int[3][];
-        normArraysWOwners[0] = normArray[0];
-        normArraysWOwners[1] = normArray[1];
-        normArraysWOwners[2] = findGameOwners(normArray[0]);
-        return cutOutSelectedTopListPart(normArraysWOwners, resultTop, resultsLow, 3);
-
-    }
-
-    public static int[][] getSelectFriendTopPersonas(int resultTop, int resultsLow, int resultsAmount){
-        return new int[0][0];
+        return normPersonas(normArray);
     }
 
     /**
-     * Sorter capable of sorting numbers x,  0 =< x => 2000. Top Scores on high index, low scores on low index.
+     * Removes all but one top scoring entry from same user from leaderboard.
+     * @param addArray: int[1] containing userIDs, int[1] containing normated scores
+     * @return int[1] containing userIDs, int[1] containing normated scores
+     */
+    private static int[][] removeAllButPersonalTopScores(int[][] addArray) {
+        //key is gameID, value norm score
+        Map<Integer, Integer> notedIDs = new HashMap<>();
+        for (int i = 0; i < addArray[0].length; i++) {
+            //if already noted result from user, check if the new result is higher and if so let it replace the old
+            if(notedIDs.containsKey(addArray[0][i])){
+                if(addArray[1][i] > notedIDs.get(addArray[0][i])){
+                    notedIDs.remove(addArray[0][i]);
+                    notedIDs.put(addArray[0][i], addArray[1][i]);
+                }
+            //else add it in map   
+            } else {
+                notedIDs.put(addArray[0][i], addArray[1][i]);
+            }
+        }
+        //convert map to two-row matrix
+        int[][] resultsMatrix = new int[2][notedIDs.size()];
+        int count = 0;
+        for (Map.Entry<Integer, Integer> entry:notedIDs.entrySet()) {
+            resultsMatrix[0][count] = entry.getKey();
+            resultsMatrix[1][count] = entry.getValue();
+            count++;
+        }
+        return resultsMatrix;
+    }
+
+    /**
+     * @param allGameTypes int[i] = userIDs, int[i+1] normated scores, columns div. after gametype
+     * @return int[][]: int[0] containing userIDs, int[1] containing normated scores, sorted from top results at low index
+     */
+    private static int[][] normPersonas(int[][] allGameTypes){
+        //check length of longest column
+        int longestRow = 0;
+        for (int[] col: allGameTypes) {
+            if (col.length > longestRow){
+                longestRow = col.length;
+            }
+        }
+        //squash matrix to two columns, add together scores paired with owner userID.
+        int[][] addedScores = new int[2][longestRow];
+        //for every pair of columns aka every gametype
+        int freeIndex = 0;
+        for (int i = 0; i < allGameTypes.length / 2; i++) {
+            //for every entry on that game
+            for (int j = 0; j < allGameTypes[i].length; j++) {
+                //for every entry in addedScores, check if it contains the userID and if so assign them that score
+                boolean found = false;
+                for (int k = 0; k < longestRow; k++) {
+                    if(addedScores[0][k] == allGameTypes[i][j]){
+                        addedScores[1][k] += allGameTypes[i+1][j];
+                        found = true;
+                        break;
+                    }
+                }
+                //else put userID on addedScore[0] and first score on addedScore[1] in new entry
+                if(!found){
+                    addedScores[0][freeIndex] = allGameTypes[i][j];
+                    addedScores[1][freeIndex] = allGameTypes[i+1][j];
+                    freeIndex++;
+                }
+            }
+        }
+        //switch rowplacement before sort TODO just noo about the switcharoo
+        int[][] switchedRows = new int[2][];
+        switchedRows[0] = addedScores[1];
+        switchedRows[1] = addedScores[0];
+        int[][] sortedScores = Sort.multRowSort(switchedRows);
+        //switch back
+        int[][] toReturn = new int[2][];
+        toReturn[1] = NormScore.normScores(sortedScores[0])[1];
+        toReturn[0] = sortedScores[1];
+        return toReturn;
+    }
+
+    /**
+     * Sorts list of GameSessions based on score, numbers x,  0 =< x => 2000. Top Scores on high index, low scores on low index.
      */
     private static void sortGameSessionsByScore(List<GameSession> bfGS){
         for (int i = 0; i < bfGS.size(); i++){
@@ -120,9 +228,9 @@ public class ScoreFront {
     /**
      *
      * @param gameType
-     * @return
+     * @return int[0] containing gameIDs, int[1] containing normed scores
      */
-    private static int[][] convertAndNorm(String gameType){
+    private static int[][] findAndNorm(String gameType){
         List<GameSession> gameSessions = gsa.getGameSessionsByType(gameType);
         sortGameSessionsByScore(gameSessions);
         int[] scores = new int[gameSessions.size()];
@@ -156,31 +264,28 @@ public class ScoreFront {
      * @return
      */
     private static int[][] filterFriends(int[][] notJustFriends){
-        //start with Map because array needs determined length
-        /*Map<Integer, Integer> friends = new HashMap<>();
+        int[][] justFriends = new int[3][notJustFriends[0].length];
+        int friendGameCount = 0;
         for (int i = 0; i < notJustFriends[0].length; i++) {
-            if(pa.currentPlayer.getFriendUserIDs().contains(notJustFriends[0][i])){
-                friends.put(notJustFriends[1][i], notJustFriends[1][i]);
-            }
-        }*/
-        int[][] justFriends = new int[notJustFriends.length][notJustFriends[0].length];
-        for (int i = 0; i < notJustFriends[0].length; i++) {
-            if(pa.currentPlayer.getFriendUserIDs().contains(notJustFriends[0][i])){
+            if(pa.currentPlayer.getFriendUserIDs().contains(notJustFriends[2][i])
+            || pa.currentPlayer.getUserID() == notJustFriends[2][i]){
                 justFriends[0][i] = notJustFriends[0][i];
                 justFriends[1][i] = notJustFriends[1][i];
                 justFriends[2][i] = notJustFriends[2][i];
+                friendGameCount++;
             }
         }
-        //convert to array
-        /*int[][] friendsArray = new int[2][friends.size()];
-        int i = 0;
-        for (Map.Entry<Integer, Integer> entry : friends.entrySet()) {
-            friendsArray[0][i] = entry.getKey();
-            friendsArray[1][i] = entry.getValue();
-            i++;
+        int[][] friendsWOZeroes = new int[3][friendGameCount];
+        int count = 0;
+        for (int i = 0; i < friendGameCount; i++){
+            if(justFriends[2][i] != 0){
+                friendsWOZeroes[0][count] = notJustFriends[0][i];
+                friendsWOZeroes[1][count] = notJustFriends[1][i];
+                friendsWOZeroes[2][count] = notJustFriends[2][i];
+                count++;
+            }
         }
-        return friendsArray;*/
-        return justFriends;
+        return friendsWOZeroes;
     }
 
     private static int[][] cutOutSelectedTopListPart(int[][] unCut, int resultTop, int resultsLow, int colUnCut){
@@ -198,9 +303,6 @@ public class ScoreFront {
 
     //a bit dirty
     private static int legalResultSpan(int resultsTop, int resultsLow, int listlength) throws IllegalArgumentException{
-        if(resultsLow < resultsTop){
-            throw new IllegalArgumentException("Top placement can not be below low placement!");
-        }
         if(listlength < resultsLow){
             return listlength;
         }
