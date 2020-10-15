@@ -1,5 +1,6 @@
 package com.example.graymatter.Social;
 
+import android.content.Context;
 import android.net.ParseException;
 
 import com.google.gson.Gson;
@@ -8,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.List;
@@ -47,7 +49,7 @@ public final class PlayerMapper implements DataMapper<Player> {
     List<PlayerMapperListener> listeners;
 
     public PlayerMapper(String dbPath) {
-        this.dbPath = dbPath; // "src/main/assets/testPlayers.json"
+        this.dbPath = dbPath; // "src/main/assets/testplayers.json"
         //in db?
         currentFriendID = 0;
         if (LocalDataMapper.getCurrentPlayerUserID() != 0) {
@@ -61,6 +63,19 @@ public final class PlayerMapper implements DataMapper<Player> {
     public Optional<Player> find(int userID) {
         try {
             List<Player> obj = newRead().getPlayers();
+            for (Player p : obj){
+                if (p.getUserID() == (userID)){
+                    return Optional.of(p);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+    public Optional<Player> findopt(Context context,int userID) {
+        try {
+            List<Player> obj = newReadopt(context).getPlayers();
             for (Player p : obj){
                 if (p.getUserID() == (userID)){
                     return Optional.of(p);
@@ -164,12 +179,20 @@ public final class PlayerMapper implements DataMapper<Player> {
         writer.flush();
         writer.close();
     }
-
-
     private DataBaseModel newRead() throws IOException {
         Reader reader = new FileReader(dbPath);
         DataBaseModel toReturn = gson.fromJson(reader, DataBaseModel.class);
         reader.close();
+        return toReturn;
+    }
+
+
+    private DataBaseModel newReadopt(Context context) throws IOException {
+        InputStream inputStream = context.getAssets().open("testplayers.json");
+
+        byte[] buffer = new byte[inputStream.available()];
+        inputStream.read(buffer);
+        DataBaseModel toReturn = gson.fromJson(new String(buffer), DataBaseModel.class);
         return toReturn;
     }
 

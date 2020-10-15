@@ -50,7 +50,7 @@ public class ChimpGameFragment extends Fragment{
         chimpGameVM.getGrid().observe(getViewLifecycleOwner(), new Observer<int[]>() {
             @Override
             public void onChanged(int[] grid) {
-                chimpGameChimpGridAdapter = new ChimpGridAdapter(ChimpGameFragment.this,grid);
+                chimpGameChimpGridAdapter = new ChimpGridAdapter(grid);
                 gridView.setAdapter(chimpGameChimpGridAdapter);
             }
         });
