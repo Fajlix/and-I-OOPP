@@ -1,10 +1,14 @@
 package com.example.graymatter;
 
+import android.app.Activity;
+import android.content.Context;
+
 import com.example.graymatter.Social.LocalDataMapper;
 import com.example.graymatter.Social.Player;
 import com.example.graymatter.Social.PlayerAccess;
 import com.example.graymatter.Social.UserInfoException;
 import com.example.graymatter.Social.DataBaseModel;
+import com.example.graymatter.View.MainActivity;
 import com.google.gson.Gson;
 
 import org.junit.Test;
@@ -14,9 +18,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 
-public class SocialTest {
-    String path = "src/main/assets/testPlayers.json";
-    PlayerAccess testPlayerAccess = new PlayerAccess(path);
+public class SocialTest extends Activity {
+    String path = "src/main/assets/testplayers.json";
+    MainActivity mainActivity = new MainActivity();
+    PlayerAccess testPlayerAccess = new PlayerAccess(path,getApplicationContext());
     Player testUser;
     Player testPlayer;
 /**

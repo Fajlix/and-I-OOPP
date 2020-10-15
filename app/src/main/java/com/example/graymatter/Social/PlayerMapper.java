@@ -49,7 +49,7 @@ public final class PlayerMapper implements DataMapper<Player> {
     List<PlayerMapperListener> listeners;
 
     public PlayerMapper(String dbPath) {
-        this.dbPath = dbPath; // "src/main/assets/testPlayers.json"
+        this.dbPath = dbPath; // "src/main/assets/testplayers.json"
         //in db?
         currentFriendID = 0;
         if (LocalDataMapper.getCurrentPlayerUserID() != 0) {
@@ -188,12 +188,11 @@ public final class PlayerMapper implements DataMapper<Player> {
 
 
     private DataBaseModel newReadopt(Context context) throws IOException {
-        InputStream inputStream = context.getAssets().open("testPlayers.json");
+        InputStream inputStream = context.getAssets().open("testplayers.json");
+
         byte[] buffer = new byte[inputStream.available()];
         inputStream.read(buffer);
-        //Reader reader = new FileReader(dbPath);
         DataBaseModel toReturn = gson.fromJson(new String(buffer), DataBaseModel.class);
-        //reader.close();
         return toReturn;
     }
 
