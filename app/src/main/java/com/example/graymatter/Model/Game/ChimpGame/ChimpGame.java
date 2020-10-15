@@ -7,9 +7,13 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Arrays;
 
+/**
+ * Class to represent a game where the player must remember a sequence of tiles and then
+ * select the tiles in order.
+ */
 public class ChimpGame extends Game {
     private int numberQty; //amount of boxes to choose from at current stage, also serves as score.
-    private int[] board = new int[24]; // The locations on which the numbers can appear, zeroes indicate empty spaces
+    private int[] board = new int[24]; // The grid on which the sequence tiles can appear, zeroes indicate empty spaces
     private int nextNumber;
     private boolean numberVisibility;
     private boolean gameOver;
@@ -19,7 +23,6 @@ public class ChimpGame extends Game {
         gameOver = true;
         EventBus.getDefault().register(this);
     }
-
 
     public void startGame(){
         gameOver = false;
@@ -34,6 +37,10 @@ public class ChimpGame extends Game {
         return numberQty;
     }
 
+    /**
+     * Method to handle changes in the game state based on player input.
+     * @param event class with input data
+     */
     @Subscribe
     public void onChimpEvent(ChimpEvent event){
         if (gameOver) {
@@ -69,6 +76,9 @@ public class ChimpGame extends Game {
             notifyObservers();
     }
 
+    /**
+     * Places sequence tiles on the game's grid.
+     */
     private void fillBoard(){
         clearBoard();
         int placement;
@@ -83,6 +93,9 @@ public class ChimpGame extends Game {
         nextNumber = 1;
     }
 
+    /**
+     * Removes all sequence tiles from the game's grid.
+     */
     private void clearBoard(){
         for (int i = 0; i<24; i++){
             board[i] = 0;
