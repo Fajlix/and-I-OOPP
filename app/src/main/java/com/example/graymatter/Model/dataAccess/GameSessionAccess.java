@@ -31,10 +31,12 @@ public class GameSessionAccess {
         gsMapper.insert(gs);
     }
 
+
     /**
      * For package-internal cleaning purposes.
      * @param gameID unique gameID of the GameSession.
      */
+    /*
     protected void removeGameSession(int gameID){
         Optional<GameSession> gs = gsMapper.find(gameID);
         if (!gs.isPresent()){
@@ -43,6 +45,7 @@ public class GameSessionAccess {
             gsMapper.delete(gs.get());
         }
     }
+    */
 
     public int getNewGameID() {
         int topGameID = 0;
@@ -54,14 +57,14 @@ public class GameSessionAccess {
         return topGameID + 1;
     }
 
-    protected GameSession getGameSession(int gameID){
+    public GameSession getGameSession(int gameID) throws DataMapperException{
         Optional<GameSession> opGameSession = gsMapper.find(gameID);
         if(opGameSession.isPresent()){
             return opGameSession.get();
         }
         throw new DataMapperException("gameId does not match GameSession in database.");
     }
-
+/*
     public static Map<Integer, Integer> getAllScoresIdentifiable(){
         Map<Integer, Integer> scores = new HashMap<>();
         for (GameSession gs: gsMapper.get()){
@@ -69,7 +72,7 @@ public class GameSessionAccess {
         }
         return scores;
     }
-
+*/
     public List<GameSession> getGameSessionsByType(String gameType) {
         List<GameSession> gs = gsMapper.get();
         List<GameSession> nGs = new ArrayList<>();

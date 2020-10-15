@@ -29,12 +29,13 @@ public class PlayerAccess {
         Optional<Player> optionalPlayer = playerMapper.find(LocalDataMapper.getCurrentPlayerUserID());
         if (optionalPlayer.isPresent()){
             currentPlayer = optionalPlayer.get();
+            updatePlayer();
         } else {
-            currentPlayer = null; //TODO mmm
+            currentPlayer = null; //TODO öh kan ju bara vara Optional<Player> dumstrut
         }
-        updatePlayer();
     }
 
+    //TODO cleanup gamesessions (remove gamesessions w dead owner
 
     //Concerns currentPlayer and the existance of the user
     /**
@@ -53,6 +54,7 @@ public class PlayerAccess {
             throw new DataMapperException("Wrong password!"); //should possibly be userinfoexception
         }
         currentPlayer = player.get();
+        LocalDataMapper.setCurrentPlayerUserID(currentPlayer.getUserID());
     }
 
     /**
@@ -64,9 +66,13 @@ public class PlayerAccess {
     public void createNewAccountAndLogIn(String email, String password, String userName) throws UserInfoException {
         //check account creation conditions before creating account.
         Player.passwordSafetyCheck(password);
-        if (isUserName(userName)) throw new DataMapperException("Username already taken!");
+        if (isUserName(userName)){
+            throw new DataMapperException("Username already taken!");
+        }
         //ask if they want email login help?
-        if (isEmail(email)) throw new DataMapperException("Email is already being used!");
+        if (isEmail(email)){
+            throw new DataMapperException("Email is already being used!");
+        }
 
 
         Player player = Player.makePlayer(getNewUserID(), email, password, userName);
@@ -79,13 +85,13 @@ public class PlayerAccess {
      */
     public void logOut() {
         currentPlayer = null;  //näej pissdålig idé
+        LocalDataMapper.setCurrentPlayerUserID(0);
     }
 
     public void deleteAccount(String password){
         currentPlayer.isPasswordCorrect(password);
         playerMapper.delete(currentPlayer);
-        currentPlayer = null;
-        //TODO write currentPlayer locally somehow
+        logOut();
     }
 
     //Checks database for different parameters
@@ -99,9 +105,9 @@ public class PlayerAccess {
         return Optional.empty();
     }
 
-    private Optional<Player> findByEmail(String email) {
+    public Optional<Player> findByEmail(String email) {
         for (Player p :playerMapper.get()){
-            if(p.getUserName().equals(email)){
+            if(p.getEmail().equals(email)){
                 return Optional.of(p);
             }
         }
@@ -199,7 +205,7 @@ public class PlayerAccess {
 
     //Related to friends
 
-    public void addFriend(int userID) throws UserInfoException {
+    public void addFriend(int userID) {
         if(isFriend(userID)){
             throw new DataMapperException("Already a friend!");
         }
@@ -213,11 +219,7 @@ public class PlayerAccess {
         playerMapper.update(friend.get());
     }
 
-    public void removeFriend(int userID) {
-        //check if the relationship even exists. Throw exception since isFriend == true indicated frontend error.
-        if(!isFriend(userID)){
-            throw new DataMapperException("Already not a friend!");
-        }
+    public void removeFriend(int userID) throws DataMapperException{
         //removes friend from user´s friend list
         try {
             currentPlayer.removeFriend(userID);
@@ -232,7 +234,7 @@ public class PlayerAccess {
         }
         try {
             friend.get().removeFriend(currentPlayer.getUserID());
-        } catch (UserInfoException e) {
+        } catch (UserInfoException e) { //can't end up here
             e.printStackTrace();
         }
         playerMapper.update(friend.get());
@@ -243,8 +245,8 @@ public class PlayerAccess {
         for (int friendID : currentPlayer.getFriendUserIDs()) {
             Optional<Player> friend = playerMapper.find(friendID);
             if(!friend.isPresent()){
-                //should you throw other class´ exception?
                 updatePlayer();
+                return getFriends();
             } else {
                 friends.add(friend.get());
             }

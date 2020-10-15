@@ -21,30 +21,11 @@ import java.util.Optional;
 
 public final class PlayerMapper implements DataMapper<Player> {
     private final String dbPath;
-    //good for batch writing. bad for safety. idk
     private DataBaseModel toWrite;
     Gson gson = new Gson();
 
-
-
-  //  public Player currentPlayer;
-
-    //orimligt???
-    //List<Player> playersList;
-    //List<Player> friendBuffer;   ??? kanske
-    //databasen
-    //kanske bara läsa / skriva till fil med bufferedReader?
-
-    //batch reading??
-
-
     public PlayerMapper(String dbPath) {
-        this.dbPath = dbPath; // "src/main/assets/testPlayers.json"
-       /* if (LocalDataMapper.getCurrentPlayerUserID() != 0) {
-            Optional<Player> player = find(LocalDataMapper.getCurrentPlayerUserID());
-            if (player.isPresent()) currentPlayer = player.get();
-        }*/
-        //listeners = new ArrayList<>();
+        this.dbPath = dbPath;
     }
 
     @Override
@@ -62,22 +43,6 @@ public final class PlayerMapper implements DataMapper<Player> {
         return Optional.empty();
     }
 
-    public Player getPlayer(int friendUserID) {
-        //TODO major dumbness. fix pls
-        try {
-            List<Player> arr = newRead().getPlayers();
-            for (Player p: arr) {
-
-                if (p.getUserID() == friendUserID) {
-                    return p;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        throw new DataMapperException("No Player matching userID");
-    }
-
     @Override
     public void delete(Player player) throws DataMapperException {
         try {
@@ -87,7 +52,6 @@ public final class PlayerMapper implements DataMapper<Player> {
             for (Player p: arr) {
                 if (p.getUserID() == player.getUserID()) {
                     pToBe = p;
-
                 }
             }
             if (!arr.remove(pToBe)){
@@ -106,7 +70,6 @@ public final class PlayerMapper implements DataMapper<Player> {
     @Override
     public void insert(Player player) throws DataMapperException {
         try {
-
             DataBaseModel dbModel = newRead();
             dbModel.getPlayers().add(player);
             toWrite = dbModel;
@@ -154,7 +117,6 @@ public final class PlayerMapper implements DataMapper<Player> {
         writer.flush();
         writer.close();
     }
-
 
     private DataBaseModel newRead() throws IOException {
         Reader reader = new FileReader(dbPath);

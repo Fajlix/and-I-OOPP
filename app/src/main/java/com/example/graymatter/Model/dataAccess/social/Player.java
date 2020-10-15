@@ -14,7 +14,7 @@ public class Player {
     /**
      * Aggregate with additional information private to the user. Reached with correct userKey.
      */
-    private UserInfo userInfo;
+    private UserInfo userInfo; //TODO aldo can just be Optional?
     /**
      * Needed upon registration:
      */
@@ -41,27 +41,11 @@ public class Player {
         this.userID = userID;
         this.userName = userName;
         this.userImage = userImage;
-        /*
-        try {
-            userImage = ImageIO.read(new File("strawberry.jpg"));
-        } catch (IOException e) {
-            userImage = ImageIO.read(new File(defaultPath));
-        }*/
         this.playerHistory = playerHistory;
         //dumb?
         if(email != null && password != null && friendUserIDs != null){
             this.userInfo = new UserInfo(email, password, friendUserIDs);
         }
-    }
-
-    //living dangerously
-    private Player(Player player){
-        this.userInfo = new UserInfo(player.userInfo);
-        this.userID = player.userID;
-        this.userName = player.userName;
-        this.userImage = player.userImage;
-        //TODO hmmm
-        Collections.copy(this.playerHistory, player.playerHistory);
     }
 
     // TODO some kind of factory? :/
@@ -99,7 +83,7 @@ public class Player {
         return userInfo.isPasswordCorrect(password);
     }
 
-    public String getEmail() throws UserInfoException {
+    public String getEmail() {
         return userInfo.getEmail();
     }
 

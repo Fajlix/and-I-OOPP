@@ -32,8 +32,7 @@ public class UserInfo {
         return friendUserIDs;//newList;
     }
 
-    protected String getEmail() throws UserInfoException {
-        //safetyCheck(userKey);
+    protected String getEmail() {
         return email;
     }
 

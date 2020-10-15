@@ -2,25 +2,6 @@
   "players": [
     {
       "userInfo": {
-        "email": "1337manneeeeen@gmail.com",
-        "password": "hejNej88*",
-        "friendUserIDs": [
-          1,
-          2,
-          71
-        ]
-      },
-      "userName": "Tuff-tuff22oHalvt",
-      "userID": 15,
-      "userImage": "",
-      "playerHistory": [
-        34,
-        35,
-        38
-      ]
-    },
-    {
-      "userInfo": {
         "email": "mat@gmail.com",
         "password": "yihha123",
         "friendUserIDs": [
@@ -36,7 +17,46 @@
         36,
         37,
         39,
-        2
+        2,
+        44
+      ]
+    },
+    {
+      "userInfo": {
+        "email": "hallondalen@gmail.com",
+        "password": "mittLillaLosen12_",
+        "friendUserIDs": [
+          1
+        ]
+      },
+      "userName": "Broderna",
+      "userID": 4,
+      "userImage": "",
+      "playerHistory": [
+        3
+      ]
+    },
+    {
+      "userInfo": {
+        "email": "1337manneeeeen@gmail.com",
+        "password": "hejNej88*",
+        "friendUserIDs": [
+          1
+        ]
+      },
+      "userName": "Tuff-tuff22oHalvt",
+      "userID": 15,
+      "userImage": "assets/pic",
+      "playerHistory": [
+        34,
+        35,
+        38,
+        45,
+        46,
+        47,
+        46,
+        47,
+        48
       ]
     }
   ],
@@ -110,6 +130,56 @@
         "day": 7
       },
       "gameID": 2
+    },
+    {
+      "score": 2,
+      "gameType": "MemoryGame",
+      "date": {
+        "year": 2020,
+        "month": 1,
+        "day": 7
+      },
+      "gameID": 3
+    },
+    {
+      "score": 300,
+      "gameType": "MemoryGame",
+      "date": {
+        "year": 2020,
+        "month": 2,
+        "day": 7
+      },
+      "gameID": 44
+    },
+    {
+      "score": 225,
+      "gameType": "MemoryGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 15
+      },
+      "gameID": 45
+    },
+    {
+      "score": 666,
+      "gameType": "ChimpGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 15
+      },
+      "gameID": 1
+    },
+    {
+      "score": 225,
+      "gameType": "MemoryGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 15
+      },
+      "gameID": 46
     }
   ]
 }

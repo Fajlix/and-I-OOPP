@@ -1,5 +1,6 @@
 package com.example.graymatter.Model.dataAccess.dataMapperImplementation;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,5 +17,15 @@ public class LocalDataMapper {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public static void setCurrentPlayerUserID(int i) {
+        try {
+            FileWriter myWriter = new FileWriter(path);
+            myWriter.write("" + i);
+            myWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
