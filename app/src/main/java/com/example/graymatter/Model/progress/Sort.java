@@ -16,20 +16,33 @@ public class Sort {
     }
 
     /**
-     * Sort after ints in int[0]
+     * Sort after ints in int[c]
      * @param toSort multirowmatrix
+     * @param highValueLowIndex determines which direction to sort int[0] after
+     * @param c column index to sort after
      * @return int[][] sorted after contents in int[0]
      */
-    public static int[][] multRowSort(int[][] toSort){
+    public static int[][] multRowSort(int[][] toSort, boolean highValueLowIndex, int c){
         for (int i = 0; i < toSort.length; i++){
-            for (int o =i; o < toSort.length; o++){
-                if(toSort[0][i] > toSort[0][o]){
-                    for(int[]col:toSort){
-                        int temp = col[i];
-                        col[i] = col[o];
-                        col[o] = temp;
-                    }
+            for (int o =i; o < toSort[i].length; o++){
+                if(highValueLowIndex){
+                    if(toSort[c][i] < toSort[c][o]){
+                        for(int[]col:toSort){
+                            int temp = col[i];
+                            col[i] = col[o];
+                            col[o] = temp;
+                        }
 
+                    }
+                } else {
+                    if (toSort[c][i] > toSort[c][o]) {
+                        for (int[] col : toSort) {
+                            int temp = col[i];
+                            col[i] = col[o];
+                            col[o] = temp;
+                        }
+
+                    }
                 }
             }
         }

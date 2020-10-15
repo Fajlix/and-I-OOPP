@@ -5,6 +5,7 @@ import com.example.graymatter.Model.dataAccess.PlayerAccess;
 import com.example.graymatter.Model.dataAccess.social.GameSession;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -34,7 +35,7 @@ public class ScoreFront {
         //get sorted matrix with gameowners, normated topscores and gameIDs
         int[][] normArraysWOwners = getGlobalTopScores(gameType);
         //filter out non-friends
-        int[][] friendTopScores = filterFriends(normArraysWOwners);
+        int[][] friendTopScores = filterFriends(normArraysWOwners, 2);
         //check for illegal resultspan
         resultLow = legalResultSpan(resultTop, resultLow, friendTopScores[0].length);
         //cut out the unwanted rankings and return
@@ -87,8 +88,8 @@ public class ScoreFront {
             throw new IllegalArgumentException("Top placement can not be below low placement!");
         }
         int[][] normArrayWOwners = getGlobalTopPersonas(legalGameTypes);
-        resultLow = legalResultSpan(resultTop, resultLow, pa.getPBSize());
-        return cutOutSelectedTopListPart(normArrayWOwners, resultTop, resultLow, 3);
+        resultLow = legalResultSpan(resultTop, resultLow, normArrayWOwners[0].length);
+        return cutOutSelectedTopListPart(normArrayWOwners, resultTop, resultLow, 2);
 
     }
 
@@ -100,9 +101,9 @@ public class ScoreFront {
         }
         int[][] normArrayWOwners = getGlobalTopPersonas(legalGameTypes);
         //cut out nonfriends from leaderboard
-        int[][] justfriends = filterFriends(normArrayWOwners);  //TODO doesn't work for tworow matrix
+        int[][] justfriends = filterFriends(normArrayWOwners, 0);  //TODO doesn't work for tworow matrix
         resultLow = legalResultSpan(resultTop, resultLow, justfriends.length);
-        return cutOutSelectedTopListPart(normArrayWOwners, resultTop, resultLow, 3);
+        return cutOutSelectedTopListPart(normArrayWOwners, resultTop, resultLow, 2);
     }
 
     /**
@@ -168,23 +169,28 @@ public class ScoreFront {
      */
     private static int[][] normPersonas(int[][] allGameTypes){
         //check length of longest column
-        int longestRow = 0;
-        for (int[] col: allGameTypes) {
-            if (col.length > longestRow){
-                longestRow = col.length;
+        //TODO reuse this list later in method
+        List<Integer> userIDs = new ArrayList<>();
+        for (int i = 0; i < allGameTypes.length; i+=2) {
+            for (int j = 0; j < allGameTypes[i].length; j++) {
+                if(!userIDs.contains(allGameTypes[i][j])){
+                    userIDs.add(allGameTypes[i][j]);
+                }
             }
         }
         //squash matrix to two columns, add together scores paired with owner userID.
-        int[][] addedScores = new int[2][longestRow];
-        //for every pair of columns aka every gametype
+        int[][] addedScores = new int[2][userIDs.size()];
+        //index for next empty row in addedScores
         int freeIndex = 0;
-        for (int i = 0; i < allGameTypes.length / 2; i++) {
+        //for every pair of columns aka every gametype
+        for (int i = 0; i < allGameTypes.length; i+=2) {
             //for every entry on that game
             for (int j = 0; j < allGameTypes[i].length; j++) {
                 //for every entry in addedScores, check if it contains the userID and if so assign them that score
                 boolean found = false;
-                for (int k = 0; k < longestRow; k++) {
-                    if(addedScores[0][k] == allGameTypes[i][j]){
+                for (int k = 0; k < addedScores[0].length; k++) {
+                    if(addedScores[0][k] != 0
+                    && addedScores[0][k] == allGameTypes[i][j]){
                         addedScores[1][k] += allGameTypes[i+1][j];
                         found = true;
                         break;
@@ -202,12 +208,19 @@ public class ScoreFront {
         int[][] switchedRows = new int[2][];
         switchedRows[0] = addedScores[1];
         switchedRows[1] = addedScores[0];
-        int[][] sortedScores = Sort.multRowSort(switchedRows);
+        int[][] sortedScores = Sort.multRowSort(switchedRows, false, 0);
         //switch back
         int[][] toReturn = new int[2][];
+        /*int[][] reverse = new int[2][];
+        //TODO arrays shouldn't have to be reverted
+        for (int i = 0; i < switchedRows[0].length; i++) {
+            reverse[0][i] = sortedScores[0][sortedScores[0].length-i-1];
+            reverse[1][i] = sortedScores[1][sortedScores[0].length-i-1];
+        }*/
         toReturn[1] = NormScore.normScores(sortedScores[0])[1];
         toReturn[0] = sortedScores[1];
-        return toReturn;
+        return Sort.multRowSort(toReturn, true, 1);
+
     }
 
     /**
@@ -260,28 +273,29 @@ public class ScoreFront {
 
     /**
      *
-     * @param notJustFriends 3-column int matrix where notJustFriends[0] =
+     * @param notJustFriends 2-column int matrix where notJustFriends[0] = userIDs
      * @return
      */
-    private static int[][] filterFriends(int[][] notJustFriends){
-        int[][] justFriends = new int[3][notJustFriends[0].length];
+    private static int[][] filterFriends(int[][] notJustFriends, int colWUserID){
+        int[][] justFriends = new int[notJustFriends.length][notJustFriends[0].length];
         int friendGameCount = 0;
         for (int i = 0; i < notJustFriends[0].length; i++) {
-            if(pa.currentPlayer.getFriendUserIDs().contains(notJustFriends[2][i])
-            || pa.currentPlayer.getUserID() == notJustFriends[2][i]){
-                justFriends[0][i] = notJustFriends[0][i];
-                justFriends[1][i] = notJustFriends[1][i];
-                justFriends[2][i] = notJustFriends[2][i];
+
+            if(pa.currentPlayer.getFriendUserIDs().contains(notJustFriends[0][i])
+            || pa.currentPlayer.getUserID() == notJustFriends[colWUserID][i]){
+                for (int j = 0; j < notJustFriends.length; j++) {
+                    justFriends[j][i] = notJustFriends[j][i];
+                }
                 friendGameCount++;
             }
         }
         int[][] friendsWOZeroes = new int[3][friendGameCount];
         int count = 0;
         for (int i = 0; i < friendGameCount; i++){
-            if(justFriends[2][i] != 0){
-                friendsWOZeroes[0][count] = notJustFriends[0][i];
-                friendsWOZeroes[1][count] = notJustFriends[1][i];
-                friendsWOZeroes[2][count] = notJustFriends[2][i];
+            if(justFriends[colWUserID][i] != 0){
+                for (int j = 0; j < notJustFriends.length; j++) {
+                    friendsWOZeroes[j][count] = notJustFriends[j][i];
+                }
                 count++;
             }
         }

@@ -1,6 +1,10 @@
 package com.example.graymatter.Model;
 
 import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
+import com.example.graymatter.Model.dataAccess.GameSessionAccess;
+import com.example.graymatter.Model.dataAccess.PlayerAccess;
+import com.example.graymatter.Model.dataAccess.dataMapperImplementation.GameSessionMapper;
+import com.example.graymatter.Model.dataAccess.dataMapperImplementation.PlayerMapper;
 import com.example.graymatter.Model.progress.NormScore;
 import com.example.graymatter.Model.progress.ScoreFront;
 import com.example.graymatter.Model.progress.Sort;
@@ -9,13 +13,19 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.Map;
 
 public class ProgressTest {
+    String path = "src/main/assets/testPlayers.json";
     int[] scores;
+    GameSessionAccess gsa;
+    PlayerAccess pa;
     @Before
     public void init(){
         scores = new int[]{8, 13, 5, 7, 1, 2, 16, 99, 2, 0, 13, 13, 13, 13, 13, 9, 9, 9, 5, 12};
+        gsa = new GameSessionAccess(path);
+        pa = new PlayerAccess(path);
     }
 
     @Test
@@ -45,10 +55,24 @@ public class ProgressTest {
 
     @Test
     public void globalTopScoresTest(){
-        int[][] scores = ScoreFront.getSelectGlobalTopScores(1, 7, "ChimpGame");
-        for (int i = 0; i < scores[0].length; i++) {
-            System.out.println(scores[0][i] + " " + scores[1][i] + " " + scores[2][i]);
-        }
+        gsa.storeGameSession(1500, "ChimpGame");
+        gsa.storeGameSession(0, "ChimpGame");
+        int[][] scores = ScoreFront.getSelectGlobalTopScores(1, 12, "ChimpGame");
+        Assert.assertEquals(pa.currentPlayer.getUserID(), scores[2][0]);
+        Assert.assertEquals(gsa.getNewGameID()-2, scores[0][0]);
+        Assert.assertEquals(pa.currentPlayer.getUserID(), scores[2][scores[2].length-1]);
+        Assert.assertEquals(gsa.getNewGameID()-1, scores[0][scores[0].length-1]);
+        GameSessionMapper mapper = new GameSessionMapper(path);
+        //if tests fail bf below db will have to be manually fixed
+        int aDel = gsa.getNewGameID()-1;
+        int bDel = gsa.getNewGameID()-2;
+        mapper.delete(mapper.find(aDel).get());
+        mapper.delete(mapper.find(bDel).get());
+        PlayerMapper pMapper = new PlayerMapper(path);
+        List<Integer> gs = pa.currentPlayer.getPlayerHistory();
+        gs.remove((Integer) aDel);
+        gs.remove((Integer) bDel);
+        pMapper.update(pa.currentPlayer);
     }
 
     @Test
@@ -61,10 +85,21 @@ public class ProgressTest {
 
     @Test
     public void friendPersonaScoresTest(){
-        int i = (int) 99.9;
-        System.out.println(i);
-
+        int[][] scores = ScoreFront.getSelectFriendTopPersonas(1, 3, "ChimpGame MemoryGame");
+        for (int i = 0; i < scores[0].length; i++) {
+            System.out.println(scores[0][i] + " " + scores[1][i]);
+        }
     }
+
+    @Test
+    public void globalPersonaScoresTest(){
+        int[][] scores = ScoreFront.getSelectGlobalTopPersonas(1, 5, "ChimpGame MemoryGame");
+        for (int i = 0; i < scores[0].length; i++) {
+            System.out.println(scores[0][i] + " " + scores[1][i]);
+        }
+    }
+
+
 
 
 }

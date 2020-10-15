@@ -44,7 +44,7 @@ public class GameSessionAccess {
         }
     }
 
-    private int getNewGameID() {
+    public int getNewGameID() {
         int topGameID = 0;
         for (GameSession g: gsMapper.get()){ //should throw exception if empty?
             if (g.getGameID() > topGameID){

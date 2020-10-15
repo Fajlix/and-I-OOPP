@@ -256,11 +256,12 @@ public class PlayerAccess {
      * removes friendUserIDs of deleted accounts
      */
     private void updatePlayer(){
-        for (int friendID : currentPlayer.getFriendUserIDs()){
-            Optional<Player> friend = playerMapper.find(friendID);
+        for (int i = 0; i < currentPlayer.getFriendUserIDs().size(); i++) {
+            int no = currentPlayer.getFriendUserIDs().get(i);
+            Optional<Player> friend = playerMapper.find(no);
             if (!friend.isPresent()){
                 try {
-                    currentPlayer.removeFriend(friendID);
+                    currentPlayer.removeFriend(no);
                 } catch (UserInfoException e) {
                     e.printStackTrace();
                 }
