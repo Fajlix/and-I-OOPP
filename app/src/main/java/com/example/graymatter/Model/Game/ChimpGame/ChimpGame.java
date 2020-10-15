@@ -17,7 +17,7 @@ public class ChimpGame extends Game {
     private int nextNumber;
     private boolean numberVisibility;
     private boolean gameOver;
-    //TODO: lives
+    private int lives;
 
     public ChimpGame(){
         gameOver = true;
@@ -25,6 +25,7 @@ public class ChimpGame extends Game {
     }
 
     public void startGame(){
+        lives = 3;
         gameOver = false;
         numberQty = 4;
         fillBoard();
@@ -61,9 +62,7 @@ public class ChimpGame extends Game {
                 {
                     gameOver = true;
                 }
-                nextNumber = 1;
                 fillBoard();
-                numberVisibility = true;
             } else { //The number clicked is not the last, continue the sequence
                 board[clickedTile] = 0;
                 nextNumber++;
@@ -71,7 +70,8 @@ public class ChimpGame extends Game {
             }
         }
         else { //Incorrect number clicked
-            gameOver = true;
+            if (--lives == 0) gameOver = true;
+            else fillBoard();
         }
             notifyObservers();
     }
@@ -91,6 +91,7 @@ public class ChimpGame extends Game {
             board[placement] = i;
         }
         nextNumber = 1;
+        numberVisibility = true;
     }
 
     /**
@@ -115,6 +116,10 @@ public class ChimpGame extends Game {
             throw new RuntimeException("Attempt to get number visibility after game over");
         }
         return numberVisibility;
+    }
+
+    public int getLives(){
+        return lives;
     }
 
     public boolean getGameOver(){
