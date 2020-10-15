@@ -4,51 +4,34 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.graymatter.R;
+import com.example.graymatter.View.FragmentChangeListener;
 
-public class ChimpGameCard extends AppCompatActivity {
-    TextView cardFront;
-    TextView cardBack;
+public class ChimpGameCard extends Fragment {
+    public TextView cardFront;
+    public TextView cardBack;
     int number;
 
-    AnimatorSet frontAnim;
-    AnimatorSet backAnim;
-    boolean isFront = true;
-
-    public ChimpGameCard(){
-        cardFront = findViewById(R.id.card_front);
-        cardBack = findViewById(R.id.back_card);
-    }
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.chimp_game_card);
-        Intent intent = getIntent();
-        cardFront = findViewById(R.id.card_front);
-        cardBack = findViewById(R.id.back_card);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                         Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_chimp_game, container, false);
+        cardFront = view.findViewById(R.id.card_front_chimp);
+        cardBack = view.findViewById(R.id.card_back_chimp);
         cardFront.setText(String.valueOf(number));
 
-        Float scale = getApplicationContext().getResources().getDisplayMetrics().density;
+        Float scale = getContext().getResources().getDisplayMetrics().density;
         cardFront.setCameraDistance(8000 * scale);
         cardBack.setCameraDistance(8000 * scale);
 
-        frontAnim = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(),R.animator.front_animation);
-        backAnim = (AnimatorSet) AnimatorInflater.loadAnimator(getApplicationContext(),R.animator.back_animation);
-
-
-    }
-
-    public boolean getIsFront ()
-    {
-        return isFront;
-    }
-
-    public void setIsFront (boolean isFront) {
-        this.isFront = isFront;
+        return view;
     }
 }

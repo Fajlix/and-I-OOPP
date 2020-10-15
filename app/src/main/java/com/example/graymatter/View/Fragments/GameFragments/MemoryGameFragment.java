@@ -25,16 +25,24 @@ public class MemoryGameFragment extends Fragment {
     private GridView gridView;
     private MemoryGridAdapter visualGameGridAdapter;
     private TextView visualGameDescription;
-    private ImageView visualGameClose;
     private MemoryGameViewModel visualMemoryVM;
     private boolean visibility = true;
+    private ScreenState screenState;
 
+    int lastPos = -1;
+
+    enum ScreenState
+    {
+        START_NEW, GAME_ONGOING
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_visual_game, container, false);
         super.onCreate(savedInstanceState);
+        screenState = ScreenState.START_NEW;
+
         visualMemoryVM = new ViewModelProvider(this).get(MemoryGameViewModel.class);
         visualMemoryVM.init();
         visualMemoryVM.getVisibility().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
@@ -63,7 +71,7 @@ public class MemoryGameFragment extends Fragment {
         visualMemoryVM.getGrid().observe(getViewLifecycleOwner(), new Observer<ArrayList<MemoryGrid.TileState>>() {
             @Override
             public void onChanged(ArrayList<MemoryGrid.TileState> grid) {
-                visualGameGridAdapter = new MemoryGridAdapter(MemoryGameFragment.this, grid);
+                visualGameGridAdapter = new MemoryGridAdapter(MemoryGameFragment.this, grid, lastPos);
                 visualGameGridAdapter.setVisibility(visibility);
                 gridView.setAdapter(visualGameGridAdapter);
                 gridView.setNumColumns(visualMemoryVM.getGridSize());
@@ -76,10 +84,13 @@ public class MemoryGameFragment extends Fragment {
         visualGameDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClearScreen();
-                visualMemoryVM.startVisualGame();
-                ShowBoard();
-
+                if (screenState == ScreenState.START_NEW)
+                {
+                    ClearScreen();
+                    visualMemoryVM.startVisualGame();
+                    ShowBoard();
+                    screenState = ScreenState.GAME_ONGOING;
+                }
             }
         });
 
@@ -91,9 +102,6 @@ public class MemoryGameFragment extends Fragment {
                     visualMemoryVM.tileHasBeenClicked(position);
             }
         });
-
-        // clicking on this should take the user to the main page
-        //ImageView visualGameClose = (ImageView) view.findViewById(R.id.visualGameClose);
 
         return view;
     }
@@ -115,6 +123,7 @@ public class MemoryGameFragment extends Fragment {
         visualGameDescription.bringToFront();
         //visualGameClose.bringToFront();
         visualGameDescription.setText("Game over... Your score was: " + level + " \n \nPress to play again");
+        screenState = ScreenState.START_NEW;
     }
 
     public void showWonGame (int level)
@@ -122,5 +131,11 @@ public class MemoryGameFragment extends Fragment {
         visualGameDescription.bringToFront();
         //visualGameClose.bringToFront();
         visualGameDescription.setText("Wow you completed the game! You got the max score of: " + level + " \n \nPress to play again");
+        screenState = ScreenState.START_NEW;
+    }
+
+    public void tileHasBeenClicked(int position) {
+        lastPos = position;
+        visualMemoryVM.tileHasBeenClicked(position);
     }
 }

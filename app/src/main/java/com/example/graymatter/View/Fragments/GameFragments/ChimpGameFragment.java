@@ -21,9 +21,9 @@ public class ChimpGameFragment extends Fragment{
     private GridView gridView;
     private ChimpGridAdapter chimpGameChimpGridAdapter;
     private TextView chimpTestDescription;
-    //private ImageView chimpTestClose;
     private ChimpGameViewModel chimpGameVM;
-    private ChimpGameCard chimpGameCard;
+
+    int lastPos = -1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,11 +31,11 @@ public class ChimpGameFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_chimp_game, container, false);
         super.onCreate(savedInstanceState);
 
+
         chimpGameVM = new ViewModelProvider(this).get(ChimpGameViewModel.class);
         gridView = view.findViewById(R.id.chimpTestGrid);
         chimpTestDescription = view.findViewById(R.id.chimpTestDescription);
         chimpGameVM.init();
-        chimpGameCard = new ChimpGameCard();
 
         chimpGameVM.getGameOver().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
@@ -52,7 +52,7 @@ public class ChimpGameFragment extends Fragment{
         chimpGameVM.getGrid().observe(getViewLifecycleOwner(), new Observer<int[]>() {
             @Override
             public void onChanged(int[] grid) {
-                chimpGameChimpGridAdapter = new ChimpGridAdapter(ChimpGameFragment.this,grid);
+                chimpGameChimpGridAdapter = new ChimpGridAdapter(ChimpGameFragment.this,grid,lastPos);
                 gridView.setAdapter(chimpGameChimpGridAdapter);
             }
         });
@@ -63,29 +63,6 @@ public class ChimpGameFragment extends Fragment{
                     chimpGameChimpGridAdapter.setVisibility(visibility);
             }
         });
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (chimpGameCard.getIsFront())
-                {
-                    chimpGameCard.frontAnim.setTarget(chimpGameCard.cardFront);
-                    chimpGameCard.backAnim.setTarget(chimpGameCard.cardBack);
-                    chimpGameCard.frontAnim.start();
-                    chimpGameCard.backAnim.start();
-                    chimpGameCard.setIsFront(false);
-                }
-                else
-                {
-                    chimpGameCard.frontAnim.setTarget(chimpGameCard.cardBack);
-                    chimpGameCard.backAnim.setTarget(chimpGameCard.cardFront);
-                    chimpGameCard.backAnim.start();
-                    chimpGameCard.frontAnim.start();
-                    chimpGameCard.setIsFront(true);
-                }
-
-                chimpGameVM.tileHasBeenClicked(position);
-            }
-        });
         chimpTestDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,9 +71,7 @@ public class ChimpGameFragment extends Fragment{
                 ShowBoard();
             }
         });
-        // clicking on this should take the user to the main page
-        //ImageView reactionTestClose = (ImageView) view.findViewById(R.id.reactionTestClose);
-        //chimpTestClose = (ImageView) view.findViewById(R.id.chimpGameClose);
+
         return view;
     }
 
@@ -132,5 +107,13 @@ public class ChimpGameFragment extends Fragment{
         chimpTestDescription.setText("Wow you completed the game! You got the max score of: " + score + " \n \nPress to play again");
     }
 
+    public GridView getGridView()
+    {
+        return gridView;
+    }
 
+    public void tileHasBeenClicked(int position) {
+        lastPos = position;
+        chimpGameVM.tileHasBeenClicked(position);
+    }
 }
