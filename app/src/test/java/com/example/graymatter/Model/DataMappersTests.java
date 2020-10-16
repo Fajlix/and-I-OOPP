@@ -64,7 +64,7 @@ public class DataMappersTests {
     @Test
     public void PlayerMapperFailsTests(){
         try {
-            pm.delete(Player.makePlayer(185, "a@e.se", "ojSAN88_", "haj", "noPic", new ArrayList<Integer>(), new ArrayList<Integer>()));
+            pm.delete(new Player(185, "a@e.se", "ojSAN88_", "haj", "noPic", new ArrayList<Integer>(), new ArrayList<Integer>()));
         } catch (DataMapperException | UserInfoException e) {}
     }
 

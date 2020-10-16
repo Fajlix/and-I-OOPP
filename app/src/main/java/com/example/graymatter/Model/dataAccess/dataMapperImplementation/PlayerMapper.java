@@ -20,6 +20,8 @@ import java.util.Optional;
 
 
 public final class PlayerMapper implements DataMapper<Player> {
+    //TODO make get() return Iterable
+
     private final String dbPath;
     private DataBaseModel toWrite;
     Gson gson = new Gson();

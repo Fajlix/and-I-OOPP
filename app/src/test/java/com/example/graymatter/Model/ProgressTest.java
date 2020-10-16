@@ -5,6 +5,7 @@ import com.example.graymatter.Model.dataAccess.GameSessionAccess;
 import com.example.graymatter.Model.dataAccess.PlayerAccess;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.GameSessionMapper;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.PlayerMapper;
+import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 import com.example.graymatter.Model.progress.NormScore;
 import com.example.graymatter.Model.progress.ScoreFront;
 import com.example.graymatter.Model.progress.Sort;
@@ -58,9 +59,9 @@ public class ProgressTest {
         gsa.storeGameSession(1500, "ChimpGame");
         gsa.storeGameSession(0, "ChimpGame");
         int[][] scores = ScoreFront.getSelectGlobalTopScores(1, 12, "ChimpGame");
-        Assert.assertEquals(pa.currentPlayer.getUserID(), scores[2][0]);
+        Assert.assertEquals(pa.getCurrentPlayer().getUserID(), scores[2][0]);
         Assert.assertEquals(gsa.getNewGameID()-2, scores[0][0]);
-        Assert.assertEquals(pa.currentPlayer.getUserID(), scores[2][scores[2].length-1]);
+        Assert.assertEquals(pa.getCurrentPlayer().getUserID(), scores[2][scores[2].length-1]);
         Assert.assertEquals(gsa.getNewGameID()-1, scores[0][scores[0].length-1]);
         GameSessionMapper mapper = new GameSessionMapper(path);
         //if tests fail bf below db will have to be manually fixed
@@ -69,14 +70,14 @@ public class ProgressTest {
         mapper.delete(mapper.find(aDel).get());
         mapper.delete(mapper.find(bDel).get());
         PlayerMapper pMapper = new PlayerMapper(path);
-        List<Integer> gs = pa.currentPlayer.getPlayerHistory();
+        List<Integer> gs = pa.getCurrentPlayer().getPlayerHistory();
         gs.remove((Integer) aDel);
         gs.remove((Integer) bDel);
-        pMapper.update(pa.currentPlayer);
+        pMapper.update(pa.getCurrentPlayer());
     }
 
     @Test
-    public void friendsTopScoresTest(){
+    public void friendsTopScoresTest() throws UserInfoException {
         int[][] scores = ScoreFront.getSelectFriendTopScores(1, 15, "ChimpGame");
         for (int i = 0; i < scores[0].length; i++) {
             System.out.println(scores[0][i] + " " + scores[1][i] + " " + scores[2][i]);
@@ -84,7 +85,7 @@ public class ProgressTest {
     }
 
     @Test
-    public void friendPersonaScoresTest(){
+    public void friendPersonaScoresTest() throws UserInfoException {
         int[][] scores = ScoreFront.getSelectFriendTopPersonas(1, 3, "ChimpGame MemoryGame");
         for (int i = 0; i < scores[0].length; i++) {
             System.out.println(scores[0][i] + " " + scores[1][i]);

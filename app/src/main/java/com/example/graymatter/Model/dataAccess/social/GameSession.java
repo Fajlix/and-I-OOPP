@@ -8,11 +8,11 @@ import java.time.LocalDate;
 public class GameSession {
 
 
-    private int score;
-    private String gameType;
+    private final int score;
+    private final String gameType;
    // LocalTime time; interesting?
-    private LocalDate date;
-    private int gameID;
+    private final LocalDate date;
+    private final int gameID;
 
 
 

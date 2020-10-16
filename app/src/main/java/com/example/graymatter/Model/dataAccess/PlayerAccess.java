@@ -6,7 +6,6 @@ import com.example.graymatter.Model.dataAccess.dataMapperImplementation.LocalDat
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.PlayerMapper;
 import com.example.graymatter.Model.dataAccess.social.Player;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
-import com.example.graymatter.Model.dataAccess.dataMapperImplementation.DataBaseModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,19 +18,23 @@ public class PlayerAccess {
 
     public DataMapper<Player> playerMapper;
     /**
-     * can be null, if null - not logged in
+     * can be Optional of null, if null - not logged in
      */
-    public Player currentPlayer;
+    public Optional<Player> currentPlayer;
 
 
     public PlayerAccess(String dbPath){
         playerMapper = new PlayerMapper(dbPath);
         Optional<Player> optionalPlayer = playerMapper.find(LocalDataMapper.getCurrentPlayerUserID());
         if (optionalPlayer.isPresent()){
-            currentPlayer = optionalPlayer.get();
-            updatePlayer();
+            currentPlayer = optionalPlayer;
+            try {
+                updatePlayer();
+            } catch (UserInfoException e) {
+                e.printStackTrace();
+            }
         } else {
-            currentPlayer = null; //TODO öh kan ju bara vara Optional<Player> dumstrut
+            currentPlayer = Optional.empty();
         }
     }
 
@@ -43,7 +46,7 @@ public class PlayerAccess {
      * @param userName The user´s username.
      * @param password The user´s password. Does not have to fulfill current password requirements.
      */
-    public void logIn(String userName, String password) throws DataMapperException {
+    public void logIn(String userName, String password) throws DataMapperException, UserInfoException {
         //might be highly unnecessary
         Optional<Player> player;
         player = findByUserName(userName);
@@ -53,8 +56,8 @@ public class PlayerAccess {
         if (!player.get().isPasswordCorrect(password)){
             throw new DataMapperException("Wrong password!"); //should possibly be userinfoexception
         }
-        currentPlayer = player.get();
-        LocalDataMapper.setCurrentPlayerUserID(currentPlayer.getUserID());
+        currentPlayer = player;
+        LocalDataMapper.setCurrentPlayerUserID(player.get().getUserID());
     }
 
     /**
@@ -64,6 +67,9 @@ public class PlayerAccess {
      * @param userName A not yet taken username.
      */
     public void createNewAccountAndLogIn(String email, String password, String userName) throws UserInfoException {
+        if(isLoggedIn()){
+            throw new DataMapperException("A player is already logged in!");
+        }
         //check account creation conditions before creating account.
         Player.passwordSafetyCheck(password);
         if (isUserName(userName)){
@@ -73,9 +79,7 @@ public class PlayerAccess {
         if (isEmail(email)){
             throw new DataMapperException("Email is already being used!");
         }
-
-
-        Player player = Player.makePlayer(getNewUserID(), email, password, userName);
+        Player player = new Player(getNewUserID(), email, password, userName);
         playerMapper.insert(player);
         logIn(userName, password);
     }
@@ -84,13 +88,14 @@ public class PlayerAccess {
      * Log out the player.
      */
     public void logOut() {
-        currentPlayer = null;  //näej pissdålig idé
+        currentPlayer = Optional.empty();  //näej pissdålig idé
         LocalDataMapper.setCurrentPlayerUserID(0);
     }
 
-    public void deleteAccount(String password){
-        currentPlayer.isPasswordCorrect(password);
-        playerMapper.delete(currentPlayer);
+    public void deleteAccount(String password) throws UserInfoException {
+        Player player = getUnwrappedPlayer();
+        player.isPasswordCorrect(password);
+        playerMapper.delete(player);
         logOut();
     }
 
@@ -107,8 +112,12 @@ public class PlayerAccess {
 
     public Optional<Player> findByEmail(String email) {
         for (Player p :playerMapper.get()){
-            if(p.getEmail().equals(email)){
-                return Optional.of(p);
+            try {
+                if(p.getEmail().equals(email)){
+                    return Optional.of(p);
+                }
+            } catch (UserInfoException e) {
+                e.printStackTrace();
             }
         }
         return Optional.empty();
@@ -133,7 +142,7 @@ public class PlayerAccess {
      * @param email to check
      * @return true if email is already in use.
      */
-    public boolean isEmail(String email) {
+    public boolean isEmail(String email) throws UserInfoException {
         for (Player p:playerMapper.get()) {
             //dedicated method sameEmail because of privacy concerns in Player
             if(p.sameEmail(email)){
@@ -143,8 +152,9 @@ public class PlayerAccess {
         return false;
     }
 
-    public boolean isFriend(int userID){
-        return currentPlayer.isFriend(userID);
+    public boolean isFriend(int userID) throws UserInfoException {
+        Player player = getUnwrappedPlayer();
+        return player.isFriend(userID);
     }
 
     /**
@@ -152,7 +162,7 @@ public class PlayerAccess {
      * @return true if anyone is logged in to the app.
      */
     public boolean isLoggedIn() {
-        return (currentPlayer != null);
+        return (currentPlayer.isPresent());
     }
 
     private int getNewUserID() {
@@ -167,7 +177,8 @@ public class PlayerAccess {
 
     //user-specific getters
     public String getEmail() throws UserInfoException {
-        return currentPlayer.getEmail();
+        Player player = getUnwrappedPlayer();
+        return player.getEmail();
     }
 
     //Changes Player parameters
@@ -179,8 +190,9 @@ public class PlayerAccess {
      * @throws UserInfoException if password is incorrect: "Current password is incorrect", if new email is illegal: *fix*
      */
     public void changeEmail(String password, String email) throws UserInfoException {
-        currentPlayer.setEmail(password, email);
-        playerMapper.update(currentPlayer);
+        Player player = getUnwrappedPlayer();
+        player.setEmail(password, email);
+        playerMapper.update(player);
     }
 
     /**
@@ -190,8 +202,9 @@ public class PlayerAccess {
      * @throws UserInfoException if old passowrd is incorrect: "Current password is incorrect", if new password is unfit: *fix*
      */
     public void changePassword(String oldPassword, String newPassword) throws UserInfoException {
-        currentPlayer.setPassword(oldPassword, newPassword);
-        playerMapper.update(currentPlayer);
+        Player player = getUnwrappedPlayer();
+        player.setPassword(oldPassword, newPassword);
+        playerMapper.update(player);
     }
 
     /**
@@ -199,13 +212,19 @@ public class PlayerAccess {
      * @param image new userimage.
      */
     public void changeUserImage(String image){
-        currentPlayer.setUserImage(image);
-        playerMapper.update(currentPlayer);
+        Player player = getUnwrappedPlayer();
+        player.setUserImage(image);
+        playerMapper.update(player);
     }
 
     //Related to friends
 
-    public void addFriend(int userID) {
+    /**
+     *
+     * @param userID
+     * @throws UserInfoException
+     */
+    public void addFriend(int userID) throws UserInfoException {
         if(isFriend(userID)){
             throw new DataMapperException("Already a friend!");
         }
@@ -213,41 +232,45 @@ public class PlayerAccess {
         if (!friend.isPresent()){
             throw new DataMapperException("No user with given userID");
         }
-        currentPlayer.addFriend(userID);
-        friend.get().addFriend(currentPlayer.getUserID());
-        playerMapper.update(currentPlayer);
+        Player player = getUnwrappedPlayer();
+        player.addFriend(userID);
+        friend.get().addFriend(player.getUserID());
+        playerMapper.update(player);
         playerMapper.update(friend.get());
     }
 
     public void removeFriend(int userID) throws DataMapperException{
         //removes friend from user´s friend list
+        Player player = getUnwrappedPlayer();
         try {
-            currentPlayer.removeFriend(userID);
+            player.removeFriend(userID);
         } catch (UserInfoException e){
             e.printStackTrace();
         }
-        playerMapper.update(currentPlayer);
+        playerMapper.update(player);
         //removes user from friend´s friend list
         Optional<Player> friend = playerMapper.find(userID);
         if (!friend.isPresent()){
             throw new DataMapperException("No user with given userID");
         }
         try {
-            friend.get().removeFriend(currentPlayer.getUserID());
+            friend.get().removeFriend(player.getUserID());
         } catch (UserInfoException e) { //can't end up here
             e.printStackTrace();
         }
         playerMapper.update(friend.get());
     }
 
-    public List<Player> getFriends(){
+    public List<Player> getFriends() throws UserInfoException {
+        Player player = getUnwrappedPlayer();
         List<Player> friends = new ArrayList<>();
-        for (int friendID : currentPlayer.getFriendUserIDs()) {
+        for (int friendID : player.getFriendUserIDs()) {
             Optional<Player> friend = playerMapper.find(friendID);
             if(!friend.isPresent()){
                 updatePlayer();
                 return getFriends();
             } else {
+                friend.get().deActUserInfo();
                 friends.add(friend.get());
             }
         }
@@ -257,13 +280,14 @@ public class PlayerAccess {
     /**
      * removes friendUserIDs of deleted accounts
      */
-    private void updatePlayer(){
-        for (int i = 0; i < currentPlayer.getFriendUserIDs().size(); i++) {
-            int no = currentPlayer.getFriendUserIDs().get(i);
+    private void updatePlayer() throws UserInfoException {
+        Player player = getUnwrappedPlayer();
+        for (int i = 0; i < player.getFriendUserIDs().size(); i++) {
+            int no = player.getFriendUserIDs().get(i);
             Optional<Player> friend = playerMapper.find(no);
             if (!friend.isPresent()){
                 try {
-                    currentPlayer.removeFriend(no);
+                    player.removeFriend(no);
                 } catch (UserInfoException e) {
                     e.printStackTrace();
                 }
@@ -274,8 +298,9 @@ public class PlayerAccess {
     //related to GameSessions (though only by ID)
 
     protected void storeGameID(int gameID) {
-        currentPlayer.addGameID(gameID);
-        playerMapper.update(currentPlayer);
+        Player player = getUnwrappedPlayer();
+        player.addGameID(gameID);
+        playerMapper.update(player);
     }
 
     /**
@@ -294,5 +319,19 @@ public class PlayerAccess {
 
     public int getPBSize() {
         return playerMapper.get().size();
+    }
+
+    private Player getUnwrappedPlayer(){
+        if (!currentPlayer.isPresent()){
+            throw new DataMapperException("Player not logged in!");
+        }
+        return currentPlayer.get();
+    }
+
+    public Player getCurrentPlayer(){
+        if(currentPlayer.isPresent()){
+            return new Player(currentPlayer.get());
+        }
+        throw new DataMapperException("Player not logged in!");
     }
 }

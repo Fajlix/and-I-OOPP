@@ -2,8 +2,8 @@ package com.example.graymatter.Model.dataAccess.social;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Representing a player of the game. Aggregates additional class userInfo with information to be reached exclusively by current user.
@@ -14,95 +14,94 @@ public class Player {
     /**
      * Aggregate with additional information private to the user. Reached with correct userKey.
      */
-    private UserInfo userInfo; //TODO aldo can just be Optional?
+    //TODO Okay no this fucks with json
+    private Optional<UserInfo> userInfo; //TODO aldo can just be Optional?
     /**
      * Needed upon registration:
      */
     private String userName;
 
 
-    private int userID;
+    private final int userID;
 
     //TODO sort methods after: userinfo connections, getters, setter, constructors, friend handler, game session handler (first figure out REST structure)
 
-    //tänk på bilderna!!!
+
     private String userImage;
-   // private Image userImage;
     private List<Integer> playerHistory;
-
-    private Player(){
-
-    }
-    //TODO does Player need to deepcopying stuff? Considering the database?
 
     /**constructor for Player with private userInfo
      */
-    private Player(int userID, String email, String password, String userName, String userImage, List<Integer> playerHistory, List<Integer> friendUserIDs) throws UserInfoException {
+    public Player(int userID, String email, String password, String userName, String userImage, List<Integer> playerHistory, List<Integer> friendUserIDs) throws UserInfoException {
         this.userID = userID;
         this.userName = userName;
-        this.userImage = userImage;
+        if(userImage == null){
+            this.userImage = "";
+        } else {
+            this.userImage = userImage;
+        }
         this.playerHistory = playerHistory;
-        //dumb?
+        //if fields for UserInfo are null, the UserInfo Optional should be empty
         if(email != null && password != null && friendUserIDs != null){
-            this.userInfo = new UserInfo(email, password, friendUserIDs);
+            this.userInfo = Optional.of(new UserInfo(email, password, friendUserIDs));
+        } else {
+            this.userInfo = Optional.empty();
         }
     }
 
-    // TODO some kind of factory? :/
-    //anyways, 1 constructor if many makemethods
-    //used for users
-    public static Player makePlayer(int userID, String email, String password, String userName, String userImage, List<Integer> playerHistory, List<Integer> friendUserIDs) throws UserInfoException {
-        return new Player(userID, email, password, userName, userImage, playerHistory, friendUserIDs);
+    public Player(int newUserID, String email, String password, String userName) throws UserInfoException {
+        this(newUserID, email, password, userName, null, null, null);
     }
 
-    //used in the creation of new users
-    public static Player makePlayer(int userID, String email, String password, String userName) throws UserInfoException {
-        return new Player(userID, email, password, userName, null, new ArrayList<Integer>(), new ArrayList<Integer>());
-    }
-
-    //used for non-user players
-    public static Player makePlayer(int userID, String userName, String userImage, List<Integer> playerHistory){
-        try {
-            return new Player(userID, null, null, userName, userImage, playerHistory, null);
-        } catch (UserInfoException e) {
-            e.printStackTrace();
+    public Player(Player player) {
+        this.userID = player.userID;
+        this.userName = player.userName;
+        this.userImage = player.userImage;
+        this.playerHistory = new ArrayList<>(player.playerHistory);
+        if (player.userInfo.isPresent()){
+            this.userInfo = Optional.of(new UserInfo(player.userInfo.get()));
+        } else {
+            this.userInfo = Optional.empty();
         }
-        //TODO no
-        return null;
+    }
+
+    private UserInfo getUnwrappedUserInfo() throws UserInfoException {
+        if(userInfo.isPresent()){
+            return userInfo.get();
+        }
+        throw new UserInfoException("Not allowed to get private information from other than current user");
     }
 
     public void setPassword(String oldPassword, String newPassword) throws UserInfoException {
-        userInfo.setPassword(oldPassword, newPassword);
+        getUnwrappedUserInfo().setPassword(oldPassword, newPassword);
     }
 
-    public void setEmail(String password, String email) throws UserInfoException {
-        userInfo.setEmail(password, email);
-    }
-
-    public boolean isPasswordCorrect(String password){
-        return userInfo.isPasswordCorrect(password);
-    }
-
-    public String getEmail() {
-        return userInfo.getEmail();
+    public boolean isPasswordCorrect(String password) throws UserInfoException {
+        return getUnwrappedUserInfo().isPasswordCorrect(password);
     }
 
     public static void passwordSafetyCheck(String password) {
         UserInfo.passwordSafetyCheck(password);
     }
 
+    public void setEmail(String password, String email) throws UserInfoException {
+        getUnwrappedUserInfo().setEmail(password, email);
+    }
+
+    public String getEmail() throws UserInfoException {
+        return getUnwrappedUserInfo().getEmail();
+    }
+
     public int getUserID(){
         return userID;
     }
 
-
+    public void setUserImage(String image){
+        this.userImage = image;
+    }
 
     public String getUserImage(){
         return userImage;
-    }
-
-    public void setUserImage(String image){
-        this.userImage = image;
     }
 
     @Override
@@ -126,12 +125,12 @@ public class Player {
         return new ArrayList<>(this.playerHistory);
     }
 
-    public void addFriend(int userID) {
-        userInfo.addFriend(userID);
+    public void addFriend(int userID) throws UserInfoException {
+        getUnwrappedUserInfo().addFriend(userID);
     }
 
-    public boolean isFriend(int userID) {
-        return userInfo.isFriend(userID);
+    public boolean isFriend(int userID) throws UserInfoException {
+        return getUnwrappedUserInfo().isFriend(userID);
     }
 
     public String getUserName() {
@@ -143,16 +142,16 @@ public class Player {
      *
      * @return friendUserIDs
      */
-    public List<Integer> getFriendUserIDs() {
-        return userInfo.getFriendUserIDs();
+    public List<Integer> getFriendUserIDs() throws UserInfoException {
+        return getUnwrappedUserInfo().getFriendUserIDs();
     }
 
     public void removeFriend(int userID) throws UserInfoException{
-        userInfo.removeFriend(userID);
+        getUnwrappedUserInfo().removeFriend(userID);
     }
 
-    public boolean sameEmail(String email) {
-        return userInfo.sameEmail(email);
+    public boolean sameEmail(String email) throws UserInfoException {
+        return getUnwrappedUserInfo().sameEmail(email);
     }
 
     /**
@@ -160,5 +159,12 @@ public class Player {
      */
     public void addGameID(int gameID){
         playerHistory.add(gameID);
+    }
+
+    /**
+     * maybe this is a fucking awful idea
+     */
+    public void deActUserInfo() {
+        userInfo = Optional.empty();
     }
 }

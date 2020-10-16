@@ -20,13 +20,12 @@ public class UserInfo {
         this.friendUserIDs = friendUserIDs;
     }
 
-    /*
     protected UserInfo(UserInfo infoToCopy){
         this.email = infoToCopy.email;
         this.password = infoToCopy.password;
-        Collections.copy(this.friendUserIDs, infoToCopy.friendUserIDs);
+        this.friendUserIDs = new ArrayList<>(infoToCopy.friendUserIDs);
     }
-*/
+
     protected List<Integer> getFriendUserIDs() {
         List<Integer> newList = new ArrayList<>();
        // Collections.copy(newList, this.friendUserIDs);
@@ -72,15 +71,6 @@ public class UserInfo {
         }
         friendUserIDs.remove((Integer) friendUserID);
     }
-
-    //can a method JUST check for exceptions?
-    /**
-    private void safetyCheck(int userKey) throws MissingAccessException {
-        if (this.userKey != userKey){
-            throw new MissingAccessException("Unmatching userkey");
-        }
-    }
-     **/
 
     //4 forloops might be smarter
     protected static boolean passwordSafetyCheck(String password){

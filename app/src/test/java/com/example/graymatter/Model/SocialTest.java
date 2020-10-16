@@ -12,6 +12,7 @@ import com.example.graymatter.Model.dataAccess.dataMapperImplementation.DataBase
 import com.google.gson.Gson;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -23,6 +24,12 @@ import java.util.Optional;
 public class SocialTest {
     String path = "src/main/assets/testPlayers.json";
     PlayerAccess testPlayerAccess = new PlayerAccess(path);
+
+    @Before
+    public void init() throws UserInfoException {
+        testPlayerAccess.logOut();
+        testPlayerAccess.logIn("Tuff-tuff22oHalvt", "hejNej88*");
+    }
 
     @Test
     public void deleteTest() throws UserInfoException {
@@ -36,8 +43,6 @@ public class SocialTest {
 
     @Test
     public void changesTest() throws UserInfoException {
-        testPlayerAccess.logOut();
-        testPlayerAccess.logIn("Tuff-tuff22oHalvt", "hejNej88*");
         testPlayerAccess.changeEmail("hejNej88*", "1337pojken@gmail.com");
         assertEquals(testPlayerAccess.getEmail(), "1337pojken@gmail.com");
         testPlayerAccess.changePassword("hejNej88*", "loseN-458");
@@ -50,17 +55,13 @@ public class SocialTest {
 
     @Test
     public void gettersTest() throws UserInfoException {
-        testPlayerAccess.logOut();
-        testPlayerAccess.logIn("Tuff-tuff22oHalvt", "hejNej88*");
         assertEquals(testPlayerAccess.getEmail(), "1337manneeeeen@gmail.com");
-        assertEquals(testPlayerAccess.currentPlayer.getUserID(), 15);
-        assertEquals(testPlayerAccess.currentPlayer.getUserName(), "Tuff-tuff22oHalvt");
+        assertEquals(testPlayerAccess.currentPlayer.get().getUserID(), 15);
+        assertEquals(testPlayerAccess.currentPlayer.get().getUserName(), "Tuff-tuff22oHalvt");
     }
 
     @Test
     public void addAndRemoveFriend() throws UserInfoException {
-        testPlayerAccess.logOut();
-        testPlayerAccess.logIn("Tuff-tuff22oHalvt", "hejNej88*");
         //test addition of friend
         testPlayerAccess.addFriend(4);
         assertTrue(testPlayerAccess.playerMapper.find(15).get().getFriendUserIDs().contains(4));
@@ -72,24 +73,24 @@ public class SocialTest {
     }
 
     @Test
-    public void friendsVaryingSuccessTest(){
-        testPlayerAccess.currentPlayer.addFriend(12);
+    public void friendsVaryingSuccessTest() throws UserInfoException {
+        testPlayerAccess.currentPlayer.get().addFriend(12);
         Assert.assertTrue(testPlayerAccess.getFriends().contains(new PlayerMapper(path).find(1).get()));
     }
 
     @Test
-    public void friendFails(){
+    public void friendFails() throws UserInfoException {
         try {
             testPlayerAccess.addFriend(1);
         } catch (DataMapperException e){}
         try {
             testPlayerAccess.addFriend(257);
         } catch (DataMapperException e){}
-        testPlayerAccess.currentPlayer.addFriend(759);
+        testPlayerAccess.currentPlayer.get().addFriend(759);
         try {
             testPlayerAccess.removeFriend(759);
         } catch (DataMapperException e){}
-        Assert.assertFalse(testPlayerAccess.currentPlayer.getFriendUserIDs().contains(759));
+        Assert.assertFalse(testPlayerAccess.currentPlayer.get().getFriendUserIDs().contains(759));
     }
 
     @Test
@@ -103,10 +104,10 @@ public class SocialTest {
     }
 
     @Test
-    public void logInAndOutTest() {
+    public void logInAndOutTest() throws UserInfoException {
         testPlayerAccess.logOut();
         testPlayerAccess.logIn("Mathilda97", "yihha123");
-        assertEquals(1, testPlayerAccess.currentPlayer.getUserID());
+        assertEquals(1, testPlayerAccess.currentPlayer.get().getUserID());
         testPlayerAccess.logOut();
         testPlayerAccess.logIn("Tuff-tuff22oHalvt", "hejNej88*");
     }
@@ -133,7 +134,7 @@ public class SocialTest {
     }
 
     @Test
-    public void logInFails(){
+    public void logInFails() throws UserInfoException {
         testPlayerAccess.logOut();
         try{
             testPlayerAccess.logIn("soffan25", "hejnej");
@@ -146,7 +147,7 @@ public class SocialTest {
     }
 
     @Test
-    public void failedRegistrations(){
+    public void failedRegistrations() throws UserInfoException {
         testPlayerAccess.logOut();
         try {
             testPlayerAccess.createNewAccountAndLogIn("1337manneeeeen@gmail.com", "robbansAcc-95", "klöverKung");
@@ -170,7 +171,7 @@ public class SocialTest {
     }
 
     @Test
-    public void repoLayerConstructorFails(){
+    public void repoLayerConstructorFails() throws UserInfoException {
         testPlayerAccess.logOut();
         PlayerAccess paF = new PlayerAccess(path);
         Assert.assertNull(paF.currentPlayer);
@@ -180,15 +181,21 @@ public class SocialTest {
     @Test
     public void userInfoFails(){
         try {
-            testPlayerAccess.currentPlayer.setPassword("felLosen-1337", "Yihaaa95!");
+            testPlayerAccess.currentPlayer.get().setPassword("felLosen-1337", "Yihaaa95!");
             Assert.fail();
         } catch (UserInfoException e){}
         try {
-            testPlayerAccess.currentPlayer.setPassword("hejNej88*", "dåligt");
+            testPlayerAccess.currentPlayer.get().setPassword("hejNej88*", "dåligt");
         } catch (UserInfoException e){}
         try {
-            testPlayerAccess.currentPlayer.setEmail("felLosen", "dream-e-letter@gmail.com");
+            testPlayerAccess.currentPlayer.get().setEmail("felLosen", "dream-e-letter@gmail.com");
         } catch (UserInfoException e){}
+    }
+
+    @Test
+    public void playerChanges(){
+        testPlayerAccess.currentPlayer.get().setUserImage("userImgs/tjohoJag");
+        Assert.assertEquals("userImgs/tjohoJag", testPlayerAccess.currentPlayer.get().getUserImage());
     }
 
 }

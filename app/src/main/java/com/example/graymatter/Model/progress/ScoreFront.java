@@ -3,6 +3,7 @@ package com.example.graymatter.Model.progress;
 import com.example.graymatter.Model.dataAccess.GameSessionAccess;
 import com.example.graymatter.Model.dataAccess.PlayerAccess;
 import com.example.graymatter.Model.dataAccess.social.GameSession;
+import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class ScoreFront {
      * Normated scores are given as an int above or equal to zero, below 1000.
      * int userID can be used to receive additional information about the Player of the matching GameSession. Additional information retained from PlayerAccess.
      */
-    public static int[][] getSelectFriendTopScores(int resultTop, int resultLow, String gameType){
+    public static int[][] getSelectFriendTopScores(int resultTop, int resultLow, String gameType) throws UserInfoException {
         //check if the resultspan is legal
         if(resultLow < resultTop){
             throw new IllegalArgumentException("Top placement can not be below low placement!");
@@ -37,7 +38,7 @@ public class ScoreFront {
         //filter out non-friends
         int[][] friendTopScores = filterFriends(normArraysWOwners, 2);
         //check for illegal resultspan
-        resultLow = legalResultSpan(resultTop, resultLow, friendTopScores[0].length);
+        resultLow = legalResultSpan(resultLow, friendTopScores[0].length);
         //cut out the unwanted rankings and return
         return cutOutSelectedTopListPart(friendTopScores, resultTop, resultLow, 3);
     }
@@ -57,7 +58,7 @@ public class ScoreFront {
             throw new IllegalArgumentException("Top placement can not be below low placement!");
         }
         int[][] normArraysWOwners = getGlobalTopScores(gameType);
-        resultLow = legalResultSpan(resultTop, resultLow, normArraysWOwners[0].length);
+        resultLow = legalResultSpan(resultLow, normArraysWOwners[0].length);
         return cutOutSelectedTopListPart(normArraysWOwners, resultTop, resultLow, 3);
     }
 
@@ -88,21 +89,21 @@ public class ScoreFront {
             throw new IllegalArgumentException("Top placement can not be below low placement!");
         }
         int[][] normArrayWOwners = getGlobalTopPersonas(legalGameTypes);
-        resultLow = legalResultSpan(resultTop, resultLow, normArrayWOwners[0].length);
+        resultLow = legalResultSpan(resultLow, normArrayWOwners[0].length);
         return cutOutSelectedTopListPart(normArrayWOwners, resultTop, resultLow, 2);
 
     }
 
 
 
-    public static int[][] getSelectFriendTopPersonas(int resultTop, int resultLow, String legalGameTypes){
+    public static int[][] getSelectFriendTopPersonas(int resultTop, int resultLow, String legalGameTypes) throws UserInfoException {
         if(resultLow < resultTop){
             throw new IllegalArgumentException("Top placement can not be below low placement!");
         }
         int[][] normArrayWOwners = getGlobalTopPersonas(legalGameTypes);
         //cut out nonfriends from leaderboard
         int[][] justfriends = filterFriends(normArrayWOwners, 0);  //TODO doesn't work for tworow matrix
-        resultLow = legalResultSpan(resultTop, resultLow, justfriends.length);
+        resultLow = legalResultSpan(resultLow, justfriends.length);
         return cutOutSelectedTopListPart(normArrayWOwners, resultTop, resultLow, 2);
     }
 
@@ -276,13 +277,13 @@ public class ScoreFront {
      * @param notJustFriends 2-column int matrix where notJustFriends[0] = userIDs
      * @return
      */
-    private static int[][] filterFriends(int[][] notJustFriends, int colWUserID){
+    private static int[][] filterFriends(int[][] notJustFriends, int colWUserID) throws UserInfoException {
         int[][] justFriends = new int[notJustFriends.length][notJustFriends[0].length];
         int friendGameCount = 0;
         for (int i = 0; i < notJustFriends[0].length; i++) {
 
-            if(pa.currentPlayer.getFriendUserIDs().contains(notJustFriends[0][i])
-            || pa.currentPlayer.getUserID() == notJustFriends[colWUserID][i]){
+            if(pa.getCurrentPlayer().getFriendUserIDs().contains(notJustFriends[0][i])
+            || pa.getCurrentPlayer().getUserID() == notJustFriends[colWUserID][i]){
                 for (int j = 0; j < notJustFriends.length; j++) {
                     justFriends[j][i] = notJustFriends[j][i];
                 }
@@ -316,7 +317,7 @@ public class ScoreFront {
     }
 
     //a bit dirty
-    private static int legalResultSpan(int resultsTop, int resultsLow, int listlength) throws IllegalArgumentException{
+    private static int legalResultSpan(int resultsLow, int listlength) throws IllegalArgumentException{
         if(listlength < resultsLow){
             return listlength;
         }
