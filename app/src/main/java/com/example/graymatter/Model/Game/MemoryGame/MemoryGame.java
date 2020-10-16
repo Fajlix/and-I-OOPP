@@ -20,8 +20,7 @@ public class MemoryGame extends Game{
     private int lives;
     private boolean gameOver;
     //TODO fix this faking shit plzz
-    //TODO Do we need eventbus still?
-    private boolean newGrid = false;
+    //TODO Do we need eventbus still
 
     public MemoryGame(){
         gameOver = true;
@@ -29,7 +28,6 @@ public class MemoryGame extends Game{
     }
 
     public void startGame(){
-        newGrid = true;
         gameOver = false;
         level = 1;
         lives = 3;
@@ -46,7 +44,8 @@ public class MemoryGame extends Game{
      * @param event holds data about which tile has been chosen
      */
     @Subscribe
-    public void onMemoryEvent(MemoryEvent event){
+    public boolean onMemoryEvent(MemoryEvent event){
+        boolean newGrid = false;
         if (gameOver) {
             throw new RuntimeException("Attempt to select tile after game over");
         }
@@ -69,9 +68,9 @@ public class MemoryGame extends Game{
                 grid = new MemoryGrid(level);
                 break;
             default:
-                newGrid = false;
                 break;
         }
+        return newGrid;
     }
 
     /*
@@ -84,13 +83,6 @@ public class MemoryGame extends Game{
         return grid.toArrayList();
     }
 
-    public boolean getNewGrid(){
-        if (newGrid){
-            newGrid = false;
-            return true;
-        }
-        return false;
-    }
 
     public MemoryGrid.TileState getTileState(int tileCoordinate){
         return grid.getTileState(tileCoordinate);

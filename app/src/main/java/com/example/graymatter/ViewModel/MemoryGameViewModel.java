@@ -64,7 +64,7 @@ public class MemoryGameViewModel extends ViewModel {
 
     //This update method is called after each update from gui in this case each time a tile
     // has been clicked
-    private void update(){
+    private void update(boolean newGrid){
         if (memoryGame.getGameOver()) {
             level = memoryGame.endGame();
             gameStarted.setValue(false);
@@ -72,7 +72,7 @@ public class MemoryGameViewModel extends ViewModel {
         }
         else {
             memoryGame.getGridAsArrayList();
-            visibility.setValue(memoryGame.getNewGrid());
+            visibility.setValue(newGrid);
             grid.setValue(memoryGame.getGridAsArrayList());
             if (visibility.getValue() != null && visibility.getValue())
             {
@@ -84,8 +84,7 @@ public class MemoryGameViewModel extends ViewModel {
 
     //This method should be called from the gui that is being used when a tile has been clicked
     public void tileHasBeenClicked(int number){
-        memoryGame.onMemoryEvent(new MemoryEvent(number));
-        update();
+        update(memoryGame.onMemoryEvent(new MemoryEvent(number)));
     }
     // a class that represents what should happen when the wait time is over
     private class DelayedTask extends TimerTask {
