@@ -48,10 +48,11 @@ public class GameSession {
     /**
      * Copy constructor
      * @param gameSession gameSession to be copies
-     */
+     *//*
     protected GameSession(GameSession gameSession){
         this(gameSession.gameID, gameSession.score, gameSession.gameType, gameSession.date);
     }
+    */
 
     public int getGameID() {
         return gameID;
@@ -68,10 +69,5 @@ public class GameSession {
     public LocalDate getDate() {
         return date;  //should deepcopy
     }
-/*
-    public String getTime() {
-        return time;
-    }
-    */
 
 }

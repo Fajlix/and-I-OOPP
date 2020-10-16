@@ -3,8 +3,10 @@ package com.example.graymatter.Model;
 import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.LocalDataMapper;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.PlayerMapper;
+import com.example.graymatter.Model.dataAccess.social.GameSession;
 import com.example.graymatter.Model.dataAccess.social.Player;
 import com.example.graymatter.Model.dataAccess.PlayerAccess;
+import com.example.graymatter.Model.dataAccess.social.UserInfo;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.DataBaseModel;
 import com.google.gson.Gson;
@@ -174,4 +176,19 @@ public class SocialTest {
         Assert.assertNull(paF.currentPlayer);
         testPlayerAccess.logIn("Tuff-tuff22oHalvt", "hejNej88*");
     }
+
+    @Test
+    public void userInfoFails(){
+        try {
+            testPlayerAccess.currentPlayer.setPassword("felLosen-1337", "Yihaaa95!");
+            Assert.fail();
+        } catch (UserInfoException e){}
+        try {
+            testPlayerAccess.currentPlayer.setPassword("hejNej88*", "dåligt");
+        } catch (UserInfoException e){}
+        try {
+            testPlayerAccess.currentPlayer.setEmail("felLosen", "dream-e-letter@gmail.com");
+        } catch (UserInfoException e){}
+    }
+
 }

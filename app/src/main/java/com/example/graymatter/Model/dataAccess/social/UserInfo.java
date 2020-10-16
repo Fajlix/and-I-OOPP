@@ -20,12 +20,13 @@ public class UserInfo {
         this.friendUserIDs = friendUserIDs;
     }
 
+    /*
     protected UserInfo(UserInfo infoToCopy){
         this.email = infoToCopy.email;
         this.password = infoToCopy.password;
         Collections.copy(this.friendUserIDs, infoToCopy.friendUserIDs);
     }
-
+*/
     protected List<Integer> getFriendUserIDs() {
         List<Integer> newList = new ArrayList<>();
        // Collections.copy(newList, this.friendUserIDs);
@@ -109,10 +110,6 @@ public class UserInfo {
 
     public boolean isFriend(int userID) {
         return friendUserIDs.contains(userID);
-    }
-
-    protected String getPassword() {
-        return password;
     }
 
     public boolean sameEmail(String email) {

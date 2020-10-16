@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
+
 //until scoring impl, no assertions. Just check in db for correct results.
 public class GameSessionTest {
 
@@ -41,4 +43,10 @@ public class GameSessionTest {
         Assert.assertEquals("ChimpGame", gs.getGameType());
     }
 
+    @Test
+    public void gameSessionGettersTest(){
+        GameSession gs = new GameSession(125, 678, "MemoryGame", LocalDate.now());
+        Assert.assertEquals(LocalDate.now(), gs.getDate());
+
+    }
 }
