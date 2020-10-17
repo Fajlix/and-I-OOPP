@@ -1,16 +1,16 @@
 package com.example.graymatter.ViewModel;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+        import androidx.lifecycle.LiveData;
+        import androidx.lifecycle.MutableLiveData;
+        import androidx.lifecycle.ViewModel;
 
-import com.example.graymatter.Model.Game.MemoryGame.MemoryEvent;
-import com.example.graymatter.Model.Game.MemoryGame.MemoryGame;
-import com.example.graymatter.Model.Game.MemoryGame.MemoryGrid;
+        import com.example.graymatter.Model.Game.MemoryGame.MemoryEvent;
+        import com.example.graymatter.Model.Game.MemoryGame.MemoryGame;
+        import com.example.graymatter.Model.Game.MemoryGame.MemoryGrid;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+        import java.util.ArrayList;
+        import java.util.Timer;
+        import java.util.TimerTask;
 
 //TODO: Show current level and lives
 
@@ -64,7 +64,7 @@ public class MemoryGameViewModel extends ViewModel {
 
     //This update method is called after each update from gui in this case each time a tile
     // has been clicked
-    private void update(){
+    private void update(boolean newGrid){
         if (memoryGame.getGameOver()) {
             level = memoryGame.endGame();
             gameStarted.setValue(false);
@@ -72,7 +72,7 @@ public class MemoryGameViewModel extends ViewModel {
         }
         else {
             memoryGame.getGridAsArrayList();
-            visibility.setValue(memoryGame.getNewGrid());
+            visibility.setValue(newGrid);
             grid.setValue(memoryGame.getGridAsArrayList());
             if (visibility.getValue() != null && visibility.getValue())
             {
@@ -84,8 +84,7 @@ public class MemoryGameViewModel extends ViewModel {
 
     //This method should be called from the gui that is being used when a tile has been clicked
     public void tileHasBeenClicked(int number){
-        memoryGame.onMemoryEvent(new MemoryEvent(number));
-        update();
+        update(memoryGame.onMemoryEvent(new MemoryEvent(number)));
     }
     // a class that represents what should happen when the wait time is over
     private class DelayedTask extends TimerTask {

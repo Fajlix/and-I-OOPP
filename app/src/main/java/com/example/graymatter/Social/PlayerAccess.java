@@ -1,5 +1,7 @@
 package com.example.graymatter.Social;
 
+import android.content.Context;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +17,9 @@ public class PlayerAccess {
     public Player currentPlayer;
 
 
-    public PlayerAccess(String dbPath){
+    public PlayerAccess(String dbPath, Context context){
         playerMapper = new PlayerMapper(dbPath);
-        Optional<Player> optionalPlayer = playerMapper.find(LocalDataMapper.getCurrentPlayerUserID());
+        Optional<Player> optionalPlayer = playerMapper.findopt(context,15);
         if (optionalPlayer.isPresent()){
             currentPlayer = optionalPlayer.get();
         } else {
@@ -230,10 +232,10 @@ public class PlayerAccess {
         playerMapper.update(friend.get());
     }
 
-    private List<Player> getFriends(){
+    public List<Player> getFriends(Context context){
         List<Player> friends = new ArrayList<>();
         for (int friendID : currentPlayer.getFriendUserIDs()) {
-            Optional<Player> friend = playerMapper.find(friendID);
+            Optional<Player> friend = playerMapper.findopt(context, friendID);
             if(!friend.isPresent()){
                 //should you throw other class´ exception?
                 updatePlayer();

@@ -133,5 +133,4 @@ public class MemoryGridAdapter extends BaseAdapter {
         }
         return view;
     }
-
 }
