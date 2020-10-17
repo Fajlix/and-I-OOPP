@@ -1,16 +1,12 @@
 package com.example.graymatter.Social;
 
-import android.content.Context;
 import android.net.ParseException;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
 import java.io.Writer;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +14,6 @@ import java.util.Random;
 
 
 public final class PlayerMapper implements DataMapper<Player> {
-    private final String dbPath;
     //good for batch writing. bad for safety. idk
     private DataBaseModel toWrite;
     Gson gson = new Gson();
@@ -32,7 +27,7 @@ public final class PlayerMapper implements DataMapper<Player> {
     }**/
 
     private Random rand = new Random();
-
+    private String jsonStr;
 
 
     public Player currentPlayer;
@@ -48,9 +43,8 @@ public final class PlayerMapper implements DataMapper<Player> {
 
     List<PlayerMapperListener> listeners;
 
-    public PlayerMapper(String dbPath) {
-        this.dbPath = dbPath; // "src/main/assets/testplayers.json"
-        //in db?
+    public PlayerMapper(String jsonStr) {
+        this.jsonStr = jsonStr;
         currentFriendID = 0;
         if (LocalDataMapper.getCurrentPlayerUserID() != 0) {
             Optional<Player> player = find(LocalDataMapper.getCurrentPlayerUserID());
@@ -59,37 +53,18 @@ public final class PlayerMapper implements DataMapper<Player> {
         //listeners = new ArrayList<>();
     }
 
-    @Override
     public Optional<Player> find(int userID) {
-        try {
             List<Player> obj = newRead().getPlayers();
             for (Player p : obj){
                 if (p.getUserID() == (userID)){
                     return Optional.of(p);
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
-    }
-    public Optional<Player> findopt(Context context,int userID) {
-        try {
-            List<Player> obj = newReadopt(context).getPlayers();
-            for (Player p : obj){
-                if (p.getUserID() == (userID)){
-                    return Optional.of(p);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         return Optional.empty();
     }
 
     public Player getPlayer(int friendUserID) {
         //TODO major dumbness. fix pls
-        try {
             List<Player> arr = newRead().getPlayers();
             for (Player p: arr) {
 
@@ -97,9 +72,6 @@ public final class PlayerMapper implements DataMapper<Player> {
                     return p;
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         throw new DataMapperException("No Player matching userID");
     }
 
@@ -163,37 +135,20 @@ public final class PlayerMapper implements DataMapper<Player> {
 
     @Override
     public List<Player> get() {
-        List<Player> players = null;
-        try {
-            players = newRead().getPlayers();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return players;
+        return newRead().getPlayers();
     }
 
     private void enterData() throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Writer writer = new FileWriter(dbPath);
+        Writer writer = new FileWriter(jsonStr);
         gson.toJson(toWrite, writer);
         writer.flush();
         writer.close();
     }
-    private DataBaseModel newRead() throws IOException {
-        Reader reader = new FileReader(dbPath);
-        DataBaseModel toReturn = gson.fromJson(reader, DataBaseModel.class);
-        reader.close();
-        return toReturn;
-    }
 
 
-    private DataBaseModel newReadopt(Context context) throws IOException {
-        InputStream inputStream = context.getAssets().open("testplayers.json");
-
-        byte[] buffer = new byte[inputStream.available()];
-        inputStream.read(buffer);
-        DataBaseModel toReturn = gson.fromJson(new String(buffer), DataBaseModel.class);
-        return toReturn;
+    private DataBaseModel newRead(){
+        return gson.fromJson(jsonStr, DataBaseModel.class);
     }
 
 }
