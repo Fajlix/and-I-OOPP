@@ -97,14 +97,13 @@ public class ChimpGameFragment extends Fragment{
 
     public void showLostGame (int score) {
         chimpTestDescription.bringToFront();
-        //chimpTestClose.bringToFront();
         chimpTestDescription.setText("Game over... Your score was: " + score + " \n \nPress to play again");
     }
 
     public void showWonGame (int score) {
         chimpTestDescription.bringToFront();
-        //chimpTestClose.bringToFront();
-        chimpTestDescription.setText("Wow you completed the game! You got the max score of: " + score + " \n \nPress to play again");
+        chimpTestDescription.setText("Wow you completed the game! You got the max score of: "
+                + score + " \n \nPress to play again");
     }
 
     public GridView getGridView()

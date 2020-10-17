@@ -64,7 +64,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 {
                     fragmentChangeListener.visualGameClicked();
                 }
-                //else if (position == 3)
+                else if (position == 3)
+                {
+                    fragmentChangeListener.ToHClicked();
+                }
             }
         });
     }

@@ -5,4 +5,5 @@ public interface FragmentChangeListener {
     public void friendsDialogClicked();
     public void chimpTestClicked();
     public void visualGameClicked();
+    public void ToHClicked();
 }
