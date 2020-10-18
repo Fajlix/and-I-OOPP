@@ -40,6 +40,7 @@ public class MemoryGridAdapter extends BaseAdapter {
     public View getView(int position, View convertView, final ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.visual_game_card, null);
         ImageView imageView = view.findViewById(R.id.whiteBackgroud);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         if (grid.get(position).equals(MemoryGrid.TileState.CORRECTHIDDEN)) {
             if (visibility) {
