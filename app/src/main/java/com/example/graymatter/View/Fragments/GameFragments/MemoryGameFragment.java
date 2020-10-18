@@ -67,8 +67,8 @@ public class MemoryGameFragment extends Fragment {
                 visualGameGridAdapter.setVisibility(visibility);
                 gridView.setAdapter(visualGameGridAdapter);
                 gridView.setNumColumns(visualMemoryVM.getGridSize());
-                gridView.setVerticalSpacing(10);
-                gridView.setHorizontalSpacing(120/(visualMemoryVM.getGridSize()));
+                gridView.setVerticalSpacing(20);
+                gridView.setHorizontalSpacing(20);
             }
         });
 
@@ -105,8 +105,8 @@ public class MemoryGameFragment extends Fragment {
     public void ShowBoard() {
         gridView.bringToFront();
         gridView.setNumColumns(visualMemoryVM.getGridSize());
-        gridView.setVerticalSpacing(40);
-        gridView.setHorizontalSpacing(40);
+        gridView.setVerticalSpacing(20);
+        gridView.setHorizontalSpacing(20);
     }
 
 
