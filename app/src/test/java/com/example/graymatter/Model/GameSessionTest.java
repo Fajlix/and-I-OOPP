@@ -19,12 +19,12 @@ public class GameSessionTest {
         gsa = new GameSessionAccess(path);
     }
 
-    @Test
+   /* @Test
     public void storeGameTest(){
         gsa.storeGameSession(500, "ChimpGame");
         gsa.storeGameSession(670, "ShrimpGame");
     }
-
+    */
     @Test
     public void removeGameTest(){
     }

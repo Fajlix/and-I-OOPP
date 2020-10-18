@@ -63,7 +63,7 @@ public class MemoryGameFragment extends Fragment {
         visualMemoryVM.getGrid().observe(getViewLifecycleOwner(), new Observer<ArrayList<MemoryGrid.TileState>>() {
             @Override
             public void onChanged(ArrayList<MemoryGrid.TileState> grid) {
-                visualGameGridAdapter = new MemoryGridAdapter(MemoryGameFragment.this, grid);
+                visualGameGridAdapter = new MemoryGridAdapter(grid);
                 visualGameGridAdapter.setVisibility(visibility);
                 gridView.setAdapter(visualGameGridAdapter);
                 gridView.setNumColumns(visualMemoryVM.getGridSize());

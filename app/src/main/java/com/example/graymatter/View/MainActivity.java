@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,14 +22,17 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
 
     private BottomNavigationView bottomNavigationView;
     private NavController navController;
-    private Dialog friendsDialog;
+    private Dialog friendsDialog, settingsDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        friendsDialog = new Dialog(this);
+
+        //friendsDialog = new FriendsDialog(this);
+        settingsDialog = new Dialog(this);
+
 
         //Configures bottom navigation
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigationView);
@@ -68,6 +72,13 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
 
         friendsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         friendsDialog.show();
+    }
+    @Override
+    public void settingsDialogClicked() {
+        settingsDialog.setContentView(R.layout.dialog_settings);
+
+        settingsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        settingsDialog.show();
     }
 
 

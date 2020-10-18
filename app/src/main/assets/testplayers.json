@@ -1,0 +1,100 @@
+{
+  "players": [
+    {
+      "userInfo": {
+        "email": "mat@gmail.com",
+        "password": "yihha123",
+        "friendUserIDs": [
+          2,
+          71
+        ]
+      },
+      "userName": "Mathilda97",
+      "userID": 1,
+      "userImage": "",
+      "playerHistory": []
+    },
+    {
+      "userInfo": {
+        "email": "1337manneeeeen@gmail.com",
+        "password": "hejNej88*",
+        "friendUserIDs": [
+          1
+        ]
+      },
+      "userName": "Tuff-tuff22oHalvt",
+      "userID": 15,
+      "userImage": "",
+      "playerHistory": [
+        34,
+        35,
+        36,
+        37,
+        38,
+        39
+      ]
+    }
+  ],
+  "gameSessions": [
+    {
+      "score": 611,
+      "gameType": "ChimpGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 7
+      },
+      "gameID": 34
+    },
+    {
+      "score": 670,
+      "gameType": "ReactionTimeGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 7
+      },
+      "gameID": 35
+    },
+    {
+      "score": 500,
+      "gameType": "ChimpGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 9
+      },
+      "gameID": 36
+    },
+    {
+      "score": 670,
+      "gameType": "ShrimpGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 9
+      },
+      "gameID": 37
+    },
+    {
+      "score": 500,
+      "gameType": "ChimpGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 9
+      },
+      "gameID": 38
+    },
+    {
+      "score": 670,
+      "gameType": "ShrimpGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 9
+      },
+      "gameID": 39
+    }
+  ]
+}
