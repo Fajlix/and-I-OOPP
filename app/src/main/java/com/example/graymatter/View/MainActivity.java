@@ -13,7 +13,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.graymatter.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -67,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     public void friendsDialogClicked() {
         friendsDialog.setContentView(R.layout.dialog_friends);
 
-
         friendsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         friendsDialog.show();
     }
@@ -75,11 +73,17 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
 
     @Override
     public void chimpTestClicked() {
-        navController.navigate(R.id.chimpGameActivity);
+        if(navController.getCurrentDestination().getLabel().equals("fragment_statistics")){
+            navController.navigate(R.id.statisticsTabFragment);
+        }
+        else navController.navigate(R.id.chimpGameActivity);
     }
 
     @Override
     public void visualGameClicked() {
-        navController.navigate(R.id.visualGameFragment);
+        if(navController.getCurrentDestination().getLabel().equals("fragment_statistics")){
+            navController.navigate(R.id.statisticsTabFragment);
+        }
+        else navController.navigate(R.id.visualGameFragment);
     }
 }

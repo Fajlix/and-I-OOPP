@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.example.graymatter.R;
 import com.example.graymatter.View.Adapters.PagerAdapter;
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 
@@ -23,20 +22,20 @@ public class StatisticsTabFragment extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statistics_tab, container, false);
 
+
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         final ViewPager viewPager = view.findViewById(R.id.viewPager);
 
-
+        //Configures tabLayout navigation
         PagerAdapter pagerAdapter = new PagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
 
-
+        //tabLayout listener
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
