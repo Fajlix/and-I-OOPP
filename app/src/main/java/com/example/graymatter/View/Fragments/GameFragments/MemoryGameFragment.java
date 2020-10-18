@@ -81,7 +81,7 @@ public class MemoryGameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ClearScreen();
-                visualMemoryVM.startVisualGame();
+                visualMemoryVM.startMemoryGame();
                 ShowBoard();
 
             }

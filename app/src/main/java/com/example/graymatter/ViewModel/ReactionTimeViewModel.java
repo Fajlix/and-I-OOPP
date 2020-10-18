@@ -9,6 +9,11 @@ import com.example.graymatter.Model.Game.ReactionGame.ReactionTimeGame;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * @author Felix
+ * class that represents the ViewModel for the reaction game.
+ */
+
 public class ReactionTimeViewModel extends ViewModel {
     private ReactionTimeGame reactionTimeGame;
     private UpdateViewTask task;
@@ -17,14 +22,21 @@ public class ReactionTimeViewModel extends ViewModel {
     private MutableLiveData<Boolean> mIsWaiting = new MutableLiveData<>();
     private int score = 0;
 
-    //Initializes the VM with a new instance of a game and sets start values for some attributes
+    /**
+     * Initializes the ViewModel with a new instance of a game and sets start values for some
+     * attributes.
+     */
+
     public void init(){
         reactionTimeGame = new ReactionTimeGame();
         timer = new Timer();
     }
-    // Starts a new reactionGame and starts a timer task which runs after randWaitTime
-    // It also sets the Mutable live data boolean waiting to true to notify observers that the
-    // View should be waiting for the time it should display their reactNow gui
+
+    /**
+     * Starts a new reactionGame and starts a timer task which runs after randWaitTime
+     * It also sets the Mutable live data boolean waiting to true to notify observers that the
+     * View should be waiting for the time it should display their reactNow gui
+     */
     public void startReactionGame(){
         reactionTimeGame.startGame();
         // New task that runs after waitTime
@@ -45,7 +57,10 @@ public class ReactionTimeViewModel extends ViewModel {
     public LiveData<Boolean> getIsWaiting(){
         return mIsWaiting;
     }
-    // a class that represents what should happen when the wait time is over
+    /**
+     * a private class that represents what should happen when the wait time is over.
+     * In this case sets the starttime of the reamtiontime Game and posts that the wait time is over.
+     */
     private class UpdateViewTask extends TimerTask {
         @Override
         public void run() {
