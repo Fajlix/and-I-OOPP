@@ -17,6 +17,7 @@ package com.example.graymatter.ViewModel;
 public class MemoryGameViewModel extends ViewModel {
     private MemoryGame memoryGame;
     private int level = 0;
+    private int lives = 0;
     private DelayedTask task;
     private Timer timer;
     //Mutable live data used to notify observers when data is changed
@@ -24,6 +25,7 @@ public class MemoryGameViewModel extends ViewModel {
     private MutableLiveData<Boolean> gameOver = new MutableLiveData<>();
     private MutableLiveData<ArrayList<MemoryGrid.TileState>> grid = new MutableLiveData<>();
     private MutableLiveData<Boolean> visibility = new MutableLiveData<>();
+
 
     //Initializes the VM with a new instance of a game and sets start values for some attributes
     public void init(){
@@ -37,6 +39,7 @@ public class MemoryGameViewModel extends ViewModel {
     public void startVisualGame(){
         memoryGame.startGame();
         grid.setValue(memoryGame.getGridAsArrayList());
+        lives = memoryGame.getLives();
         visibility.setValue(true);
         gameStarted.setValue(true);
         task = new DelayedTask();
@@ -71,6 +74,7 @@ public class MemoryGameViewModel extends ViewModel {
             gameOver.setValue(true);
         }
         else {
+            lives = memoryGame.getLives();
             memoryGame.getGridAsArrayList();
             visibility.setValue(newGrid);
             grid.setValue(memoryGame.getGridAsArrayList());
@@ -80,6 +84,9 @@ public class MemoryGameViewModel extends ViewModel {
                 timer.schedule(task, 1000);
             }
         }
+    }
+    public int getLives(){
+        return lives;
     }
 
     //This method should be called from the gui that is being used when a tile has been clicked
