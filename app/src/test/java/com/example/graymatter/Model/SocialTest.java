@@ -22,7 +22,8 @@ import java.util.Optional;
 
 
 public class SocialTest {
-    String path = "src/main/assets/testPlayers.json";
+    JsonTestHelper jsonTestHelper = new JsonTestHelper();
+    String path = jsonTestHelper.getJsonString();
     PlayerAccess testPlayerAccess = new PlayerAccess(path);
 
     @Before

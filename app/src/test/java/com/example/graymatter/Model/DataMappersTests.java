@@ -21,7 +21,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class DataMappersTests {
-    String path = "src/main/assets/testPlayers.json";
+    JsonTestHelper jsonTestHelper = new JsonTestHelper();
+    String path = jsonTestHelper.getJsonString();
     GameSessionMapper gsm = new GameSessionMapper(path);
     PlayerMapper pm = new PlayerMapper(path);
 

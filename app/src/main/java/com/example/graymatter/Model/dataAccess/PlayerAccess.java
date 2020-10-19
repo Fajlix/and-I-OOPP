@@ -23,16 +23,12 @@ public class PlayerAccess {
     public Optional<Player> currentPlayer;
 
 
-    public PlayerAccess(String dbPath){
-        playerMapper = new PlayerMapper(dbPath);
+    public PlayerAccess(String jsonStr) {
+        playerMapper = new PlayerMapper(jsonStr);
         Optional<Player> optionalPlayer = playerMapper.find(LocalDataMapper.getCurrentPlayerUserID());
         if (optionalPlayer.isPresent()){
             currentPlayer = optionalPlayer;
-            try {
-                updatePlayer();
-            } catch (UserInfoException e) {
-                e.printStackTrace();
-            }
+            updatePlayer();
         } else {
             currentPlayer = Optional.empty();
         }
@@ -261,18 +257,22 @@ public class PlayerAccess {
         playerMapper.update(friend.get());
     }
 
-    public List<Player> getFriends() throws UserInfoException {
+    public List<Player> getFriends() {
         Player player = getUnwrappedPlayer();
         List<Player> friends = new ArrayList<>();
-        for (int friendID : player.getFriendUserIDs()) {
-            Optional<Player> friend = playerMapper.find(friendID);
-            if(!friend.isPresent()){
-                updatePlayer();
-                return getFriends();
-            } else {
-                friend.get().deActUserInfo();
-                friends.add(friend.get());
+        try {
+            for (int friendID : player.getFriendUserIDs()) {
+                Optional<Player> friend = playerMapper.find(friendID);
+                if (!friend.isPresent()) {
+                    updatePlayer();
+                    return getFriends();
+                } else {
+                    friend.get().deActUserInfo();
+                    friends.add(friend.get());
+                }
             }
+        } catch (UserInfoException e) {
+            updatePlayer();
         }
         return friends;
     }
@@ -280,18 +280,18 @@ public class PlayerAccess {
     /**
      * removes friendUserIDs of deleted accounts
      */
-    private void updatePlayer() throws UserInfoException {
-        Player player = getUnwrappedPlayer();
-        for (int i = 0; i < player.getFriendUserIDs().size(); i++) {
-            int no = player.getFriendUserIDs().get(i);
-            Optional<Player> friend = playerMapper.find(no);
-            if (!friend.isPresent()){
-                try {
+    private void updatePlayer() {
+        try {
+            Player player = getUnwrappedPlayer();
+            for (int i = 0; i < player.getFriendUserIDs().size(); i++) {
+                int no = player.getFriendUserIDs().get(i);
+                Optional<Player> friend = playerMapper.find(no);
+                if (!friend.isPresent()) {
                     player.removeFriend(no);
-                } catch (UserInfoException e) {
-                    e.printStackTrace();
                 }
             }
+        } catch (UserInfoException e) {
+            e.printStackTrace();
         }
     }
 

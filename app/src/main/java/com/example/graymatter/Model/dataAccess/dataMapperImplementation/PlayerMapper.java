@@ -14,7 +14,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,15 +26,15 @@ public final class PlayerMapper implements DataMapper<Player> {
     //TODO make get() return Iterable
     //TODO should it check for empty fields?
 
-    private final String dbPath;
+    private final String jsonStr;
     Gson gson = new Gson();
 
     /**
      * PlayerMapper constructor
      * @param dbPath path to .json file
      */
-    public PlayerMapper(String dbPath) {
-        this.dbPath = dbPath;
+    public PlayerMapper(String jsonStr) {
+        this.jsonStr = jsonStr;
     }
 
     /**
@@ -45,15 +44,11 @@ public final class PlayerMapper implements DataMapper<Player> {
      */
     @Override
     public Optional<Player> find(int userID) {
-        try {
-            List<Player> obj = newRead().getPlayers();
-            for (Player p : obj){
-                if (p.getUserID() == (userID)){
-                    return Optional.of(p);
-                }
+        List<Player> obj = newRead().getPlayers();
+        for (Player p : obj){
+            if (p.getUserID() == (userID)){
+                return Optional.of(p);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return Optional.empty();
     }
@@ -129,25 +124,18 @@ public final class PlayerMapper implements DataMapper<Player> {
      */
     @Override
     public List<Player> get() {
-        List<Player> players = null;
-        try {
-            players = newRead().getPlayers();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return players;
+        return newRead().getPlayers();
     }
 
     /**
      * Method for database entries, not intended for use from other methods than those defined by interface.
      * @param players updated List of players to wrote to database.
-     * @throws IOException
      */
     private void enterData(List<Player> players) throws IOException {
         DataBaseModel db = newRead();
         db.setPlayers(players);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Writer writer = new FileWriter(dbPath);
+        Writer writer = new FileWriter(jsonStr);
         gson.toJson(db, writer);
         writer.flush();
         writer.close();
@@ -156,13 +144,9 @@ public final class PlayerMapper implements DataMapper<Player> {
     /**
      * Method for reading the database, not intended for use from other methods than those defined by interface.
      * @return DataBaseModel containing all database fields.
-     * @throws IOException
      */
-    private DataBaseModel newRead() throws IOException {
-        Reader reader = new FileReader(dbPath);
-        DataBaseModel toReturn = gson.fromJson(reader, DataBaseModel.class);
-        reader.close();
-        return toReturn;
+    private DataBaseModel newRead() {
+        return gson.fromJson(jsonStr, DataBaseModel.class);
     }
 
 }

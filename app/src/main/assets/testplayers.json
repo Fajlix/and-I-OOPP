@@ -26,7 +26,8 @@
         "email": "hallondalen@gmail.com",
         "password": "mittLillaLosen12_",
         "friendUserIDs": [
-          1
+          1,
+          15
         ]
       },
       "userName": "Broderna",
@@ -41,7 +42,8 @@
         "email": "1337manneeeeen@gmail.com",
         "password": "hejNej88*",
         "friendUserIDs": [
-          1
+          1,
+          4
         ]
       },
       "userName": "Tuff-tuff22oHalvt",
@@ -51,7 +53,9 @@
         34,
         35,
         38,
-        45
+        45,
+        46,
+        46
       ]
     }
   ],

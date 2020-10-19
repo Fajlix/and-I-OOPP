@@ -18,7 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ProgressTest {
-    String path = "src/main/assets/testPlayers.json";
+    JsonTestHelper jsonTestHelper = new JsonTestHelper();
+    String path = jsonTestHelper.getJsonString();
     int[] scores;
     GameSessionAccess gsa;
     PlayerAccess pa;

@@ -8,17 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.graymatter.R;
-import com.example.graymatter.View.Fragments.GameFragments.ChimpGameFragment;
 
 
 public class ChimpGridAdapter extends BaseAdapter {
     private int[] grid;
     private boolean visibility = true;
-    ChimpGameFragment context;
 
-    public ChimpGridAdapter(ChimpGameFragment context, int[] grid) {
+    public ChimpGridAdapter(int[] grid) {
         this.grid = grid;
-        this.context = context;
     }
     public void setVisibility(boolean visibility){
         this.visibility = visibility;

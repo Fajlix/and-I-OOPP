@@ -8,18 +8,15 @@ import android.widget.ImageView;
 
 import com.example.graymatter.Model.Game.MemoryGame.MemoryGrid;
 import com.example.graymatter.R;
-import com.example.graymatter.View.Fragments.GameFragments.MemoryGameFragment;
 
 import java.util.ArrayList;
 
 public class MemoryGridAdapter extends BaseAdapter {
     private ArrayList<MemoryGrid.TileState> grid;
     private boolean visibility = true;
-    MemoryGameFragment context;
 
-    public MemoryGridAdapter(MemoryGameFragment context, ArrayList<MemoryGrid.TileState> grid) {
+    public MemoryGridAdapter(ArrayList<MemoryGrid.TileState> grid) {
         this.grid = grid;
-        this.context = context;
     }
     public void setVisibility(boolean visibility){
         this.visibility = visibility;
@@ -43,6 +40,7 @@ public class MemoryGridAdapter extends BaseAdapter {
     public View getView(int position, View convertView, final ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.visual_game_card, null);
         ImageView imageView = view.findViewById(R.id.whiteBackgroud);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         if (grid.get(position).equals(MemoryGrid.TileState.CORRECTHIDDEN)) {
             if (visibility) {
@@ -63,5 +61,4 @@ public class MemoryGridAdapter extends BaseAdapter {
         }
         return view;
     }
-
 }
