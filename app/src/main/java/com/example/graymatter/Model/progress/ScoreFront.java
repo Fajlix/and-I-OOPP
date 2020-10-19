@@ -291,7 +291,7 @@ public class ScoreFront {
         int[][] justFriends = null;
         try {
             justFriends = new int[notJustFriends.length][pa.getCurrentPlayer().getFriendUserIDs().size()];
-            for (int i = 0; i < notJustFriends[0].length; i++) {
+            for (int i = 1; i < pa.getCurrentPlayer().getFriendUserIDs().size(); i++) {
                 if(pa.getCurrentPlayer().getFriendUserIDs().contains(notJustFriends[colWUserID][i])
                 || pa.getCurrentPlayer().getUserID() == notJustFriends[colWUserID][i]) {
                     for (int j = 0; j < notJustFriends.length; j++) {

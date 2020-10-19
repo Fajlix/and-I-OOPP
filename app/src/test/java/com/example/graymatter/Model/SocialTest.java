@@ -74,8 +74,9 @@ public class SocialTest {
 
     @Test
     public void friendsVaryingSuccessTest() throws UserInfoException {
-        testPlayerAccess.currentPlayer.get().addFriend(12);
-        Assert.assertTrue(testPlayerAccess.getFriends().contains(new PlayerMapper(path).find(1).get()));
+        testPlayerAccess.addFriend(4);
+        Assert.assertTrue(testPlayerAccess.getFriends().contains(new PlayerMapper(path).find(4).get()));
+        testPlayerAccess.removeFriend(4);
     }
 
     @Test
@@ -174,7 +175,7 @@ public class SocialTest {
     public void repoLayerConstructorFails() throws UserInfoException {
         testPlayerAccess.logOut();
         PlayerAccess paF = new PlayerAccess(path);
-        Assert.assertNull(paF.currentPlayer);
+        Assert.assertEquals(Optional.empty(), paF.currentPlayer);
         testPlayerAccess.logIn("Tuff-tuff22oHalvt", "hejNej88*");
     }
 
