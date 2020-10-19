@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Class provides client access to Player. Coordinates Player parameters with database.
+ * Class provides client access to Player. Coordinates Player fields with database.
  */
 public class PlayerAccess {
 

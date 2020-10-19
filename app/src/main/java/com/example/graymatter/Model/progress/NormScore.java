@@ -1,59 +1,15 @@
 package com.example.graymatter.Model.progress;
 
-import com.example.graymatter.Model.dataAccess.GameSessionAccess;
-import com.example.graymatter.Model.dataAccess.social.GameSession;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-public class NormScore {
-
-    private static GameSessionAccess gsa;
+/**
+ * Class contains static methods use for normating numbers.
+ */
+public class NormScore { //TODO this should be renamed NormNumber
 
     /**
-     * "unfair"
-     * @param unNorm
-     * @param gameType
-     * @return
-     */
-
-    public static void normScore(int unNorm, String gameType){
-/*
-        //check somewhere if there are new games, if not use old normScores? would have to be saved in db, might be dumb
-        int normScore = 0;
-        List<GameSession> list = gsa.getGameSessionsByType(gameType);
-        int [] distribution = new int[list.size()];
-        for (int i = 0; i < distribution.length; i++){
-            distribution[i] = list.get(i).getScore();
-        }
-        int[] sorted = Sort.sort(distribution);
-        //find unNorms pos. in this array
-        for (int i = 0; i < sorted.length; i++) {
-            if (unNorm == sorted[i]){
-                normScore = sorted[i];
-                return normScore;
-            } else if (unNorm < sorted[i]){
-                double chunks = 1000.0 /(double)sorted.length;
-                normScore = (int)(chunks * (double)i);
-            }
-        }
-        double average = findAverage(sorted);
-        double standardD = findStandardDeviation(average, sorted);
-
-        //middle one has score 500
-        int midPos = sorted.length / 2; //TODO idk rounds up
-        //every score same as
-        //calculate "spots" based on the amount of scores, spots being score if 50th percentile = 500 points
-        //then pop them out two at the time, one below, one above?
-        return normScore;
-        */
-    }
-
-    /**
-     *
+     * Method normates scores by associating each of them with a number 1-1000 representing the percentile the score performs in.
      * @param scores sorted with top scores at high indexes
-     * @return int[][]: int[0] original scores, int[1] normated scores
+     * @return int[][]: int[0] original scores, int[1] normated scores, both sorted with low scores at low indexes and v.v.
      */
     public static int[][] normScores(int[] scores){
         //what part of the gameDB does each game represent?
@@ -61,9 +17,12 @@ public class NormScore {
         int[] normScores = new int[scores.length];
         int sameCount = 1;
         for (int i = 1; i < scores.length; i++) {
+            //if this score is not the same as the last one, the last score and all equal to the last score can get a normated score
             if (scores[i-1] != scores[i]){
+                //if the number was one of a kind the percentile is just the amount of scores performing worse*the percentage each score is of scores
                 if(sameCount == 1){
                     normScores[i-1] = (int)(chunks * (i-1));
+                //if multiple numbers scored the same, their normated score is the normated score if there were only one score + the percentage these scores are of scores (the list)/2
                 } else{
                     double span = chunks*sameCount;
                     int spanMid = (int)((span /2)+chunks*(i-sameCount));
@@ -76,24 +35,12 @@ public class NormScore {
                 sameCount++;
             }
         }
+        //the very last level of scores need to be normated
         normScores[scores.length-1] = (int)chunks* (scores.length-1);
+        //normated scores are paired with argument unnormated scores //TODO this could loop through a wider matrix
         int[][] scoresAndNormatedScores = new int[2][scores.length];
         scoresAndNormatedScores[0] = scores;
         scoresAndNormatedScores[1] = normScores;
         return scoresAndNormatedScores;
     }
-
-    private static double findAverage(int [] array){
-        int sum = 0;
-        for (int i = 0; i < array.length; i++) {
-            sum += array[i];
-        }
-        return ((double)sum / (double)array.length);
-    }
-
-    private static double findStandardDeviation(double average, int[] sorted) {
-        return 0.0;
-    }
-
-
 }

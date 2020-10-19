@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-//i wanted it to be protected, didn't work
+/**
+ * Representing private user information. All fields and methods private or protected.
+ */
 public class UserInfo {
 
 
@@ -12,8 +14,14 @@ public class UserInfo {
     private String password;
     private List<Integer> friendUserIDs;
 
-
-    UserInfo(String email, String password, List<Integer> friendUserIDs) throws UserInfoException {
+    /**
+     * Standard constructor.
+     * @param email of the user.
+     * @param password as defined by method passwordSafetyCheck.
+     * @param friendUserIDs List of integers representing IDs of this users friends. This class is not responsible for ensuring that this connection is mutual, accepted or otherwise valid.
+     * @throws UserInfoException is password does not uphold password standards defined by passwordSafetyCheck.
+     */
+    protected UserInfo(String email, String password, List<Integer> friendUserIDs) throws UserInfoException {
         this.email = email;
         if (!passwordSafetyCheck(password)) throw new UserInfoException(passwordNegativeFeedback());
         this.password = password;
@@ -27,9 +35,7 @@ public class UserInfo {
     }
 
     protected List<Integer> getFriendUserIDs() {
-        List<Integer> newList = new ArrayList<>();
-       // Collections.copy(newList, this.friendUserIDs);
-        return friendUserIDs;//newList;
+        return new ArrayList<>(this.friendUserIDs);
     }
 
     protected String getEmail() {

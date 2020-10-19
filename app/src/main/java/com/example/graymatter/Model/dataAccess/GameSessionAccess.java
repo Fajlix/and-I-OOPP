@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Class provides client access to GameSession. Coordinates GameSession fields with database.
+ */
 public class GameSessionAccess {
 
     private static DataMapper<GameSession> gsMapper;

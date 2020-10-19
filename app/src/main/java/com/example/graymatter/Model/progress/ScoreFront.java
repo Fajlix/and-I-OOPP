@@ -7,17 +7,19 @@ import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class contains methods returning different kind of leaderboards with normated scores.
+ * Methods renormates score every time called. For bigger databases these calls are demanding. This class should be located at serverside and methods should be called sparsely.
+ */
 public class ScoreFront {
 
     private static GameSessionAccess gsa = new GameSessionAccess("src/main/assets/testPlayers.json"); //comes from somewhere?
     private static PlayerAccess pa = new PlayerAccess("src/main/assets/testPlayers.json"); //same
-
 
     /**
      * Returns a leaderboard of gamesessions, corresponding normated scores and players from a particular gameType, with only games played by the user marked as currentUser in local cache. Cut after argument input.
@@ -28,7 +30,7 @@ public class ScoreFront {
      * Normated scores are given as an int above or equal to zero, below 1000.
      * int userID can be used to receive additional information about the Player of the matching GameSession. Additional information retained from PlayerAccess.
      */
-    public static int[][] getSelectFriendTopScores(int resultTop, int resultLow, String gameType) throws UserInfoException {
+    public static int[][] getSelectFriendTopScores(int resultTop, int resultLow, String gameType) {
         //check if the resultspan is legal
         if(resultLow < resultTop){
             throw new IllegalArgumentException("Top placement can not be below low placement!");
@@ -95,14 +97,22 @@ public class ScoreFront {
     }
 
 
-
+    /**
+     * Returns a leaderboard of players on current users friend list (current user according to cache) and corresponding normated scores. Based on persona, a.k.a. overall topscoring player.
+     * Friends rankings does not indicate complete playerbase relative ranking, however scores are normated after entire playerbase.
+     * @param resultTop Top placement, not index, beginning the span of Map rows to return.
+     * @param resultLow Low placement, not index, ending the span of Map rows to return.
+     * @param legalGameTypes A String of gameTypes, seperated by space " ".
+     * @return
+     * @throws UserInfoException
+     */
     public static int[][] getSelectFriendTopPersonas(int resultTop, int resultLow, String legalGameTypes) throws UserInfoException {
         if(resultLow < resultTop){
             throw new IllegalArgumentException("Top placement can not be below low placement!");
         }
         int[][] normArrayWOwners = getGlobalTopPersonas(legalGameTypes);
         //cut out nonfriends from leaderboard
-        int[][] justfriends = filterFriends(normArrayWOwners, 0);  //TODO doesn't work for tworow matrix
+        int[][] justfriends = filterFriends(normArrayWOwners, 0);
         resultLow = legalResultSpan(resultLow, justfriends.length);
         return cutOutSelectedTopListPart(normArrayWOwners, resultTop, resultLow, 2);
     }
@@ -273,21 +283,42 @@ public class ScoreFront {
     }
 
     /**
-     *
-     * @param notJustFriends 2-column int matrix where notJustFriends[0] = userIDs
-     * @return
+     * Filter out rows from matrix where int[0][row] does not match an entry in current user´s (according to cache) friend list.
+     * @param notJustFriends int matrix where notJustFriends[0] contains userIDs
+     * @return int[notJustFriends.length][<length of current user´s friend list>], int[0] containing userIDs
      */
-    private static int[][] filterFriends(int[][] notJustFriends, int colWUserID) throws UserInfoException {
+    private static int[][] filterFriends(int[][] notJustFriends, int colWUserID) {
+        int[][] justFriends = null;
+        try {
+            justFriends = new int[notJustFriends.length][pa.getCurrentPlayer().getFriendUserIDs().size()];
+            for (int i = 0; i < notJustFriends[0].length; i++) {
+                if(pa.getCurrentPlayer().getFriendUserIDs().contains(notJustFriends[colWUserID][i])
+                || pa.getCurrentPlayer().getUserID() == notJustFriends[colWUserID][i]) {
+                    for (int j = 0; j < notJustFriends.length; j++) {
+                        justFriends[j][i] = notJustFriends[j][i];
+                    }
+                }
+            }
+        } catch (UserInfoException e){
+                e.printStackTrace();
+        }
+        return justFriends;
+
+
+        /*
         int[][] justFriends = new int[notJustFriends.length][notJustFriends[0].length];
         int friendGameCount = 0;
         for (int i = 0; i < notJustFriends[0].length; i++) {
-
-            if(pa.getCurrentPlayer().getFriendUserIDs().contains(notJustFriends[0][i])
-            || pa.getCurrentPlayer().getUserID() == notJustFriends[colWUserID][i]){
-                for (int j = 0; j < notJustFriends.length; j++) {
-                    justFriends[j][i] = notJustFriends[j][i];
+            try {
+                if(pa.getCurrentPlayer().getFriendUserIDs().contains(notJustFriends[0][i]) //TODO why not colWUserID???
+                || pa.getCurrentPlayer().getUserID() == notJustFriends[colWUserID][i]){
+                    for (int j = 0; j < notJustFriends.length; j++) {
+                        justFriends[j][i] = notJustFriends[j][i];
+                    }
+                    friendGameCount++;
                 }
-                friendGameCount++;
+            } catch (UserInfoException e){
+                e.printStackTrace();
             }
         }
         int[][] friendsWOZeroes = new int[3][friendGameCount];
@@ -301,6 +332,7 @@ public class ScoreFront {
             }
         }
         return friendsWOZeroes;
+        */
     }
 
     private static int[][] cutOutSelectedTopListPart(int[][] unCut, int resultTop, int resultsLow, int colUnCut){
@@ -316,7 +348,7 @@ public class ScoreFront {
         return cut;
     }
 
-    //a bit dirty
+
     private static int legalResultSpan(int resultsLow, int listlength) throws IllegalArgumentException{
         if(listlength < resultsLow){
             return listlength;

@@ -1,5 +1,8 @@
 package com.example.graymatter.Model.progress;
 
+/**
+ * Class containing static methods providing sorting for different kinds of arguments.
+ */
 public class Sort {
 
     public static int[] sort(int[] toSort){
@@ -16,11 +19,11 @@ public class Sort {
     }
 
     /**
-     * Sort after ints in int[c]
-     * @param toSort multirowmatrix
-     * @param highValueLowIndex determines which direction to sort int[0] after
-     * @param c column index to sort after
-     * @return int[][] sorted after contents in int[0]
+     * Sort rows in matrix after ints in int[c]
+     * @param toSort multi-row-matrix to sort. toSort[c] contains the numbers to sort after.
+     * @param highValueLowIndex determines which direction to sort int[0] after. if true, low indexes contains high values, if false, low indexes contains low values.
+     * @param c index of column which content to sort after.
+     * @return int[][] sorted after contents in int[c]
      */
     public static int[][] multRowSort(int[][] toSort, boolean highValueLowIndex, int c){
         for (int i = 0; i < toSort.length; i++){

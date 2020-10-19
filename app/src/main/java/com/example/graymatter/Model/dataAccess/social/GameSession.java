@@ -3,14 +3,13 @@ package com.example.graymatter.Model.dataAccess.social;
 import java.time.LocalDate;
 
 /**
- * Respresenting a game session, associated from a Player.
+ * Representing a game session, a.k.a all history stored from one instance of a game being played.
  */
 public class GameSession {
 
 
     private final int score;
     private final String gameType;
-   // LocalTime time; interesting?
     private final LocalDate date;
     private final int gameID;
 
@@ -19,15 +18,14 @@ public class GameSession {
     /**
      * Standard constructor used for documenting a game session.
      * @param gameID Unique GameId 1 and above supplied by databasemapper.
-     * @param score Not below 0. Normated with Neurån scoring.
-     * @param gameType String representing game type. Needs to formatted likewise for every game entry from same game.
+     * @param score Not below 0. Unnormated. Bigger score is a better result than a lower. //TODO is this what we decided on?
+     * @param gameType String representing game type. Needs to formatted likewise for every game entry from same game. //TODO we never decided on this?
      */
     public GameSession(int gameID, int score, String gameType, LocalDate date){
         this.date = date;
         this.gameID = gameID;
         this.score = score;
         this.gameType = gameType;
-       // this.time = LocalTime.now();
     }
 
 
@@ -54,18 +52,30 @@ public class GameSession {
     }
     */
 
+    /**
+     * @return the gameID identifying the GameSession instance.
+     */
     public int getGameID() {
         return gameID;
     }
 
+    /**
+     * @return the score of the GameSession instance. Not below 0. Unnormated. Bigger score is a better result than a lower.
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     * @return String representing game type.
+     */
     public String getGameType() {
         return gameType;
     }
 
+    /**
+     * @return date of the GameSession. TimeZone according to OS of the device the GameSession was played on.
+     */
     public LocalDate getDate() {
         return date;  //should deepcopy
     }
