@@ -1,10 +1,5 @@
 package com.example.graymatter.Model.progress;
 
-import com.example.graymatter.Model.dataAccess.GameSessionAccess;
-import com.example.graymatter.Model.dataAccess.PlayerAccess;
-import com.example.graymatter.Model.dataAccess.social.GameSession;
-import com.example.graymatter.Model.dataAccess.social.UserInfoException;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,10 +11,7 @@ import java.util.Map;
  * Class contains methods returning different kind of leaderboards with normated scores.
  * Methods renormates score every time called. For bigger databases these calls are demanding. This class should be located at serverside and methods should be called sparsely.
  */
-public class ScoreFront {
-
-    private static GameSessionAccess gsa = new GameSessionAccess("src/main/assets/testPlayers.json"); //comes from somewhere?
-    private static PlayerAccess pa = new PlayerAccess("src/main/assets/testPlayers.json"); //same
+public class NormLeaderboards {
 
     /**
      * Returns a leaderboard of gamesessions, corresponding normated scores and players from a particular gameType, with only games played by the user marked as currentUser in local cache. Cut after argument input.
@@ -30,19 +22,15 @@ public class ScoreFront {
      * Normated scores are given as an int above or equal to zero, below 1000.
      * int userID can be used to receive additional information about the Player of the matching GameSession. Additional information retained from PlayerAccess.
      */
-    public static int[][] getSelectFriendTopScores(int resultTop, int resultLow, String gameType) {
-        return NormLeaderboards.getSelectFriendTopScores(findGameSessionIDsAndScoresFromDBA(gameType), resultTop, resultLow);
-
-
-
+    public static int[][] getSelectFriendTopScores(int[][] IDandScoresAndUserIDs, int resultTop, int resultLow, int userID, List<Integer> friendIDs) {
         //check if the resultspan is legal
         if(resultLow < resultTop){
             throw new IllegalArgumentException("Top placement can not be below low placement!");
         }
         //get sorted matrix with gameowners, normated topscores and gameIDs
-        int[][] normArraysWOwners = getGlobalTopScores(gameType);
+        int[][] normArraysWOwners = getGlobalTopScores(IDandScoresAndUserIDs, userID, friendIDs);
         //filter out non-friends
-        int[][] friendTopScores = filterFriends(normArraysWOwners, 2);
+        int[][] friendTopScores = filterFriends(normArraysWOwners, 2, friendIDs, userID);
         //check for illegal resultspan
         resultLow = legalResultSpan(resultLow, friendTopScores[0].length);
         //cut out the unwanted rankings and return
@@ -68,15 +56,18 @@ public class ScoreFront {
         return cutOutSelectedTopListPart(normArraysWOwners, resultTop, resultLow, 3);
     }
 
-    private static int[][] getGlobalTopScores(String gameType){
+    private static int[][] getGlobalTopScores(int[][] IDsAndScores, List<Integer> owners){
         //below: normArrays[0] = gameIDs, normArrays[1] = normScores, normArrays[2] = ownerUserIDs
         //sort and norm the results
-        int[][] normArrays = findAndNorm(gameType);
+        int[][] sortArrays = Sort.multRowSort(IDsAndScores, false, 1);
+        sortArrays[1] = NormScore.normScores(sortArrays[1])[1];
+
+        int[][] reverted = Sort.multRowSort(sortArrays, true, 1);
         //find owners of gameIDs
         int[][] normArraysWOwners = new int[3][];
         //first two columns are copied from normArrays
-        normArraysWOwners[0] = normArrays[0];
-        normArraysWOwners[1] = normArrays[1];
+        normArraysWOwners[0] = reverted[0];
+        normArraysWOwners[1] = reverted[1];
         normArraysWOwners[2] = findGameOwners(normArrays[0]);
         return normArraysWOwners;
     }
@@ -97,7 +88,6 @@ public class ScoreFront {
         int[][] normArrayWOwners = getGlobalTopPersonas(legalGameTypes);
         resultLow = legalResultSpan(resultLow, normArrayWOwners[0].length);
         return cutOutSelectedTopListPart(normArrayWOwners, resultTop, resultLow, 2);
-
     }
 
 
@@ -107,7 +97,7 @@ public class ScoreFront {
      * @param resultTop Top placement, not index, beginning the span of Map rows to return.
      * @param resultLow Low placement, not index, ending the span of Map rows to return.
      * @param legalGameTypes A String of gameTypes, seperated by space " ".
-     * @return
+     * @return int[][] containing int[0] being a list of userIDs in currentPlayers friendbase, int[1] normScores. Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboard position.
      * @throws UserInfoException
      */
     public static int[][] getSelectFriendTopPersonas(int resultTop, int resultLow, String legalGameTypes) throws UserInfoException {
@@ -162,7 +152,7 @@ public class ScoreFront {
                     notedIDs.remove(addArray[0][i]);
                     notedIDs.put(addArray[0][i], addArray[1][i]);
                 }
-            //else add it in map   
+                //else add it in map
             } else {
                 notedIDs.put(addArray[0][i], addArray[1][i]);
             }
@@ -205,7 +195,7 @@ public class ScoreFront {
                 boolean found = false;
                 for (int k = 0; k < addedScores[0].length; k++) {
                     if(addedScores[0][k] != 0
-                    && addedScores[0][k] == allGameTypes[i][j]){
+                            && addedScores[0][k] == allGameTypes[i][j]){
                         addedScores[1][k] += allGameTypes[i+1][j];
                         found = true;
                         break;
@@ -239,95 +229,19 @@ public class ScoreFront {
     }
 
     /**
-     * Sorts list of GameSessions based on score, numbers x,  0 =< x => 2000. Top Scores on high index, low scores on low index.
-     */
-    private static void sortGameSessionsByScore(List<GameSession> bfGS){
-        for (int i = 0; i < bfGS.size(); i++){
-            for (int o =i; o < bfGS.size(); o++){
-                if(bfGS.get(i).getScore() > bfGS.get(o).getScore()){
-                    GameSession temp = bfGS.get(i);
-                    bfGS.set(i, bfGS.get(o));
-                    bfGS.set(o, temp);
-                }
-            }
-        }
-    }
-
-    /**
-     *
-     * @param gameType
-     * @return int[0] containing gameIDs, int[1] containing normed scores
-     */
-    /*
-    private static int[][] findAndNorm(String gameType){
-        List<GameSession> gameSessions = gsa.getGameSessionsByType(gameType);
-        sortGameSessionsByScore(gameSessions);
-        int[] scores = new int[gameSessions.size()];
-        int[] gameID = new int[gameSessions.size()];
-        for (int i = 0; i < gameSessions.size(); i++) {
-            scores[i] = gameSessions.get(i).getScore();
-            gameID[i] = gameSessions.get(i).getGameID();
-        }
-        int[][] normScores = NormScore.normScores(scores);
-        //revert it TODO fix something smoother
-        int[][] revertedNormScores = new int[2][normScores[0].length];
-        for (int i = 0; i < normScores[0].length; i++) {
-            revertedNormScores[0][i] = gameID[normScores[0].length-i-1];
-            revertedNormScores[1][i] = normScores[1][normScores[0].length-i-1];
-        }
-        return revertedNormScores;
-    }
-*/
-
-    private static int[][] findGameSessionIDsAndScoresFromDBA(String gameType){
-        List<GameSession> gameSessions = gsa.getGameSessionsByType(gameType);
-        int[][] gs = new int[2][];
-        gs[1] = new int[gameSessions.size()];
-        gs[0] = new int[gameSessions.size()];
-        for (int i = 0; i < gameSessions.size(); i++) {
-            gs[1][i] = gameSessions.get(i).getScore();
-            gs[0][i] = gameSessions.get(i).getGameID();
-        }
-        return gs;
-    }
-    
-    private static int[][] revert(int[][] toRevert){
-        int[][] revertedNormScores = new int[toRevert.length][toRevert[0].length];
-        for (int i = 0; i < toRevert[0].length; i++) {
-            for (int j = 0; j < toRevert.length; j++) {
-                revertedNormScores[j][i] = toRevert[j][toRevert.length-i-1];
-            }
-        }
-        return revertedNormScores;
-    }
-
-    private static int[] findGameOwners(int[] gameIDs){
-        int[] userIDs = new int[gameIDs.length];
-        for (int i = 0; i < gameIDs.length; i++) {
-            userIDs[i] = gsa.getGameOwnerUserID(gameIDs[i]);
-        }
-        return userIDs;
-    }
-
-    /**
      * Filter out rows from matrix where int[0][row] does not match an entry in current user´s (according to cache) friend list.
      * @param notJustFriends int matrix where notJustFriends[0] contains userIDs
      * @return int[notJustFriends.length][<length of current user´s friend list>], int[0] containing userIDs
      */
-    private static int[][] filterFriends(int[][] notJustFriends, int colWUserID) {
-        int[][] justFriends = null;
-        try {
-            justFriends = new int[notJustFriends.length][pa.getCurrentPlayer().getFriendUserIDs().size()];
-            for (int i = 0; i < notJustFriends[0].length; i++) {
-                if(pa.getCurrentPlayer().getFriendUserIDs().contains(notJustFriends[colWUserID][i])
-                || pa.getCurrentPlayer().getUserID() == notJustFriends[colWUserID][i]) {
-                    for (int j = 0; j < notJustFriends.length; j++) {
-                        justFriends[j][i] = notJustFriends[j][i];
-                    }
+    private static int[][] filterFriends(int[][] notJustFriends, int colWUserID, List<Integer> friendIDs, int currentUserID) {
+        int[][] justFriends = new int[notJustFriends.length][friendIDs.size()];
+        for (int i = 0; i < notJustFriends[0].length; i++) {
+            if(friendIDs.contains(notJustFriends[colWUserID][i])
+                    || currentUserID == notJustFriends[colWUserID][i]) {
+                for (int j = 0; j < notJustFriends.length; j++) {
+                    justFriends[j][i] = notJustFriends[j][i];
                 }
             }
-        } catch (UserInfoException e){
-                e.printStackTrace();
         }
         return justFriends;
 
