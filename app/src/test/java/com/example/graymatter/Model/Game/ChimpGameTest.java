@@ -1,9 +1,7 @@
 package com.example.graymatter.Model.Game;
 
-import com.example.graymatter.Model.Game.ChimpGame.ChimpEvent;
 import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
 
-import org.greenrobot.eventbus.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -82,10 +80,10 @@ public class ChimpGameTest {
             }
         }
 
-        EventBus.getDefault().post(new ChimpEvent(posOfOne));
-        EventBus.getDefault().post(new ChimpEvent(posOfTwo));
-        EventBus.getDefault().post(new ChimpEvent(posOfThree));
-        EventBus.getDefault().post(new ChimpEvent(posOfFour));
+        chimpGame.makeMove(posOfOne);
+        chimpGame.makeMove(posOfTwo);
+        chimpGame.makeMove(posOfThree);
+        chimpGame.makeMove(posOfFour);
 
         assertEquals(5, chimpGame.endGame());
 
@@ -99,12 +97,39 @@ public class ChimpGameTest {
 
         for (int i = 0; i < 40; i++){
             if (board[i] != 0 && board[i] != 1){
-                EventBus.getDefault().post( new ChimpEvent(i) );
+                chimpGame.makeMove(i);
                 break;
             }
         }
 
         assertEquals(chimpGame.getLives(), initLives - 1);
 
+    }
+
+    @Test
+    public void gameOverBlock(){
+        boolean first = false;
+        boolean second = false;
+
+        chimpGame.endGame();
+
+
+        try {
+            chimpGame.getNumberVisibility();
+        } catch (RuntimeException e){
+            if(e.getMessage().equals("Attempt to get number visibility after game over")){
+                first = true;
+            }
+        }
+
+        try {
+            chimpGame.getBoard();
+        } catch (RuntimeException e){
+            if (e.getMessage().equals("Attempt to get board after game over")){
+                second = true;
+            }
+        }
+
+        assertTrue(first && second);
     }
 }
