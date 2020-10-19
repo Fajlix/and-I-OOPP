@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.graymatter.Model.Game.MemoryGame.MemoryEvent;
 import com.example.graymatter.Model.Game.MemoryGame.MemoryGame;
 import com.example.graymatter.Model.Game.MemoryGame.MemoryGrid;
 
@@ -83,7 +82,7 @@ public class MemoryGameViewModel extends ViewModel {
      *               has been clicked.
      */
     public void tileHasBeenClicked(int number){
-        update(memoryGame.onMemoryEvent(new MemoryEvent(number)));
+        update(memoryGame.makeMove(number));
     }
     //Getter data, both used for observers as well as normal getters
     public int getGridSize(){

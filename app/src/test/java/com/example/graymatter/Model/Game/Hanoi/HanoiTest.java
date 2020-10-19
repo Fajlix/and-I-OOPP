@@ -1,11 +1,8 @@
 package com.example.graymatter.Model.Game.Hanoi;
 
-import com.example.graymatter.Model.Game.TowerOfHanoi.HanoiEvent;
 import com.example.graymatter.Model.Game.TowerOfHanoi.HanoiRodPosition;
 import com.example.graymatter.Model.Game.TowerOfHanoi.TowerOfHanoi;
 
-import org.greenrobot.eventbus.EventBus;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,13 +26,13 @@ public class HanoiTest {
     @Test
     public void finishGame(){
 
-        EventBus.getDefault().post(new HanoiEvent(HanoiRodPosition.LEFT, HanoiRodPosition.RIGHT));
-        EventBus.getDefault().post(new HanoiEvent(HanoiRodPosition.LEFT, HanoiRodPosition.MIDDLE));
-        EventBus.getDefault().post(new HanoiEvent(HanoiRodPosition.RIGHT, HanoiRodPosition.MIDDLE));
-        EventBus.getDefault().post(new HanoiEvent(HanoiRodPosition.LEFT, HanoiRodPosition.RIGHT));
-        EventBus.getDefault().post(new HanoiEvent(HanoiRodPosition.MIDDLE, HanoiRodPosition.LEFT));
-        EventBus.getDefault().post(new HanoiEvent(HanoiRodPosition.MIDDLE, HanoiRodPosition.RIGHT));
-        EventBus.getDefault().post(new HanoiEvent(HanoiRodPosition.LEFT, HanoiRodPosition.RIGHT));
+        game.makeMove(HanoiRodPosition.LEFT, HanoiRodPosition.RIGHT);
+        game.makeMove(HanoiRodPosition.LEFT, HanoiRodPosition.MIDDLE);
+        game.makeMove(HanoiRodPosition.RIGHT, HanoiRodPosition.MIDDLE);
+        game.makeMove(HanoiRodPosition.LEFT, HanoiRodPosition.RIGHT);
+        game.makeMove(HanoiRodPosition.MIDDLE, HanoiRodPosition.LEFT);
+        game.makeMove(HanoiRodPosition.MIDDLE, HanoiRodPosition.RIGHT);
+        game.makeMove(HanoiRodPosition.LEFT, HanoiRodPosition.RIGHT);
 
         assertTrue(game.isWon());
     }
@@ -43,8 +40,8 @@ public class HanoiTest {
     @Test
     public void invalidMove(){
 
-        EventBus.getDefault().post(new HanoiEvent(HanoiRodPosition.LEFT, HanoiRodPosition.MIDDLE));
-        EventBus.getDefault().post(new HanoiEvent(HanoiRodPosition.LEFT, HanoiRodPosition.MIDDLE));
+        game.makeMove(HanoiRodPosition.LEFT, HanoiRodPosition.MIDDLE);
+        game.makeMove(HanoiRodPosition.LEFT, HanoiRodPosition.MIDDLE);
 
         ArrayList<ArrayList<Integer>> list = game.getState();
         assertTrue(list.get(0).size() == 2 && list.get(1).size() == 1);
