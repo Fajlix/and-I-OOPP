@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.graymatter.Model.Game.ChimpGame.ChimpEvent;
 import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
 
 /**
@@ -71,7 +70,7 @@ public class ChimpGameViewModel extends ViewModel {
      * @param number the position of the tile in the grid array
      */
     public void tileHasBeenClicked(int number){
-        chimpGame.onChimpEvent(new ChimpEvent(number));
+        chimpGame.makeMove(number);
         update();
     }
 

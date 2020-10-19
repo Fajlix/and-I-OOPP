@@ -1,11 +1,9 @@
 package com.example.graymatter.Model.Game;
 
-import com.example.graymatter.Model.Game.MemoryGame.MemoryEvent;
 import com.example.graymatter.Model.Game.MemoryGame.MemoryGame;
 import com.example.graymatter.Model.Game.MemoryGame.MemoryGrid;
 import com.example.graymatter.Model.Game.MemoryGame.MemoryTile;
 
-import org.greenrobot.eventbus.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +29,7 @@ public class MemoryGameTest {
 
         for (int i=0 ; i<grid.size() ; i++){
             if (grid.get(i)==MemoryGrid.TileState.CORRECTHIDDEN){
-                EventBus.getDefault().post(new MemoryEvent(i));
+                game.makeMove(i);
             }
         }
 
@@ -51,7 +49,7 @@ public class MemoryGameTest {
             int i = 0;
             while (wrongs < 4) {
                 if (grid.get(i) == MemoryGrid.TileState.INCORRECTHIDDEN) {
-                    game.onMemoryEvent(new MemoryEvent(i));
+                    game.makeMove(i);
                     wrongs++;
                 }
                 i++;

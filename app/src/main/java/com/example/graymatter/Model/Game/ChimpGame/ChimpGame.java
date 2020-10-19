@@ -2,9 +2,6 @@ package com.example.graymatter.Model.Game.ChimpGame;
 
 import com.example.graymatter.Model.Game.Game;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import java.util.Arrays;
 
 /**
@@ -21,7 +18,6 @@ public class ChimpGame extends Game {
 
     public ChimpGame(){
         gameOver = true;
-        EventBus.getDefault().register(this);
     }
 
     public void startGame(){
@@ -40,14 +36,12 @@ public class ChimpGame extends Game {
 
     /**
      * Method to handle changes in the game state based on player input.
-     * @param event class with input data
+     * @param clickedTile coordinate for the tile clicked by the player
      */
-    @Subscribe
-    public void onChimpEvent(ChimpEvent event){
+    public void makeMove(int clickedTile){
         if (gameOver) {
             throw new RuntimeException("Attempt to select tile after game over");
         }
-        int clickedTile = event.tileCoordinate;
         if ( clickedTile<0 || clickedTile>23 ){
             throw new RuntimeException("Input out of bounds");
         }
