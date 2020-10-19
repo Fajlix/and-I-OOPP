@@ -13,10 +13,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.graymatter.Model.Game.TowerOfHanoi.HanoiRodPosition;
 import com.example.graymatter.R;
+import com.example.graymatter.View.Adapters.ChimpGridAdapter;
 import com.example.graymatter.ViewModel.TowerOfHanoiViewModel;
 
 import java.util.ArrayList;
@@ -34,9 +37,7 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
     private ImageView rightRod;
     private TowerOfHanoiViewModel toHVM;
     private ArrayList<ImageView> disks = new ArrayList<>();
-    private FrameLayout leftRodFL;
-    private FrameLayout middleRodFL;
-    private FrameLayout rightRodFL;
+    private ArrayList<FrameLayout> rodsFL = new ArrayList<>();
 
     private HanoiRodPosition fromRod;
     private HanoiRodPosition toRod;
@@ -48,6 +49,8 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
 
     private int numberOfDisks;
     private int disksOnRightRod = 0;
+
+    boolean firstClick = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,16 +66,14 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
         middleRod = view.findViewById(R.id.middleRod);
         rightRod = view.findViewById(R.id.rightRod);
 
-        leftRod.setVisibility(View.GONE);
-        middleRod.setVisibility(View.GONE);
-        rightRod.setVisibility(View.GONE);
-
         level3 = view.findViewById(R.id.three);
         level4 = view.findViewById(R.id.four);
         level5 = view.findViewById(R.id.five);
         level6 = view.findViewById(R.id.six);
         level7 = view.findViewById(R.id.seven);
         level8 = view.findViewById(R.id.eight);
+
+        showLevels();
 
         level3.setOnClickListener(this);
         level4.setOnClickListener(this);
@@ -90,33 +91,46 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
         leftLimitMiddleRod = 165 * xRatio;
         rightLimitMiddleRod = 315 * xRatio;
 
-        leftRod.setOnTouchListener(new View.OnTouchListener() {
+        toHVM.getBoard().observe(getViewLifecycleOwner(), new Observer<ArrayList<ArrayList<Integer>>>() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                onTouchEvent(event);
-                return false;
+            public void onChanged(ArrayList<ArrayList<Integer>> board) {
+                drawDisks(board);
             }
         });
-        middleRod.setOnTouchListener(new View.OnTouchListener() {
+        toHVM.getGameOver().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                onTouchEvent(event);
-                return false;
+            public void onChanged(Boolean aBoolean) {
+                if (toHVM.getBoard().getValue() != null)
+                    drawDisks(toHVM.getBoard().getValue());
+                showWonGame(toHVM.getScore());
             }
         });
-        rightRod.setOnTouchListener(new View.OnTouchListener() {
+        leftRod.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                onTouchEvent(event);
-                return false;
+            public void onClick(View v) {
+                rodClick(HanoiRodPosition.LEFT);
+            }
+        });
+        middleRod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rodClick(HanoiRodPosition.MIDDLE);
+            }
+        });
+        rightRod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rodClick(HanoiRodPosition.RIGHT);
             }
         });
 
 
-        leftRodFL = view.findViewById(R.id.leftRodFL);
+        rodsFL.add((FrameLayout) view.findViewById(R.id.leftRodFL));
+        rodsFL.add((FrameLayout) view.findViewById(R.id.middleRodFL));
+        rodsFL.add((FrameLayout) view.findViewById(R.id.rightRodFL));
 
         for (int i = 0; i < logos.length; i++) {
-            ImageView view1 = new ImageView(leftRodFL.getContext());
+            ImageView view1 = new ImageView(rodsFL.get(0).getContext());
             view1.setImageResource(logos[i]);
             disks.add(view1);
         }
@@ -124,28 +138,16 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+    public void rodClick(HanoiRodPosition hanoiRodPosition) {
+        if (firstClick) {
+            fromRod = hanoiRodPosition;
+            firstClick = false;
+        } else {
+            toRod = hanoiRodPosition;
+            diskMove(fromRod, toRod);
 
-            x = event.getX();
-
-            if (x < leftLimitMiddleRod)
-                fromRod = HanoiRodPosition.LEFT;
-            else if (x >= leftLimitMiddleRod && x <= rightLimitMiddleRod)
-                fromRod = HanoiRodPosition.MIDDLE;
-            else
-                fromRod = HanoiRodPosition.RIGHT;
-        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            x = event.getX();
-            if (x < leftLimitMiddleRod) {
-                diskMove(fromRod, HanoiRodPosition.LEFT);
-            } else if (x >= leftLimitMiddleRod
-                    && x <= rightLimitMiddleRod) {
-                diskMove(fromRod, HanoiRodPosition.MIDDLE);
-            } else
-                diskMove(fromRod, HanoiRodPosition.RIGHT);
+            firstClick = true;
         }
-        return true;
     }
 
     @Override
@@ -175,10 +177,24 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
         showGameScreen();
         drawStartDisks(toHVM.getLevel());
         toHVM.startToHGame();
+    }
 
-        if (toHVM.getGameOver().getValue()) {
-            showWonGame(toHVM.getScore());
-        }
+    public void showLevels ()
+    {
+        toHDescription.setText("Welcome to Tower of Hanoi, select a level to play");
+
+        removeViews();
+
+        level3.setVisibility(View.VISIBLE);
+        level4.setVisibility(View.VISIBLE);
+        level5.setVisibility(View.VISIBLE);
+        level6.setVisibility(View.VISIBLE);
+        level7.setVisibility(View.VISIBLE);
+        level8.setVisibility(View.VISIBLE);
+
+        leftRod.setVisibility(View.GONE);
+        middleRod.setVisibility(View.GONE);
+        rightRod.setVisibility(View.GONE);
     }
 
     // clears the screen of all the text and images to show the test
@@ -204,6 +220,12 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
         toHDescription.bringToFront();
         toHDescription.setText("Wow you completed the game! Your score was: "
                 + score + " \n \nPress to play again");
+        toHDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLevels();
+            }
+        });
     }
 
     private void drawStartDisks(int numberOfDisks) {
@@ -215,16 +237,38 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
 
             disks.get(i).setLayoutParams(layoutParams);
 
-            leftRodFL.addView(disks.get(i));
+            rodsFL.get(0).addView(disks.get(i));
+        }
+    }
+
+    private void drawDisks(ArrayList<ArrayList<Integer>> board) {
+        removeViews();
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board.get(i).size(); j++) {
+                int pos = 185;
+
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
+                        (200 - 20 * (board.get(j).get(i) - 1), 70);
+                layoutParams.setMargins(118 - 10 * (board.get(j).get(i) - 1), pos - 20 * j, 0, 0);
+
+                disks.get(board.get(i).get(j) - 1).setLayoutParams(layoutParams);
+
+                rodsFL.get(i).addView(disks.get(board.get(i).get(j) - 1));
+            }
+        }
+    }
+
+    public void removeViews ()
+    {
+        for (int i = 0; i < disks.size(); i++) {
+            if (disks.get(i).getParent() != null)
+                ((ViewGroup) disks.get(i).getParent()).removeView(disks.get(i));
         }
     }
 
     public void diskMove(HanoiRodPosition from, HanoiRodPosition to) {
         toHVM.tileHasBeenClicked(from, to);
     }
-
-    // on touch -> current = from
-    // on letgo -> current = to
 
     int[] logos = {R.mipmap.ic_toh_disk1_foreground,
             R.mipmap.ic_toh_disk2_foreground,

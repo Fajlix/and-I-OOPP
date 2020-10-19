@@ -86,17 +86,31 @@
 
         </FrameLayout>
 
-        <ImageView
-            android:id="@+id/middleRod"
+        <FrameLayout
+            android:id="@+id/middleRodFL"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/ic_toh_background_foreground" />
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/rightRod"
+            <ImageView
+                android:id="@+id/middleRod"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@mipmap/ic_toh_background_foreground"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/rightRodFL"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/ic_toh_background_foreground" />
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/rightRod"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@mipmap/ic_toh_background_foreground"/>
+
+        </FrameLayout>
 
     </LinearLayout>
 

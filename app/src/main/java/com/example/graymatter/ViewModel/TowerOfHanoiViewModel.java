@@ -1,5 +1,6 @@
 package com.example.graymatter.ViewModel;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -7,17 +8,17 @@ import com.example.graymatter.Model.Game.TowerOfHanoi.HanoiEvent;
 import com.example.graymatter.Model.Game.TowerOfHanoi.HanoiRodPosition;
 import com.example.graymatter.Model.Game.TowerOfHanoi.TowerOfHanoi;
 
+import java.util.ArrayList;
+
 public class TowerOfHanoiViewModel extends ViewModel {
     TowerOfHanoi towerOfHanoi;
     private int score = 0;
     private MutableLiveData<Boolean> gameOver = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<ArrayList<Integer>>> board = new MutableLiveData<>();
     int level;
-    //ToHDraw toHDraw;
 
     public void init(){
         towerOfHanoi = new TowerOfHanoi();
-        gameOver.setValue(false);
-        drawStartDisks(getLevel());
     }
 
     public void startToHGame(){
@@ -33,12 +34,18 @@ public class TowerOfHanoiViewModel extends ViewModel {
     // has been clicked
     private void update(){
         if (towerOfHanoi.isWon()) {
+            board.setValue(towerOfHanoi.getState());
             score = towerOfHanoi.endGame();
             gameOver.setValue(true);
         }
         else {
-            towerOfHanoi.getState();
+            board.setValue(towerOfHanoi.getState());
         }
+    }
+
+    public LiveData<ArrayList<ArrayList<Integer>>> getBoard ()
+    {
+        return board;
     }
 
     //This method should be called from the gui that is being used when a tile has been clicked
@@ -58,11 +65,6 @@ public class TowerOfHanoiViewModel extends ViewModel {
         return level;
     }
 
-
-    public void drawStartDisks (int numberOfDisks)
-    {
-        //toHDraw = new ToHDraw(, 100, 100, numberOfDisks);
-    }
 
     public MutableLiveData<Boolean> getGameOver ()
     {
