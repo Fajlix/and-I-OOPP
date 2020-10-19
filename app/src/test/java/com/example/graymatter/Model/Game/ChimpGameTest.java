@@ -107,4 +107,31 @@ public class ChimpGameTest {
         assertEquals(chimpGame.getLives(), initLives - 1);
 
     }
+
+    @Test
+    public void gameOverBlock(){
+        boolean first = false;
+        boolean second = false;
+
+        chimpGame.endGame();
+
+
+        try {
+            chimpGame.getNumberVisibility();
+        } catch (RuntimeException e){
+            if(e.getMessage().equals("Attempt to get number visibility after game over")){
+                first = true;
+            }
+        }
+
+        try {
+            chimpGame.getBoard();
+        } catch (RuntimeException e){
+            if (e.getMessage().equals("Attempt to get board after game over")){
+                second = true;
+            }
+        }
+
+        assertTrue(first && second);
+    }
 }
