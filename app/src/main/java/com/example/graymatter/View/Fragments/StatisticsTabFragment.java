@@ -16,6 +16,8 @@ import com.google.android.material.tabs.TabLayout;
 
 public class StatisticsTabFragment extends Fragment {
 
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
     public StatisticsTabFragment() {
         // Required empty public constructor
@@ -28,8 +30,8 @@ public class StatisticsTabFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_statistics_tab, container, false);
 
 
-        TabLayout tabLayout = view.findViewById(R.id.tabLayout);
-        final ViewPager viewPager = view.findViewById(R.id.viewPager);
+        tabLayout = view.findViewById(R.id.tabLayout);
+        viewPager = view.findViewById(R.id.viewPager);
 
         //Configures tabLayout navigation
         PagerAdapter pagerAdapter = new PagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
@@ -58,4 +60,11 @@ public class StatisticsTabFragment extends Fragment {
 
         return view;
     }
+
+    public void update(String game){
+        PagerAdapter pagerAdapter = new PagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pagerAdapter);
+
+    }
+
 }
