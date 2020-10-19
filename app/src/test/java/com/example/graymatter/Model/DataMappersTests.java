@@ -44,6 +44,10 @@ public class DataMappersTests {
         gsa.storeGameSession(785, "ChimpGame");
         gsm.update(new GameSession(gsa.getNewGameID()-1, 225, "MemoryGame", LocalDate.now()));
         Assert.assertEquals("MemoryGame", gsm.find(gsa.getNewGameID()-1).get().getGameType());
+        gsm.delete(gsm.find(gsa.getNewGameID()-1).get());
+        Player player = pm.find(LocalDataMapper.getCurrentPlayerUserID()).get();
+        //TODO remove dumb gameID from playerHistory
+        pm.update(player);
     }
 
     @Test

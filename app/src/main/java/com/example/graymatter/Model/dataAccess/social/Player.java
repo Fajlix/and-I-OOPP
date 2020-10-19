@@ -15,7 +15,7 @@ public class Player {
      * Aggregate with additional information private to the user
      */
     //TODO Okay no this fucks with json
-    private Optional<UserInfo> userInfo; //TODO aldo can just be Optional?
+    private UserInfo userInfo; //TODO aldo can just be Optional?
     //TODO just say fuck it, design by contract?
     //TODO maybe UserInfo should be private class in Player?
 
@@ -54,9 +54,9 @@ public class Player {
         this.playerHistory = playerHistory;
         //if fields for UserInfo are null, the UserInfo Optional should be empty
         if(email != null && password != null && friendUserIDs != null){
-            this.userInfo = Optional.of(new UserInfo(email, password, friendUserIDs));
+            this.userInfo = new UserInfo(email, password, friendUserIDs);
         } else {
-            this.userInfo = Optional.empty();
+            this.userInfo = null;
         }
     }
 
@@ -81,16 +81,16 @@ public class Player {
         this.userName = player.userName;
         this.userImage = player.userImage;
         this.playerHistory = new ArrayList<>(player.playerHistory);
-        if (player.userInfo.isPresent()){
-            this.userInfo = Optional.of(new UserInfo(player.userInfo.get()));
+        if (player.userInfo != null){
+            this.userInfo = new UserInfo(player.userInfo);
         } else {
-            this.userInfo = Optional.empty();
+            this.userInfo = null;
         }
     }
 
     private UserInfo getUnwrappedUserInfo() throws UserInfoException {
-        if(userInfo.isPresent()){
-            return userInfo.get();
+        if(userInfo != null){
+            return userInfo;
         }
         throw new UserInfoException("Not allowed to get private information from other than current user");
     }
@@ -265,6 +265,6 @@ public class Player {
      * Removes non-public information about a user. Suitable for when exposing the Player to another Player.
      */
     public void deActUserInfo() {
-        userInfo = Optional.empty();
+        userInfo = null;
     }
 }

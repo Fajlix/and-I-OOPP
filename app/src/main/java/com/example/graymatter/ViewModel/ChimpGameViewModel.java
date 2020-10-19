@@ -46,7 +46,6 @@ public class ChimpGameViewModel extends ViewModel {
     private void update(){
         if (chimpGame.getGameOver()) {
             score = chimpGame.endGame();  //does score need to be global? i d think so
-            ScoreFront.storeGameSession(score, chimpGame.getGameName()); //also stores reference to Player.
             gameOver.setValue(true);
         }
         else {

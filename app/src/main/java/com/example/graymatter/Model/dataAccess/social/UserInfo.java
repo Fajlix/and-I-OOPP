@@ -42,7 +42,6 @@ public class UserInfo {
         return email;
     }
 
-    //shouldn't have a safety check i think?
     protected boolean isPasswordCorrect(String password){
         return this.password.equals(password);
     }
