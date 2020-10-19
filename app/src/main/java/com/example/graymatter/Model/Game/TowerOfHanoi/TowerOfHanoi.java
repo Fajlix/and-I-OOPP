@@ -37,7 +37,7 @@ public class TowerOfHanoi extends Game {
     public int endGame(){
         active = false;
         if (won && level == 8) {
-            return 10000 - (700 / moves) - (300 / gameTime);
+            return (10000 / moves) + (500 / gameTime);
         }
         else {
             return 0;

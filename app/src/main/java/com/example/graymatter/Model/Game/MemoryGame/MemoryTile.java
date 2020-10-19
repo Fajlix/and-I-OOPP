@@ -32,4 +32,8 @@ public class MemoryTile {
         return chosen;
     }
 
+    public boolean equals(MemoryTile other){
+        return (this.correct == other.correct && this.chosen == other.chosen);
+    }
+
 }

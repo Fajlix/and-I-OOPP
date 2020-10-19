@@ -44,7 +44,7 @@ public class HanoiBoard {
                 from = right;
                 break;
             default:
-                throw new RuntimeException("invalid method input");
+                throw new IllegalArgumentException("invalid method input");
         }
         switch (toEnum){
             case LEFT:
@@ -57,7 +57,7 @@ public class HanoiBoard {
                 to = right;
                 break;
             default:
-                throw new RuntimeException("Invalid method input");
+                throw new IllegalArgumentException("Invalid method input");
         }
         HanoiDisk toMove = from.grab();
         if (!to.place(toMove)){
