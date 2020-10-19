@@ -34,8 +34,10 @@ public class StatisticsTabFragment extends Fragment {
         viewPager = view.findViewById(R.id.viewPager);
 
         //Configures tabLayout navigation
+
         PagerAdapter pagerAdapter = new PagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
+
 
         //tabLayout listener
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -61,10 +63,5 @@ public class StatisticsTabFragment extends Fragment {
         return view;
     }
 
-    public void update(String game){
-        PagerAdapter pagerAdapter = new PagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(pagerAdapter);
-
-    }
 
 }

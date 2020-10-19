@@ -25,6 +25,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
     int[] logos;
     Context context;
     FragmentChangeListener fragmentChangeListener;
+    StatisticsChangeListener statisticsChangeListener;
 
     public StatisticsAdapter (Context c, String[] gameName, String[] gameDescription, String[] colors, int[] logos) {
         context = c;
@@ -39,7 +40,10 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
     public StatisticsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.statistics_game_card, parent, false);
+
         fragmentChangeListener = (FragmentChangeListener) parent.getContext();
+        //statisticsChangeListener = (StatisticsChangeListener)context;
+
         return new StatisticsViewHolder(view);
     }
 
@@ -57,14 +61,17 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
                 if (position == 0)
                 {
                     fragmentChangeListener.reactionTestClicked();
+                    //statisticsChangeListener.reactionTestClicked();
                 }
                 else if (position == 1)
                 {
                     fragmentChangeListener.chimpTestClicked();
+                    //statisticsChangeListener.chimpTestClicked();
                 }
                 else if (position == 2)
                 {
                     fragmentChangeListener.visualGameClicked();
+                    //statisticsChangeListener.visualGameClicked();
                 }
                 else if (position == 3)
                 {

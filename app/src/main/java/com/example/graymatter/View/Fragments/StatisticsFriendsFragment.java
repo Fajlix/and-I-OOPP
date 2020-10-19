@@ -12,14 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.graymatter.R;
+import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.View.FriendsAdapter;
 import com.example.graymatter.View.LeaderboardAdapter;
+import com.example.graymatter.View.StatisticsChangeListener;
 import com.example.graymatter.ViewModel.StatisticsViewModel;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 
-public class StatisticsFriendsFragment extends Fragment {
+public class StatisticsFriendsFragment extends Fragment{
 
     private String gameName;
     private TextView textViewGame;
@@ -57,8 +59,14 @@ public class StatisticsFriendsFragment extends Fragment {
         return view;
     }
 
+
+
+
     public void update(String game){
         textViewGame.setText(game + " leaderboard");
+
     }
+
+
 
 }

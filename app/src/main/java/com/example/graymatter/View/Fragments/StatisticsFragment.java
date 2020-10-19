@@ -11,11 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.graymatter.R;
+import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.View.StatisticsAdapter;
 import com.example.graymatter.View.StatisticsChangeListener;
 
 //TODO almost the same as GamesFragment
-public class StatisticsFragment extends Fragment implements StatisticsChangeListener {
+public class StatisticsFragment extends Fragment{
 
     String[] gameName;
     String[] gameDescription;
@@ -58,18 +59,5 @@ public class StatisticsFragment extends Fragment implements StatisticsChangeList
     }
 
 
-    @Override
-    public void reactionTestClicked() {
 
-    }
-
-    @Override
-    public void chimpTestClicked() {
-
-    }
-
-    @Override
-    public void visualGameClicked() {
-
-    }
 }
