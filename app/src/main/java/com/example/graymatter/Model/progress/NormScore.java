@@ -11,7 +11,7 @@ public class NormScore { //TODO this should be renamed NormNumber
      * @param scores sorted with top scores at high indexes
      * @return int[][]: int[0] original scores, int[1] normated scores, both sorted with low scores at low indexes and v.v.
      */
-    public static int[][] normScores(int[] scores){
+    public static int[][] normScores(int[] scores){ //TODO flip it this is dumb
         //what part of the gameDB does each game represent?
         double chunks = 1000.0 /(double)scores.length;
         int[] normScores = new int[scores.length];
