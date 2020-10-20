@@ -60,6 +60,8 @@ public class HanoiBoard {
                 throw new RuntimeException("Invalid method input");
         }
         HanoiDisk toMove = from.grab();
+        if (toMove == null)
+            return false;
         if (!to.place(toMove)){
             from.place(toMove);
             return false;

@@ -24,6 +24,7 @@ public class TowerOfHanoiViewModel extends ViewModel {
     public void startToHGame(){
         towerOfHanoi.startGame();
         towerOfHanoi.setLevel(getLevel());
+        update();
     }
 
     public int getScore() {

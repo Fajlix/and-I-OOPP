@@ -175,7 +175,6 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
 
         clearStartScreen();
         showGameScreen();
-        drawStartDisks(toHVM.getLevel());
         toHVM.startToHGame();
     }
 
@@ -243,13 +242,18 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
 
     private void drawDisks(ArrayList<ArrayList<Integer>> board) {
         removeViews();
+        int rodWidth = 284;
         for (int i = 0; i < board.size(); i++) {
+            int ch = 0;
             for (int j = 0; j < board.get(i).size(); j++) {
-                int pos = 185;
-
+                int pos = 300;
+                int width = 60 + 20*(board.get(i).get(j)-1);
+                int height = 50 + 20*(board.get(i).get(j)-1);
+                int fixedheight = 30;
+                ch += fixedheight;
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
-                        (200 - 20 * (board.get(j).get(i) - 1), 70);
-                layoutParams.setMargins(118 - 10 * (board.get(j).get(i) - 1), pos - 20 * j, 0, 0);
+                        (width, height);
+                layoutParams.setMargins((rodWidth -width)/2, pos -ch -height/2 -fixedheight /2, 0, 0);
 
                 disks.get(board.get(i).get(j) - 1).setLayoutParams(layoutParams);
 
