@@ -9,24 +9,25 @@ import java.util.Map;
 
 /**
  * Class contains methods returning different kind of leaderboards with normated scores.
- * Methods renormates score every time called. For bigger databases these calls are demanding. This class should be located at serverside and methods should be called sparsely.
+ * Methods renormates score every time called. For bigger databases these calls are demanding.
+ * This class should be located at serverside and methods should be called sparsely.
  */
 public class NormLeaderboards {
 
     /**
-     * Returns a leaderboard of gamesessions, corresponding normated scores and players from a particular gameType, with only games played by the user marked as currentUser in local cache. Cut after argument input.
+     * Returns a leaderboard of gamesessions, corresponding normated scores and players from a particular argument collection of game sessions.
+     * Only includes entries where gameIDs are related to userIDs in argument userIDs. Cut after argument input.
+     * @param userIDs List of userIDs of people whose scores are to be included in the leaderboard.
      * @param resultTop Top placement, not index, beginning the span of Map rows to return.
      * @param resultLow Low placement, not index, ending the span of Map rows to return.
-     * @param gameType String retained from game class representing the type of the game.
      * @param scoresAllData int[][] containing int[0] being a list of userIDs, int[1] normScores, int[2] gameIDs
      * @return int[][] containing int[0] being a list of userIDs, int[1] normScores, int[2] gameIDs.
      * Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboard position.
+     * @throws IllegalArgumentException if resultTop > resultLow, resultTop < 1 or resultLow <1.
      * Normated scores are given as an int above or equal to zero, below 1000.
      * int userID can be used to receive additional information about the Player of the matching GameSession. Additional information retained from PlayerAccess.
      */
-    public static int[][] getSelectFriendTopScores(int[][] scoresAllData, int resultTop, int resultLow, List<Integer> friendIDs) throws IllegalArgumentException {
-        //TODO not here
-
+    public static int[][] getSelectGroupTopScores(int[][] scoresAllData, int resultTop, int resultLow, List<Integer> userIDs) throws IllegalArgumentException {
         //check if the resultspan is legal
         if(!isResultSpanLegal(resultTop, resultLow)){
             throw new IllegalArgumentException("Illegal resultspan!");
@@ -34,7 +35,7 @@ public class NormLeaderboards {
         //sort and norm matrix
         int[][] normArraysWOwners = getGlobalTopScores(scoresAllData);
         //filter out non-friends
-        int[][] friendTopScores = filterFriends(normArraysWOwners, 2, friendIDs);
+        int[][] friendTopScores = filterFriends(normArraysWOwners, 2, userIDs);
         //fix illegal resultspan
         resultLow = findResultsLow(resultLow, friendTopScores[0].length);
         //cut out the unwanted rankings and return
@@ -42,11 +43,13 @@ public class NormLeaderboards {
     }
 
     /**
-     * Returns a leaderboard of gamesessions, corresponding normated scores and players from a particular gameType, cut after argument input.
+     * Returns a leaderboard of gamesessions, corresponding normated scores and players from a particular argument collection of game sessions, cut after argument input.
+     * @param scoresAllData int[][] containing int[0] being a list of userIDs, int[1] normScores, int[2] gameIDs
      * @param resultTop Top placement, not index, beginning the span of Map rows to return.
      * @param resultLow Low placement, not index, ending the span of Map rows to return.
-     * @param gameType String retained from game class representing the type of the game.
-     * @return int[][] containing int[0] being a list of gameIDs, int[1] normScores, int[2] userIDs. Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboard position.
+     * @return int[][] containing int[0] being a list of gameIDs, int[1] normScores, int[2] userIDs.
+     * Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboard position.
+     * @throws IllegalArgumentException if resultTop > resultLow, resultTop < 1 or resultLow <1.
      * Normated scores are given as an int above or equal to zero, below 1000.
      * int userID can be used to receive additional information about the Player of the matching GameSession. Additional information retained from PlayerAccess.
      */

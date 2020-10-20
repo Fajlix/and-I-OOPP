@@ -6,11 +6,7 @@ import com.example.graymatter.Model.dataAccess.social.GameSession;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import java.util.List;
-import java.util.Map;
 
 /**
  * Class contains methods returning different kind of leaderboards with normated scores.
@@ -38,7 +34,7 @@ public class ScoreFront {
     public int[][] getSelectFriendTopScores(int resultTop, int resultLow, String gameType) throws UserInfoException {
         List<Integer> friendIDs = pa.getCurrentPlayer().getFriendUserIDs();
         friendIDs.add(pa.getCurrentPlayer().getUserID());
-        return NormLeaderboards.getSelectFriendTopScores(getGameData(gameType), resultTop, resultLow, friendIDs);
+        return NormLeaderboards.getSelectGroupTopScores(getGameData(gameType), resultTop, resultLow, friendIDs);
     }
 
     /**
