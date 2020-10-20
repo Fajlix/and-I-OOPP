@@ -75,7 +75,6 @@ public class MemoryGameFragment extends Fragment {
             public void onChanged(ArrayList<MemoryGrid.TileState> grid) {
                 visualGameGridAdapter = new MemoryGridAdapter(MemoryGameFragment.this, grid, lastPos);
                 livesText.setText("You have " + visualMemoryVM.getLives() + " lives Remaining");
-                visualGameGridAdapter = new MemoryGridAdapter(grid);
                 visualGameGridAdapter.setVisibility(visibility);
                 gridView.setAdapter(visualGameGridAdapter);
                 gridView.setNumColumns(visualMemoryVM.getGridSize());
@@ -93,7 +92,7 @@ public class MemoryGameFragment extends Fragment {
                 if (screenState == ScreenState.START_NEW)
                 {
                     ClearScreen();
-                    visualMemoryVM.startVisualGame();
+                    visualMemoryVM.startMemoryGame();
                     ShowBoard();
                     screenState = ScreenState.GAME_ONGOING;
                 }

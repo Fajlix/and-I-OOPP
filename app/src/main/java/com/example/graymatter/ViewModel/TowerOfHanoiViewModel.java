@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.graymatter.Model.Game.TowerOfHanoi.HanoiEvent;
 import com.example.graymatter.Model.Game.TowerOfHanoi.HanoiRodPosition;
 import com.example.graymatter.Model.Game.TowerOfHanoi.TowerOfHanoi;
 
@@ -51,7 +50,7 @@ public class TowerOfHanoiViewModel extends ViewModel {
 
     //This method should be called from the gui that is being used when a tile has been clicked
     public void tileHasBeenClicked(HanoiRodPosition from, HanoiRodPosition to){
-        towerOfHanoi.onHanoiEvent(new HanoiEvent(from, to));
+        towerOfHanoi.makeMove(from, to);
         update();
     }
 

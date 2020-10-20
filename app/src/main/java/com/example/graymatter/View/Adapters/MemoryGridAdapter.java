@@ -66,9 +66,6 @@ public class MemoryGridAdapter extends BaseAdapter {
         frontAnim = (AnimatorSet) AnimatorInflater.loadAnimator(context.getContext(),R.animator.front_animation);
         backAnim = (AnimatorSet) AnimatorInflater.loadAnimator(context.getContext(),R.animator.back_animation);
 
-        ImageView imageView = view.findViewById(R.id.whiteBackgroud);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
         if (grid.get(position).equals(MemoryGrid.TileState.CORRECTHIDDEN)) {
             if (visibility) {
                 memoryCardView.setCardBackgroundColor(0xFFFFFFFF);
