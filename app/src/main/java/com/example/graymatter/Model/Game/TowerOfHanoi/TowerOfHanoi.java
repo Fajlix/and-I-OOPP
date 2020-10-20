@@ -2,9 +2,6 @@ package com.example.graymatter.Model.Game.TowerOfHanoi;
 
 import com.example.graymatter.Model.Game.Game;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 
 /**
@@ -23,7 +20,6 @@ public class TowerOfHanoi extends Game {
 
     public TowerOfHanoi(){
         active = false;
-        EventBus.getDefault().register(this);
     }
 
     public void startGame(){
@@ -37,7 +33,7 @@ public class TowerOfHanoi extends Game {
     public int endGame(){
         active = false;
         if (won && level == 8) {
-            return 10000 - (700 / moves) - (300 / gameTime);
+            return (10000 / moves) + (500 / gameTime);
         }
         else {
             return 0;
@@ -46,15 +42,15 @@ public class TowerOfHanoi extends Game {
 
     /**
      * method handles player input
-     * @param event Holds information about which rods a disk is being moved from
+     * @param from Holds information about which rod a disk is being moved from
+     * @param to Holds information about which rod a disk is being moved to
      */
-    @Subscribe
-    public void onHanoiEvent(HanoiEvent event){
+    public void makeMove(HanoiRodPosition from, HanoiRodPosition to){
         if (!active){
             throw new RuntimeException("Attempted game event while no active game");
         }
 
-        if (board.moveDisk(event.moveFrom, event.moveTo)) {
+        if (board.moveDisk(from, to)) {
             moves++;
             if (board.isWon()) {
                 gameTime = (int) (System.currentTimeMillis() - startTime) / 1000;

@@ -18,6 +18,9 @@ import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.View.FriendsDialog;
 import com.example.graymatter.ViewModel.ProfileViewModel;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 
 public class ProfileFragment extends Fragment {
 
@@ -43,8 +46,11 @@ public class ProfileFragment extends Fragment {
 
 
         final ProfileViewModel profileViewModel = new ProfileViewModel();
-        profileViewModel.init(getContext());
-
+        try {
+            profileViewModel.init(getJsonString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         Button friendsButton = (Button)view.findViewById(R.id.btnFriends);
@@ -71,6 +77,13 @@ public class ProfileFragment extends Fragment {
 
 
         return view;
+    }
+    private String getJsonString () throws IOException {
+        InputStream inputStream = requireContext().getAssets().open("testplayers.json");
+
+        byte[] buffer = new byte[inputStream.available()];
+        inputStream.read(buffer);
+        return new String(buffer);
     }
 
     public void setProfileName(TextView profileName) {

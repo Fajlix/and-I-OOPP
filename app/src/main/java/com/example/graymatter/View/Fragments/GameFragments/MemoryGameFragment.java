@@ -25,6 +25,8 @@ public class MemoryGameFragment extends Fragment {
     private GridView gridView;
     private MemoryGridAdapter visualGameGridAdapter;
     private TextView visualGameDescription;
+    private TextView livesText;
+    private ImageView visualGameClose;
     private MemoryGameViewModel visualMemoryVM;
     private boolean visibility = true;
     private ScreenState screenState;
@@ -72,15 +74,19 @@ public class MemoryGameFragment extends Fragment {
             @Override
             public void onChanged(ArrayList<MemoryGrid.TileState> grid) {
                 visualGameGridAdapter = new MemoryGridAdapter(MemoryGameFragment.this, grid, lastPos);
+                livesText.setText("You have " + visualMemoryVM.getLives() + " lives Remaining");
+                visualGameGridAdapter = new MemoryGridAdapter(grid);
                 visualGameGridAdapter.setVisibility(visibility);
                 gridView.setAdapter(visualGameGridAdapter);
                 gridView.setNumColumns(visualMemoryVM.getGridSize());
-                gridView.setVerticalSpacing(10);
-                gridView.setHorizontalSpacing(120/(visualMemoryVM.getGridSize()));
+                gridView.setVerticalSpacing(20);
+                gridView.setHorizontalSpacing(20);
             }
         });
 
         visualGameDescription = (TextView) view.findViewById(R.id.visualGameDescription);
+        livesText = view.findViewById(R.id.livesText);
+        livesText.setVisibility(View.INVISIBLE);
         visualGameDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,9 +118,12 @@ public class MemoryGameFragment extends Fragment {
 
     public void ShowBoard() {
         gridView.bringToFront();
+        livesText.bringToFront();
+        livesText.setVisibility(View.VISIBLE);
+        livesText.setText("You have " + visualMemoryVM.getLives() + " lives Remaining");
         gridView.setNumColumns(visualMemoryVM.getGridSize());
-        gridView.setVerticalSpacing(40);
-        gridView.setHorizontalSpacing(40);
+        gridView.setVerticalSpacing(20);
+        gridView.setHorizontalSpacing(20);
     }
 
 
