@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     private BottomNavigationView bottomNavigationView;
     private NavController navController;
     private Dialog friendsDialog;
+    private Dialog settingsDialog;
 
     private String game;
 
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
 
     @Override
     public void settingsDialogClicked() {
-        Dialog settingsDialog = new SettingsDialog(this);
+        settingsDialog = new SettingsDialog(this);
         settingsDialog.setContentView(R.layout.dialog_settings);
 
         settingsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -110,17 +111,21 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
 
     @Override
     public void logoutClicked() {
+        settingsDialog.dismiss();
+        navController.navigate(R.id.profileFragment);  //TODO maby something else
 
     }
 
     @Override
     public void changeEmailClicked() {
-
+        settingsDialog.dismiss();
+        navController.navigate(R.id.changeEmailFragment);
     }
 
     @Override
     public void changePasswordClicked() {
-
+        settingsDialog.dismiss();
+        navController.navigate(R.id.changePasswordFragment);
     }
 
 

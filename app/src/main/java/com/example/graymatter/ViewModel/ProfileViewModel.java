@@ -37,10 +37,12 @@ public class ProfileViewModel extends ViewModel {
     public void logoutUser(){
 
     }
-    public void changeEmail(){
+    public void changeEmail(String currentEmail, String newEmail, String confirmNewEmail){
+
 
     }
-    public void changePassword(){
+    public void changePassword(String currentPassword, String newPassword, String confirmNewPassword){
+
 
     }
 

@@ -25,9 +25,8 @@ public class SettingsDialog extends Dialog {
 
     public SettingsDialog(@NonNull Context context) {
         super(context);
-
+        listener = (FragmentChangeListener)context;
     }
-
 
 
 
@@ -35,10 +34,8 @@ public class SettingsDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO is this how you do it?
         profileViewModel = new ProfileViewModel();
 
-        listener = (FragmentChangeListener) getContext();
 
         //Creates an alert dialog that is shown when logoutButton is pressen, with a yes and a no button
         builder = new AlertDialog.Builder(getContext());
@@ -47,7 +44,8 @@ public class SettingsDialog extends Dialog {
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which){
-
+                listener.logoutClicked();
+                profileViewModel.logoutUser();  //TODO make it do something
             }
         });
         builder.setNegativeButton("NO", new DialogInterface.OnClickListener(){
@@ -60,8 +58,6 @@ public class SettingsDialog extends Dialog {
 
 
 
-
-
         Button changeEmailButton = (Button)findViewById(R.id.changeEmailButton);
         Button changePasswordButton = (Button)findViewById(R.id.changePasswordButton);
         Button logoutButton = (Button)findViewById(R.id.logoutButton);
@@ -70,13 +66,13 @@ public class SettingsDialog extends Dialog {
         changeEmailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                listener.changeEmailClicked();
             }
         });
         changePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                listener.changePasswordClicked();
             }
         });
         logoutButton.setOnClickListener(new View.OnClickListener() {

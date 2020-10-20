@@ -79,4 +79,14 @@
         android:name="com.example.graymatter.View.Fragments.StatisticsGlobalFragment"
         android:label="fragment_statistics_global"
         tools:layout="@layout/fragment_statistics_global" />
+    <fragment
+        android:id="@+id/changeEmailFragment"
+        android:name="com.example.graymatter.View.Fragments.ChangeEmailFragment"
+        android:label="fragment_change_email"
+        tools:layout="@layout/fragment_change_email" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.example.graymatter.View.Fragments.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" />
 </navigation>

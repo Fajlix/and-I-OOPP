@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.Fragments.ChangeEmailFragment"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="485dp"
+        android:layout_marginTop="200dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Change Email"
+            android:textColor="#000"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextCurrentEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Current Email"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/editTextNewEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="New Email"
+            android:layout_marginTop="20dp"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/editTextConfirmNewEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Confirm New Email"
+            android:inputType="textEmailAddress" />
+
+        <Button
+            android:id="@+id/btnChangeEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimary"
+            android:text="Change Email" />
+
+    </LinearLayout>
+</LinearLayout>
