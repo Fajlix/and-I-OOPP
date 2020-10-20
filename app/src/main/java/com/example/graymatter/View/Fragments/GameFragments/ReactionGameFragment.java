@@ -72,6 +72,7 @@ public class ReactionGameFragment extends Fragment{
     // shows the wait screen, before the reaction test is supposed to happen
 
     public void showWaitScreen() {
+        reactionTestDescription.setBackgroundColor(0xff5555e5);
         reactionTestDescription.setText("Press the screen when it turns white");
         screenState = ScreenState.WAIT;
     }
@@ -89,7 +90,7 @@ public class ReactionGameFragment extends Fragment{
     {
         screenState = ScreenState.RESULT;
         reactionTestDescription.setTextColor(0xffffffff);
-        reactionTestDescription.setBackgroundColor(0xff000000);
+        reactionTestDescription.setBackgroundColor(0xff5555e5);
         if (res <= 0)
         {
             reactionTestDescription.setText("You pressed to early");
