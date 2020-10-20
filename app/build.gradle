@@ -4,6 +4,12 @@ android {
     compileSdkVersion 29
     buildToolsVersion "30.0.2"
 
+    sourceSets {
+        androidTest {
+            assets.srcDirs = ['src/main/assets', 'src/../assets', 'src/androidTest/assets/', 'src/debug/assets/']
+        }
+    }
+
     defaultConfig {
         applicationId "com.example.graymatter"
         targetSdkVersion 29

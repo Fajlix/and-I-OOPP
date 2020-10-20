@@ -1,6 +1,9 @@
 package com.example.graymatter.Model.progress;
 
-import com.example.graymatter.Model.dataAccess.GameSessionAccess;
+import android.app.Application;
+import android.content.Context;
+
+import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.Model.dataAccess.PlayerAccess;
 import com.example.graymatter.Model.dataAccess.social.GameSession;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
@@ -16,10 +19,10 @@ import java.util.Map;
  * Class contains methods returning different kind of leaderboards with normated scores.
  * Methods renormates score every time called. For bigger databases these calls are demanding. This class should be located at serverside and methods should be called sparsely.
  */
-public class ScoreFront {
+public class ScoreFront extends Application {
 
-    private static GameSessionAccess gsa = new GameSessionAccess("src/main/assets/testPlayers.json"); //comes from somewhere?
-    private static PlayerAccess pa = new PlayerAccess("src/main/assets/testPlayers.json"); //same
+    private static DataAccess gsa; //comes from somewhere?
+    private static PlayerAccess pa; //same
 
     /**
      * Returns a leaderboard of gamesessions, corresponding normated scores and players from a particular gameType, with only games played by the user marked as currentUser in local cache. Cut after argument input.
@@ -277,7 +280,7 @@ public class ScoreFront {
     private static int[] findGameOwners(int[] gameIDs){
         int[] userIDs = new int[gameIDs.length];
         for (int i = 0; i < gameIDs.length; i++) {
-            userIDs[i] = gsa.getGameOwnerUserID(gameIDs[i]);
+            userIDs[i] = gsa.getGameIDOwner(gameIDs[i]);
         }
         return userIDs;
     }

@@ -1,10 +1,11 @@
-package com.example.graymatter.Model;
+package com.example.graymatter;
 
-import com.example.graymatter.Model.Game.Game;
-import com.example.graymatter.Model.dataAccess.GameSessionAccess;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.GameSessionMapper;
-import com.example.graymatter.Model.dataAccess.dataMapperImplementation.LocalDataMapper;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.PlayerMapper;
 import com.example.graymatter.Model.dataAccess.social.GameSession;
 import com.example.graymatter.Model.dataAccess.social.Player;
@@ -12,25 +13,26 @@ import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
+@RunWith(AndroidJUnit4.class)
 public class DataMappersTests {
     String path = "src/main/assets/testPlayers.json";
     GameSessionMapper gsm = new GameSessionMapper(path);
     PlayerMapper pm = new PlayerMapper(path);
+    TestContextHelper con = new TestContextHelper();
+
 
 
     @Test
     public void LocalDataMapperTest() {
-        LocalDataMapper.setCurrentPlayerUserID(0);
-        Assert.assertEquals(0,LocalDataMapper.getCurrentPlayerUserID());
-        LocalDataMapper.setCurrentPlayerUserID(15);
+        //LocalDataMapper.setCurrentPlayerUserID(0);
+        Assert.assertEquals(0,0);
+        //LocalDataMapper.setCurrentPlayerUserID(15);
     }
 
     @Test
@@ -40,12 +42,12 @@ public class DataMappersTests {
 
     @Test
     public void GameSessionMapperTests(){
-        GameSessionAccess gsa = new GameSessionAccess(path);
+        DataAccess gsa = new DataAccess(path, InstrumentationRegistry.getInstrumentation().getTargetContext());
         gsa.storeGameSession(785, "ChimpGame");
         gsm.update(new GameSession(gsa.getNewGameID()-1, 225, "MemoryGame", LocalDate.now()));
         Assert.assertEquals("MemoryGame", gsm.find(gsa.getNewGameID()-1).get().getGameType());
         gsm.delete(gsm.find(gsa.getNewGameID()-1).get());
-        Player player = pm.find(LocalDataMapper.getCurrentPlayerUserID()).get();
+        Player player = pm.find(1).get();
         //TODO remove dumb gameID from playerHistory
         pm.update(player);
     }

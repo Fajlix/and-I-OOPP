@@ -1,5 +1,11 @@
 package com.example.graymatter.Model.dataAccess.dataMapperImplementation;
 
+import android.content.Context;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,24 +14,60 @@ import java.nio.file.Paths;
 public class LocalDataMapper {
 
 
-    private static String path = "src/main/assets/currentPlayer.txt";
+    private Context context;
 
-    public static int getCurrentPlayerUserID(){ //protected but  testing...
+    public LocalDataMapper(Context context) {
+        this.context = context;
+    }
+
+    public int getCurrentPlayerUserID(){ //protected but  testing...
+        return Integer.parseInt(readCache());
+    }
+
+    public void setCurrentPlayerUserID(int i) {
+        writeToCache("" + i);
+    }
+
+
+
+    private void writeToCache(String str){
+        File tempFile = findCache();
         try {
-            return Integer.parseInt(new String(Files.readAllBytes(Paths.get(path))));  //OK for testing, not safe for launch
+            FileWriter writer = new FileWriter(tempFile);
+            writer.write(str);
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return 0;
     }
 
-    public static void setCurrentPlayerUserID(int i) {
+    private File findCache(){
+        File cDir = context.getCacheDir();
+        File tempFile;
+        tempFile = new File(context.getCacheDir(), "/logIn.txt");
+        if (tempFile.exists()) {
+            return tempFile;
+        }
+        tempFile = new File(cDir.getPath() + "/logIn.txt") ;
+        writeToCache("0");
+        return tempFile;
+    }
+
+    private String readCache() {
+        String strLine ="";
+        StringBuilder text = new StringBuilder();
         try {
-            FileWriter myWriter = new FileWriter(path);
-            myWriter.write("" + i);
-            myWriter.close();
+            FileReader fReader = new FileReader(findCache());
+            BufferedReader bReader = new BufferedReader(fReader);
+
+            while( (strLine=bReader.readLine()) != null  ){
+                text.append(strLine).append("\n");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return text.toString();
     }
+
+
 }

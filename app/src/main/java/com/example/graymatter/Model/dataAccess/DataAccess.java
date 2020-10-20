@@ -1,20 +1,33 @@
 package com.example.graymatter.Model.dataAccess;
 
+import android.content.Context;
+import android.net.ParseException;
+
 import com.example.graymatter.Model.dataAccess.dataMapper.DataMapper;
 import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
+import com.example.graymatter.Model.dataAccess.dataMapperImplementation.GameSessionMapper;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.LocalDataMapper;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.PlayerMapper;
+import com.example.graymatter.Model.dataAccess.social.GameSession;
 import com.example.graymatter.Model.dataAccess.social.Player;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
- * Class provides client access to Player. Coordinates Player fields with database.
+ * Class provides client facade to GameSession and holds instance of other facade PlayerAccess.
+ * Coordinates GameSession fields with corresponding databse entries.
  */
-public class PlayerAccess {
+public class DataAccess {
+
+    private LocalDataMapper ldm;
+
+    private DataMapper<GameSession> gsMapper;
 
     public DataMapper<Player> playerMapper;
     /**
@@ -22,10 +35,11 @@ public class PlayerAccess {
      */
     public Optional<Player> currentPlayer;
 
-
-    public PlayerAccess(String dbPath){
+    public DataAccess(String dbPath, Context context){
+        ldm = new LocalDataMapper(context);
+        gsMapper = new GameSessionMapper(dbPath);
         playerMapper = new PlayerMapper(dbPath);
-        Optional<Player> optionalPlayer = playerMapper.find(8);
+        Optional<Player> optionalPlayer = playerMapper.find(ldm.getCurrentPlayerUserID());
         if (optionalPlayer.isPresent()){
             currentPlayer = optionalPlayer;
             try {
@@ -37,6 +51,71 @@ public class PlayerAccess {
             currentPlayer = Optional.empty();
         }
     }
+
+
+    public void storeGameSession(int score, String gameType) throws ParseException {
+        LocalDate date = LocalDate.now(); //solve timezone stuff
+        GameSession gs = new GameSession(getNewGameID(), score, gameType, date);
+        storeGameID(gs.getGameID());
+        gsMapper.insert(gs);
+    }
+
+
+    /**
+     * For package-internal cleaning purposes.
+     * @param gameID unique gameID of the GameSession.
+     */
+    /*
+    protected void removeGameSession(int gameID){
+        Optional<GameSession> gs = gsMapper.find(gameID);
+        if (!gs.isPresent()){
+            throw new DataMapperException("gameID does not match GameSession");
+        } else {
+            gsMapper.delete(gs.get());
+        }
+    }
+    */
+
+    public int getNewGameID() {
+        int topGameID = 0;
+        for (GameSession g: gsMapper.get()){ //should throw exception if empty?
+            if (g.getGameID() > topGameID){
+                topGameID = g.getGameID();
+            }
+        }
+        return topGameID + 1;
+    }
+
+    public GameSession getGameSession(int gameID) throws DataMapperException{
+        Optional<GameSession> opGameSession = gsMapper.find(gameID);
+        if(opGameSession.isPresent()){
+            return opGameSession.get();
+        }
+        throw new DataMapperException("gameId does not match GameSession in database.");
+    }
+/*
+    public static Map<Integer, Integer> getAllScoresIdentifiable(){
+        Map<Integer, Integer> scores = new HashMap<>();
+        for (GameSession gs: gsMapper.get()){
+            scores.put(gs.getGameID(), gs.getScore());
+        }
+        return scores;
+    }
+*/
+    public List<GameSession> getGameSessionsByType(String gameType) {
+        List<GameSession> gs = gsMapper.get();
+        List<GameSession> nGs = new ArrayList<>();
+        for (GameSession session : gs){
+            if (session.getGameType().equals(gameType)){
+                nGs.add(session);
+            }
+        }
+        return nGs;
+    }
+
+    //below strictly PlayerMapper-related methods
+
+
 
     //TODO cleanup gamesessions (remove gamesessions w dead owner
 
@@ -57,7 +136,7 @@ public class PlayerAccess {
             throw new DataMapperException("Wrong password!"); //should possibly be userinfoexception
         }
         currentPlayer = player;
-        //LocalDataMapper.setCurrentPlayerUserID(player.get().getUserID());
+        ldm.setCurrentPlayerUserID(player.get().getUserID());
     }
 
     /**
@@ -89,7 +168,7 @@ public class PlayerAccess {
      */
     public void logOut() {
         currentPlayer = Optional.empty();  //näej pissdålig idé
-       // LocalDataMapper.setCurrentPlayerUserID(0);
+        ldm.setCurrentPlayerUserID(0);
     }
 
     public void deleteAccount(String password) throws UserInfoException {
@@ -334,4 +413,8 @@ public class PlayerAccess {
         }
         throw new DataMapperException("Player not logged in!");
     }
+
+
+
+
 }

@@ -1,7 +1,9 @@
-package com.example.graymatter.Model;
+package com.example.graymatter;
 
-import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
-import com.example.graymatter.Model.dataAccess.GameSessionAccess;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.Model.dataAccess.PlayerAccess;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.GameSessionMapper;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.PlayerMapper;
@@ -13,19 +15,21 @@ import com.example.graymatter.Model.progress.Sort;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.List;
-import java.util.Map;
 
+@RunWith(AndroidJUnit4.class)
 public class ProgressTest {
     String path = "src/main/assets/testPlayers.json";
     int[] scores;
-    GameSessionAccess gsa;
+    DataAccess gsa;
     PlayerAccess pa;
+    TestContextHelper con = new TestContextHelper();
     @Before
     public void init(){
         scores = new int[]{8, 13, 5, 7, 1, 2, 16, 99, 2, 0, 13, 13, 13, 13, 13, 9, 9, 9, 5, 12};
-        gsa = new GameSessionAccess(path);
+        gsa = new DataAccess(path, InstrumentationRegistry.getInstrumentation().getTargetContext());
         pa = new PlayerAccess(path);
     }
 

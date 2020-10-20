@@ -1,34 +1,45 @@
-package com.example.graymatter.Model;
+package com.example.graymatter;
 
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.LocalDataMapper;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.PlayerMapper;
-import com.example.graymatter.Model.dataAccess.social.GameSession;
 import com.example.graymatter.Model.dataAccess.social.Player;
 import com.example.graymatter.Model.dataAccess.PlayerAccess;
-import com.example.graymatter.Model.dataAccess.social.UserInfo;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
-import com.example.graymatter.Model.dataAccess.dataMapperImplementation.DataBaseModel;
-import com.google.gson.Gson;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import static org.junit.Assert.*;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.Optional;
 
-
+@RunWith(AndroidJUnit4.class)
 public class SocialTest {
     String path = "src/main/assets/testPlayers.json";
-    PlayerAccess testPlayerAccess = new PlayerAccess(path);
+    DataAccess testPlayerAccess = new DataAccess(path, InstrumentationRegistry.getInstrumentation().getTargetContext());
+    LocalDataMapper ldm = new LocalDataMapper(InstrumentationRegistry.getInstrumentation().getTargetContext());
+
 
     @Before
     public void init() throws UserInfoException {
         testPlayerAccess.logOut();
         testPlayerAccess.logIn("Tuff-tuff22oHalvt", "hejNej88*");
+    }
+
+    @Test
+    public void ldmTest(){
+        System.out.println(ldm.getCurrentPlayerUserID());
+        ldm.setCurrentPlayerUserID(1);
+        System.out.println(ldm.getCurrentPlayerUserID());
+        ldm.setCurrentPlayerUserID(15);
     }
 
     @Test
@@ -101,7 +112,7 @@ public class SocialTest {
 
     @Test
     public void readGsonTest() {
-        assertEquals(LocalDataMapper.getCurrentPlayerUserID(), 15);
+        assertEquals(1, 15);
     }
 
     @Test

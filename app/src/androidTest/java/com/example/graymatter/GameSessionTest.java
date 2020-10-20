@@ -1,26 +1,32 @@
-package com.example.graymatter.Model;
+package com.example.graymatter;
 
-import com.example.graymatter.Model.dataAccess.GameSessionAccess;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.GameSessionMapper;
 import com.example.graymatter.Model.dataAccess.social.GameSession;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.time.LocalDate;
 
 //until scoring impl, no assertions. Just check in db for correct results.
+@RunWith(AndroidJUnit4.class)
 public class GameSessionTest {
 
     String path = "src/main/assets/testPlayers.json";
-    GameSessionAccess gsa;
+    DataAccess gsa;
     GameSessionMapper gsm;
+    TestContextHelper cont = new TestContextHelper();
 
 
     @Before
     public void init(){
-        gsa = new GameSessionAccess(path);
+        gsa = new DataAccess(path, InstrumentationRegistry.getInstrumentation().getTargetContext());
         gsm = new GameSessionMapper(path);
     }
 
