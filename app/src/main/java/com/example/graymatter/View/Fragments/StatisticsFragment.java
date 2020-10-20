@@ -11,9 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.graymatter.R;
-import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.View.StatisticsAdapter;
-import com.example.graymatter.View.StatisticsChangeListener;
 
 //TODO almost the same as GamesFragment
 public class StatisticsFragment extends Fragment{
@@ -44,6 +42,7 @@ public class StatisticsFragment extends Fragment{
 //        gameDescription = getResources().getStringArray(R.array.gameDescription);
 //        colors = getResources().getStringArray(R.array.gameCardColors);
 
+        //TODO remove hardcode
         gameName = new String[]{"Toer", "tes", "ss"};
         gameDescription = new String[]{"Toer", "tes", "ss"};
         colors = new String[]{"#636161", "#232323", "#999999"};

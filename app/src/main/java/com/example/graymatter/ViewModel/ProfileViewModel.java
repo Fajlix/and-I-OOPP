@@ -33,5 +33,17 @@ public class ProfileViewModel extends ViewModel {
     }
 
 
+    //Settings
+    public void logoutUser(){
+
+    }
+    public void changeEmail(){
+
+    }
+    public void changePassword(){
+
+    }
+
+
 
 }

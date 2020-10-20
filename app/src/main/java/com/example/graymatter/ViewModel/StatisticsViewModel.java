@@ -9,32 +9,53 @@ import com.example.graymatter.Social.PlayerAccess;
 public class StatisticsViewModel extends ViewModel {
     private Context context;
 
-    private String[] usernames;
-    private int[] userImages, userScores;
+    private String[] topFriendsUsernames, topFriendsUserScores, topGlobalUsernames, topGlobalUserScores;
+    private int[] topFriendsUserImages, topGlobalUserImages;
 
     private PlayerAccess playerAccess;
 
-    public void init(Context context){
+    public void init(Context context, String game){
         this.context = context;
-        playerAccess = new PlayerAccess("src/main/assets/testplayers.json", context);
+
+        if(game.equals("Reaction Test")){
+            //TODO something with Social
+        }
+
+        topFriendsUsernames = new String[]{"123", "456", "1234"};
+        topFriendsUserScores = new String[]{"hej", "så", "okej"};
+        topFriendsUserImages = new int[]{1,2,3};
+
+        topGlobalUsernames = new String[]{"123", "456", "1234"};
+        topGlobalUserScores = new String[]{"hej", "så", "okej"};
+        topGlobalUserImages = new int[]{1,2,3};
     }
 
-    public void update(String game){
 
+    public String[] getTopFriendsUsernames(){
+
+        return topFriendsUsernames;
+    }
+    public String[] getTopFriendsUserScores(){
+
+        return topFriendsUserScores;
+    }
+    public int[] getTopFriendsUserImages(){
+
+        return topFriendsUserImages;
     }
 
-    public String[] getUsersnames(){
 
-        return  null;
+    public String[] getTopGlobalUsernames(){
+
+        return topGlobalUsernames;
     }
-    public int[] getUserImages(){
+    public String[] getTopGlobalUserScores(){
 
-        return  null;
+        return topGlobalUserScores;
     }
-    public int[] getUserScores(){
+    public int[] getTopGlobalUserImages(){
 
-        return  null;
+        return topGlobalUserImages;
     }
-
 
 }

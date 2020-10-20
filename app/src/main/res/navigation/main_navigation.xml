@@ -61,5 +61,22 @@
         android:id="@+id/statisticsTabFragment"
         android:name="com.example.graymatter.View.Fragments.StatisticsTabFragment"
         android:label="fragment_statistics_tab"
-        tools:layout="@layout/fragment_statistics_tab" />
+        tools:layout="@layout/fragment_statistics_tab" >
+        <action
+            android:id="@+id/action_statisticsTabFragment_to_statisticsFriendsFragment"
+            app:destination="@id/statisticsFriendsFragment" />
+        <action
+            android:id="@+id/action_statisticsTabFragment_to_statisticsGlobalFragment"
+            app:destination="@id/statisticsGlobalFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/statisticsFriendsFragment"
+        android:name="com.example.graymatter.View.Fragments.StatisticsFriendsFragment"
+        android:label="fragment_statistics_friends"
+        tools:layout="@layout/fragment_statistics_friends" />
+    <fragment
+        android:id="@+id/statisticsGlobalFragment"
+        android:name="com.example.graymatter.View.Fragments.StatisticsGlobalFragment"
+        android:label="fragment_statistics_global"
+        tools:layout="@layout/fragment_statistics_global" />
 </navigation>

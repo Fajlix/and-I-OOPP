@@ -15,7 +15,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.graymatter.R;
-import com.example.graymatter.View.FragmentChangeListener;
 
 //TODO This is basically a copy of RecyclerViewAdapter, so should prob do sum smart abstractions instead
 public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.StatisticsViewHolder> {
@@ -25,7 +24,6 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
     int[] logos;
     Context context;
     FragmentChangeListener fragmentChangeListener;
-    StatisticsChangeListener statisticsChangeListener;
 
     public StatisticsAdapter (Context c, String[] gameName, String[] gameDescription, String[] colors, int[] logos) {
         context = c;
@@ -42,7 +40,6 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
         View view = inflater.inflate(R.layout.statistics_game_card, parent, false);
 
         fragmentChangeListener = (FragmentChangeListener) parent.getContext();
-        //statisticsChangeListener = (StatisticsChangeListener)context;
 
         return new StatisticsViewHolder(view);
     }
@@ -61,17 +58,14 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
                 if (position == 0)
                 {
                     fragmentChangeListener.reactionTestClicked();
-                    //statisticsChangeListener.reactionTestClicked();
                 }
                 else if (position == 1)
                 {
                     fragmentChangeListener.chimpTestClicked();
-                    //statisticsChangeListener.chimpTestClicked();
                 }
                 else if (position == 2)
                 {
                     fragmentChangeListener.visualGameClicked();
-                    //statisticsChangeListener.visualGameClicked();
                 }
                 else if (position == 3)
                 {

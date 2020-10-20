@@ -12,10 +12,27 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     private int numOfTabs;
 
-    public PagerAdapter(FragmentManager fm, int numOfTabs){
-        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        
+    private String[] namesFriends, scoresFriends, namesGlobal, scoresGlobal;
+    private int[] picturesFriends, picturesGlobal;
+
+    String game;
+
+    public PagerAdapter(FragmentManager fm, int numOfTabs, String[] namesFriends,
+                        String[] scoresFriends, int[] picturesFriends, String[] namesGlobal,
+                        String[] scoresGlobal, int[] picturesGlobal, String game){
+        super(fm);
+
         this.numOfTabs = numOfTabs;
+
+        this.namesFriends = namesFriends;
+        this.scoresFriends = scoresFriends;
+        this.picturesFriends = picturesFriends;
+
+        this.namesGlobal = namesGlobal;
+        this.scoresGlobal = scoresGlobal;
+        this.picturesGlobal = picturesGlobal;
+
+        this.game = game;
     }
 
 
@@ -25,9 +42,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
         switch(position){
             case 0:
-                return new StatisticsFriendsFragment();
+                return new StatisticsFriendsFragment(namesFriends, scoresFriends, picturesFriends, game);
             case 1:
-                return new StatisticsGlobalFragment();
+                return new StatisticsGlobalFragment(namesGlobal, scoresGlobal, picturesGlobal, game);
             default:
                 return null;
         }
