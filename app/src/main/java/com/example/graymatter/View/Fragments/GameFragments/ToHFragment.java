@@ -246,14 +246,14 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
         for (int i = 0; i < board.size(); i++) {
             int ch = 0;
             for (int j = 0; j < board.get(i).size(); j++) {
-                int pos = 300;
+                int pos = 285;
                 int width = 60 + 20*(board.get(i).get(j)-1);
-                int height = 50 + 20*(board.get(i).get(j)-1);
-                int fixedheight = 30;
+                int height = 60 + 20*(board.get(i).get(j)-1);
+                int fixedheight = 25;
                 ch += fixedheight;
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
                         (width, height);
-                layoutParams.setMargins((rodWidth -width)/2, pos -ch -height/2 -fixedheight /2, 0, 0);
+                layoutParams.setMargins((rodWidth -width)/2, pos -ch -height/2 -fixedheight/2, 0, 0);
 
                 disks.get(board.get(i).get(j) - 1).setLayoutParams(layoutParams);
 
