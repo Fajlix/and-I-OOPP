@@ -51,7 +51,27 @@
         34,
         35,
         38,
-        45
+        45,
+        46,
+        47,
+        48,
+        49,
+        48,
+        48,
+        49,
+        50,
+        51,
+        50,
+        50,
+        51,
+        52,
+        53,
+        52,
+        52,
+        53,
+        54,
+        55,
+        54
       ]
     }
   ],
@@ -165,6 +185,86 @@
         "day": 19
       },
       "gameID": 1
+    },
+    {
+      "score": 1500,
+      "gameType": "ChimpGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 20
+      },
+      "gameID": 46
+    },
+    {
+      "score": 0,
+      "gameType": "ChimpGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 20
+      },
+      "gameID": 47
+    },
+    {
+      "score": 1500,
+      "gameType": "ChimpGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 20
+      },
+      "gameID": 48
+    },
+    {
+      "score": 0,
+      "gameType": "ChimpGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 20
+      },
+      "gameID": 49
+    },
+    {
+      "score": 1500,
+      "gameType": "ChimpGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 20
+      },
+      "gameID": 50
+    },
+    {
+      "score": 0,
+      "gameType": "ChimpGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 20
+      },
+      "gameID": 51
+    },
+    {
+      "score": 1500,
+      "gameType": "ChimpGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 20
+      },
+      "gameID": 52
+    },
+    {
+      "score": 0,
+      "gameType": "ChimpGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 20
+      },
+      "gameID": 53
     }
   ]
 }

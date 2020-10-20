@@ -1,4 +1,4 @@
-package com.example.graymatter.Model;
+package com.example.graymatter;
 
 import android.app.Application;
 import android.content.Context;
