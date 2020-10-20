@@ -1,6 +1,8 @@
 package com.example.graymatter;
 
 
+import android.content.Context;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
@@ -9,7 +11,6 @@ import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.LocalDataMapper;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.PlayerMapper;
 import com.example.graymatter.Model.dataAccess.social.Player;
-import com.example.graymatter.Model.dataAccess.PlayerAccess;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 
 import org.junit.Assert;
@@ -23,8 +24,8 @@ import java.util.Optional;
 
 @RunWith(AndroidJUnit4.class)
 public class SocialTest {
-    String path = "src/main/assets/testPlayers.json";
-    DataAccess testPlayerAccess = new DataAccess(path, InstrumentationRegistry.getInstrumentation().getTargetContext());
+    Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+    DataAccess testPlayerAccess = new DataAccess(InstrumentationRegistry.getInstrumentation().getTargetContext());
     LocalDataMapper ldm = new LocalDataMapper(InstrumentationRegistry.getInstrumentation().getTargetContext());
 
 
@@ -86,7 +87,7 @@ public class SocialTest {
     @Test
     public void friendsVaryingSuccessTest() throws UserInfoException {
         testPlayerAccess.addFriend(4);
-        Assert.assertTrue(testPlayerAccess.getFriends().contains(new PlayerMapper(path).find(4).get()));
+        Assert.assertTrue(testPlayerAccess.getFriends().contains(new PlayerMapper(context).find(4).get()));
         testPlayerAccess.removeFriend(4);
     }
 
@@ -185,7 +186,7 @@ public class SocialTest {
     @Test
     public void repoLayerConstructorFails() throws UserInfoException {
         testPlayerAccess.logOut();
-        PlayerAccess paF = new PlayerAccess(path);
+        DataAccess paF = new DataAccess(context);
         Assert.assertEquals(Optional.empty(), paF.currentPlayer);
         testPlayerAccess.logIn("Tuff-tuff22oHalvt", "hejNej88*");
     }

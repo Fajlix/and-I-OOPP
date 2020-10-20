@@ -1,10 +1,8 @@
 package com.example.graymatter.Model.progress;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.example.graymatter.Model.dataAccess.DataAccess;
-import com.example.graymatter.Model.dataAccess.PlayerAccess;
 import com.example.graymatter.Model.dataAccess.social.GameSession;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 
@@ -22,7 +20,6 @@ import java.util.Map;
 public class ScoreFront extends Application {
 
     private static DataAccess gsa; //comes from somewhere?
-    private static PlayerAccess pa; //same
 
     /**
      * Returns a leaderboard of gamesessions, corresponding normated scores and players from a particular gameType, with only games played by the user marked as currentUser in local cache. Cut after argument input.
@@ -293,10 +290,10 @@ public class ScoreFront extends Application {
     private static int[][] filterFriends(int[][] notJustFriends, int colWUserID) {
         int[][] justFriends = null;
         try {
-            justFriends = new int[notJustFriends.length][pa.getCurrentPlayer().getFriendUserIDs().size()];
-            for (int i = 1; i < pa.getCurrentPlayer().getFriendUserIDs().size(); i++) {
-                if(pa.getCurrentPlayer().getFriendUserIDs().contains(notJustFriends[colWUserID][i])
-                || pa.getCurrentPlayer().getUserID() == notJustFriends[colWUserID][i]) {
+            justFriends = new int[notJustFriends.length][gsa.getCurrentPlayer().getFriendUserIDs().size()];
+            for (int i = 1; i < gsa.getCurrentPlayer().getFriendUserIDs().size(); i++) {
+                if(gsa.getCurrentPlayer().getFriendUserIDs().contains(notJustFriends[colWUserID][i])
+                || gsa.getCurrentPlayer().getUserID() == notJustFriends[colWUserID][i]) {
                     for (int j = 0; j < notJustFriends.length; j++) {
                         justFriends[j][i] = notJustFriends[j][i];
                     }

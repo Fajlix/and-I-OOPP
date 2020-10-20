@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,7 +22,8 @@ public class LocalDataMapper {
     }
 
     public int getCurrentPlayerUserID(){ //protected but  testing...
-        return Integer.parseInt(readCache());
+        String str = readCache();
+        return Integer.parseInt(str.substring(0, str.indexOf("\n")));
     }
 
     public void setCurrentPlayerUserID(int i) {
@@ -31,6 +33,10 @@ public class LocalDataMapper {
 
 
     private void writeToCache(String str){
+       /* try (FileOutputStream fos = context.openFileOutput("logIn.txt", Context.MODE_PRIVATE)) {
+            fos.write(fileContents.toByteArray());
+        }*/
+
         File tempFile = findCache();
         try {
             FileWriter writer = new FileWriter(tempFile);
@@ -42,14 +48,19 @@ public class LocalDataMapper {
     }
 
     private File findCache(){
-        File cDir = context.getCacheDir();
         File tempFile;
-        tempFile = new File(context.getCacheDir(), "/logIn.txt");
+        tempFile = new File(context.getCacheDir(), "logIn.txt");
         if (tempFile.exists()) {
             return tempFile;
         }
-        tempFile = new File(cDir.getPath() + "/logIn.txt") ;
-        writeToCache("0");
+        try {
+            tempFile = File.createTempFile("logIn.txt", null, context.getCacheDir());
+            FileWriter writer = new FileWriter(tempFile);
+            writer.write("0");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return tempFile;
     }
 

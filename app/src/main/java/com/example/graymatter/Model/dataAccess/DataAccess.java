@@ -28,17 +28,16 @@ public class DataAccess {
     private LocalDataMapper ldm;
 
     private DataMapper<GameSession> gsMapper;
-
     public DataMapper<Player> playerMapper;
     /**
      * can be Optional of null, if null - not logged in
      */
     public Optional<Player> currentPlayer;
 
-    public DataAccess(String dbPath, Context context){
+    public DataAccess(Context context){
         ldm = new LocalDataMapper(context);
-        gsMapper = new GameSessionMapper(dbPath);
-        playerMapper = new PlayerMapper(dbPath);
+        gsMapper = new GameSessionMapper(context);
+        playerMapper = new PlayerMapper(context);
         Optional<Player> optionalPlayer = playerMapper.find(ldm.getCurrentPlayerUserID());
         if (optionalPlayer.isPresent()){
             currentPlayer = optionalPlayer;

@@ -1,5 +1,6 @@
 package com.example.graymatter.Model.dataAccess.dataMapperImplementation;
 
+import android.content.Context;
 import android.net.ParseException;
 
 import com.example.graymatter.Model.dataAccess.dataMapper.DataMapper;
@@ -8,11 +9,16 @@ import com.example.graymatter.Model.dataAccess.social.GameSession;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.net.ContentHandler;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,10 +26,12 @@ public class GameSessionMapper implements DataMapper<GameSession> {
     //parametriserad mapper?? går det?
     String dbPath;
     Gson gson = new Gson();
+    Context context;
 
 
-    public GameSessionMapper(String dbPath){
+    public GameSessionMapper(Context context){
         this.dbPath = dbPath;
+        this.context = context;
       //  this.gson = gson; hmm
     }
 
@@ -106,26 +114,37 @@ public class GameSessionMapper implements DataMapper<GameSession> {
     }
 
     private List<GameSession> getDBGameSessions() throws IOException {
-        Reader reader = new FileReader(dbPath);
-        DataBaseModel dbM = gson.fromJson(reader, DataBaseModel.class);
-        reader.close();
+
+
+        DataBaseModel dbM = gson.fromJson(getJsonString(context), DataBaseModel.class);
         return dbM.getGameSessions();
     }
 
     //maybe this should throw the exception
     private void enterData(List<GameSession> nGameSessions) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String FILENAME = "testplayers.json";
         try {
-            Reader reader = new FileReader(dbPath);
-            DataBaseModel nDb = gson.fromJson(reader, DataBaseModel.class);
-            reader.close();
+            DataBaseModel nDb = gson.fromJson(getJsonString(context), DataBaseModel.class);
             nDb.setGameSessions(nGameSessions);
-            Writer writer = new FileWriter(dbPath);
+            //Writer writer = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            FileOutputStream fos = context.openFileOutput(FILENAME,Context.MODE_PRIVATE);
+
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fos));
+            //fos.write(nDb.toString().getBytes());
             gson.toJson(nDb, writer);
             writer.flush();
             writer.close();
         } catch (IOException e){
             e.printStackTrace();
         }
+
+    }
+
+    private String getJsonString (Context context) throws IOException {
+        InputStream inputStream = context.getAssets().open("testplayers.json");
+        byte[] buffer = new byte[inputStream.available()];
+        inputStream.read(buffer);
+        return new String(buffer);
     }
 }

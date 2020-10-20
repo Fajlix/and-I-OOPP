@@ -1,17 +1,23 @@
 package com.example.graymatter.Model.dataAccess.dataMapperImplementation;
 
+import android.content.Context;
 import android.net.ParseException;
 
 import com.example.graymatter.Model.dataAccess.dataMapper.DataMapper;
 import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
 
+import com.example.graymatter.Model.dataAccess.social.GameSession;
 import com.example.graymatter.Model.dataAccess.social.Player;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Iterator;
@@ -27,15 +33,15 @@ public final class PlayerMapper implements DataMapper<Player> {
     //TODO make get() return Iterable
     //TODO should it check for empty fields?
 
-    private final String dbPath;
     Gson gson = new Gson();
+    Context context;
 
     /**
      * PlayerMapper constructor
      * @param dbPath path to .json file
      */
-    public PlayerMapper(String dbPath) {
-        this.dbPath = dbPath;
+    public PlayerMapper(Context context) {
+        this.context = context;
     }
 
     /**
@@ -143,15 +149,38 @@ public final class PlayerMapper implements DataMapper<Player> {
      * @param players updated List of players to wrote to database.
      * @throws IOException
      */
+    /*
     private void enterData(List<Player> players) throws IOException {
         DataBaseModel db = newRead();
         db.setPlayers(players);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Writer writer = new FileWriter(dbPath);
+        Writer writer = new FileWriter(getJsonString(context));
         gson.toJson(db, writer);
         writer.flush();
         writer.close();
     }
+    */
+
+    private void enterData(List<Player> players) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String FILENAME = "testplayers.json";
+        try {
+            DataBaseModel nDb = gson.fromJson(getJsonString(context), DataBaseModel.class);
+            nDb.setPlayers(players);
+            //Writer writer = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            FileOutputStream fos = context.openFileOutput(FILENAME,Context.MODE_PRIVATE);
+
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fos));
+            //fos.write(nDb.toString().getBytes());
+            gson.toJson(nDb, writer);
+            writer.flush();
+            writer.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
 
     /**
      * Method for reading the database, not intended for use from other methods than those defined by interface.
@@ -159,10 +188,18 @@ public final class PlayerMapper implements DataMapper<Player> {
      * @throws IOException
      */
     private DataBaseModel newRead() throws IOException {
-        Reader reader = new FileReader(dbPath);
-        DataBaseModel toReturn = gson.fromJson(reader, DataBaseModel.class);
-        reader.close();
+        //Reader reader = new FileReader(getJsonString(context));
+        DataBaseModel toReturn = gson.fromJson(getJsonString(context), DataBaseModel.class);
+       // reader.close();
         return toReturn;
+    }
+
+    private String getJsonString (Context context) throws IOException {
+        InputStream inputStream = context.getAssets().open("testplayers.json");
+        byte[] buffer = new byte[inputStream.available()];
+        inputStream.read(buffer);
+        String str = new String(buffer);
+        return str;
     }
 
 }

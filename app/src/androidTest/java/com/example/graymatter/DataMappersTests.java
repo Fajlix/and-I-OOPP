@@ -1,5 +1,7 @@
 package com.example.graymatter;
 
+import android.content.Context;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
@@ -12,6 +14,7 @@ import com.example.graymatter.Model.dataAccess.social.Player;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -22,11 +25,16 @@ import java.util.Optional;
 @RunWith(AndroidJUnit4.class)
 public class DataMappersTests {
     String path = "src/main/assets/testPlayers.json";
-    GameSessionMapper gsm = new GameSessionMapper(path);
-    PlayerMapper pm = new PlayerMapper(path);
+
+    Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+    GameSessionMapper gsm = new GameSessionMapper(context);
+    PlayerMapper pm = new PlayerMapper(context);
     TestContextHelper con = new TestContextHelper();
 
+    @Before
+    public void init(){
 
+    }
 
     @Test
     public void LocalDataMapperTest() {
@@ -42,7 +50,7 @@ public class DataMappersTests {
 
     @Test
     public void GameSessionMapperTests(){
-        DataAccess gsa = new DataAccess(path, InstrumentationRegistry.getInstrumentation().getTargetContext());
+        DataAccess gsa = new DataAccess(InstrumentationRegistry.getInstrumentation().getTargetContext());
         gsa.storeGameSession(785, "ChimpGame");
         gsm.update(new GameSession(gsa.getNewGameID()-1, 225, "MemoryGame", LocalDate.now()));
         Assert.assertEquals("MemoryGame", gsm.find(gsa.getNewGameID()-1).get().getGameType());

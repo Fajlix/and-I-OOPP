@@ -6,6 +6,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.GameSessionMapper;
 import com.example.graymatter.Model.dataAccess.social.GameSession;
+import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,8 +27,13 @@ public class GameSessionTest {
 
     @Before
     public void init(){
-        gsa = new DataAccess(path, InstrumentationRegistry.getInstrumentation().getTargetContext());
-        gsm = new GameSessionMapper(path);
+        gsa = new DataAccess(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        gsm = new GameSessionMapper(InstrumentationRegistry.getInstrumentation().getTargetContext());
+        try {
+            gsa.logIn("Tuff-tuff22oHalvt", "hejNej88*");
+        } catch (UserInfoException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test

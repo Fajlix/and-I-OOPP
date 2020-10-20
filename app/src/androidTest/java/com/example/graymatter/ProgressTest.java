@@ -1,10 +1,11 @@
 package com.example.graymatter;
 
+import android.content.Context;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.graymatter.Model.dataAccess.DataAccess;
-import com.example.graymatter.Model.dataAccess.PlayerAccess;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.GameSessionMapper;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.PlayerMapper;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
@@ -22,15 +23,16 @@ import java.util.List;
 @RunWith(AndroidJUnit4.class)
 public class ProgressTest {
     String path = "src/main/assets/testPlayers.json";
+    Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
     int[] scores;
     DataAccess gsa;
-    PlayerAccess pa;
+
     TestContextHelper con = new TestContextHelper();
     @Before
     public void init(){
         scores = new int[]{8, 13, 5, 7, 1, 2, 16, 99, 2, 0, 13, 13, 13, 13, 13, 9, 9, 9, 5, 12};
-        gsa = new DataAccess(path, InstrumentationRegistry.getInstrumentation().getTargetContext());
-        pa = new PlayerAccess(path);
+        gsa = new DataAccess(context);
     }
 
     @Test
@@ -63,21 +65,21 @@ public class ProgressTest {
         gsa.storeGameSession(1500, "ChimpGame");
         gsa.storeGameSession(0, "ChimpGame");
         int[][] scores = ScoreFront.getSelectGlobalTopScores(1, 12, "ChimpGame");
-        Assert.assertEquals(pa.getCurrentPlayer().getUserID(), scores[2][0]);
+        Assert.assertEquals(gsa.getCurrentPlayer().getUserID(), scores[2][0]);
         Assert.assertEquals(gsa.getNewGameID()-2, scores[0][0]);
-        Assert.assertEquals(pa.getCurrentPlayer().getUserID(), scores[2][scores[2].length-1]);
+        Assert.assertEquals(gsa.getCurrentPlayer().getUserID(), scores[2][scores[2].length-1]);
         Assert.assertEquals(gsa.getNewGameID()-1, scores[0][scores[0].length-1]);
-        GameSessionMapper mapper = new GameSessionMapper(path);
+        GameSessionMapper mapper = new GameSessionMapper(context);
         //if tests fail bf below db will have to be manually fixed
         int aDel = gsa.getNewGameID()-1;
         int bDel = gsa.getNewGameID()-2;
         mapper.delete(mapper.find(aDel).get());
         mapper.delete(mapper.find(bDel).get());
-        PlayerMapper pMapper = new PlayerMapper(path);
-        List<Integer> gs = pa.getCurrentPlayer().getPlayerHistory();
+        PlayerMapper pMapper = new PlayerMapper(context);
+        List<Integer> gs = gsa.getCurrentPlayer().getPlayerHistory();
         gs.remove((Integer) aDel);
         gs.remove((Integer) bDel);
-        pMapper.update(pa.getCurrentPlayer());
+        pMapper.update(gsa.getCurrentPlayer());
     }
 
     @Test
