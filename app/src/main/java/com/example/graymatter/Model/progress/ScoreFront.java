@@ -24,13 +24,16 @@ public class ScoreFront extends Application {
     }
 
     /**
-     * Returns a leaderboard of gamesessions, corresponding normated scores and players from a particular gameType, with only games played by the user marked as currentUser in local cache. Cut after argument input.
+     * Returns a leaderboard of gamesessions, corresponding normated scores and players from a particular gameType,
+     * with only games played by the user marked as currentUser in local cache. Cut after argument input.
      * @param resultTop Top placement, not index, beginning the span of Map rows to return.
      * @param resultLow Low placement, not index, ending the span of Map rows to return.
      * @param gameType String retained from game class representing the type of the game.
-     * @return int[][] containing int[0] being a list of gameIDs, int[1] normScores, int[2] userIDs. Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboard position.
+     * @return int[][] containing int[0] being a list of userIDs, int[1] normScores, int[2] gameIDs.
+     * Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboard position (offset by one)
      * Normated scores are given as an int above or equal to zero, below 1000.
-     * int userID can be used to receive additional information about the Player of the matching GameSession. Additional information retained from PlayerAccess.
+     * int userID can be used to receive additional information about the Player of the matching GameSession.
+     * Additional information retained from PlayerAccess.
      */
     public int[][] getSelectFriendTopScores(int resultTop, int resultLow, String gameType) throws UserInfoException {
         List<Integer> friendIDs = pa.getCurrentPlayer().getFriendUserIDs();
@@ -43,9 +46,11 @@ public class ScoreFront extends Application {
      * @param resultTop Top placement, not index, beginning the span of Map rows to return.
      * @param resultLow Low placement, not index, ending the span of Map rows to return.
      * @param gameType String retained from game class representing the type of the game.
-     * @return int[][] containing int[0] being a list of gameIDs, int[1] normScores, int[2] userIDs. Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboard position.
+     * @return int[][] containing int[0] being a list of userIDs, int[1] normScores, int[2] gameIDs.
+     * Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboard position (offset by one)
      * Normated scores are given as an int above or equal to zero, below 1000.
-     * int userID can be used to receive additional information about the Player of the matching GameSession. Additional information retained from PlayerAccess.
+     * int userID can be used to receive additional information about the Player of the matching GameSession.
+     * Additional information retained from PlayerAccess.
      */
     public int[][] getSelectGlobalTopScores(int resultTop, int resultLow, String gameType){
         return NormLeaderboards.getSelectGlobalTopScores(getGameData(gameType), resultTop, resultLow);
@@ -74,7 +79,9 @@ public class ScoreFront extends Application {
      * @param resultTop Top placement, not index, beginning the span of Map rows to return.
      * @param resultLow Low placement, not index, ending the span of Map rows to return.
      * @param legalGameTypes A String of gameTypes, seperated by space " ".
-     * @return
+     * @return int[][] containing int[0] being a list of userIDs, int[1] normScores. Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboard position.
+     * All userIDs on leaderboard matches usernames in friend list of currentPlayer in DataAccess. Normated scores are given as an int above or equal to zero, below 1000.
+     * int userID can be used to receive additional information about the Player of the matching GameSession. Additional information retained from PlayerAccess.
      * @throws UserInfoException
      */
     public int[][] getSelectFriendTopPersonas(int resultTop, int resultLow, String legalGameTypes) throws UserInfoException {
