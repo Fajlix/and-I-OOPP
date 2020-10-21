@@ -29,11 +29,15 @@ public class DataMappersTests {
     Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
     GameSessionMapper gsm = new GameSessionMapper(context);
     PlayerMapper pm = new PlayerMapper(context);
-    TestContextHelper con = new TestContextHelper();
+    DataAccess gsa = new DataAccess(context);
 
     @Before
     public void init(){
-
+        try {
+            gsa.logIn("Tuff-tuff22oHalvt", "hejNej88*");
+        } catch (UserInfoException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -50,7 +54,6 @@ public class DataMappersTests {
 
     @Test
     public void GameSessionMapperTests(){
-        DataAccess gsa = new DataAccess(InstrumentationRegistry.getInstrumentation().getTargetContext());
         gsa.storeGameSession(785, "ChimpGame");
         gsm.update(new GameSession(gsa.getNewGameID()-1, 225, "MemoryGame", LocalDate.now()));
         Assert.assertEquals("MemoryGame", gsm.find(gsa.getNewGameID()-1).get().getGameType());

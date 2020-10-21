@@ -11,12 +11,17 @@ import com.example.graymatter.Model.dataAccess.social.Player;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
@@ -144,39 +149,55 @@ public final class PlayerMapper implements DataMapper<Player> {
         return players;
     }
 
+
     /**
      * Method for database entries, not intended for use from other methods than those defined by interface.
      * @param players updated List of players to wrote to database.
-     * @throws IOException
-     */
-    /*
-    private void enterData(List<Player> players) throws IOException {
-        DataBaseModel db = newRead();
-        db.setPlayers(players);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Writer writer = new FileWriter(getJsonString(context));
-        gson.toJson(db, writer);
-        writer.flush();
-        writer.close();
-    }
-    */
-
+     *//*
     private void enterData(List<Player> players) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String FILENAME = "testplayers.json";
+
         try {
             DataBaseModel nDb = gson.fromJson(getJsonString(context), DataBaseModel.class);
             nDb.setPlayers(players);
-            //Writer writer = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
-            FileOutputStream fos = context.openFileOutput(FILENAME,Context.MODE_PRIVATE);
 
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fos));
-            //fos.write(nDb.toString().getBytes());
-            gson.toJson(nDb, writer);
+            File file = appStorageDirectory();
+            FileWriter writer = new FileWriter(file);
+            writer.write(nDb.toString());
             writer.flush();
             writer.close();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
+        }
+
+
+    }*/
+
+    private File appStorageDirectory() {
+        File appFilesDirectory = context.getFilesDir();
+        return new File(appFilesDirectory, "test");
+    }
+
+    private void enterData(List<Player> players){
+        File file = new File(context.getFilesDir(), "testplayers.json");
+        FileOutputStream stream = null;
+        try {
+
+            DataBaseModel nDb = gson.fromJson(getJsonString(context), DataBaseModel.class);
+            nDb.setPlayers(players);
+            System.out.println();
+
+            String jsonInString = gson.toJson(nDb);
+
+            stream = new FileOutputStream(file);
+            stream.write(jsonInString.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                stream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -190,16 +211,48 @@ public final class PlayerMapper implements DataMapper<Player> {
     private DataBaseModel newRead() throws IOException {
         //Reader reader = new FileReader(getJsonString(context));
         DataBaseModel toReturn = gson.fromJson(getJsonString(context), DataBaseModel.class);
+
        // reader.close();
         return toReturn;
     }
 
     private String getJsonString (Context context) throws IOException {
-        InputStream inputStream = context.getAssets().open("testplayers.json");
+        //InputStream inputStream = context.getFilesDir().open("testplayers.json");
+
+        File file = new File(context.getFilesDir(), "testplayers.json");
+        FileInputStream stream = null;
+
+        stream = new FileInputStream(file);
+
+        Reader red = new InputStreamReader(stream);
+        BufferedReader buf = new BufferedReader(red);
+
+        String line = buf.readLine();
+        StringBuilder sb = new StringBuilder();
+        while(line != null){
+            sb.append(line).append("\n");
+            line = buf.readLine();
+        }
+        System.out.println(sb.toString());
+        return sb.toString();
+
+/*
+        inputStream.read(stream.);
+        inputStream.close();
+        String str = new String(buffer);
+
+        String str = stream.read(buffer);
+        stream.close();
+        String str = new String(buffer);
+
+        /*DataBaseModel nDb = gson.fromJson(getJsonString(context), DataBaseModel.class);
+
+
         byte[] buffer = new byte[inputStream.available()];
         inputStream.read(buffer);
+        inputStream.close();
         String str = new String(buffer);
-        return str;
+        return str;*/
     }
 
 }

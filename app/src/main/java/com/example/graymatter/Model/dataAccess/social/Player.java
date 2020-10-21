@@ -3,6 +3,7 @@ package com.example.graymatter.Model.dataAccess.social;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -181,9 +182,9 @@ public class Player {
             return false;
         }
         Player oP = (Player) o;
-        if (!this.userInfo.equals(oP.userInfo)){
+        /*if (!this.userInfo.equals(oP.userInfo)){
             return false; //TODO not sure if it should still return true
-        }
+        }*/
         return (oP.userID != 0 && userID == oP.userID);
     }
 
@@ -267,4 +268,5 @@ public class Player {
     public void deActUserInfo() {
         userInfo = null;
     }
+
 }

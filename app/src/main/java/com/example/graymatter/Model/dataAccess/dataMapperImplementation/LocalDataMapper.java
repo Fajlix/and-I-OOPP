@@ -41,6 +41,7 @@ public class LocalDataMapper {
         try {
             FileWriter writer = new FileWriter(tempFile);
             writer.write(str);
+            writer.flush();
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,6 +58,7 @@ public class LocalDataMapper {
             tempFile = File.createTempFile("logIn.txt", null, context.getCacheDir());
             FileWriter writer = new FileWriter(tempFile);
             writer.write("0");
+            writer.flush();
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -74,6 +76,8 @@ public class LocalDataMapper {
             while( (strLine=bReader.readLine()) != null  ){
                 text.append(strLine).append("\n");
             }
+            bReader.close();
+            fReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

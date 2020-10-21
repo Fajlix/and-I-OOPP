@@ -1,3 +1,4 @@
+/*
 package com.example.graymatter;
 
 import android.content.Context;
@@ -28,11 +29,15 @@ public class ProgressTest {
     int[] scores;
     DataAccess gsa;
 
-    TestContextHelper con = new TestContextHelper();
     @Before
     public void init(){
         scores = new int[]{8, 13, 5, 7, 1, 2, 16, 99, 2, 0, 13, 13, 13, 13, 13, 9, 9, 9, 5, 12};
         gsa = new DataAccess(context);
+        try {
+            gsa.logIn("Tuff-tuff22oHalvt", "hejNej88*");
+        } catch (UserInfoException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -110,3 +115,4 @@ public class ProgressTest {
 
 
 }
+*/

@@ -111,10 +111,6 @@ public class SocialTest {
         assertEquals(1, testPlayerAccess.playerMapper.find(1).get().getUserID());
     }
 
-    @Test
-    public void readGsonTest() {
-        assertEquals(1, 15);
-    }
 
     @Test
     public void logInAndOutTest() throws UserInfoException {

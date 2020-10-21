@@ -3,6 +3,7 @@ package com.example.graymatter.Model.dataAccess.social;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Representing private user information. All fields and methods private or protected.
@@ -102,6 +103,20 @@ public class UserInfo {
         return "Password must be at minimum 8 characters and contain at least an uppercase letter, a lowercase letter, a number, and a special character";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserInfo userInfo = (UserInfo) o;
+        return email.equals(userInfo.email) &&
+                password.equals(userInfo.password) &&
+                friendUserIDs.equals(userInfo.friendUserIDs);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, password, friendUserIDs);
+    }
 
     public boolean isFriend(int userID) {
         return friendUserIDs.contains(userID);

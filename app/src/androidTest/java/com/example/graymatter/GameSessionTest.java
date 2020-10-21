@@ -22,7 +22,6 @@ public class GameSessionTest {
     String path = "src/main/assets/testPlayers.json";
     DataAccess gsa;
     GameSessionMapper gsm;
-    TestContextHelper cont = new TestContextHelper();
 
 
     @Before
