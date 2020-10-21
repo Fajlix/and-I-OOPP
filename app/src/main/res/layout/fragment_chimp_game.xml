@@ -25,7 +25,7 @@
         android:id="@+id/chimpTestDescription"
         android:layout_width="416dp"
         android:layout_height="736dp"
-        android:background="#000000"
+        android:background="#4CAF50"
         android:clickable="true"
         android:fontFamily="monospace"
         android:gravity="center"
@@ -43,57 +43,48 @@
         android:id="@+id/iconNumber1"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="208dp"
         android:layout_marginLeft="130dp"
+        android:layout_marginTop="208dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.337"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_number_1" />
+        app:srcCompat="@mipmap/ic_number_1s_foreground" />
 
     <ImageView
         android:id="@+id/iconNumber2"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="152dp"
         android:layout_marginLeft="190dp"
+        android:layout_marginTop="152dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_number_2" />
+        app:srcCompat="@mipmap/ic_number_2s_foreground" />
 
     <ImageView
         android:id="@+id/iconNumber3"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="94dp"
         android:layout_marginLeft="190dp"
+        android:layout_marginTop="94dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_number_3" />
+        app:srcCompat="@mipmap/ic_number_3s_foreground" />
 
     <ImageView
         android:id="@+id/iconNumber4"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="152dp"
         android:layout_marginLeft="250dp"
+        android:layout_marginTop="152dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.675"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_number_4" />
-
-    <ImageView
-        android:id="@+id/chimpGameClose"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="365dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_close_white" />
+        app:srcCompat="@mipmap/ic_number_4s_foreground" />
 
 </FrameLayout>

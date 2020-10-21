@@ -2,9 +2,6 @@ package com.example.graymatter.Model.Game.MemoryGame;
 
 import com.example.graymatter.Model.Game.Game;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 
 /**
@@ -19,17 +16,12 @@ public class MemoryGame extends Game{
     private int level;
     private int lives;
     private boolean gameOver;
-    //TODO fix this faking shit plzz
-    //TODO Do we need eventbus still?
-    private boolean newGrid = false;
 
     public MemoryGame(){
         gameOver = true;
-        EventBus.getDefault().register(this);
     }
 
     public void startGame(){
-        newGrid = true;
         gameOver = false;
         level = 1;
         lives = 3;
@@ -43,14 +35,13 @@ public class MemoryGame extends Game{
 
     /**
      * Method to respond to player choosing a tile, called through an event bus
-     * @param event holds data about which tile has been chosen
+     * @param tileCoordinate holds data about which tile has been chosen
      */
-    @Subscribe
-    public void onMemoryEvent(MemoryEvent event){
+    public boolean makeMove(int tileCoordinate){
+        boolean newGrid = false;
         if (gameOver) {
             throw new RuntimeException("Attempt to select tile after game over");
         }
-        int tileCoordinate = event.tileCoordinate;
 
         grid.choose(tileCoordinate);
 
@@ -69,9 +60,9 @@ public class MemoryGame extends Game{
                 grid = new MemoryGrid(level);
                 break;
             default:
-                newGrid = false;
                 break;
         }
+        return newGrid;
     }
 
     /*
@@ -84,13 +75,6 @@ public class MemoryGame extends Game{
         return grid.toArrayList();
     }
 
-    public boolean getNewGrid(){
-        if (newGrid){
-            newGrid = false;
-            return true;
-        }
-        return false;
-    }
 
     public MemoryGrid.TileState getTileState(int tileCoordinate){
         return grid.getTileState(tileCoordinate);

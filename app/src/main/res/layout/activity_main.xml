@@ -7,7 +7,6 @@
     android:visibility="visible"
     tools:context=".View.MainActivity">
 
-
     <fragment
         android:id="@+id/fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -34,6 +33,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

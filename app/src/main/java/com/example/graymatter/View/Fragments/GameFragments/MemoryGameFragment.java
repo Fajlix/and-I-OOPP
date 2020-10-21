@@ -25,16 +25,26 @@ public class MemoryGameFragment extends Fragment {
     private GridView gridView;
     private MemoryGridAdapter visualGameGridAdapter;
     private TextView visualGameDescription;
+    private TextView livesText;
     private ImageView visualGameClose;
     private MemoryGameViewModel visualMemoryVM;
     private boolean visibility = true;
+    private ScreenState screenState;
 
+    int lastPos = -1;
+
+    enum ScreenState
+    {
+        START_NEW, GAME_ONGOING
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_visual_game, container, false);
         super.onCreate(savedInstanceState);
+        screenState = ScreenState.START_NEW;
+
         visualMemoryVM = new ViewModelProvider(this).get(MemoryGameViewModel.class);
         visualMemoryVM.init();
         visualMemoryVM.getVisibility().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
@@ -63,23 +73,29 @@ public class MemoryGameFragment extends Fragment {
         visualMemoryVM.getGrid().observe(getViewLifecycleOwner(), new Observer<ArrayList<MemoryGrid.TileState>>() {
             @Override
             public void onChanged(ArrayList<MemoryGrid.TileState> grid) {
-                visualGameGridAdapter = new MemoryGridAdapter(MemoryGameFragment.this, grid);
+                visualGameGridAdapter = new MemoryGridAdapter(MemoryGameFragment.this, grid, lastPos);
+                livesText.setText("You have " + visualMemoryVM.getLives() + " lives Remaining");
                 visualGameGridAdapter.setVisibility(visibility);
                 gridView.setAdapter(visualGameGridAdapter);
                 gridView.setNumColumns(visualMemoryVM.getGridSize());
-                gridView.setVerticalSpacing(10);
-                gridView.setHorizontalSpacing(120/(visualMemoryVM.getGridSize()));
+                gridView.setVerticalSpacing(20);
+                gridView.setHorizontalSpacing(20);
             }
         });
 
         visualGameDescription = (TextView) view.findViewById(R.id.visualGameDescription);
+        livesText = view.findViewById(R.id.livesText);
+        livesText.setVisibility(View.INVISIBLE);
         visualGameDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClearScreen();
-                visualMemoryVM.startVisualGame();
-                ShowBoard();
-
+                if (screenState == ScreenState.START_NEW)
+                {
+                    ClearScreen();
+                    visualMemoryVM.startMemoryGame();
+                    ShowBoard();
+                    screenState = ScreenState.GAME_ONGOING;
+                }
             }
         });
 
@@ -92,9 +108,6 @@ public class MemoryGameFragment extends Fragment {
             }
         });
 
-        // clicking on this should take the user to the main page
-        //ImageView visualGameClose = (ImageView) view.findViewById(R.id.visualGameClose);
-
         return view;
     }
 
@@ -104,9 +117,12 @@ public class MemoryGameFragment extends Fragment {
 
     public void ShowBoard() {
         gridView.bringToFront();
+        livesText.bringToFront();
+        livesText.setVisibility(View.VISIBLE);
+        livesText.setText("You have " + visualMemoryVM.getLives() + " lives Remaining");
         gridView.setNumColumns(visualMemoryVM.getGridSize());
-        gridView.setVerticalSpacing(40);
-        gridView.setHorizontalSpacing(40);
+        gridView.setVerticalSpacing(20);
+        gridView.setHorizontalSpacing(20);
     }
 
 
@@ -115,6 +131,7 @@ public class MemoryGameFragment extends Fragment {
         visualGameDescription.bringToFront();
         //visualGameClose.bringToFront();
         visualGameDescription.setText("Game over... Your score was: " + level + " \n \nPress to play again");
+        screenState = ScreenState.START_NEW;
     }
 
     public void showWonGame (int level)
@@ -122,5 +139,11 @@ public class MemoryGameFragment extends Fragment {
         visualGameDescription.bringToFront();
         //visualGameClose.bringToFront();
         visualGameDescription.setText("Wow you completed the game! You got the max score of: " + level + " \n \nPress to play again");
+        screenState = ScreenState.START_NEW;
+    }
+
+    public void tileHasBeenClicked(int position) {
+        lastPos = position;
+        visualMemoryVM.tileHasBeenClicked(position);
     }
 }

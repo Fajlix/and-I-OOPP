@@ -8,4 +8,25 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string-array name="games">
+        <item>Reaction Test</item>
+        <item>Chimp Test</item>
+        <item>Visual Memory</item>
+        <item>Tower of Hanoi</item>
+    </string-array>
+
+    <string-array name="gameDescription">
+        <item>Reaction Test desc</item>
+        <item>Chimp Test desc</item>
+        <item>Visual Memory desc</item>
+        <item>Tower of Hanoi desc</item>
+    </string-array>
+
+    <string-array name="gameCardColors">
+        <item name="reactionTest">#5555e5</item>
+        <item name="chimpTest">#4CAF50</item>
+        <item name="visualTest">#DA3737</item>
+        <item name="towerOfHanoi">#E5C555</item>
+    </string-array>
+
 </resources>

@@ -5,4 +5,8 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="black_overlay">#66000000</color>
     <color name="white">#ffffff</color>
+    <color name="reactionTest">#5555e5</color>
+    <color name="chimpTest">#4CAF50</color>
+    <color name="visualTest">#DA3737</color>
+    <color name="towerOfHanoi">#E5C555</color>
 </resources>
