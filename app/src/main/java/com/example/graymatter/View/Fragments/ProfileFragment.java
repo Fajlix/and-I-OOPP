@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 import com.example.graymatter.R;
 import com.example.graymatter.View.FragmentChangeListener;
@@ -47,7 +48,7 @@ public class ProfileFragment extends Fragment {
 
 
         final ProfileViewModel profileViewModel = new ProfileViewModel();
-        profileViewModel.init(getContext());
+        profileViewModel.init(new DataAccess(getContext()));
 
 
         Button friendsButton = (Button)view.findViewById(R.id.btnFriends);
