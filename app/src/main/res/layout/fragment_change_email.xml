@@ -49,6 +49,15 @@
             android:hint="Confirm New Email"
             android:inputType="textEmailAddress" />
 
+        <TextView
+            android:id="@+id/textViewError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="#FF0000"
+            android:visibility="invisible" />
+
         <Button
             android:id="@+id/btnChangeEmail"
             android:layout_width="match_parent"

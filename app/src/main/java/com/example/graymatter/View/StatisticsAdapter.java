@@ -19,16 +19,14 @@ import com.example.graymatter.R;
 //TODO This is basically a copy of RecyclerViewAdapter, so should prob do sum smart abstractions instead
 public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.StatisticsViewHolder> {
     String[] nameArray;
-    String[] descArray;
     String[] colors;
     int[] logos;
     Context context;
     FragmentChangeListener fragmentChangeListener;
 
-    public StatisticsAdapter (Context c, String[] gameName, String[] gameDescription, String[] colors, int[] logos) {
+    public StatisticsAdapter (Context c, String[] gameName, String[] colors, int[] logos) {
         context = c;
         nameArray = gameName;
-        descArray = gameDescription;
         this.logos = logos;
         this.colors = colors;
     }
@@ -47,7 +45,6 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
     @Override
     public void onBindViewHolder(@NonNull StatisticsViewHolder holder, final int position) {
         holder.title.setText(nameArray[position]);
-        holder.description.setText(descArray[position]);
         holder.logo.setImageResource(logos[position]);
         holder.mainCard.setBackgroundColor(Color.parseColor(colors[position]));
 
@@ -69,7 +66,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
                 }
                 else if (position == 3)
                 {
-                    //fragmentChangeListener.towerOfHanoiClicked();
+                    fragmentChangeListener.ToHClicked();
                 }
             }
         });
@@ -81,7 +78,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
     }
 
     public class StatisticsViewHolder extends RecyclerView.ViewHolder{
-        TextView title, description;
+        TextView title;
         ImageView logo;
         LinearLayout mainCard;
         ConstraintLayout mainLayout;
@@ -89,7 +86,6 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
         public StatisticsViewHolder (@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.statisticsGamesTxt);
-            description = itemView.findViewById(R.id.statisticsGamesDescTxt);
             logo = itemView.findViewById(R.id.statisticsGameLogo);
             mainCard = itemView.findViewById(R.id.statisticsMainCard);
             mainLayout = itemView.findViewById(R.id.statisticsMainLayout);

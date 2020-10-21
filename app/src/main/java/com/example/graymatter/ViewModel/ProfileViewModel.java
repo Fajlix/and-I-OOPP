@@ -33,6 +33,21 @@ public class ProfileViewModel extends ViewModel {
     }
 
 
+
+    public boolean isLoggedIn(){
+        return playerAccess.isLoggedIn();
+    }
+
+    public void login(String username, String password){
+
+    }
+    public void register(String username, String email, String password){
+
+    }
+
+
+
+
     //Settings
     public void logoutUser(){
 

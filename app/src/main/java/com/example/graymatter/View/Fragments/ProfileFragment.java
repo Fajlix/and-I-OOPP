@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.graymatter.R;
+import com.example.graymatter.Social.PlayerAccess;
 import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.View.FriendsDialog;
 import com.example.graymatter.ViewModel.ProfileViewModel;
@@ -42,15 +43,19 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         listener = (FragmentChangeListener)getContext();
 
-         profileName = (TextView)view.findViewById(R.id.textViewProfileName);
-
-
         final ProfileViewModel profileViewModel = new ProfileViewModel();
         try {
             profileViewModel.init(getJsonString());
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        if(!profileViewModel.isLoggedIn()){
+            listener.notLoggedIn();
+        }
+
+
+        profileName = (TextView)view.findViewById(R.id.textViewProfileName);
 
 
         Button friendsButton = (Button)view.findViewById(R.id.btnFriends);

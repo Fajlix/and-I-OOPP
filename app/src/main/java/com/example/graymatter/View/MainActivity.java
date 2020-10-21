@@ -116,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     public void logoutClicked() {
         settingsDialog.dismiss();
         navController.navigate(R.id.profileFragment);  //TODO maby something else
-
     }
 
     @Override
@@ -133,6 +132,26 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
 
     @Override
     public void ToHClicked() {
-        navController.navigate(R.id.toHFragment);
+        if(navController.getCurrentDestination().getLabel().equals("fragment_statistics")){
+            game = "Tower of Hanoi";
+            navController.navigate(R.id.statisticsTabFragment);
+        }
+        else navController.navigate(R.id.toHFragment);
+
+    }
+
+    @Override
+    public void notLoggedIn() {
+        navController.navigate(R.id.loginFragment);
+    }
+
+    @Override
+    public void registerClicked() {
+        navController.navigate(R.id.registerFragment);
+    }
+
+    @Override
+    public void backToProfile() {
+        navController.navigate(R.id.profileFragment);
     }
 }

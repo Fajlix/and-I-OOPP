@@ -12,4 +12,8 @@ public interface FragmentChangeListener {
     public void changeEmailClicked();
     public void changePasswordClicked();
     public void ToHClicked();
+
+    public void notLoggedIn();
+    public void registerClicked();
+    public void backToProfile();
 }

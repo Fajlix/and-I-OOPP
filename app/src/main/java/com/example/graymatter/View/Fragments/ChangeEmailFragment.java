@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.graymatter.R;
+import com.example.graymatter.Social.DataMapperException;
 import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.ViewModel.ProfileViewModel;
 
@@ -38,13 +40,22 @@ public class ChangeEmailFragment extends Fragment {
         final EditText editTextNewEmail = (EditText)view.findViewById(R.id.editTextNewEmail);
         final EditText editTextConfirmNewEmail = (EditText)view.findViewById(R.id.editTextConfirmNewEmail);
 
+        final TextView textViewError = (TextView)view.findViewById(R.id.textViewError);
+
         Button buttonChangeEmail = (Button)view.findViewById(R.id.btnChangeEmail);
 
         buttonChangeEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                profileViewModel.changeEmail(editTextCurrentEmail.getText().toString(), editTextNewEmail.getText().toString(), editTextConfirmNewEmail.getText().toString());
-                listener.logoutClicked();
+                try {
+                    profileViewModel.changeEmail(editTextCurrentEmail.getText().toString(), editTextNewEmail.getText().toString(), editTextConfirmNewEmail.getText().toString());
+                    textViewError.setVisibility(View.INVISIBLE);
+                    listener.backToProfile();
+                }catch(DataMapperException e){
+                    textViewError.setText(e.getMessage());
+                    textViewError.setVisibility(View.VISIBLE);
+                }
+
             }
         });
 
