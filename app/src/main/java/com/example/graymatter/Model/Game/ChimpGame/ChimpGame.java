@@ -16,6 +16,10 @@ public class ChimpGame extends Game {
     private boolean gameOver;
     private int lives;
 
+
+    private final String gameName = "ChimpGame";
+
+
     public ChimpGame(){
         gameOver = true;
     }
@@ -118,5 +122,10 @@ public class ChimpGame extends Game {
 
     public boolean getGameOver(){
         return gameOver;
+    }
+
+
+    public String getGameName() {
+        return gameName;
     }
 }

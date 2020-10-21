@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 import com.example.graymatter.R;
 import com.example.graymatter.Social.PlayerAccess;
 import com.example.graymatter.View.FragmentChangeListener;
@@ -44,11 +45,7 @@ public class ProfileFragment extends Fragment {
         listener = (FragmentChangeListener)getContext();
 
         final ProfileViewModel profileViewModel = new ProfileViewModel();
-        try {
-            profileViewModel.init(getJsonString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        profileViewModel.init(getContext());
 
         if(!profileViewModel.isLoggedIn()){
             listener.notLoggedIn();
@@ -64,7 +61,12 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 //listener.friendsDialogClicked();
 
-                Dialog friendsDialog = new FriendsDialog(getContext(), profileViewModel.getFriends());
+                Dialog friendsDialog = null;
+                try {
+                    friendsDialog = new FriendsDialog(getContext(), profileViewModel.getFriends());
+                } catch (UserInfoException e) {
+                    e.printStackTrace();
+                }
 
                 //friendsDialog.setContentView(R.layout.dialog_friends);
 

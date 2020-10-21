@@ -5,6 +5,7 @@
         "email": "mat@gmail.com",
         "password": "yihha123",
         "friendUserIDs": [
+          15,
           2,
           71
         ]
@@ -12,7 +13,28 @@
       "userName": "Mathilda97",
       "userID": 1,
       "userImage": "",
-      "playerHistory": []
+      "playerHistory": [
+        36,
+        37,
+        39,
+        2,
+        44
+      ]
+    },
+    {
+      "userInfo": {
+        "email": "hallondalen@gmail.com",
+        "password": "mittLillaLosen12_",
+        "friendUserIDs": [
+          1
+        ]
+      },
+      "userName": "Broderna",
+      "userID": 4,
+      "userImage": "",
+      "playerHistory": [
+        3
+      ]
     },
     {
       "userInfo": {
@@ -24,14 +46,12 @@
       },
       "userName": "Tuff-tuff22oHalvt",
       "userID": 15,
-      "userImage": "",
+      "userImage": "assets/pic",
       "playerHistory": [
         34,
         35,
-        36,
-        37,
         38,
-        39
+        45
       ]
     }
   ],
@@ -57,44 +77,94 @@
       "gameID": 35
     },
     {
-      "score": 500,
+      "score": 200,
       "gameType": "ChimpGame",
       "date": {
         "year": 2020,
-        "month": 10,
-        "day": 9
+        "month": 9,
+        "day": 5
       },
       "gameID": 36
     },
     {
-      "score": 670,
-      "gameType": "ShrimpGame",
-      "date": {
-        "year": 2020,
-        "month": 10,
-        "day": 9
-      },
-      "gameID": 37
-    },
-    {
-      "score": 500,
+      "score": 100,
       "gameType": "ChimpGame",
       "date": {
         "year": 2020,
         "month": 10,
-        "day": 9
+        "day": 2
+      },
+      "gameID": 37
+    },
+    {
+      "score": 900,
+      "gameType": "ChimpGame",
+      "date": {
+        "year": 2020,
+        "month": 8,
+        "day": 7
       },
       "gameID": 38
     },
     {
-      "score": 670,
-      "gameType": "ShrimpGame",
+      "score": 111,
+      "gameType": "ChimpGame",
       "date": {
         "year": 2020,
         "month": 10,
-        "day": 9
+        "day": 5
       },
       "gameID": 39
+    },
+    {
+      "score": 1200,
+      "gameType": "ChimpGame",
+      "date": {
+        "year": 2020,
+        "month": 6,
+        "day": 7
+      },
+      "gameID": 2
+    },
+    {
+      "score": 2,
+      "gameType": "MemoryGame",
+      "date": {
+        "year": 2020,
+        "month": 1,
+        "day": 7
+      },
+      "gameID": 3
+    },
+    {
+      "score": 300,
+      "gameType": "MemoryGame",
+      "date": {
+        "year": 2020,
+        "month": 2,
+        "day": 7
+      },
+      "gameID": 44
+    },
+    {
+      "score": 225,
+      "gameType": "MemoryGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 15
+      },
+      "gameID": 45
+    },
+    {
+      "score": 666,
+      "gameType": "ChimpGame",
+      "date": {
+        "year": 2020,
+        "month": 10,
+        "day": 19
+      },
+      "gameID": 1
     }
   ]
 }
