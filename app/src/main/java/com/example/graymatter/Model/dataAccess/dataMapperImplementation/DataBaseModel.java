@@ -1,8 +1,10 @@
-package com.example.graymatter.Social;
+package com.example.graymatter.Model.dataAccess.dataMapperImplementation;
+
+import com.example.graymatter.Model.dataAccess.social.GameSession;
+import com.example.graymatter.Model.dataAccess.social.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class DataBaseModel {
     private List<Player> players = new ArrayList<>();

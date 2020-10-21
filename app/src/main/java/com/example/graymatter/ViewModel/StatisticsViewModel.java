@@ -4,7 +4,8 @@ import android.content.Context;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.graymatter.Social.PlayerAccess;
+import com.example.graymatter.Model.dataAccess.DataAccess;
+
 
 public class StatisticsViewModel extends ViewModel {
     private Context context;
@@ -12,7 +13,7 @@ public class StatisticsViewModel extends ViewModel {
     private String[] topFriendsUsernames, topFriendsUserScores, topGlobalUsernames, topGlobalUserScores;
     private int[] topFriendsUserImages, topGlobalUserImages;
 
-    private PlayerAccess playerAccess;
+    private DataAccess playerAccess;
 
     public void init(Context context, String game){
         this.context = context;

@@ -1,10 +1,13 @@
-package com.example.graymatter.Social;
+package com.example.graymatter.Model.dataAccess.social;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-//i wanted it to be protected, didn't work
+/**
+ * Representing private user information. All fields and methods private or protected.
+ */
 public class UserInfo {
 
 
@@ -12,8 +15,14 @@ public class UserInfo {
     private String password;
     private List<Integer> friendUserIDs;
 
-
-    UserInfo(String email, String password, List<Integer> friendUserIDs) throws UserInfoException {
+    /**
+     * Standard constructor.
+     * @param email of the user.
+     * @param password as defined by method passwordSafetyCheck.
+     * @param friendUserIDs List of integers representing IDs of this users friends. This class is not responsible for ensuring that this connection is mutual, accepted or otherwise valid.
+     * @throws UserInfoException is password does not uphold password standards defined by passwordSafetyCheck.
+     */
+    protected UserInfo(String email, String password, List<Integer> friendUserIDs) throws UserInfoException {
         this.email = email;
         if (!passwordSafetyCheck(password)) throw new UserInfoException(passwordNegativeFeedback());
         this.password = password;
@@ -23,21 +32,17 @@ public class UserInfo {
     protected UserInfo(UserInfo infoToCopy){
         this.email = infoToCopy.email;
         this.password = infoToCopy.password;
-        Collections.copy(this.friendUserIDs, infoToCopy.friendUserIDs);
+        this.friendUserIDs = new ArrayList<>(infoToCopy.friendUserIDs);
     }
 
     protected List<Integer> getFriendUserIDs() {
-        List<Integer> newList = new ArrayList<>();
-       // Collections.copy(newList, this.friendUserIDs);
-        return friendUserIDs;//newList;
+        return new ArrayList<>(this.friendUserIDs);
     }
 
-    protected String getEmail() throws UserInfoException {
-        //safetyCheck(userKey);
+    protected String getEmail() {
         return email;
     }
 
-    //shouldn't have a safety check i think?
     protected boolean isPasswordCorrect(String password){
         return this.password.equals(password);
     }
@@ -73,15 +78,6 @@ public class UserInfo {
         friendUserIDs.remove((Integer) friendUserID);
     }
 
-    //can a method JUST check for exceptions?
-    /**
-    private void safetyCheck(int userKey) throws MissingAccessException {
-        if (this.userKey != userKey){
-            throw new MissingAccessException("Unmatching userkey");
-        }
-    }
-     **/
-
     //4 forloops might be smarter
     protected static boolean passwordSafetyCheck(String password){
         if (password.length() < 8) return false;
@@ -107,13 +103,23 @@ public class UserInfo {
         return "Password must be at minimum 8 characters and contain at least an uppercase letter, a lowercase letter, a number, and a special character";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserInfo userInfo = (UserInfo) o;
+        return email.equals(userInfo.email) &&
+                password.equals(userInfo.password) &&
+                friendUserIDs.equals(userInfo.friendUserIDs);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, password, friendUserIDs);
+    }
 
     public boolean isFriend(int userID) {
         return friendUserIDs.contains(userID);
-    }
-
-    protected String getPassword() {
-        return password;
     }
 
     public boolean sameEmail(String email) {
