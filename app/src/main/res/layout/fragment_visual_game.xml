@@ -24,7 +24,7 @@
         android:id="@+id/visualGameDescription"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000000"
+        android:background="#DA3737"
         android:clickable="true"
         android:fontFamily="monospace"
         android:gravity="center"

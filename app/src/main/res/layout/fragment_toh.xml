@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E5C555"
+    android:backgroundTint="#E5C555"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/three"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@mipmap/ic_number_3s_foreground" />
+
+        <Button
+            android:id="@+id/four"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@mipmap/ic_number_4s_foreground" />
+
+        <Button
+            android:id="@+id/five"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@mipmap/ic_number_5s_foreground" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/six"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:background="@mipmap/ic_number_6s_foreground" />
+
+        <Button
+            android:id="@+id/seven"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@mipmap/ic_number_7s_foreground" />
+
+        <Button
+            android:id="@+id/eight"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@mipmap/ic_number_8s_foreground" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/toHDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:text="Welcome to Tower of Hanoi, select a level to play"
+        android:textColor="#000000"
+        android:textSize="36sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <FrameLayout
+            android:id="@+id/leftRodFL"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/leftRod"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@mipmap/ic_toh_background_foreground"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/middleRodFL"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/middleRod"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@mipmap/ic_toh_background_foreground"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/rightRodFL"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/rightRod"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@mipmap/ic_toh_background_foreground"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

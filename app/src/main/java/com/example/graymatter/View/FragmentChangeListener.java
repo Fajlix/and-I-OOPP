@@ -6,4 +6,5 @@ public interface FragmentChangeListener {
     public void settingsDialogClicked();
     public void chimpTestClicked();
     public void visualGameClicked();
+    public void ToHClicked();
 }

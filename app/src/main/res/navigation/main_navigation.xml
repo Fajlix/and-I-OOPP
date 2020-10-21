@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_gamesFragment_to_visualGameFragment"
             app:destination="@id/visualGameFragment" />
+        <action
+            android:id="@+id/action_gamesFragment_to_toHFragment"
+            app:destination="@id/toHFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -53,4 +56,8 @@
         android:name="com.example.graymatter.View.Fragments.GameFragments.MemoryGameFragment"
         android:label="fragment_visual_game"
         tools:layout="@layout/fragment_visual_game" />
+    <fragment
+        android:id="@+id/toHFragment"
+        android:name="com.example.graymatter.View.Fragments.GameFragments.ToHFragment"
+        android:label="ToHFragment" />
 </navigation>
