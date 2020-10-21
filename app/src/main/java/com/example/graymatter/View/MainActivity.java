@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,13 +44,15 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-               if(destination.getId() == R.id.reactionTestActivity || destination.getId() == R.id.chimpGameActivity || destination.getId() == R.id.visualGameFragment){
+               if(destination.getId() == R.id.reactionTestActivity || destination.getId() == R.id.chimpGameActivity ||
+                       destination.getId() == R.id.visualGameFragment || destination.getId() == R.id.toHFragment){
                    bottomNavigationView.setVisibility(View.GONE);
                }
                else bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
-
+      
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
     }
 
@@ -128,5 +131,8 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
         navController.navigate(R.id.changePasswordFragment);
     }
 
-
+    @Override
+    public void ToHClicked() {
+        navController.navigate(R.id.toHFragment);
+    }
 }

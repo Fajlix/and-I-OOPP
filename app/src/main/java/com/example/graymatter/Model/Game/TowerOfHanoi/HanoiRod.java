@@ -10,6 +10,8 @@ public class HanoiRod {
 
 
     public HanoiDisk grab(){
+        if (disks.empty())
+            return null;
         return disks.pop();
     }
 

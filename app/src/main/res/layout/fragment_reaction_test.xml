@@ -8,26 +8,16 @@
     tools:context=".View.Fragments.GameFragments.ReactionGameFragment">
 
 
-
-    <ImageView
-        android:id="@+id/reactionTestClose"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:clickable="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_close_white" />
-
     <TextView
         android:id="@+id/reactionTestDescription"
         android:layout_width="412dp"
         android:layout_height="733dp"
         android:layout_centerHorizontal="true"
-        android:background="#000000"
+        android:background="#5555e5"
         android:clickable="true"
         android:fontFamily="monospace"
         android:gravity="center"
-        android:text="Press to start the game"
+        android:text="Welcome to reaction test, press the screen to start the game"
         android:textColor="#FFFFFF"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_gamesFragment_to_visualGameFragment"
             app:destination="@id/visualGameFragment" />
+        <action
+            android:id="@+id/action_gamesFragment_to_toHFragment"
+            app:destination="@id/toHFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -89,4 +92,8 @@
         android:name="com.example.graymatter.View.Fragments.ChangePasswordFragment"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_change_password" />
+    <fragment
+        android:id="@+id/toHFragment"
+        android:name="com.example.graymatter.View.Fragments.GameFragments.ToHFragment"
+        android:label="ToHFragment" />
 </navigation>
