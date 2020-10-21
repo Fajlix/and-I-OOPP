@@ -211,18 +211,14 @@ public final class PlayerMapper implements DataMapper<Player> {
     private DataBaseModel newRead() throws IOException {
         //Reader reader = new FileReader(getJsonString(context));
         DataBaseModel toReturn = gson.fromJson(getJsonString(context), DataBaseModel.class);
-
        // reader.close();
         return toReturn;
     }
 
     private String getJsonString (Context context) throws IOException {
         //InputStream inputStream = context.getFilesDir().open("testplayers.json");
-
         File file = new File(context.getFilesDir(), "testplayers.json");
-        FileInputStream stream = null;
-
-        stream = new FileInputStream(file);
+        FileInputStream stream = new FileInputStream(file);
 
         Reader red = new InputStreamReader(stream);
         BufferedReader buf = new BufferedReader(red);

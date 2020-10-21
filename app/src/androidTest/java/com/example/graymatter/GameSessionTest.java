@@ -58,6 +58,5 @@ public class GameSessionTest {
     public void gameSessionGettersTest(){
         GameSession gs = new GameSession(125, 678, "MemoryGame", LocalDate.now());
         Assert.assertEquals(LocalDate.now(), gs.getDate());
-
     }
 }
