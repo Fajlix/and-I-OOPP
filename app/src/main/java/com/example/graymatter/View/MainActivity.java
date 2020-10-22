@@ -15,6 +15,7 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     private Dialog settingsDialog;
 
     private String game;
+    private DataAccess dataAccess;
 
 
     @Override
@@ -51,15 +53,23 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
                else bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
-      
+
+        dataAccess = new DataAccess(this);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
     }
 
 
+    @Override
     public String getGame(){
         return game;
     }
+    @Override
+    public DataAccess getDataAccess() {
+        return dataAccess;
+    }
+
 
 
     @Override
@@ -94,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
 
     @Override
     public void friendsDialogClicked() {
-        //friendsDialog = new FriendsDialog(this, );
+        friendsDialog = new FriendsDialog(this);
         friendsDialog.setContentView(R.layout.dialog_friends);
 
         friendsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

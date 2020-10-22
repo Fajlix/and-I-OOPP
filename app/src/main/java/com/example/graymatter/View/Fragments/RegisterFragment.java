@@ -36,7 +36,7 @@ public class RegisterFragment extends Fragment {
         listener = (FragmentChangeListener)getContext();
 
         final ProfileViewModel profileViewModel = new ProfileViewModel();
-        profileViewModel.init(new DataAccess(getContext()));
+        profileViewModel.init(listener.getDataAccess());
 
         final EditText editTextUsername = (EditText)view.findViewById(R.id.editTextTextUsername);
         final EditText editTextEmail = (EditText)view.findViewById(R.id.editTextTextEmailAddress);

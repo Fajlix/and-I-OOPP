@@ -29,6 +29,7 @@ public class DataAccess {
 
     private DataMapper<GameSession> gsMapper;
     public DataMapper<Player> playerMapper;
+
     /**
      * can be Optional of null, if null - not logged in
      */
@@ -136,6 +137,8 @@ public class DataAccess {
         }
         currentPlayer = player;
         ldm.setCurrentPlayerUserID(player.get().getUserID());
+
+
     }
 
     /**
@@ -240,6 +243,17 @@ public class DataAccess {
      * @return true if anyone is logged in to the app.
      */
     public boolean isLoggedIn() {
+//        Optional<Player> optionalPlayer = playerMapper.find(ldm.getCurrentPlayerUserID());
+//        if (optionalPlayer.isPresent()){
+//            currentPlayer = optionalPlayer;
+//            try {
+//                updatePlayer();
+//            } catch (UserInfoException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            currentPlayer = Optional.empty();
+//        }
         return (currentPlayer.isPresent());
     }
 

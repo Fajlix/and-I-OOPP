@@ -11,16 +11,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 import com.example.graymatter.R;
 import com.example.graymatter.View.FragmentChangeListener;
+import com.example.graymatter.View.MainActivity;
 import com.example.graymatter.ViewModel.ProfileViewModel;
 
 
 public class LoginFragment extends Fragment {
 
-    FragmentChangeListener listener;
+    private FragmentChangeListener listener;
+    private ProfileViewModel profileViewModel;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -34,7 +37,8 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         listener = (FragmentChangeListener)getContext();
 
-        final ProfileViewModel profileViewModel = new ProfileViewModel();
+        profileViewModel = new ProfileViewModel();
+        profileViewModel.init(listener.getDataAccess());
 
         final EditText editTextUsername = (EditText)view.findViewById(R.id.editTextUsername);
         final EditText editTextPassword = (EditText)view.findViewById(R.id.editTextTextPassword);

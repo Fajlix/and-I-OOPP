@@ -25,20 +25,11 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editTextCurrentEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Current Email"
-            android:inputType="textEmailAddress" />
-
-        <EditText
             android:id="@+id/editTextNewEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="New Email"
-            android:layout_marginTop="20dp"
             android:inputType="textEmailAddress" />
 
         <EditText
@@ -48,6 +39,15 @@
             android:ems="10"
             android:hint="Confirm New Email"
             android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/editTextCurrentEmailPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Password"
+            android:layout_marginTop="20dp"
+            android:inputType="textPassword" />
 
         <TextView
             android:id="@+id/textViewError"

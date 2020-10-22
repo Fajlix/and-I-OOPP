@@ -16,9 +16,9 @@ import com.example.graymatter.View.StatisticsAdapter;
 //TODO almost the same as GamesFragment
 public class StatisticsFragment extends Fragment{
 
-    String[] gameName;
-    String[] colors;
-    int[] logos = {R.mipmap.ic_reaction_test_logo_foreground,
+    private String[] gameName;
+    private String[] colors;
+    private int[] logos = {R.mipmap.ic_reaction_test_logo_foreground,
             R.mipmap.ic_chimp_game_logo_foreground,
             R.mipmap.ic_visual_memory_game_logo_foreground,
             R.mipmap.ic_tower_of_hanoi_logo_foreground};

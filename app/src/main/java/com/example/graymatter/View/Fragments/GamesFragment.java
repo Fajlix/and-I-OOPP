@@ -20,8 +20,8 @@ public class GamesFragment extends Fragment {
 
     //private BottomNavigationView bottomNavigationView;
 
-    String gameName[], gameDescription[], colors[];
-    int logos[] = {R.mipmap.ic_reaction_test_logo_foreground,
+    private String gameName[], gameDescription[], colors[];
+    private int logos[] = {R.mipmap.ic_reaction_test_logo_foreground,
             R.mipmap.ic_chimp_game_logo_foreground,
             R.mipmap.ic_visual_memory_game_logo_foreground,
             R.mipmap.ic_tower_of_hanoi_logo_foreground};

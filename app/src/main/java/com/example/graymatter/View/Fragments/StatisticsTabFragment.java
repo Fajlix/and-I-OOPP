@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.graymatter.R;
 import com.example.graymatter.View.Adapters.PagerAdapter;
+import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.View.MainActivity;
 import com.example.graymatter.ViewModel.StatisticsViewModel;
 import com.google.android.material.tabs.TabLayout;
@@ -22,6 +23,7 @@ public class StatisticsTabFragment extends Fragment{
     private TabLayout tabLayout;
     private PagerAdapter pagerAdapter;
     private StatisticsViewModel statisticsViewModel;
+    private FragmentChangeListener listener;
 
     private String game;
 
@@ -35,9 +37,9 @@ public class StatisticsTabFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statistics_tab, container, false);
+        listener = (FragmentChangeListener)getContext();
 
-        MainActivity activity = (MainActivity)getActivity();
-        game = activity.getGame();
+        game = listener.getGame();
 
         statisticsViewModel = new StatisticsViewModel();
         statisticsViewModel.init(getContext(), game);

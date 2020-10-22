@@ -14,7 +14,6 @@ import java.nio.file.Paths;
 
 public class LocalDataMapper {
 
-
     private Context context;
 
     public LocalDataMapper(Context context) {

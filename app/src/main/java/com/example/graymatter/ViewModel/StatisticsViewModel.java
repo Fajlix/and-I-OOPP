@@ -18,6 +18,9 @@ public class StatisticsViewModel extends ViewModel {
     public void init(Context context, String game){
         this.context = context;
 
+
+
+
         if(game.equals("Reaction Test")){
             //TODO something with Social
         }

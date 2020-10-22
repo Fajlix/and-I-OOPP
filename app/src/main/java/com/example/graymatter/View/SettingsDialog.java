@@ -21,7 +21,7 @@ public class SettingsDialog extends Dialog {
     private AlertDialog.Builder builder;
     private ProfileViewModel profileViewModel;
 
-    FragmentChangeListener listener;
+    private FragmentChangeListener listener;
 
     public SettingsDialog(@NonNull Context context) {
         super(context);
@@ -35,6 +35,7 @@ public class SettingsDialog extends Dialog {
         super.onCreate(savedInstanceState);
 
         profileViewModel = new ProfileViewModel();
+        profileViewModel.init(listener.getDataAccess());
 
 
         //Creates an alert dialog that is shown when logoutButton is pressen, with a yes and a no button
