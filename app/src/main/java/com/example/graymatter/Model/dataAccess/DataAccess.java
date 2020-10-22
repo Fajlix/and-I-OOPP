@@ -63,7 +63,6 @@ public class DataAccess {
      * For package-internal cleaning purposes.
      * @param gameID unique gameID of the GameSession.
      */
-    /*
     protected void removeGameSession(int gameID){
         Optional<GameSession> gs = gsMapper.find(gameID);
         if (!gs.isPresent()){
@@ -72,7 +71,7 @@ public class DataAccess {
             gsMapper.delete(gs.get());
         }
     }
-    */
+
 
     public int getNewGameID() {
         int topGameID = 0;
@@ -91,15 +90,7 @@ public class DataAccess {
         }
         throw new DataMapperException("gameId does not match GameSession in database.");
     }
-/*
-    public static Map<Integer, Integer> getAllScoresIdentifiable(){
-        Map<Integer, Integer> scores = new HashMap<>();
-        for (GameSession gs: gsMapper.get()){
-            scores.put(gs.getGameID(), gs.getScore());
-        }
-        return scores;
-    }
-*/
+
     public List<GameSession> getGameSessionsByType(String gameType) {
         List<GameSession> gs = gsMapper.get();
         List<GameSession> nGs = new ArrayList<>();
@@ -111,9 +102,7 @@ public class DataAccess {
         return nGs;
     }
 
-    //below strictly PlayerMapper-related methods
-
-
+    //Below strictly PlayerMapper-related methods
 
     //TODO cleanup gamesessions (remove gamesessions w dead owner
 
@@ -165,7 +154,7 @@ public class DataAccess {
      * Log out the player.
      */
     public void logOut() {
-        currentPlayer = Optional.empty();  //näej pissdålig idé
+        currentPlayer = Optional.empty();
         ldm.setCurrentPlayerUserID(0);
     }
 
@@ -297,7 +286,7 @@ public class DataAccess {
     //Related to friends
 
     /**
-     *
+     * 
      * @param userID
      * @throws UserInfoException
      */

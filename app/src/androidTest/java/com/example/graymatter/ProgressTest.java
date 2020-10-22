@@ -1,7 +1,7 @@
-/*
 package com.example.graymatter;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -25,6 +25,7 @@ import java.util.List;
 public class ProgressTest {
     String path = "src/main/assets/testPlayers.json";
     Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+    ScoreFront sf = new ScoreFront(new DataAccess(context));
 
     int[] scores;
     DataAccess gsa;
@@ -59,17 +60,18 @@ public class ProgressTest {
         int[] normScoresComp = new int[]{0, 50, 150, 150, 250, 250, 300, 350, 475, 475, 475, 550, 750, 750, 750, 750, 750, 750, 900, 950};
         Assert.assertEquals(sortedScores.length, normScores[0].length);
         for (int i = 0; i < sortedScores.length; i++) {
-            //System.out.print(sortedScores[i]);
-            //System.out.println(" " + normScores[i]);
-            Assert.assertEquals(normScores[1][i], normScoresComp[i]);
+            Log.i("unN: ", "" + sortedScores[i]);
+            Log.i("N: ",  "" + normScores[1][i]);
+            Assert.assertEquals(normScoresComp[i], normScores[1][i]);
         }
     }
 
+    /*
     @Test
     public void globalTopScoresTest(){
         gsa.storeGameSession(1500, "ChimpGame");
         gsa.storeGameSession(0, "ChimpGame");
-        int[][] scores = ScoreFront.getSelectGlobalTopScores(1, 12, "ChimpGame");
+        int[][] scores = sf.getSelectGlobalTopScores(1, 12, "ChimpGame");
         Assert.assertEquals(gsa.getCurrentPlayer().getUserID(), scores[2][0]);
         Assert.assertEquals(gsa.getNewGameID()-2, scores[0][0]);
         Assert.assertEquals(gsa.getCurrentPlayer().getUserID(), scores[2][scores[2].length-1]);
@@ -89,7 +91,7 @@ public class ProgressTest {
 
     @Test
     public void friendsTopScoresTest() throws UserInfoException {
-        int[][] scores = ScoreFront.getSelectFriendTopScores(1, 15, "ChimpGame");
+        int[][] scores = sf.getSelectFriendTopScores(1, 15, "ChimpGame");
         for (int i = 0; i < scores[0].length; i++) {
             System.out.println(scores[0][i] + " " + scores[1][i] + " " + scores[2][i]);
         }
@@ -97,7 +99,7 @@ public class ProgressTest {
 
     @Test
     public void friendPersonaScoresTest() throws UserInfoException {
-        int[][] scores = ScoreFront.getSelectFriendTopPersonas(1, 3, "ChimpGame MemoryGame");
+        int[][] scores = sf.getSelectFriendTopPersonas(1, 3, "ChimpGame MemoryGame");
         for (int i = 0; i < scores[0].length; i++) {
             System.out.println(scores[0][i] + " " + scores[1][i]);
         }
@@ -105,14 +107,13 @@ public class ProgressTest {
 
     @Test
     public void globalPersonaScoresTest(){
-        int[][] scores = ScoreFront.getSelectGlobalTopPersonas(1, 5, "ChimpGame MemoryGame");
+        int[][] scores = sf.getSelectGlobalTopPersonas(1, 5, "ChimpGame MemoryGame");
         for (int i = 0; i < scores[0].length; i++) {
             System.out.println(scores[0][i] + " " + scores[1][i]);
         }
     }
 
-
+*/
 
 
 }
-*/

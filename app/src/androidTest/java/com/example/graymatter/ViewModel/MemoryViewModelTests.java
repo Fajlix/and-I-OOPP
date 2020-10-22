@@ -12,7 +12,6 @@ import com.example.graymatter.Model.Game.MemoryGame.MemoryGrid;
 import com.example.graymatter.Model.dataAccess.DataAccess;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
