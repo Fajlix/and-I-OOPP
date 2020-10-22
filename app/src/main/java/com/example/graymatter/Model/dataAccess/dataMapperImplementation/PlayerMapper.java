@@ -218,6 +218,13 @@ public final class PlayerMapper implements DataMapper<Player> {
     private String getJsonString (Context context) throws IOException {
         //InputStream inputStream = context.getFilesDir().open("testplayers.json");
         File file = new File(context.getFilesDir(), "testplayers.json");
+        if (!file.exists()){
+            InputStream inputStream = context.getAssets().open("testplayers.json");
+            byte[] buffer = new byte[inputStream.available()];
+            inputStream.read(buffer);
+            inputStream.close();
+            return new String(buffer);
+        }
         FileInputStream stream = new FileInputStream(file);
 
         Reader red = new InputStreamReader(stream);
