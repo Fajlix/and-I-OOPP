@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.R;
 import com.example.graymatter.ViewModel.ReactionTimeViewModel;
 
@@ -31,7 +32,7 @@ public class ReactionGameFragment extends Fragment{
         super.onCreate(savedInstanceState);
         reactionTimeVM = new ViewModelProvider(this).get(ReactionTimeViewModel.class);
         screenState = ScreenState.START;
-        reactionTimeVM.init();
+        reactionTimeVM.init(new DataAccess(getContext()));
 
         reactionTimeVM.getIsWaiting().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
