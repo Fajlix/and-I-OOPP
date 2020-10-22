@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 import com.example.graymatter.R;
@@ -35,7 +36,7 @@ public class RegisterFragment extends Fragment {
         listener = (FragmentChangeListener)getContext();
 
         final ProfileViewModel profileViewModel = new ProfileViewModel();
-        profileViewModel.init(getContext());
+        profileViewModel.init(new DataAccess(getContext()));
 
         final EditText editTextUsername = (EditText)view.findViewById(R.id.editTextTextUsername);
         final EditText editTextEmail = (EditText)view.findViewById(R.id.editTextTextEmailAddress);

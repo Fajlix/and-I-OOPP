@@ -30,6 +30,8 @@ public class ProfileFragment extends Fragment {
 
     TextView profileName, username, email, scoe;
 
+    ProfileViewModel profileViewModel;
+
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -44,7 +46,7 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         listener = (FragmentChangeListener)getContext();
 
-        final ProfileViewModel profileViewModel = new ProfileViewModel();
+        profileViewModel = new ProfileViewModel();
         profileViewModel.init(new DataAccess(getContext()));
 
         if(!profileViewModel.isLoggedIn()){
