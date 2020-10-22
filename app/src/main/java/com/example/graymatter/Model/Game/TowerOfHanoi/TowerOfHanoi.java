@@ -19,10 +19,12 @@ public class TowerOfHanoi extends Game {
     private boolean active;
 
     public TowerOfHanoi(){
+        gameOver = true;
         active = false;
     }
 
     public void startGame(){
+        gameOver = false;
         active = true;
         board = new HanoiBoard(level);
         moves = 0;
@@ -31,6 +33,7 @@ public class TowerOfHanoi extends Game {
     }
 
     public int endGame(){
+        gameOver = true;
         active = false;
         if (won && level == 8) {
             return (10000 / moves) + (500 / gameTime);

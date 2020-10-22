@@ -20,6 +20,7 @@ public class ReactionTimeGame extends Game {
      * Only constructor for ReactionTime. No parameters
      */
     public ReactionTimeGame(){
+        gameOver = true;
         maxWaitTime = 3000;
         minWaitTime = 500;
         startTime = 0;
@@ -32,7 +33,7 @@ public class ReactionTimeGame extends Game {
      * before reacting.
      */
     public void startGame() {
-
+        gameOver = false;
         // a random time between min- and maxWaitTime
         randWaitTime = Math.round(Math.random() * maxWaitTime) + minWaitTime;
     }
@@ -43,6 +44,7 @@ public class ReactionTimeGame extends Game {
      */
     //Call this to stop the reactionTest returns -1 if clicked to early
     public int endGame(){
+            gameOver = true;
             int result;
             endTime = System.currentTimeMillis();
             //If starTime is not set the player reacted before waitTime is over and reacted to early.
