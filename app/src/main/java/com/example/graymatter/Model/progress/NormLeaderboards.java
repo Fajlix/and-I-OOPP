@@ -75,9 +75,9 @@ public class NormLeaderboards {
 
     /**
      * Returns a leaderboard of players and corresponding normated scores. Based on persona, a.k.a. overall topscoring player.
-     * @param allData three-row matrix where int[0] contains userIDs, int[1] scores, int[2] gameIDs.
      * @param resultTop Top placement, not index, beginning the span of Map rows to return.
      * @param resultLow Low placement, not index, ending the span of Map rows to return.
+     * @param legalGameTypes A String of gameTypes, seperated by space " ". Retained from TODO this should have dedicated method either in GameSessionAccess or some formal legal shell above
      * @return int[][] containing int[0] being a list of userIDs, int[1] normScores. Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboard position.
      * Normated scores are given as an int above or equal to zero, below 1000.
      * int userID can be used to receive additional information about the Player of the matching GameSession. Additional information retained from PlayerAccess.

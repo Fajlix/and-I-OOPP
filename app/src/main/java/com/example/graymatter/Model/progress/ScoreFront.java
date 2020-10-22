@@ -142,6 +142,7 @@ public class ScoreFront extends Application {
         gs[0] = findGameOwners(gs[2]);
         return gs;
     }
+*/
 
     /**
      * Finds mathing userIDs for input gameIDs.
@@ -154,6 +155,7 @@ public class ScoreFront extends Application {
         for (int i = 0; i < gameIDs.length; i++) {
             userIDs[i] = da.getGameIDOwner(gameIDs[i]);
         }
-        return userIDs;
+        gs[0] = findGameOwners(gs[2]);
+        return gs;
     }
 }
