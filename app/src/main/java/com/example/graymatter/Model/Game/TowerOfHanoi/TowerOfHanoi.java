@@ -18,11 +18,15 @@ public class TowerOfHanoi extends Game {
     private int gameTime;
     private boolean active;
 
+    private final String gameName = "TowerOfHanoiGame";
+
     public TowerOfHanoi(){
+        gameOver = true;
         active = false;
     }
 
     public void startGame(){
+        gameOver = false;
         active = true;
         board = new HanoiBoard(level);
         moves = 0;
@@ -31,6 +35,7 @@ public class TowerOfHanoi extends Game {
     }
 
     public int endGame(){
+        gameOver = true;
         active = false;
         if (won && level == 8) {
             return (10000 / moves) + (500 / gameTime);
@@ -99,4 +104,8 @@ public class TowerOfHanoi extends Game {
         return board.getState();
     }
 
+    @Override
+    public String getGameName(){
+        return gameName;
+    }
 }

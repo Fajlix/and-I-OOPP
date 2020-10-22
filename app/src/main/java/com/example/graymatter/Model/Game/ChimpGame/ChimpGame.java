@@ -13,11 +13,10 @@ public class ChimpGame extends Game {
     private int[] board = new int[24]; // The grid on which the sequence tiles can appear, zeroes indicate empty spaces
     private int nextNumber;
     private boolean numberVisibility;
-    private boolean gameOver;
     private int lives;
 
 
-    private final String gameName = "ChimpGame";
+    private final String name = "ChimpGame";
 
 
     public ChimpGame(){
@@ -30,7 +29,6 @@ public class ChimpGame extends Game {
         numberQty = 4;
         fillBoard();
         numberVisibility = true;
-        notifyObservers();
     }
 
     public int endGame(){
@@ -71,7 +69,6 @@ public class ChimpGame extends Game {
             if (--lives == 0) gameOver = true;
             else fillBoard();
         }
-            notifyObservers();
     }
 
     /**
@@ -120,12 +117,7 @@ public class ChimpGame extends Game {
         return lives;
     }
 
-    public boolean getGameOver(){
-        return gameOver;
-    }
-
-
     public String getGameName() {
-        return gameName;
+        return name;
     }
 }

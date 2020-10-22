@@ -15,13 +15,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.graymatter.Model.Game.TowerOfHanoi.HanoiRodPosition;
+import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.R;
 import com.example.graymatter.ViewModel.TowerOfHanoiViewModel;
 
 import java.util.ArrayList;
 
 /**
- * @author Viktor
+ * @author Viktor Felix
  * the class that represents the fragment for Chimp Game
  */
 public class ToHFragment extends Fragment implements View.OnClickListener {
@@ -56,7 +57,7 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
 
         toHVM = new ViewModelProvider(this).get(TowerOfHanoiViewModel.class);
         toHDescription = view.findViewById(R.id.toHDescription);
-        toHVM.init();
+        toHVM.init(new DataAccess(getContext()));
 
         leftRod = view.findViewById(R.id.leftRod);
         middleRod = view.findViewById(R.id.middleRod);
@@ -247,11 +248,11 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
                 int pos = 285;
                 int width = 60 + 20*(board.get(i).get(j)-1);
                 int height = 60 + 20*(board.get(i).get(j)-1);
-                int fixedheight = 25;
-                ch += fixedheight;
+                int fixedHeight = 25;
+                ch += fixedHeight;
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
                         (width, height);
-                layoutParams.setMargins((rodWidth -width)/2, pos -ch -height/2 -fixedheight/2, 0, 0);
+                layoutParams.setMargins((rodWidth -width)/2, pos -ch -height/2 -fixedHeight/2, 0, 0);
 
                 disks.get(board.get(i).get(j) - 1).setLayoutParams(layoutParams);
 

@@ -15,11 +15,12 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.graymatter.R;
 import com.example.graymatter.View.Adapters.ChimpGridAdapter;
 import com.example.graymatter.ViewModel.ChimpGameViewModel;
+import com.example.graymatter.Model.dataAccess.DataAccess;
 
 import java.util.ArrayList;
 
 /**
- * @author Viktor
+ * @author Viktor Felix
  * the class that represents the fragment for Chimp Game
  */
 public class ChimpGameFragment extends Fragment {
@@ -45,7 +46,7 @@ public class ChimpGameFragment extends Fragment {
         chimpGameVM = new ViewModelProvider(this).get(ChimpGameViewModel.class);
         gridView = view.findViewById(R.id.chimpTestGrid);
         chimpTestDescription = view.findViewById(R.id.chimpTestDescription);
-        chimpGameVM.init();
+        chimpGameVM.init(new DataAccess(getContext()));
 
         chimpGameVM.getGameOver().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
@@ -138,7 +139,7 @@ public class ChimpGameFragment extends Fragment {
      */
     public void tileHasBeenClicked(int position) {
         lastPos = position;
-        chimpGameVM.tileHasBeenClicked(position);
+        chimpGameVM.makeMove(position);
     }
 
     /**

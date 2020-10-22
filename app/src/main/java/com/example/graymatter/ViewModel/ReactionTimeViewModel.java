@@ -5,12 +5,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.graymatter.Model.Game.ReactionGame.ReactionTimeGame;
+import com.example.graymatter.Model.dataAccess.DataAccess;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * @author Felix
+ * @author Felix Viktor
  * class that represents the ViewModel for the reaction game.
  */
 
@@ -22,12 +23,15 @@ public class ReactionTimeViewModel extends ViewModel {
     private MutableLiveData<Boolean> mIsWaiting = new MutableLiveData<>();
     private int score = 0;
 
+    private DataAccess dataAccess;
+
     /**
      * Initializes the ViewModel with a new instance of a game and sets start values for some
      * attributes.
      */
 
-    public void init(){
+    public void init(DataAccess dataAccess){
+        this.dataAccess = dataAccess;
         reactionTimeGame = new ReactionTimeGame();
         timer = new Timer();
     }
@@ -41,7 +45,7 @@ public class ReactionTimeViewModel extends ViewModel {
         reactionTimeGame.startGame();
         // New task that runs after waitTime
         task = new UpdateViewTask();
-        mIsWaiting.setValue(true);
+        mIsWaiting.postValue(true);
         timer.schedule(task, reactionTimeGame.getRandWaitTime());
     }
 
@@ -51,6 +55,9 @@ public class ReactionTimeViewModel extends ViewModel {
         if (task != null)
             task.cancel();
         score = reactionTimeGame.endGame();
+        if(dataAccess.isLoggedIn()){
+            dataAccess.storeGameSession(score, reactionTimeGame.getGameName());
+        }
     }
     public int getScore(){
         return score;
