@@ -19,7 +19,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.graymatter.Model.Game.TowerOfHanoi.HanoiRodPosition;
 import com.example.graymatter.R;
-import com.example.graymatter.View.Adapters.ChimpGridAdapter;
 import com.example.graymatter.ViewModel.TowerOfHanoiViewModel;
 
 import java.util.ArrayList;

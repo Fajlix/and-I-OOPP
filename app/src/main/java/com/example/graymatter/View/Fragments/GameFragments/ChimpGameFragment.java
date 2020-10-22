@@ -1,23 +1,25 @@
 package com.example.graymatter.View.Fragments.GameFragments;
 
-        import android.os.Bundle;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.AdapterView;
-        import android.widget.GridView;
-        import android.widget.ImageView;
-        import android.widget.TextView;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-        import androidx.fragment.app.Fragment;
-        import androidx.lifecycle.Observer;
-        import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
-        import com.example.graymatter.R;
-        import com.example.graymatter.View.Adapters.ChimpGridAdapter;
-        import com.example.graymatter.ViewModel.ChimpGameViewModel;
+import com.example.graymatter.R;
+import com.example.graymatter.View.Adapters.ChimpGridAdapter;
+import com.example.graymatter.ViewModel.ChimpGameViewModel;
 
-public class ChimpGameFragment extends Fragment{
+import java.util.ArrayList;
+
+public class ChimpGameFragment extends Fragment {
     private GridView gridView;
     private ChimpGridAdapter chimpGameChimpGridAdapter;
     private TextView chimpTestDescription;
@@ -42,7 +44,7 @@ public class ChimpGameFragment extends Fragment{
             public void onChanged(Boolean gameOver) {
                 if (gameOver) {
                     int numberQty = chimpGameVM.getScore();
-                    if(numberQty >= 25)
+                    if (numberQty >= 25)
                         showWonGame(numberQty);
                     else
                         showLostGame(numberQty);
@@ -52,7 +54,7 @@ public class ChimpGameFragment extends Fragment{
         chimpGameVM.getGrid().observe(getViewLifecycleOwner(), new Observer<int[]>() {
             @Override
             public void onChanged(int[] grid) {
-                chimpGameChimpGridAdapter = new ChimpGridAdapter(ChimpGameFragment.this,grid,lastPos);
+                chimpGameChimpGridAdapter = new ChimpGridAdapter(ChimpGameFragment.this, ArrayToArrayList(grid), lastPos);
                 gridView.setAdapter(chimpGameChimpGridAdapter);
             }
         });
@@ -95,24 +97,29 @@ public class ChimpGameFragment extends Fragment{
         gridView.setHorizontalSpacing(50);
     }
 
-    public void showLostGame (int score) {
+    public void showLostGame(int score) {
         chimpTestDescription.bringToFront();
         chimpTestDescription.setText("Game over... Your score was: " + score + " \n \nPress to play again");
     }
 
-    public void showWonGame (int score) {
+    public void showWonGame(int score) {
         chimpTestDescription.bringToFront();
         chimpTestDescription.setText("Wow you completed the game! You got the max score of: "
                 + score + " \n \nPress to play again");
     }
 
-    public GridView getGridView()
-    {
-        return gridView;
-    }
-
     public void tileHasBeenClicked(int position) {
         lastPos = position;
         chimpGameVM.tileHasBeenClicked(position);
+    }
+
+    public ArrayList<Integer> ArrayToArrayList(int[] arr) {
+        ArrayList<Integer> array_list = new ArrayList<>();
+
+        // Using add() method to add elements in array_list
+        for (int i = 0; i < arr.length; i++)
+            array_list.add(new Integer(arr[i]));
+
+        return array_list;
     }
 }

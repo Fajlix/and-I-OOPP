@@ -121,7 +121,6 @@ public class MemoryGameFragment extends Fragment {
     public void showLostGame (int level)
     {
         visualGameDescription.bringToFront();
-        //visualGameClose.bringToFront();
         visualGameDescription.setText("Game over... Your score was: " + level + " \n \nPress to play again");
         screenState = ScreenState.START_NEW;
     }
@@ -129,7 +128,6 @@ public class MemoryGameFragment extends Fragment {
     public void showWonGame (int level)
     {
         visualGameDescription.bringToFront();
-        //visualGameClose.bringToFront();
         visualGameDescription.setText("Wow you completed the game! You got the max score of: " + level + " \n \nPress to play again");
         screenState = ScreenState.START_NEW;
     }
