@@ -38,7 +38,7 @@ public class TowerOfHanoiViewModel extends ViewModel {
     // has been clicked
     private void update(){
         if (towerOfHanoi.isWon()) {
-            board.setValue(towerOfHanoi.getState());
+            board.postValue(towerOfHanoi.getState());
             score = towerOfHanoi.endGame();
             gameOver.setValue(true);
             if(dataAccess.isLoggedIn()){
@@ -46,7 +46,7 @@ public class TowerOfHanoiViewModel extends ViewModel {
             }
         }
         else {
-            board.setValue(towerOfHanoi.getState());
+            board.postValue(towerOfHanoi.getState());
         }
     }
 

@@ -45,7 +45,7 @@ public class ReactionTimeViewModel extends ViewModel {
         reactionTimeGame.startGame();
         // New task that runs after waitTime
         task = new UpdateViewTask();
-        mIsWaiting.setValue(true);
+        mIsWaiting.postValue(true);
         timer.schedule(task, reactionTimeGame.getRandWaitTime());
     }
     public void endReactionTimeGame(){

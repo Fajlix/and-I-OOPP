@@ -34,8 +34,8 @@ public class ChimpGameViewModel extends ViewModel {
     public void init(DataAccess dataAccess){
         this.dataAccess = dataAccess;
         chimpGame = new ChimpGame();
-        gameOver.setValue(false);
-        visibility.setValue(false);
+        gameOver.postValue(false);
+        visibility.postValue(false);
     }
 
     /**
@@ -43,7 +43,7 @@ public class ChimpGameViewModel extends ViewModel {
      */
     public void startChimpGame(){
         chimpGame.startGame();
-        grid.setValue(chimpGame.getBoard());
+        grid.postValue(chimpGame.getBoard());
     }
     //Getters for the data, both used for observers as well as normal getters
     public LiveData<int[]> getGrid(){
@@ -78,7 +78,7 @@ public class ChimpGameViewModel extends ViewModel {
             gameOver.setValue(true);
         }
         else {
-            grid.setValue(chimpGame.getBoard());
+            grid.postValue(chimpGame.getBoard());
             visibility.setValue(chimpGame.getNumberVisibility());
         }
     }
