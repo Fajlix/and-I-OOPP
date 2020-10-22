@@ -21,7 +21,7 @@ public class ChimpGameViewModel extends ViewModel {
     private ChimpGame chimpGame;
     private int score = 0;
 
-    private DataAccess da;
+    private DataAccess dataAccess;
 
     //Mutable live data used to notify observers when data is changed
     private MutableLiveData<Boolean> gameOver = new MutableLiveData<>();
@@ -31,8 +31,8 @@ public class ChimpGameViewModel extends ViewModel {
     /**
      * Initializes the VM with a new instance of a game and sets start values for some attributes.
      */
-    public void init(DataAccess da){
-        this.da = da;
+    public void init(DataAccess dataAccess){
+        this.dataAccess = dataAccess;
         chimpGame = new ChimpGame();
         gameOver.setValue(false);
         visibility.setValue(false);
@@ -68,11 +68,13 @@ public class ChimpGameViewModel extends ViewModel {
         if (chimpGame.getGameOver()) {
             score = chimpGame.endGame();  //does score need to be global? i d think so
             try {
-                da.logIn("Tuff-tuff22oHalvt", "hejNej88*");
+                dataAccess.logIn("Tuff-tuff22oHalvt", "hejNej88*");
             } catch (UserInfoException e) {
                 e.printStackTrace();
             }
-            da.storeGameSession(score, chimpGame.getGameName());
+            if(dataAccess.isLoggedIn()){
+                dataAccess.storeGameSession(score, chimpGame.getGameName());
+            }
             gameOver.setValue(true);
         }
         else {

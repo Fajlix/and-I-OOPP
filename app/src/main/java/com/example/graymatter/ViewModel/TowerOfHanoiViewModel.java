@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.graymatter.Model.Game.TowerOfHanoi.HanoiRodPosition;
 import com.example.graymatter.Model.Game.TowerOfHanoi.TowerOfHanoi;
+import com.example.graymatter.Model.dataAccess.DataAccess;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,10 @@ public class TowerOfHanoiViewModel extends ViewModel {
     private MutableLiveData<ArrayList<ArrayList<Integer>>> board = new MutableLiveData<>();
     int level;
 
-    public void init(){
+    private DataAccess dataAccess;
+
+    public void init(DataAccess dataAccess){
+        this.dataAccess = dataAccess;
         towerOfHanoi = new TowerOfHanoi();
     }
 
@@ -37,6 +41,9 @@ public class TowerOfHanoiViewModel extends ViewModel {
             board.setValue(towerOfHanoi.getState());
             score = towerOfHanoi.endGame();
             gameOver.setValue(true);
+            if(dataAccess.isLoggedIn()){
+                dataAccess.storeGameSession(score, towerOfHanoi.getGameName());
+            }
         }
         else {
             board.setValue(towerOfHanoi.getState());

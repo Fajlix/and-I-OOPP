@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.graymatter.Model.Game.MemoryGame.MemoryGame;
 import com.example.graymatter.Model.Game.MemoryGame.MemoryGrid;
+import com.example.graymatter.Model.dataAccess.DataAccess;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -21,6 +22,8 @@ public class MemoryGameViewModel extends ViewModel {
     private int lives = 0;
     private DelayedTask task;
     private Timer timer;
+
+    private DataAccess dataAccess;
     //Mutable live data used to notify observers when data is changed
     private MutableLiveData<Boolean> gameStarted = new MutableLiveData<>();
     private MutableLiveData<Boolean> gameOver = new MutableLiveData<>();
@@ -30,7 +33,8 @@ public class MemoryGameViewModel extends ViewModel {
     /**
      * Initializes the VM with a new instance of a game and sets start values for some attributes
      */
-    public void init(){
+    public void init(DataAccess dataAccess){
+        this.dataAccess = dataAccess;
         memoryGame = new MemoryGame();
         gameStarted.setValue(false);
         gameOver.setValue(false);
@@ -60,6 +64,9 @@ public class MemoryGameViewModel extends ViewModel {
     private void update(boolean newGrid){
         if (memoryGame.getGameOver()) {
             level = memoryGame.endGame();
+            if(dataAccess.isLoggedIn()){
+                dataAccess.storeGameSession(level, memoryGame.getGameName());
+            }
             gameStarted.setValue(false);
             gameOver.setValue(true);
         }
