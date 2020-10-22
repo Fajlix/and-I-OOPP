@@ -239,23 +239,6 @@ public final class PlayerMapper implements DataMapper<Player> {
         System.out.println(sb.toString());
         return sb.toString();
 
-/*
-        inputStream.read(stream.);
-        inputStream.close();
-        String str = new String(buffer);
-
-        String str = stream.read(buffer);
-        stream.close();
-        String str = new String(buffer);
-
-        /*DataBaseModel nDb = gson.fromJson(getJsonString(context), DataBaseModel.class);
-
-
-        byte[] buffer = new byte[inputStream.available()];
-        inputStream.read(buffer);
-        inputStream.close();
-        String str = new String(buffer);
-        return str;*/
     }
 
 }

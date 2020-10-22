@@ -13,6 +13,7 @@ package com.example.graymatter.View.Fragments.GameFragments;
         import androidx.lifecycle.Observer;
         import androidx.lifecycle.ViewModelProvider;
 
+        import com.example.graymatter.Model.dataAccess.DataAccess;
         import com.example.graymatter.R;
         import com.example.graymatter.View.Adapters.ChimpGridAdapter;
         import com.example.graymatter.ViewModel.ChimpGameViewModel;
@@ -35,7 +36,8 @@ public class ChimpGameFragment extends Fragment{
         chimpGameVM = new ViewModelProvider(this).get(ChimpGameViewModel.class);
         gridView = view.findViewById(R.id.chimpTestGrid);
         chimpTestDescription = view.findViewById(R.id.chimpTestDescription);
-        chimpGameVM.init();
+        //TODO hmm
+        chimpGameVM.init(new DataAccess(getContext()));
 
         chimpGameVM.getGameOver().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
