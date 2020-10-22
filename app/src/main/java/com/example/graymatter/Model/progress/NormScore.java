@@ -6,6 +6,7 @@ package com.example.graymatter.Model.progress;
  */
 public class NormScore { //TODO this should be renamed NormNumber
 
+    private static int ACCURACY = 2;
     /**
      * Method normates scores by associating each of them with a number 1-1000 representing the percentile the score performs in.
      * @param scores sorted with top scores at high indexes
@@ -13,7 +14,7 @@ public class NormScore { //TODO this should be renamed NormNumber
      */
     public static int[][] normScores(int[] scores){ //TODO flip it this is dumb
         //what part of the gameDB does each game represent?
-        double chunks = 1000.0 /(double)scores.length;
+        double chunks = ((double)Math.pow(10, ACCURACY)*10)/(double)scores.length;
         int[] normScores = new int[scores.length];
         int sameCount = 1;
         for (int i = 1; i < scores.length; i++) {
@@ -42,5 +43,9 @@ public class NormScore { //TODO this should be renamed NormNumber
         scoresAndNormatedScores[0] = scores;
         scoresAndNormatedScores[1] = normScores;
         return scoresAndNormatedScores;
+    }
+
+    public static void setACCURACY(int decimals){
+        ACCURACY = decimals;
     }
 }
