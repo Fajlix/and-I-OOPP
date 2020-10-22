@@ -15,8 +15,8 @@ public class ProfileViewModel extends ViewModel {
 
     private DataAccess playerAccess;
 
-    public void init(Context context){
-        playerAccess = new DataAccess(context);
+    public void init(DataAccess playerAccess){
+        this.playerAccess = playerAccess;
     }
 
     public String[] getFriends() throws UserInfoException {

@@ -63,8 +63,6 @@ public class ChimpViewModelTests {
                 }
             }
         }
-
-        assertTrue(viewModel.getScore() == 5);
+        assertEquals(5, viewModel.getScore());
     }
-
 }
