@@ -10,7 +10,7 @@ public class GameSession {
 
     private final int score;
     private final String gameType;
-    private final LocalDate date;
+    private final String dateString;
     private final int gameID;
 
 
@@ -21,8 +21,8 @@ public class GameSession {
      * @param score Not below 0. Unnormated. Bigger score is a better result than a lower. //TODO is this what we decided on?
      * @param gameType String representing game type. Needs to formatted likewise for every game entry from same game. //TODO we never decided on this?
      */
-    public GameSession(int gameID, int score, String gameType, LocalDate date){
-        this.date = date;
+    public GameSession(int gameID, int score, String gameType, String dateString){
+        this.dateString = dateString;
         this.gameID = gameID;
         this.score = score;
         this.gameType = gameType;
@@ -76,8 +76,8 @@ public class GameSession {
     /**
      * @return date of the GameSession. TimeZone according to OS of the device the GameSession was played on.
      */
-    public LocalDate getDate() {
-        return date;  //should deepcopy
+    public String getDate() {
+        return dateString;  //should deepcopy
     }
 
 }

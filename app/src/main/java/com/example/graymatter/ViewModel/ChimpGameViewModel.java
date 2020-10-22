@@ -1,10 +1,15 @@
 package com.example.graymatter.ViewModel;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
+import com.example.graymatter.Model.dataAccess.DataAccess;
+import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 import com.example.graymatter.Model.progress.ScoreFront;
 
 /**
@@ -15,6 +20,9 @@ import com.example.graymatter.Model.progress.ScoreFront;
 public class ChimpGameViewModel extends ViewModel {
     private ChimpGame chimpGame;
     private int score = 0;
+
+    private DataAccess dataAccess;
+
     //Mutable live data used to notify observers when data is changed
     private MutableLiveData<Boolean> gameOver = new MutableLiveData<>();
     private MutableLiveData<int[]> grid = new MutableLiveData<>();
@@ -23,10 +31,11 @@ public class ChimpGameViewModel extends ViewModel {
     /**
      * Initializes the VM with a new instance of a game and sets start values for some attributes.
      */
-    public void init(){
+    public void init(DataAccess dataAccess){
+        this.dataAccess = dataAccess;
         chimpGame = new ChimpGame();
-        gameOver.setValue(false);
-        visibility.setValue(false);
+        gameOver.postValue(false);
+        visibility.postValue(false);
     }
 
     /**
@@ -34,7 +43,7 @@ public class ChimpGameViewModel extends ViewModel {
      */
     public void startChimpGame(){
         chimpGame.startGame();
-        grid.setValue(chimpGame.getBoard());
+        grid.postValue(chimpGame.getBoard());
     }
     //Getters for the data, both used for observers as well as normal getters
     public LiveData<int[]> getGrid(){
@@ -58,10 +67,18 @@ public class ChimpGameViewModel extends ViewModel {
     private void update(){
         if (chimpGame.getGameOver()) {
             score = chimpGame.endGame();  //does score need to be global? i d think so
+            try {
+                dataAccess.logIn("Tuff-tuff22oHalvt", "hejNej88*");
+            } catch (UserInfoException e) {
+                e.printStackTrace();
+            }
+            if(dataAccess.isLoggedIn()){
+                dataAccess.storeGameSession(score, chimpGame.getGameName());
+            }
             gameOver.setValue(true);
         }
         else {
-            grid.setValue(chimpGame.getBoard());
+            grid.postValue(chimpGame.getBoard());
             visibility.setValue(chimpGame.getNumberVisibility());
         }
     }

@@ -55,7 +55,7 @@ public class DataMappersTests {
     @Test
     public void GameSessionMapperTests(){
         gsa.storeGameSession(785, "ChimpGame");
-        gsm.update(new GameSession(gsa.getNewGameID()-1, 225, "MemoryGame", LocalDate.now()));
+        gsm.update(new GameSession(gsa.getNewGameID()-1, 225, "MemoryGame", LocalDate.now().toString()));
         Assert.assertEquals("MemoryGame", gsm.find(gsa.getNewGameID()-1).get().getGameType());
         gsm.delete(gsm.find(gsa.getNewGameID()-1).get());
         Player player = pm.find(1).get();
@@ -70,11 +70,11 @@ public class DataMappersTests {
         Assert.assertFalse(ghostGS.isPresent());
         //exception in delete
         try{
-            gsm.delete(new GameSession(87, 111, "ExGame", LocalDate.now()));
+            gsm.delete(new GameSession(87, 111, "ExGame", LocalDate.now().toString()));
         } catch (DataMapperException e){}
         //exception in insert()
         try {
-            gsm.insert(new GameSession(1, 666, "ChimpGame", LocalDate.now()));
+            gsm.insert(new GameSession(1, 666, "ChimpGame", LocalDate.now().toString()));
         } catch (DataMapperException e){}
     }
 

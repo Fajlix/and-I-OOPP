@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.graymatter.Model.Game.TowerOfHanoi.HanoiRodPosition;
+import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.R;
 import com.example.graymatter.View.Adapters.ChimpGridAdapter;
 import com.example.graymatter.ViewModel.TowerOfHanoiViewModel;
@@ -60,7 +61,7 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
 
         toHVM = new ViewModelProvider(this).get(TowerOfHanoiViewModel.class);
         toHDescription = view.findViewById(R.id.toHDescription);
-        toHVM.init();
+        toHVM.init(new DataAccess(getContext()));
 
         leftRod = view.findViewById(R.id.leftRod);
         middleRod = view.findViewById(R.id.middleRod);
