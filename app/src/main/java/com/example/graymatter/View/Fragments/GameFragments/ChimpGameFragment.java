@@ -8,13 +8,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-        import androidx.fragment.app.Fragment;
-        import androidx.lifecycle.Observer;
-        import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
-        import com.example.graymatter.R;
-        import com.example.graymatter.View.Adapters.ChimpGridAdapter;
-        import com.example.graymatter.ViewModel.ChimpGameViewModel;
+import com.example.graymatter.R;
+import com.example.graymatter.View.Adapters.ChimpGridAdapter;
+import com.example.graymatter.ViewModel.ChimpGameViewModel;
 
 import java.util.ArrayList;
 
@@ -32,6 +32,7 @@ public class ChimpGameFragment extends Fragment {
 
     /**
      * Initializes the start screen, and the updates it depending on what the user does.
+     *
      * @return returns the view
      */
     @Override
@@ -111,6 +112,7 @@ public class ChimpGameFragment extends Fragment {
 
     /**
      * When the game is lost this method is called to show the lost game screen
+     *
      * @param score is the score the user got
      */
     public void showLostGame(int score) {
@@ -120,6 +122,7 @@ public class ChimpGameFragment extends Fragment {
 
     /**
      * When the game is won this method is called to show the won game screen
+     *
      * @param score is the score the user got
      */
     public void showWonGame(int score) {
@@ -130,6 +133,7 @@ public class ChimpGameFragment extends Fragment {
 
     /**
      * This method is called each time a tile han been clicked to notify the Viewmodel
+     *
      * @param position represents the position of the card that has been clicked
      */
     public void tileHasBeenClicked(int position) {
@@ -139,6 +143,7 @@ public class ChimpGameFragment extends Fragment {
 
     /**
      * Changes the array to an ArrayList, which makes it possible to abstract more
+     *
      * @param arr is the array that should be converted
      * @return returns an ArrayList with the same data as the array
      */

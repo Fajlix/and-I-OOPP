@@ -1,6 +1,5 @@
 package com.example.graymatter.View.Adapters;
 
-import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.view.LayoutInflater;

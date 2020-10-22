@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
-import com.example.graymatter.Model.progress.ScoreFront;
 
 /**
  * @author Felix

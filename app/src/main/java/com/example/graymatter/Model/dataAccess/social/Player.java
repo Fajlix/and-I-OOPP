@@ -3,8 +3,6 @@ package com.example.graymatter.Model.dataAccess.social;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Representing a player of the game. Aggregates additional class userInfo with information to be reached exclusively by current user.
