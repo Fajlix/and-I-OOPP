@@ -11,8 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
+import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 import com.example.graymatter.R;
-import com.example.graymatter.Social.DataMapperException;
 import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.ViewModel.ProfileViewModel;
 
@@ -51,7 +52,7 @@ public class LoginFragment extends Fragment {
                     profileViewModel.login(editTextUsername.getText().toString(), editTextPassword.getText().toString());
                     textViewError.setVisibility(View.INVISIBLE);
                     listener.backToProfile();
-                }catch(DataMapperException e){
+                }catch(DataMapperException | UserInfoException e){
                     textViewError.setText(e.getMessage());
                     textViewError.setVisibility(View.VISIBLE);
                 }

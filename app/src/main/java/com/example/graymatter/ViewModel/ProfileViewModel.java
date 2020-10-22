@@ -42,11 +42,11 @@ public class ProfileViewModel extends ViewModel {
         return playerAccess.isLoggedIn();
     }
 
-    public void login(String username, String password){
-
+    public void login(String username, String password) throws UserInfoException {
+        playerAccess.logIn(username,password);
     }
-    public void register(String username, String email, String password){
-
+    public void register(String username, String email, String password) throws UserInfoException {
+        playerAccess.createNewAccountAndLogIn(email,password,username);
     }
 
 
@@ -54,7 +54,6 @@ public class ProfileViewModel extends ViewModel {
 
     //Settings
     public void logoutUser(){
-
     }
     public void changeEmail(String currentEmail, String newEmail, String confirmNewEmail){
 

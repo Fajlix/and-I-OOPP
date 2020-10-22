@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
 import com.example.graymatter.R;
-import com.example.graymatter.Social.DataMapperException;
 import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.ViewModel.ProfileViewModel;
 

@@ -1,7 +1,6 @@
 package com.example.graymatter.View;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +21,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
     String[] colors;
     int[] logos;
     Context context;
-    FragmentChangeListener fragmentChangeListener;
+    FragmentChangeListener listener;
 
     public StatisticsAdapter (Context c, String[] gameName, String[] colors, int[] logos) {
         context = c;
@@ -37,7 +36,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.statistics_game_card, parent, false);
 
-        fragmentChangeListener = (FragmentChangeListener) parent.getContext();
+        listener = (FragmentChangeListener) parent.getContext();
 
         return new StatisticsViewHolder(view);
     }
@@ -54,19 +53,19 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
             {
                 if (position == 0)
                 {
-                    fragmentChangeListener.reactionTestClicked();
+                    listener.reactionTestClicked();
                 }
                 else if (position == 1)
                 {
-                    fragmentChangeListener.chimpTestClicked();
+                    listener.chimpTestClicked();
                 }
                 else if (position == 2)
                 {
-                    fragmentChangeListener.visualGameClicked();
+                    listener.visualGameClicked();
                 }
                 else if (position == 3)
                 {
-                    fragmentChangeListener.ToHClicked();
+                    listener.ToHClicked();
                 }
             }
         });

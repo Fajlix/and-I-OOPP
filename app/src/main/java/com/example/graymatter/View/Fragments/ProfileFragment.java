@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 import com.example.graymatter.R;
-import com.example.graymatter.Social.PlayerAccess;
 import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.View.FriendsDialog;
 import com.example.graymatter.ViewModel.ProfileViewModel;
