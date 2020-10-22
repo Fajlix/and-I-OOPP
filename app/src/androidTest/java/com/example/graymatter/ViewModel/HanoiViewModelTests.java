@@ -3,6 +3,7 @@ package com.example.graymatter.ViewModel;
 
 import android.content.Context;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
@@ -18,6 +19,9 @@ import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class HanoiViewModelTests {
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule =
+            new InstantTaskExecutorRule();
     public Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
     TowerOfHanoiViewModel viewModel;
@@ -32,7 +36,7 @@ public class HanoiViewModelTests {
 
 
     @Test
-    public void test(){/*
+    public void test(){
 
         viewModel.tileHasBeenClicked(HanoiRodPosition.LEFT, HanoiRodPosition.RIGHT);
         viewModel.tileHasBeenClicked(HanoiRodPosition.LEFT, HanoiRodPosition.MIDDLE);
@@ -43,6 +47,6 @@ public class HanoiViewModelTests {
         viewModel.tileHasBeenClicked(HanoiRodPosition.LEFT, HanoiRodPosition.RIGHT);
 
         assertTrue(viewModel.getGameOver().getValue());
-*/
+
     }
 }
