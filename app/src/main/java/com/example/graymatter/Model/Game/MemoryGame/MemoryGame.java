@@ -15,7 +15,6 @@ public class MemoryGame extends Game{
     private MemoryGrid grid; // The grid on which the selectable tiles are located
     private int level;
     private int lives;
-    private boolean gameOver;
 
     public MemoryGame(){
         gameOver = true;
@@ -86,9 +85,5 @@ public class MemoryGame extends Game{
 
     public int getLives() {
         return lives;
-    }
-
-    public boolean getGameOver(){
-        return gameOver;
     }
 }
