@@ -1,9 +1,7 @@
 package com.example.graymatter.View.Fragments.GameFragments;
 
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,18 +11,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.graymatter.Model.Game.TowerOfHanoi.HanoiRodPosition;
 import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.R;
-import com.example.graymatter.View.Adapters.ChimpGridAdapter;
 import com.example.graymatter.ViewModel.TowerOfHanoiViewModel;
 
 import java.util.ArrayList;
 
+/**
+ * @author Viktor Felix
+ * the class that represents the fragment for Chimp Game
+ */
 public class ToHFragment extends Fragment implements View.OnClickListener {
     private TextView toHDescription;
     private Button level3;
@@ -43,16 +43,12 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
     private HanoiRodPosition fromRod;
     private HanoiRodPosition toRod;
 
-    float x;
-    float xRatio, yRatio;
-    boolean isValidTouch = true;
-    float bottomLimit, topLimit, leftLimitMiddleRod, rightLimitMiddleRod;
-
-    private int numberOfDisks;
-    private int disksOnRightRod = 0;
-
     boolean firstClick = true;
 
+    /**
+     * Initializes the start screen, and the updates it depending on what the user does.
+     * @return returns the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,15 +78,6 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
         level6.setOnClickListener(this);
         level7.setOnClickListener(this);
         level8.setOnClickListener(this);
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        xRatio = displayMetrics.widthPixels / 480;
-
-        bottomLimit = 20 * yRatio;
-        topLimit = 250 * yRatio;
-        leftLimitMiddleRod = 165 * xRatio;
-        rightLimitMiddleRod = 315 * xRatio;
 
         toHVM.getBoard().observe(getViewLifecycleOwner(), new Observer<ArrayList<ArrayList<Integer>>>() {
             @Override
@@ -125,7 +112,6 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-
         rodsFL.add((FrameLayout) view.findViewById(R.id.leftRodFL));
         rodsFL.add((FrameLayout) view.findViewById(R.id.middleRodFL));
         rodsFL.add((FrameLayout) view.findViewById(R.id.rightRodFL));
@@ -139,6 +125,12 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    /**
+     * /**
+     * This method is called each time a rod has been clicked to either get the rod to move from,
+     * or the rod to move to
+     * @param hanoiRodPosition is the rod that hac been clicked
+     */
     public void rodClick(HanoiRodPosition hanoiRodPosition) {
         if (firstClick) {
             fromRod = hanoiRodPosition;
@@ -151,6 +143,10 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * OnClick method for the level select
+     * @param v is the parameter id to determine which view that has been clicked
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -179,6 +175,9 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
         toHVM.startToHGame();
     }
 
+    /**
+     * Showing the level select menu
+     */
     public void showLevels ()
     {
         toHDescription.setText("Welcome to Tower of Hanoi, select a level to play");
@@ -197,7 +196,9 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
         rightRod.setVisibility(View.GONE);
     }
 
-    // clears the screen of all the text and images to show the test
+    /**
+     * clears the screen from the level select buttons to show the game
+     */
     public void clearStartScreen() {
         toHDescription.setText("");
 
@@ -209,13 +210,19 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
         level8.setVisibility(View.GONE);
     }
 
+    /**
+     * Displays the rods
+     */
     public void showGameScreen() {
         leftRod.setVisibility(View.VISIBLE);
         middleRod.setVisibility(View.VISIBLE);
         rightRod.setVisibility(View.VISIBLE);
-        // show disks on left rod
     }
 
+    /**
+     * When the game is won this method is called to show the won game screen
+     * @param score is the score the user got
+     */
     public void showWonGame(int score) {
         toHDescription.bringToFront();
         toHDescription.setText("Wow you completed the game! Your score was: "
@@ -228,19 +235,10 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void drawStartDisks(int numberOfDisks) {
-        for (int i = numberOfDisks - 1; i >= 0; i--) {
-            int pos = 145 - 20 * (numberOfDisks - i);
-
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(50 + 20 * i, 50 + 20 * i);
-            layoutParams.setMargins(118 - 10 * i, pos, 0, 0);
-
-            disks.get(i).setLayoutParams(layoutParams);
-
-            rodsFL.get(0).addView(disks.get(i));
-        }
-    }
-
+    /**
+     * draws the disk on the right position on the rods
+     * @param board is the board that should be drawn
+     */
     private void drawDisks(ArrayList<ArrayList<Integer>> board) {
         removeViews();
         int rodWidth = 284;
@@ -250,11 +248,11 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
                 int pos = 285;
                 int width = 60 + 20*(board.get(i).get(j)-1);
                 int height = 60 + 20*(board.get(i).get(j)-1);
-                int fixedheight = 25;
-                ch += fixedheight;
+                int fixedHeight = 25;
+                ch += fixedHeight;
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
                         (width, height);
-                layoutParams.setMargins((rodWidth -width)/2, pos -ch -height/2 -fixedheight/2, 0, 0);
+                layoutParams.setMargins((rodWidth -width)/2, pos -ch -height/2 -fixedHeight/2, 0, 0);
 
                 disks.get(board.get(i).get(j) - 1).setLayoutParams(layoutParams);
 
@@ -263,6 +261,9 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * removes the previous views
+     */
     public void removeViews ()
     {
         for (int i = 0; i < disks.size(); i++) {
@@ -271,6 +272,11 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * Communicates with the viewmodel about where the disk should move from, and to where
+     * @param from from which rod to move
+     * @param to to which rod to move
+     */
     public void diskMove(HanoiRodPosition from, HanoiRodPosition to) {
         toHVM.tileHasBeenClicked(from, to);
     }

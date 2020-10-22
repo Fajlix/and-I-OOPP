@@ -2,13 +2,9 @@ package com.example.graymatter.View.Adapters;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 
@@ -18,9 +14,11 @@ import com.example.graymatter.View.Fragments.GameFragments.MemoryGameFragment;
 
 import java.util.ArrayList;
 
-public class MemoryGridAdapter extends BaseAdapter {
-    private ArrayList<MemoryGrid.TileState> grid;
-    private boolean visibility = true;
+/**
+ * @author Viktor
+ * class that represents memory game adapter
+ */
+public class MemoryGridAdapter extends GeneralAdapter {
     MemoryGameFragment context;
 
     AnimatorSet frontAnim;
@@ -29,36 +27,28 @@ public class MemoryGridAdapter extends BaseAdapter {
     private int lastPos;
 
     public MemoryGridAdapter(MemoryGameFragment context, ArrayList<MemoryGrid.TileState> grid, int lastPos) {
-        this.grid = grid;
+        setGrid(grid);
         this.context = context;
         this.lastPos = lastPos;
     }
-    public void setVisibility(boolean visibility){
-        this.visibility = visibility;
-    }
 
-    // how many tiles on the board
-    @Override
-    public int getCount() {
-        return grid.size();
-    }
-
-    public Object getItem(int position) {
-        return null;
-    }
-
-    public long getItemId(int position) {
-        return 0;
-    }
-
+    /**
+     * When a tile has been clicked this method communicate with the fragment
+     * @param position is which tile that has been clicked
+     */
     public void tileHasBeenClicked(int position) {
         context.tileHasBeenClicked(position);
     }
 
+    /**
+     * This method creates the view for each grid tile and also creates the animation for when the
+     * tile has been clicked, and depending on if it is the correct one or not it modifies the view
+     * @param position represents which tile it is
+     * @return returns the view for the tile
+     */
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.visual_game_card, null);
-        final TextView cardFrontMemory = view.findViewById(R.id.card_front_memory);
         CardView cardBackMemory = view.findViewById(R.id.card_back_memory);
         CardView memoryCardView = view.findViewById(R.id.memoryCardView);
         memoryCardView.setCardBackgroundColor(0xFF8A8A8A);

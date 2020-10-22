@@ -9,10 +9,8 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.graymatter.R;
-import com.example.graymatter.ViewModel.MemoryGameViewModel;
 import com.example.graymatter.ViewModel.ProfileViewModel;
 
 public class SettingsDialog extends Dialog {

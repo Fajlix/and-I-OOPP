@@ -1,24 +1,29 @@
 package com.example.graymatter.View.Fragments.GameFragments;
 
-        import android.os.Bundle;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.AdapterView;
-        import android.widget.GridView;
-        import android.widget.ImageView;
-        import android.widget.TextView;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-        import androidx.fragment.app.Fragment;
-        import androidx.lifecycle.Observer;
-        import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
-        import com.example.graymatter.Model.dataAccess.DataAccess;
-        import com.example.graymatter.R;
-        import com.example.graymatter.View.Adapters.ChimpGridAdapter;
-        import com.example.graymatter.ViewModel.ChimpGameViewModel;
+import com.example.graymatter.R;
+import com.example.graymatter.View.Adapters.ChimpGridAdapter;
+import com.example.graymatter.ViewModel.ChimpGameViewModel;
+import com.example.graymatter.Model.dataAccess.DataAccess;
 
-public class ChimpGameFragment extends Fragment{
+import java.util.ArrayList;
+
+/**
+ * @author Viktor Felix
+ * the class that represents the fragment for Chimp Game
+ */
+public class ChimpGameFragment extends Fragment {
     private GridView gridView;
     private ChimpGridAdapter chimpGameChimpGridAdapter;
     private TextView chimpTestDescription;
@@ -26,6 +31,11 @@ public class ChimpGameFragment extends Fragment{
 
     int lastPos = -1;
 
+    /**
+     * Initializes the start screen, and the updates it depending on what the user does.
+     *
+     * @return returns the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -36,7 +46,6 @@ public class ChimpGameFragment extends Fragment{
         chimpGameVM = new ViewModelProvider(this).get(ChimpGameViewModel.class);
         gridView = view.findViewById(R.id.chimpTestGrid);
         chimpTestDescription = view.findViewById(R.id.chimpTestDescription);
-        //TODO hmm
         chimpGameVM.init(new DataAccess(getContext()));
 
         chimpGameVM.getGameOver().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
@@ -44,7 +53,7 @@ public class ChimpGameFragment extends Fragment{
             public void onChanged(Boolean gameOver) {
                 if (gameOver) {
                     int numberQty = chimpGameVM.getScore();
-                    if(numberQty >= 25)
+                    if (numberQty >= 25)
                         showWonGame(numberQty);
                     else
                         showLostGame(numberQty);
@@ -54,7 +63,7 @@ public class ChimpGameFragment extends Fragment{
         chimpGameVM.getGrid().observe(getViewLifecycleOwner(), new Observer<int[]>() {
             @Override
             public void onChanged(int[] grid) {
-                chimpGameChimpGridAdapter = new ChimpGridAdapter(ChimpGameFragment.this,grid,lastPos);
+                chimpGameChimpGridAdapter = new ChimpGridAdapter(ChimpGameFragment.this, ArrayToArrayList(grid), lastPos);
                 gridView.setAdapter(chimpGameChimpGridAdapter);
             }
         });
@@ -77,7 +86,9 @@ public class ChimpGameFragment extends Fragment{
         return view;
     }
 
-    // clears the screen of all the text and images to show the test
+    /**
+     * A method to clear the start screen to show the game screen
+     */
     public void ClearStartScreen() {
         chimpTestDescription.setText("");
         final ImageView iconNumber1 = this.getView().findViewById(R.id.iconNumber1);
@@ -90,6 +101,9 @@ public class ChimpGameFragment extends Fragment{
         iconNumber4.setVisibility(View.GONE);
     }
 
+    /**
+     * Shows the actual game screen
+     */
     public void ShowBoard() {
         gridView.bringToFront();
         gridView.setNumColumns(4);
@@ -97,24 +111,50 @@ public class ChimpGameFragment extends Fragment{
         gridView.setHorizontalSpacing(50);
     }
 
-    public void showLostGame (int score) {
+    /**
+     * When the game is lost this method is called to show the lost game screen
+     *
+     * @param score is the score the user got
+     */
+    public void showLostGame(int score) {
         chimpTestDescription.bringToFront();
         chimpTestDescription.setText("Game over... Your score was: " + score + " \n \nPress to play again");
     }
 
-    public void showWonGame (int score) {
+    /**
+     * When the game is won this method is called to show the won game screen
+     *
+     * @param score is the score the user got
+     */
+    public void showWonGame(int score) {
         chimpTestDescription.bringToFront();
         chimpTestDescription.setText("Wow you completed the game! You got the max score of: "
                 + score + " \n \nPress to play again");
     }
 
-    public GridView getGridView()
-    {
-        return gridView;
-    }
-
+    /**
+     * This method is called each time a tile han been clicked to notify the Viewmodel
+     *
+     * @param position represents the position of the card that has been clicked
+     */
     public void tileHasBeenClicked(int position) {
         lastPos = position;
-        chimpGameVM.tileHasBeenClicked(position);
+        chimpGameVM.makeMove(position);
+    }
+
+    /**
+     * Changes the array to an ArrayList, which makes it possible to abstract more
+     *
+     * @param arr is the array that should be converted
+     * @return returns an ArrayList with the same data as the array
+     */
+    public ArrayList<Integer> ArrayToArrayList(int[] arr) {
+        ArrayList<Integer> array_list = new ArrayList<>();
+
+        // Using add() method to add elements in array_list
+        for (int i = 0; i < arr.length; i++)
+            array_list.add(new Integer(arr[i]));
+
+        return array_list;
     }
 }

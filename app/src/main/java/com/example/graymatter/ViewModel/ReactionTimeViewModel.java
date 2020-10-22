@@ -11,7 +11,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * @author Felix
+ * @author Felix Viktor
  * class that represents the ViewModel for the reaction game.
  */
 
@@ -48,6 +48,7 @@ public class ReactionTimeViewModel extends ViewModel {
         mIsWaiting.postValue(true);
         timer.schedule(task, reactionTimeGame.getRandWaitTime());
     }
+
     public void endReactionTimeGame(){
         // removes task from the timer if the game ended to early so that the run method in the
         // timer task is called one time to much.
