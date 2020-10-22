@@ -13,6 +13,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.graymatter.R;
 import com.example.graymatter.ViewModel.ReactionTimeViewModel;
 
+/**
+ * @author Viktor
+ * the class that represents the fragment for Chimp Game
+ */
 public class ReactionGameFragment extends Fragment{
     private ScreenState screenState;
     private TextView reactionTestDescription;
@@ -24,6 +28,10 @@ public class ReactionGameFragment extends Fragment{
         REACTION, RESULT, WAIT, START
     }
 
+    /**
+     * Initializes the start screen, and the updates it depending on what the user does.
+     * @return returns the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,19 +73,21 @@ public class ReactionGameFragment extends Fragment{
             }
         });
 
-        // TODO clicking on this should take the user to the main page
-        //ImageView reactionTestClose = (ImageView) view.findViewById(R.id.reactionTestClose);
         return view;
     }
-    // shows the wait screen, before the reaction test is supposed to happen
 
+    /**
+     * This screen is shown when the user wait on the react screen
+     */
     public void showWaitScreen() {
         reactionTestDescription.setBackgroundColor(0xff5555e5);
         reactionTestDescription.setText("Press the screen when it turns white");
         screenState = ScreenState.WAIT;
     }
 
-    // showing the reaction screen, change color to white
+    /**
+     * When this screen shows to let the user know to react
+     */
     public void showReactionScreen(){
         reactionTestDescription.setTextColor(0xff000000);
         reactionTestDescription.setText("NOW");
@@ -85,7 +95,10 @@ public class ReactionGameFragment extends Fragment{
         screenState = ScreenState.REACTION;
     }
 
-    // showing the result and the screen is back to black, if the user pressed to early the game will let the user know
+    /**
+     * When the test is over this method is called to show the react time
+     * @param res is the time the user got
+     */
     public void showResult (int res)
     {
         screenState = ScreenState.RESULT;

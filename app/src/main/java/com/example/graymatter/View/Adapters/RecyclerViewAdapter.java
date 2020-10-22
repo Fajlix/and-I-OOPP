@@ -16,6 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.graymatter.R;
 import com.example.graymatter.View.FragmentChangeListener;
 
+/**
+ * @author Viktor
+ * class that represents a general adapter for a grid view
+ */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder> {
     String[] nameArray;
     String[] descArray;
@@ -32,6 +36,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.colors = colors;
     }
 
+    /**
+     * Initializes the ViewHolders, an object that hold the view and represents it
+     * @return it returns the viewholder
+     */
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,6 +49,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return new RecyclerViewHolder(view);
     }
 
+    /**
+     * This method is called for each ViewHolder to bind it to the adapter
+     * @param holder represents the specific viewHolder
+     * @param position represents the position of the view
+     */
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, final int position) {
         holder.title.setText(nameArray[position]);
@@ -78,7 +91,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-
+    /**
+     * a class that navigate to the necessary components that are being modified
+     */
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         TextView title, description;
         ImageView logo;

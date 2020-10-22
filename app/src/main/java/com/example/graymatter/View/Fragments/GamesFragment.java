@@ -9,16 +9,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
-import com.example.graymatter.View.Adapters.MainScreenGridAdapter;
 import com.example.graymatter.R;
 import com.example.graymatter.View.Adapters.RecyclerViewAdapter;
 
-
+/**
+ * @author Viktor
+ * the class that represents the fragment for Chimp Game
+ */
 public class GamesFragment extends Fragment {
-
-    //private BottomNavigationView bottomNavigationView;
 
     String gameName[], gameDescription[], colors[];
     int logos[] = {R.mipmap.ic_reaction_test_logo_foreground,
@@ -32,6 +31,10 @@ public class GamesFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Initializes the start screen, and the updates it depending on what the user does.
+     * @return returns the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,7 +56,4 @@ public class GamesFragment extends Fragment {
 
         return view;
     }
-
-
-
 }

@@ -10,12 +10,19 @@ import androidx.fragment.app.Fragment;
 
 import com.example.graymatter.R;
 
-
+/**
+ * @author Viktor
+ * the class that represents the fragment for each chimpGameCard
+ */
 public class ChimpGameCard extends Fragment {
     public TextView cardFront;
     public TextView cardBack;
     int number;
 
+    /**
+     * Initializes some general specifics for the cards
+     * @return returns the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                          Bundle savedInstanceState) {

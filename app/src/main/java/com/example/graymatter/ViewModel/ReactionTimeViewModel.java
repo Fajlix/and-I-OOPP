@@ -44,6 +44,7 @@ public class ReactionTimeViewModel extends ViewModel {
         mIsWaiting.setValue(true);
         timer.schedule(task, reactionTimeGame.getRandWaitTime());
     }
+
     public void endReactionTimeGame(){
         // removes task from the timer if the game ended to early so that the run method in the
         // timer task is called one time to much.

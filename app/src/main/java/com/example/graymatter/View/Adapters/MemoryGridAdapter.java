@@ -18,6 +18,10 @@ import com.example.graymatter.View.Fragments.GameFragments.MemoryGameFragment;
 
 import java.util.ArrayList;
 
+/**
+ * @author Viktor
+ * class that represents memory game adapter
+ */
 public class MemoryGridAdapter extends GeneralAdapter {
     MemoryGameFragment context;
 
@@ -32,10 +36,20 @@ public class MemoryGridAdapter extends GeneralAdapter {
         this.lastPos = lastPos;
     }
 
+    /**
+     * When a tile has been clicked this method communicate with the fragment
+     * @param position is which tile that has been clicked
+     */
     public void tileHasBeenClicked(int position) {
         context.tileHasBeenClicked(position);
     }
 
+    /**
+     * This method creates the view for each grid tile and also creates the animation for when the
+     * tile has been clicked, and depending on if it is the correct one or not it modifies the view
+     * @param position represents which tile it is
+     * @return returns the view for the tile
+     */
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.visual_game_card, null);

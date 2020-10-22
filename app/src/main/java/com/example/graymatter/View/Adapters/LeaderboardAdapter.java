@@ -1,4 +1,4 @@
-package com.example.graymatter.View;
+package com.example.graymatter.View.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

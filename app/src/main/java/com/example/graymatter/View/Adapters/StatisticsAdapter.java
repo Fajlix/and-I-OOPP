@@ -1,7 +1,6 @@
-package com.example.graymatter.View;
+package com.example.graymatter.View.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.graymatter.R;
+import com.example.graymatter.View.FragmentChangeListener;
 
 //TODO This is basically a copy of RecyclerViewAdapter, so should prob do sum smart abstractions instead
 public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.StatisticsViewHolder> {

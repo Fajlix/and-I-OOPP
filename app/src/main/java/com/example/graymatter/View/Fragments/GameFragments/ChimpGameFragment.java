@@ -19,6 +19,10 @@ import com.example.graymatter.ViewModel.ChimpGameViewModel;
 
 import java.util.ArrayList;
 
+/**
+ * @author Viktor
+ * the class that represents the fragment for Chimp Game
+ */
 public class ChimpGameFragment extends Fragment {
     private GridView gridView;
     private ChimpGridAdapter chimpGameChimpGridAdapter;
@@ -27,6 +31,10 @@ public class ChimpGameFragment extends Fragment {
 
     int lastPos = -1;
 
+    /**
+     * Initializes the start screen, and the updates it depending on what the user does.
+     * @return returns the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,7 +85,9 @@ public class ChimpGameFragment extends Fragment {
         return view;
     }
 
-    // clears the screen of all the text and images to show the test
+    /**
+     * A method to clear the start screen to show the game screen
+     */
     public void ClearStartScreen() {
         chimpTestDescription.setText("");
         final ImageView iconNumber1 = this.getView().findViewById(R.id.iconNumber1);
@@ -90,6 +100,9 @@ public class ChimpGameFragment extends Fragment {
         iconNumber4.setVisibility(View.GONE);
     }
 
+    /**
+     * Shows the actual game screen
+     */
     public void ShowBoard() {
         gridView.bringToFront();
         gridView.setNumColumns(4);
@@ -97,22 +110,39 @@ public class ChimpGameFragment extends Fragment {
         gridView.setHorizontalSpacing(50);
     }
 
+    /**
+     * When the game is lost this method is called to show the lost game screen
+     * @param score is the score the user got
+     */
     public void showLostGame(int score) {
         chimpTestDescription.bringToFront();
         chimpTestDescription.setText("Game over... Your score was: " + score + " \n \nPress to play again");
     }
 
+    /**
+     * When the game is won this method is called to show the won game screen
+     * @param score is the score the user got
+     */
     public void showWonGame(int score) {
         chimpTestDescription.bringToFront();
         chimpTestDescription.setText("Wow you completed the game! You got the max score of: "
                 + score + " \n \nPress to play again");
     }
 
+    /**
+     * This method is called each time a tile han been clicked to notify the Viewmodel
+     * @param position represents the position of the card that has been clicked
+     */
     public void tileHasBeenClicked(int position) {
         lastPos = position;
         chimpGameVM.tileHasBeenClicked(position);
     }
 
+    /**
+     * Changes the array to an ArrayList, which makes it possible to abstract more
+     * @param arr is the array that should be converted
+     * @return returns an ArrayList with the same data as the array
+     */
     public ArrayList<Integer> ArrayToArrayList(int[] arr) {
         ArrayList<Integer> array_list = new ArrayList<>();
 

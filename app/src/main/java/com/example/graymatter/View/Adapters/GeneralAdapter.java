@@ -7,6 +7,10 @@ import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
 
+/**
+ * @author Viktor
+ * class that represents a general adapter for a grid view
+ */
 public class GeneralAdapter extends BaseAdapter {
     ArrayList grid;
     boolean visibility = true;
