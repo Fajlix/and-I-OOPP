@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.graymatter.Model.Game.MemoryGame.MemoryGrid;
+import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.R;
 import com.example.graymatter.View.Adapters.MemoryGridAdapter;
 import com.example.graymatter.ViewModel.MemoryGameViewModel;
@@ -46,7 +47,7 @@ public class MemoryGameFragment extends Fragment {
         screenState = ScreenState.START_NEW;
 
         visualMemoryVM = new ViewModelProvider(this).get(MemoryGameViewModel.class);
-        visualMemoryVM.init();
+        visualMemoryVM.init(new DataAccess(getContext()));
         visualMemoryVM.getVisibility().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean _visibility) {
