@@ -39,8 +39,8 @@ public class GameSessionTest {
     public void storeGameTest(){
         gsa.storeGameSession(500, "ChimpGame");
         gsa.storeGameSession(670, "ShrimpGame");
-        gsm.delete(gsm.find(gsa.getNewGameID()-1).get());
-        gsm.delete(gsm.find(gsa.getNewGameID()-1).get());
+        //gsm.delete(gsm.find(gsa.getNewGameID()-1).get());
+        //gsm.delete(gsm.find(gsa.getNewGameID()-1).get());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class GameSessionTest {
 
     @Test
     public void gameSessionGettersTest(){
-        GameSession gs = new GameSession(125, 678, "MemoryGame", LocalDate.now());
-        Assert.assertEquals(LocalDate.now(), gs.getDate());
+        GameSession gs = new GameSession(125, 678, "MemoryGame", LocalDate.now().toString());
+        Assert.assertEquals(LocalDate.now().toString(), gs.getDate());
     }
 }

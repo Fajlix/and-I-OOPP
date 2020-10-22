@@ -54,7 +54,8 @@ public class DataAccess {
 
     public void storeGameSession(int score, String gameType) throws ParseException {
         LocalDate date = LocalDate.now(); //solve timezone stuff
-        GameSession gs = new GameSession(getNewGameID(), score, gameType, date);
+        String dateString = date.toString();
+        GameSession gs = new GameSession(getNewGameID(), score, gameType, dateString);
         storeGameID(gs.getGameID());
         gsMapper.insert(gs);
     }
