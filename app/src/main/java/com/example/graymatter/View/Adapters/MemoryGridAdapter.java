@@ -18,9 +18,7 @@ import com.example.graymatter.View.Fragments.GameFragments.MemoryGameFragment;
 
 import java.util.ArrayList;
 
-public class MemoryGridAdapter extends BaseAdapter {
-    private ArrayList<MemoryGrid.TileState> grid;
-    private boolean visibility = true;
+public class MemoryGridAdapter extends GeneralAdapter {
     MemoryGameFragment context;
 
     AnimatorSet frontAnim;
@@ -29,26 +27,9 @@ public class MemoryGridAdapter extends BaseAdapter {
     private int lastPos;
 
     public MemoryGridAdapter(MemoryGameFragment context, ArrayList<MemoryGrid.TileState> grid, int lastPos) {
-        this.grid = grid;
+        setGrid(grid);
         this.context = context;
         this.lastPos = lastPos;
-    }
-    public void setVisibility(boolean visibility){
-        this.visibility = visibility;
-    }
-
-    // how many tiles on the board
-    @Override
-    public int getCount() {
-        return grid.size();
-    }
-
-    public Object getItem(int position) {
-        return null;
-    }
-
-    public long getItemId(int position) {
-        return 0;
     }
 
     public void tileHasBeenClicked(int position) {
@@ -58,7 +39,6 @@ public class MemoryGridAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.visual_game_card, null);
-        final TextView cardFrontMemory = view.findViewById(R.id.card_front_memory);
         CardView cardBackMemory = view.findViewById(R.id.card_back_memory);
         CardView memoryCardView = view.findViewById(R.id.memoryCardView);
         memoryCardView.setCardBackgroundColor(0xFF8A8A8A);

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.graymatter.R;
+import com.example.graymatter.View.Adapters.FriendsAdapter;
 
 public class FriendsDialog extends Dialog {
 
