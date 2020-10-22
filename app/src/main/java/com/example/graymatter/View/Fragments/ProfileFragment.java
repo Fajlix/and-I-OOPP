@@ -6,6 +6,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 import com.example.graymatter.R;
+import com.example.graymatter.View.Adapters.FriendsAdapter;
 import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.View.FriendsDialog;
 import com.example.graymatter.ViewModel.ProfileViewModel;
@@ -27,8 +30,9 @@ import java.io.InputStream;
 public class ProfileFragment extends Fragment {
 
     private FragmentChangeListener listener;
-
+    int[] images = {1,2,3};
     TextView profileName, username, email, scoe;
+    RecyclerView recyclerView;
 
 
     public ProfileFragment() {
@@ -49,9 +53,17 @@ public class ProfileFragment extends Fragment {
 
         final ProfileViewModel profileViewModel = new ProfileViewModel();
         profileViewModel.init(new DataAccess(getContext()));
+        recyclerView = view.findViewById(R.id.friendsRecyclerView);
+        FriendsAdapter friendsAdapter;
+        try {
+            friendsAdapter = new FriendsAdapter(super.getContext(), profileViewModel.getFriends(),images);
+            recyclerView.setAdapter(friendsAdapter);
+        } catch (UserInfoException e) {
+            e.printStackTrace();
+        }
+        recyclerView.setLayoutManager(new LinearLayoutManager(super.getContext()));
 
-
-        Button friendsButton = (Button)view.findViewById(R.id.btnFriends);
+        Button friendsButton = view.findViewById(R.id.btnFriends);
         friendsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +71,7 @@ public class ProfileFragment extends Fragment {
 
                 Dialog friendsDialog = null;
                 try {
-                    friendsDialog = new FriendsDialog(getContext(), profileViewModel.getFriends());
+                    friendsDialog = new FriendsDialog(getContext(), profileViewModel.getFriends(), recyclerView);
                 } catch (UserInfoException e) {
                     e.printStackTrace();
                 }
@@ -80,13 +92,6 @@ public class ProfileFragment extends Fragment {
 
 
         return view;
-    }
-    private String getJsonString () throws IOException {
-        InputStream inputStream = requireContext().getAssets().open("testplayers.json");
-
-        byte[] buffer = new byte[inputStream.available()];
-        inputStream.read(buffer);
-        return new String(buffer);
     }
 
     public void setProfileName(TextView profileName) {
