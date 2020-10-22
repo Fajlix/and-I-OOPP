@@ -2,6 +2,7 @@ package com.example.graymatter.ViewModel;
 
 import android.content.Context;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -19,6 +20,9 @@ import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class ChimpViewModelTests {
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule =
+            new InstantTaskExecutorRule();
 
     public Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
@@ -36,7 +40,7 @@ public class ChimpViewModelTests {
 
     @Test
     public void test(){
-        /*
+
         int first = 0;
         int second = 0;
         int third = 0;
@@ -73,7 +77,7 @@ public class ChimpViewModelTests {
                 }
             }
         }
-        assertEquals(5, viewModel.getScore());*/
+        assertEquals(5, viewModel.getScore());
     }
 
 

@@ -4,6 +4,7 @@ package com.example.graymatter.ViewModel;
 
 import android.content.Context;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
@@ -21,7 +22,9 @@ import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class MemoryViewModelTests {
-
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule =
+            new InstantTaskExecutorRule();
     public Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
 
