@@ -15,7 +15,8 @@ public class MemoryGame extends Game{
     private MemoryGrid grid; // The grid on which the selectable tiles are located
     private int level;
     private int lives;
-    private boolean gameOver;
+
+    private final String gameName = "MemoryGame";
 
     public MemoryGame(){
         gameOver = true;
@@ -31,6 +32,11 @@ public class MemoryGame extends Game{
     public int endGame(){
         gameOver = true;
         return level;
+    }
+
+    @Override
+    public String getGameName() {
+        return gameName;
     }
 
     /**
@@ -86,9 +92,5 @@ public class MemoryGame extends Game{
 
     public int getLives() {
         return lives;
-    }
-
-    public boolean getGameOver(){
-        return gameOver;
     }
 }

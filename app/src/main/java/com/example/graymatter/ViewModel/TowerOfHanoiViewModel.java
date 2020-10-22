@@ -6,11 +6,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.graymatter.Model.Game.TowerOfHanoi.HanoiRodPosition;
 import com.example.graymatter.Model.Game.TowerOfHanoi.TowerOfHanoi;
+import com.example.graymatter.Model.dataAccess.DataAccess;
 
 import java.util.ArrayList;
 
 /**
- * @author Viktor
+ * @author Viktor Felix
  * class that represents the ViewModel for the tower of hanoi game.
  */
 public class TowerOfHanoiViewModel extends ViewModel {
@@ -20,12 +21,15 @@ public class TowerOfHanoiViewModel extends ViewModel {
     private MutableLiveData<ArrayList<ArrayList<Integer>>> board = new MutableLiveData<>();
     int level;
 
+    private DataAccess dataAccess;
+
     /**
      * Initializes the ViewModel with a new instance of a game
      */
-    public void init(){
-        towerOfHanoi = new TowerOfHanoi();
-    }
+        public void init(DataAccess dataAccess){
+            this.dataAccess = dataAccess;
+            towerOfHanoi = new TowerOfHanoi();
+        }
 
     /**
      * Starts the towerOfHanoi instance and get the level the user has chosen and updates the
@@ -47,12 +51,15 @@ public class TowerOfHanoiViewModel extends ViewModel {
      */
     private void update(){
         if (towerOfHanoi.isWon()) {
-            board.setValue(towerOfHanoi.getState());
+            board.postValue(towerOfHanoi.getState());
             score = towerOfHanoi.endGame();
             gameOver.setValue(true);
+            if(dataAccess.isLoggedIn()){
+                dataAccess.storeGameSession(score, towerOfHanoi.getGameName());
+            }
         }
         else {
-            board.setValue(towerOfHanoi.getState());
+            board.postValue(towerOfHanoi.getState());
         }
     }
 

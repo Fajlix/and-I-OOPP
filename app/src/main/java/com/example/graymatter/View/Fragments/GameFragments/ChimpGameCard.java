@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import com.example.graymatter.R;
 
 /**
- * @author Viktor
+ * @author Viktor Felix
  * the class that represents the fragment for each chimpGameCard
  */
 public class ChimpGameCard extends Fragment {

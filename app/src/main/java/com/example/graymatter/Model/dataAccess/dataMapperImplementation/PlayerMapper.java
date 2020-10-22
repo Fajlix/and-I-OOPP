@@ -144,30 +144,7 @@ public final class PlayerMapper implements DataMapper<Player> {
     /**
      * Method for database entries, not intended for use from other methods than those defined by interface.
      * @param players updated List of players to wrote to database.
-     *//*
-    private void enterData(List<Player> players) {
-
-        try {
-            DataBaseModel nDb = gson.fromJson(getJsonString(context), DataBaseModel.class);
-            nDb.setPlayers(players);
-
-            File file = appStorageDirectory();
-            FileWriter writer = new FileWriter(file);
-            writer.write(nDb.toString());
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-    }*/
-
-    private File appStorageDirectory() {
-        File appFilesDirectory = context.getFilesDir();
-        return new File(appFilesDirectory, "test");
-    }
-
+     */
     private void enterData(List<Player> players){
         File file = new File(context.getFilesDir(), "testplayers.json");
         FileOutputStream stream = null;
@@ -230,23 +207,6 @@ public final class PlayerMapper implements DataMapper<Player> {
         System.out.println(sb.toString());
         return sb.toString();
 
-/*
-        inputStream.read(stream.);
-        inputStream.close();
-        String str = new String(buffer);
-
-        String str = stream.read(buffer);
-        stream.close();
-        String str = new String(buffer);
-
-        /*DataBaseModel nDb = gson.fromJson(getJsonString(context), DataBaseModel.class);
-
-
-        byte[] buffer = new byte[inputStream.available()];
-        inputStream.read(buffer);
-        inputStream.close();
-        String str = new String(buffer);
-        return str;*/
     }
 
 }
