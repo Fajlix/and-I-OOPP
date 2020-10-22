@@ -18,6 +18,8 @@ public class TowerOfHanoi extends Game {
     private int gameTime;
     private boolean active;
 
+    private final String gameName = "TowerOfHanoiGame";
+
     public TowerOfHanoi(){
         active = false;
     }
@@ -99,4 +101,8 @@ public class TowerOfHanoi extends Game {
         return board.getState();
     }
 
+    @Override
+    public String getGameName(){
+        return gameName;
+    }
 }

@@ -17,6 +17,8 @@ public class MemoryGame extends Game{
     private int lives;
     private boolean gameOver;
 
+    private final String gameName = "MemoryGame";
+
     public MemoryGame(){
         gameOver = true;
     }
@@ -31,6 +33,11 @@ public class MemoryGame extends Game{
     public int endGame(){
         gameOver = true;
         return level;
+    }
+
+    @Override
+    public String getGameName() {
+        return gameName;
     }
 
     /**
