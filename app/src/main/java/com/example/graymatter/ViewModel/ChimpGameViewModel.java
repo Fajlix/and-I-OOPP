@@ -1,10 +1,15 @@
 package com.example.graymatter.ViewModel;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
+import com.example.graymatter.Model.dataAccess.DataAccess;
+import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 import com.example.graymatter.Model.progress.ScoreFront;
 
 /**
@@ -15,6 +20,9 @@ import com.example.graymatter.Model.progress.ScoreFront;
 public class ChimpGameViewModel extends ViewModel {
     private ChimpGame chimpGame;
     private int score = 0;
+
+    private DataAccess da;
+
     //Mutable live data used to notify observers when data is changed
     private MutableLiveData<Boolean> gameOver = new MutableLiveData<>();
     private MutableLiveData<int[]> grid = new MutableLiveData<>();
@@ -23,7 +31,8 @@ public class ChimpGameViewModel extends ViewModel {
     /**
      * Initializes the VM with a new instance of a game and sets start values for some attributes.
      */
-    public void init(){
+    public void init(DataAccess da){
+        this.da = da;
         chimpGame = new ChimpGame();
         gameOver.setValue(false);
         visibility.setValue(false);
@@ -58,6 +67,12 @@ public class ChimpGameViewModel extends ViewModel {
     private void update(){
         if (chimpGame.getGameOver()) {
             score = chimpGame.endGame();  //does score need to be global? i d think so
+            try {
+                da.logIn("Tuff-tuff22oHalvt", "hejNej88*");
+            } catch (UserInfoException e) {
+                e.printStackTrace();
+            }
+            da.storeGameSession(score, chimpGame.getGameName());
             gameOver.setValue(true);
         }
         else {
