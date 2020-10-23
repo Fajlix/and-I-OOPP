@@ -5,12 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.graymatter.View.Fragments.StatisticsFriendsFragment;
-import com.example.graymatter.View.Fragments.StatisticsGlobalFragment;
-
 public class PagerAdapter extends FragmentPagerAdapter {
 
     private int numOfTabs;
+    StatisticsFragmentInterface SFI;
 
     private String[] namesFriends, scoresFriends, namesGlobal, scoresGlobal;
     private int[] picturesFriends, picturesGlobal;
@@ -19,9 +17,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     public PagerAdapter(FragmentManager fm, int numOfTabs, String[] namesFriends,
                         String[] scoresFriends, int[] picturesFriends, String[] namesGlobal,
-                        String[] scoresGlobal, int[] picturesGlobal, String game){
+                        String[] scoresGlobal, int[] picturesGlobal, String game, StatisticsFragmentInterface SFI) {
         super(fm);
-
+        this.SFI = SFI;
         this.numOfTabs = numOfTabs;
 
         this.namesFriends = namesFriends;
@@ -39,12 +37,11 @@ public class PagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-
-        switch(position){
+        switch (position) {
             case 0:
-                return new StatisticsFriendsFragment(namesFriends, scoresFriends, picturesFriends, game);
+                return SFI.getFragment(position,namesFriends, scoresFriends, picturesFriends, game);
             case 1:
-                return new StatisticsGlobalFragment(namesGlobal, scoresGlobal, picturesGlobal, game);
+                return SFI.getFragment(position,namesGlobal, scoresGlobal, picturesGlobal, game);
             default:
                 return null;
         }

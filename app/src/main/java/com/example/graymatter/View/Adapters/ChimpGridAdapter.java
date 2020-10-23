@@ -6,12 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.cardview.widget.CardView;
-
 import com.example.graymatter.R;
-import com.example.graymatter.View.Fragments.GameFragments.ChimpGameFragment;
-
 import java.util.ArrayList;
 
 /**
@@ -19,7 +15,7 @@ import java.util.ArrayList;
  * the class that represents the gridView for the chimpGame
  */
 public class ChimpGridAdapter extends GeneralAdapter {
-    ChimpGameFragment context;
+    GameFragment gameFragment;
 
     AnimatorSet frontAnim;
     AnimatorSet backAnim;
@@ -27,9 +23,9 @@ public class ChimpGridAdapter extends GeneralAdapter {
 
     private int lastPos;
 
-    public ChimpGridAdapter(ChimpGameFragment context, ArrayList<Integer> grid, int lastPos) {
+    public ChimpGridAdapter(GameFragment gameFragment, ArrayList<Integer> grid, int lastPos) {
         setGrid(grid);
-        this.context = context;
+        this.gameFragment = gameFragment;
         this.lastPos = lastPos;
     }
 
@@ -37,8 +33,8 @@ public class ChimpGridAdapter extends GeneralAdapter {
      * When a tile has been clicked this method communicate with the fragment
      * @param position is which tile that has been clicked
      */
-    public void tileHasBeenClicked(int position) {
-        context.tileHasBeenClicked(position);
+    public void makeMove(int position) {
+        gameFragment.makeMove(position);
     }
 
     /**
@@ -54,8 +50,8 @@ public class ChimpGridAdapter extends GeneralAdapter {
         final TextView cardBackChimp = view.findViewById(R.id.card_back_chimp);
         CardView chimpCardView = view.findViewById(R.id.chimpCardView);
 
-        frontAnim = (AnimatorSet) AnimatorInflater.loadAnimator(context.getContext(),R.animator.front_animation);
-        backAnim = (AnimatorSet) AnimatorInflater.loadAnimator(context.getContext(),R.animator.back_animation);
+        frontAnim = (AnimatorSet) AnimatorInflater.loadAnimator(gameFragment.getContext(),R.animator.front_animation);
+        backAnim = (AnimatorSet) AnimatorInflater.loadAnimator(gameFragment.getContext(),R.animator.back_animation);
 
         if (grid.get(position).equals(0)){
 
@@ -83,13 +79,9 @@ public class ChimpGridAdapter extends GeneralAdapter {
                 @Override
                 public void onClick(View v) {
                     if (isFront)
-                    {
                         isFront = false;
-                    }
-
                     lastPos = position;
-
-                    tileHasBeenClicked(position);
+                    makeMove(position);
                 }
             });
 
