@@ -5,6 +5,11 @@ package com.example.graymatter.Model.progress;
  */
 public class Sort {
 
+    /**
+     * Ordinary sorter sorting an integer array to low values on low indexes and v.v.
+     * @param toSort
+     * @return
+     */
     public static int[] sort(int[] toSort){
         for (int i = 0; i < toSort.length; i++){
             for (int o =i; o < toSort.length; o++){

@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.graymatter.R;
-import com.example.graymatter.View.StatisticsAdapter;
+import com.example.graymatter.View.Adapters.StatisticsAdapter;
 
 //TODO almost the same as GamesFragment
 public class StatisticsFragment extends Fragment{

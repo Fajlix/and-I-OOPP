@@ -28,8 +28,8 @@ public class StatisticsViewModel extends ViewModel {
         playerAccess = dataAccess;
 
         //friendsScores[1] is score, [2] is ID:s
-        friendsScores = ScoreFront.getSelectFriendTopScores(1,10, game); //TODO not sure if right
-        globalScores = ScoreFront.getSelectGlobalTopScores(1,10, game);
+        //friendsScores = ScoreFront.getSelectFriendTopScores(1,10, game); //TODO not sure if right
+        //globalScores = ScoreFront.getSelectGlobalTopScores(1,10, game);
 
 
         String[] friendsUsernames = new String[10];

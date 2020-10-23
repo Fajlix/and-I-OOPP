@@ -11,10 +11,18 @@ import androidx.fragment.app.Fragment;
 
 import com.example.graymatter.R;
 
+/**
+ * @author Viktor
+ * the class that represents the fragment for each memoryGameCard
+ */
 public class MemoryGameCard extends Fragment {
     public TextView cardFrontMemory;
     public CardView cardBackMemory;
 
+    /**
+     * Initializes some general specifics for the cards
+     * @return returns the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

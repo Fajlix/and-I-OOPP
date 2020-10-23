@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 import com.example.graymatter.R;
+import com.example.graymatter.View.Adapters.FriendsAdapter;
 import com.example.graymatter.ViewModel.ProfileViewModel;
 
 public class FriendsDialog extends Dialog {
