@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     public void reactionTestClicked() {
         //Checks if current fragment is StatisticsFragment, else it's GamesFragment
         if(navController.getCurrentDestination().getLabel().equals("fragment_statistics")){
-            game = "Reaction Test";
+            game = "ReactionTest";
             navController.navigate(R.id.statisticsTabFragment);
         }
         else navController.navigate(R.id.reactionTestActivity);
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     @Override
     public void chimpTestClicked() {
         if(navController.getCurrentDestination().getLabel().equals("fragment_statistics")){
-            game = "Chimp Test";
+            game = "ChimpTest";
             navController.navigate(R.id.statisticsTabFragment);
         }
         else navController.navigate(R.id.chimpGameActivity);
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     @Override
     public void visualGameClicked() {
         if(navController.getCurrentDestination().getLabel().equals("fragment_statistics")){
-            game = "Visual Test";
+            game = "VisualTest";
             navController.navigate(R.id.statisticsTabFragment);
         }
         else navController.navigate(R.id.visualGameFragment);
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     @Override
     public void ToHClicked() {
         if(navController.getCurrentDestination().getLabel().equals("fragment_statistics")){
-            game = "Tower of Hanoi";
+            game = "TowerOfHanoi";
             navController.navigate(R.id.statisticsTabFragment);
         }
         else navController.navigate(R.id.toHFragment);

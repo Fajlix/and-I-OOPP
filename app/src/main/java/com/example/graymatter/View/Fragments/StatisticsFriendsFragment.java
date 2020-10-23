@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.graymatter.R;
 import com.example.graymatter.View.LeaderboardAdapter;
+import com.example.graymatter.ViewModel.StatisticsViewModel;
 
 
 public class StatisticsFriendsFragment extends Fragment{

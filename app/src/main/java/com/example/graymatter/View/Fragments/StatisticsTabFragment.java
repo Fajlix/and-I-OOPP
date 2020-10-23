@@ -42,7 +42,7 @@ public class StatisticsTabFragment extends Fragment{
         game = listener.getGame();
 
         statisticsViewModel = new StatisticsViewModel();
-        statisticsViewModel.init(getContext(), game);
+        //statisticsViewModel.init(getContext(), game);
 
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
