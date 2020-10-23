@@ -57,6 +57,7 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_toh, container, false);
         super.onCreate(savedInstanceState);
+        listener = (FragmentChangeListener)getContext();
 
         toHVM = new ViewModelProvider(this).get(TowerOfHanoiViewModel.class);
         toHDescription = view.findViewById(R.id.toHDescription);
