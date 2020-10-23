@@ -12,14 +12,14 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     private int numOfTabs;
 
-    private String[] namesFriends, scoresFriends, namesGlobal, scoresGlobal;
-    private int[] picturesFriends, picturesGlobal;
+    private String[] namesFriends, namesGlobal;
+    private int[] picturesFriends, picturesGlobal, scoresFriends, scoresGlobal;
 
     String game;
 
     public PagerAdapter(FragmentManager fm, int numOfTabs, String[] namesFriends,
-                        String[] scoresFriends, int[] picturesFriends, String[] namesGlobal,
-                        String[] scoresGlobal, int[] picturesGlobal, String game){
+                        int[] scoresFriends, int[] picturesFriends, String[] namesGlobal,
+                        int[] scoresGlobal, int[] picturesGlobal, String game){
         super(fm);
 
         this.numOfTabs = numOfTabs;

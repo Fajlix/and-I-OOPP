@@ -17,10 +17,10 @@ import com.example.graymatter.View.Adapters.LeaderboardAdapter;
 public class StatisticsGlobalFragment extends Fragment {
 
     private String gameName;
-    private String[] names, scores;
-    private int[] pictures;
+    private String[] names;
+    private int[] pictures, scores;
 
-    public StatisticsGlobalFragment(String[] names, String[] scores, int[] pictures, String game) {
+    public StatisticsGlobalFragment(String[] names, int[] scores, int[] pictures, String game) {
         this.names = names;
         this.scores = scores;
         this.pictures = pictures;

@@ -401,14 +401,14 @@ public class DataAccess {
         return playerMapper.get().size();
     }
 
-    private Player getUnwrappedPlayer(){
+    private Player getUnwrappedPlayer() throws DataMapperException{
         if (!currentPlayer.isPresent()){
             throw new DataMapperException("Player not logged in!");
         }
         return currentPlayer.get();
     }
 
-    public Player getCurrentPlayer(){
+    public Player getCurrentPlayer() throws DataMapperException{
         if(currentPlayer.isPresent()){
             return new Player(currentPlayer.get());
         }
@@ -416,6 +416,13 @@ public class DataAccess {
     }
 
 
+    public Player getNonUserPlayer(int userID) throws DataMapperException{
+        Optional<Player> optionalPlayer = playerMapper.find(userID);
+        if(optionalPlayer.isPresent()){
+            return optionalPlayer.get();
+        }
+        throw new DataMapperException("Player not found in database");
+    }
 
 
 }
