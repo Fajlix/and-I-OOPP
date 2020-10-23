@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.graymatter.R;
 import com.example.graymatter.View.Adapters.ChimpGridAdapter;
+import com.example.graymatter.View.Adapters.GameFragment;
 import com.example.graymatter.ViewModel.ChimpGameViewModel;
 import com.example.graymatter.Model.dataAccess.DataAccess;
 
@@ -23,7 +24,7 @@ import java.util.ArrayList;
  * @author Viktor Felix
  * the class that represents the fragment for Chimp Game
  */
-public class ChimpGameFragment extends Fragment {
+public class ChimpGameFragment extends Fragment implements GameFragment {
     private GridView gridView;
     private ChimpGridAdapter chimpGameChimpGridAdapter;
     private TextView chimpTestDescription;
@@ -137,10 +138,6 @@ public class ChimpGameFragment extends Fragment {
      *
      * @param position represents the position of the card that has been clicked
      */
-    public void tileHasBeenClicked(int position) {
-        lastPos = position;
-        chimpGameVM.makeMove(position);
-    }
 
     /**
      * Changes the array to an ArrayList, which makes it possible to abstract more
@@ -156,5 +153,12 @@ public class ChimpGameFragment extends Fragment {
             array_list.add(new Integer(arr[i]));
 
         return array_list;
+    }
+
+    @Override
+    public void makeMove(int position) {
+        lastPos = position;
+        chimpGameVM.makeMove(position);
+
     }
 }
