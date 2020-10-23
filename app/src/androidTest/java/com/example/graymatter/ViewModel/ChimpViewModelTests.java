@@ -2,6 +2,7 @@ package com.example.graymatter.ViewModel;
 
 import android.content.Context;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -13,12 +14,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Objects;
-
 import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class ChimpViewModelTests {
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule =
+            new InstantTaskExecutorRule();
 
     public Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
@@ -36,7 +38,7 @@ public class ChimpViewModelTests {
 
     @Test
     public void test(){
-        /*
+
         int first = 0;
         int second = 0;
         int third = 0;
@@ -61,19 +63,19 @@ public class ChimpViewModelTests {
             }
         }
 
-        viewModel.tileHasBeenClicked(first);
-        viewModel.tileHasBeenClicked(second);
-        viewModel.tileHasBeenClicked(third);
-        viewModel.tileHasBeenClicked(fourth);
+        viewModel.makeMove(first);
+        viewModel.makeMove(second);
+        viewModel.makeMove(third);
+        viewModel.makeMove(fourth);
         for (int j = 0; j<3; j++) {
             for (int i = 0; i < grid.getValue().length; i++) {
                 if (grid.getValue()[i] == 2) {
-                    viewModel.tileHasBeenClicked(i);
+                    viewModel.makeMove(i);
                     break;
                 }
             }
         }
-        assertEquals(5, viewModel.getScore());*/
+        assertEquals(5, viewModel.getScore());
     }
 
 

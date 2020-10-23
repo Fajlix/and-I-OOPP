@@ -10,16 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.graymatter.R;
 import com.example.graymatter.View.FragmentChangeListener;
 
-/**
- * @author Viktor
- * class that represents a general adapter for a grid view
- */
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder> {
+//TODO This is basically a copy of RecyclerViewAdapter, so should prob do sum smart abstractions instead
+public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.StatisticsViewHolder> {
     String[] nameArray;
     String[] descArray;
     String[] colors;
@@ -27,7 +25,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context context;
     FragmentChangeListener fragmentChangeListener;
 
-    public RecyclerViewAdapter(Context c, String[] gameName, String[] gameDescription, String[] colors, int[] logos) {
+    public StatisticsAdapter (Context c, String[] gameName, String[] gameDescription, String[] colors, int[] logos) {
         context = c;
         nameArray = gameName;
         descArray = gameDescription;
@@ -35,32 +33,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.colors = colors;
     }
 
-    /**
-     * Initializes the ViewHolders, an object that hold the view and represents it
-     * @return it returns the viewholder
-     */
     @NonNull
     @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public StatisticsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.main_page_button, parent, false);
+        View view = inflater.inflate(R.layout.statistics_game_card, parent, false);
+
         fragmentChangeListener = (FragmentChangeListener) parent.getContext();
-        return new RecyclerViewHolder(view);
+
+        return new StatisticsViewHolder(view);
     }
 
-    /**
-     * This method is called for each ViewHolder to bind it to the adapter
-     * @param holder represents the specific viewHolder
-     * @param position represents the position of the view
-     */
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull StatisticsViewHolder holder, final int position) {
         holder.title.setText(nameArray[position]);
         holder.description.setText(descArray[position]);
         holder.logo.setImageResource(logos[position]);
         holder.mainCard.setBackgroundColor(Color.parseColor(colors[position]));
 
-        holder.mainCard.setOnClickListener(new View.OnClickListener() {
+        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
@@ -78,7 +69,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
                 else if (position == 3)
                 {
-                    fragmentChangeListener.ToHClicked();
+                    //fragmentChangeListener.towerOfHanoiClicked();
                 }
             }
         });
@@ -89,21 +80,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return logos.length;
     }
 
-
-    /**
-     * a class that navigate to the necessary components that are being modified
-     */
-    public class RecyclerViewHolder extends RecyclerView.ViewHolder {
+    public class StatisticsViewHolder extends RecyclerView.ViewHolder{
         TextView title, description;
         ImageView logo;
         LinearLayout mainCard;
+        ConstraintLayout mainLayout;
 
-        public RecyclerViewHolder (@NonNull View itemView) {
+        public StatisticsViewHolder (@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.gamesTxt);
-            description = itemView.findViewById(R.id.gamesDescTxt);
-            logo = itemView.findViewById(R.id.gameLogo);
-            mainCard = itemView.findViewById(R.id.mainScreenCard);
+            title = itemView.findViewById(R.id.statisticsGamesTxt);
+            description = itemView.findViewById(R.id.statisticsGamesDescTxt);
+            logo = itemView.findViewById(R.id.statisticsGameLogo);
+            mainCard = itemView.findViewById(R.id.statisticsMainCard);
+            mainLayout = itemView.findViewById(R.id.statisticsMainLayout);
         }
     }
+
+
 }

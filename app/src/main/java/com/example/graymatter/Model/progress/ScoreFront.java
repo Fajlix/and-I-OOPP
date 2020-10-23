@@ -152,8 +152,7 @@ public class ScoreFront {
         for (int i = 0; i < gameIDs.length; i++) {
             userIDs[i] = da.getGameIDOwner(gameIDs[i]);
         }
-        //gs[0] = findGameOwners(gs[2]);
-        //return gs;
+
         return userIDs;
     }
 

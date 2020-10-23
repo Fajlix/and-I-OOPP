@@ -1,8 +1,5 @@
 package com.example.graymatter.ViewModel;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -10,7 +7,6 @@ import androidx.lifecycle.ViewModel;
 import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
 import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
-import com.example.graymatter.Model.progress.ScoreFront;
 
 /**
  * @author Felix
@@ -87,7 +83,7 @@ public class ChimpGameViewModel extends ViewModel {
      * This method should be called from the gui that is being used when a tile has been clicked
      * @param number the position of the tile in the grid array
      */
-    public void tileHasBeenClicked(int number){
+    public void makeMove(int number){
         chimpGame.makeMove(number);
         update();
     }

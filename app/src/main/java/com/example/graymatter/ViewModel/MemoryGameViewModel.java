@@ -13,7 +13,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * @author Felix
+ * @author Felix Viktor
  * class that represents the ViewModel for the Memory Game.
  */
 public class MemoryGameViewModel extends ViewModel {
