@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -35,7 +36,7 @@ public class DataMappersTests {
     public void init(){
         try {
             gsa.logIn("Tuff-tuff22oHalvt", "hejNej88*");
-        } catch (UserInfoException e) {
+        } catch (UserInfoException | IOException e) {
             e.printStackTrace();
         }
     }

@@ -20,6 +20,7 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @RunWith(AndroidJUnit4.class)
@@ -30,13 +31,13 @@ public class SocialTest {
 
 
     @Before
-    public void init() throws UserInfoException {
+    public void init() throws UserInfoException, IOException {
         testPlayerAccess.logOut();
         testPlayerAccess.logIn("Tuff-tuff22oHalvt", "hejNej88*");
     }
 
     @Test
-    public void ldmTest(){
+    public void ldmTest() throws IOException {
         System.out.println(ldm.getCurrentPlayerUserID());
         ldm.setCurrentPlayerUserID(1);
         System.out.println(ldm.getCurrentPlayerUserID());
@@ -44,7 +45,7 @@ public class SocialTest {
     }
 
     @Test
-    public void deleteTest() throws UserInfoException {
+    public void deleteTest() throws UserInfoException, IOException {
         testPlayerAccess.logOut();
         testPlayerAccess.createNewAccountAndLogIn("shortlife@hotmail.se", "123Ninja_", "lana-del-rey-fan");
         assertTrue(testPlayerAccess.isLoggedIn());
@@ -54,7 +55,7 @@ public class SocialTest {
     }
 
     @Test
-    public void changesTest() throws UserInfoException {
+    public void changesTest() throws UserInfoException, IOException {
         testPlayerAccess.changeEmail("hejNej88*", "1337pojken@gmail.com");
         assertEquals(testPlayerAccess.getEmail(), "1337pojken@gmail.com");
         testPlayerAccess.changePassword("hejNej88*", "loseN-458");
@@ -113,7 +114,7 @@ public class SocialTest {
 
 
     @Test
-    public void logInAndOutTest() throws UserInfoException {
+    public void logInAndOutTest() throws UserInfoException, IOException {
         testPlayerAccess.logOut();
         testPlayerAccess.logIn("Mathilda97", "yihha123");
         assertEquals(1, testPlayerAccess.currentPlayer.get().getUserID());
@@ -122,7 +123,7 @@ public class SocialTest {
     }
 
     @Test
-    public void deleteAccountTest() throws UserInfoException {
+    public void deleteAccountTest() throws UserInfoException, IOException {
         testPlayerAccess.logOut();
         testPlayerAccess.createNewAccountAndLogIn("tjenare@hotmail.se", "saftHallon29?", "Lejonkungen");
         testPlayerAccess.deleteAccount("saftHallon29?");
@@ -143,7 +144,7 @@ public class SocialTest {
     }
 
     @Test
-    public void logInFails() throws UserInfoException {
+    public void logInFails() throws UserInfoException, IOException {
         testPlayerAccess.logOut();
         try{
             testPlayerAccess.logIn("soffan25", "hejnej");
@@ -156,11 +157,11 @@ public class SocialTest {
     }
 
     @Test
-    public void failedRegistrations() throws UserInfoException {
+    public void failedRegistrations() throws UserInfoException, IOException {
         testPlayerAccess.logOut();
         try {
             testPlayerAccess.createNewAccountAndLogIn("1337manneeeeen@gmail.com", "robbansAcc-95", "klöverKung");
-        } catch (DataMapperException | UserInfoException e){}
+        } catch (DataMapperException | UserInfoException | IOException e){}
         try {
             testPlayerAccess.createNewAccountAndLogIn("katten@jansson.se", "tjena", "Broderna");
         } catch (DataMapperException | UserInfoException e){}
@@ -180,7 +181,7 @@ public class SocialTest {
     }
 
     @Test
-    public void repoLayerConstructorFails() throws UserInfoException {
+    public void repoLayerConstructorFails() throws UserInfoException, IOException {
         testPlayerAccess.logOut();
         DataAccess paF = new DataAccess(context);
         Assert.assertEquals(Optional.empty(), paF.currentPlayer);

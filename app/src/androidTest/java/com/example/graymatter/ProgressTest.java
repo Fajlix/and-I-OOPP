@@ -17,6 +17,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+
 @RunWith(AndroidJUnit4.class)
 public class ProgressTest {
     String path = "src/main/assets/testPlayers.json";
@@ -32,7 +34,7 @@ public class ProgressTest {
         gsa = new DataAccess(context);
         try {
             gsa.logIn("Tuff-tuff22oHalvt", "hejNej88*");
-        } catch (UserInfoException e) {
+        } catch (UserInfoException | IOException e) {
             e.printStackTrace();
         }
     }

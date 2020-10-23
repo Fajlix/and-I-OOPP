@@ -10,6 +10,9 @@ import com.example.graymatter.model.dataAccess.social.UserInfoException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
@@ -22,7 +25,7 @@ public class ProfileViewModelTest {
         profileViewModel = new ProfileViewModel();
         try {
             gsa.logIn("Tuff-tuff22oHalvt", "hejNej88*");
-        } catch (UserInfoException e) {
+        } catch (UserInfoException | IOException e) {
             e.printStackTrace();
         }
         profileViewModel.init(gsa);
