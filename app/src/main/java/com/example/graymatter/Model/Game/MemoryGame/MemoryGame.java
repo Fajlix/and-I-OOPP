@@ -5,6 +5,7 @@ import com.example.graymatter.Model.Game.Game;
 import java.util.ArrayList;
 
 /**
+ * @author Hugo
  *  This class describes the logic for a game where the player is shown a grid of tiles for a second,
  *  and then has to select which tiles in the grid were coloured.
  *

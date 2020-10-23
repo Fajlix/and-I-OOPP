@@ -5,6 +5,7 @@ import com.example.graymatter.Model.Game.Game;
 import java.util.Arrays;
 
 /**
+ * @author Hugo
  * Class to represent a game where the player must remember a sequence of tiles and then
  * select the tiles in order.
  */

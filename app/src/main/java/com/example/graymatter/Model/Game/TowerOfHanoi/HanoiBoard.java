@@ -4,6 +4,7 @@ package com.example.graymatter.Model.Game.TowerOfHanoi;
 import java.util.ArrayList;
 
 /**
+ * @author Hugo
  * The entire "board" for the Tower of Hanoi game, i.e three rods which hold disks
  */
 public class HanoiBoard {

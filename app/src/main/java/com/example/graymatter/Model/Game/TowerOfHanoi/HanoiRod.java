@@ -3,6 +3,10 @@ package com.example.graymatter.Model.Game.TowerOfHanoi;
 import java.util.ArrayList;
 import java.util.Stack;
 
+/**
+ * @author Hugo
+ * One rod in the Tower of Hanoi game
+ */
 public class HanoiRod {
 
     private Stack<HanoiDisk> disks = new Stack<>();

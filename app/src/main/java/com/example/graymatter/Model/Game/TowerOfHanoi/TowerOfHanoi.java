@@ -5,6 +5,7 @@ import com.example.graymatter.Model.Game.Game;
 import java.util.ArrayList;
 
 /**
+ * @author Hugo
  * class to represent the game "Tower of Hanoi", where the player must move disks between three rods without putting a larger disk on a larger one.
  * the goal is to move all disks from the left rod to the right rod.
  */

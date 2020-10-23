@@ -3,6 +3,7 @@ package com.example.graymatter.Model.dataAccess.social;
 import java.time.LocalDate;
 
 /**
+ * @author Aline
  * Representing a game session, a.k.a all history stored from one instance of a game being played.
  */
 public class GameSession {

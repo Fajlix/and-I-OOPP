@@ -1,6 +1,7 @@
 package com.example.graymatter.Model.Game.TowerOfHanoi;
 
 /**
+ * @author Hugo
  * One disk in the Tower of Hanoi game
  */
 public class HanoiDisk {
