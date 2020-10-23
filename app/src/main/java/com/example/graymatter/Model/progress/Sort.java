@@ -12,7 +12,7 @@ public class Sort {
      */
     public static int[] sort(int[] toSort){
         for (int i = 0; i < toSort.length; i++){
-            for (int o =i; o < toSort.length; o++){
+            for (int o =i +1; o < toSort.length; o++){
                 if(toSort[i] > toSort[o]){
                     int temp = toSort[i];
                     toSort[i] = toSort[o];
@@ -31,8 +31,8 @@ public class Sort {
      * @return int[][] sorted after contents in int[c]
      */
     public static int[][] multRowSort(int[][] toSort, boolean highValueLowIndex, int c){
-        for (int i = 0; i < toSort.length; i++){
-            for (int o =i; o < toSort[i].length; o++){
+        for (int i = 0; i < toSort[c].length; i++){
+            for (int o =i; o < toSort[c].length; o++){
                 if(highValueLowIndex){
                     if(toSort[c][i] < toSort[c][o]){
                         for(int[]col:toSort){
