@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * @author Aline
  * Class provides client facade to GameSession and holds instance of other facade PlayerAccess.
  * Coordinates GameSession fields with corresponding databse entries.
  */

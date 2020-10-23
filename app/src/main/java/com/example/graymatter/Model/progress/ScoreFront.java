@@ -8,6 +8,7 @@ import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 import java.util.List;
 
 /**
+ * @author Aline
  * Class contains methods returning different kind of leaderboards with normated scores.
  * Methods renormates score every time called. For bigger databases these calls are demanding. This class should be located at serverside and methods should be called sparsely.
  */
