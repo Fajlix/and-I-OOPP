@@ -74,7 +74,7 @@ public class ChimpGameViewModel extends ViewModel {
             gameOver.setValue(true);
         }
         else {
-            grid.postValue(chimpGame.getBoard());
+            grid.setValue(chimpGame.getBoard());
             visibility.setValue(chimpGame.getNumberVisibility());
         }
     }
