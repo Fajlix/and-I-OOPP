@@ -1,8 +1,5 @@
 package com.example.graymatter.Model.progress;
 
-import android.app.Application;
-import android.content.Context;
-
 import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.Model.dataAccess.social.GameSession;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
@@ -14,7 +11,7 @@ import java.util.List;
  * Class contains methods returning different kind of leaderboards with normated scores.
  * Methods renormates score every time called. For bigger databases these calls are demanding. This class should be located at serverside and methods should be called sparsely.
  */
-public class ScoreFront extends Application {
+public class ScoreFront {
 
     private DataAccess da;
 
@@ -158,5 +155,9 @@ public class ScoreFront extends Application {
         //gs[0] = findGameOwners(gs[2]);
         //return gs;
         return userIDs;
+    }
+
+    public static void setSignificantNumbers(int sigNum){
+        NormLeaderboards.setSignificantNumber(sigNum);
     }
 }
