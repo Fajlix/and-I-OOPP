@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel;
 import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 
+import java.io.IOException;
+
 
 public class ProfileViewModel extends ViewModel {
 
@@ -55,10 +57,10 @@ public class ProfileViewModel extends ViewModel {
      * @param password the entered password
      * @throws UserInfoException when username/password is wrong
      */
-    public void login(String username, String password) throws UserInfoException {
+    public void login(String username, String password) throws UserInfoException, IOException {
         playerAccess.logIn(username,password);
     }
-    public void register(String username, String email, String password) throws UserInfoException {
+    public void register(String username, String email, String password) throws UserInfoException, IOException {
         playerAccess.createNewAccountAndLogIn(email,password,username);
     }
 
@@ -66,7 +68,7 @@ public class ProfileViewModel extends ViewModel {
 
 
     //Settings
-    public void logoutUser(){
+    public void logoutUser() throws IOException {
         playerAccess.logOut();
     }
     public void changeEmail(String newEmail, String confirmNewEmail, String password) throws UserInfoException {

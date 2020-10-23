@@ -34,7 +34,7 @@ public final class PlayerMapper implements DataMapper<Player> {
 
     /**
      * PlayerMapper constructor
-     * @param dbPath path to .json file
+     * @param context path to .json file
      */
     public PlayerMapper(Context context) {
         this.context = context;
@@ -184,7 +184,6 @@ public final class PlayerMapper implements DataMapper<Player> {
     }
 
     private String getJsonString (Context context) throws IOException {
-        //InputStream inputStream = context.getFilesDir().open("testplayers.json");
         File file = new File(context.getFilesDir(), "testplayers.json");
         if (!file.exists()){
             InputStream inputStream = context.getAssets().open("testplayers.json");

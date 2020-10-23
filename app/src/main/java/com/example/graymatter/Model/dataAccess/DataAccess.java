@@ -5,13 +5,14 @@ import android.net.ParseException;
 
 import com.example.graymatter.Model.dataAccess.dataMapper.DataMapper;
 import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
+import com.example.graymatter.Model.dataAccess.dataMapperImplementation.DataMapperServices;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.GameSessionMapper;
-import com.example.graymatter.Model.dataAccess.dataMapperImplementation.LocalDataMapper;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.PlayerMapper;
 import com.example.graymatter.Model.dataAccess.social.GameSession;
 import com.example.graymatter.Model.dataAccess.social.Player;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.Optional;
  */
 public class DataAccess {
 
-    private LocalDataMapper ldm;
+    private DataMapperServices ldm;
 
     private DataMapper<GameSession> gsMapper;
     public DataMapper<Player> playerMapper;
@@ -34,7 +35,7 @@ public class DataAccess {
     public Optional<Player> currentPlayer;
 
     public DataAccess(Context context){
-        ldm = new LocalDataMapper(context);
+        ldm = new DataMapperServices(context);
         gsMapper = new GameSessionMapper(context);
         playerMapper = new PlayerMapper(context);
         Optional<Player> optionalPlayer = playerMapper.find(ldm.getCurrentPlayerUserID());
@@ -113,7 +114,7 @@ public class DataAccess {
      * @param userName The user´s username.
      * @param password The user´s password. Does not have to fulfill current password requirements.
      */
-    public void logIn(String userName, String password) throws DataMapperException, UserInfoException {
+    public void logIn(String userName, String password) throws DataMapperException, UserInfoException, IOException {
         //might be highly unnecessary
         Optional<Player> player;
         player = findByUserName(userName);
@@ -135,7 +136,7 @@ public class DataAccess {
      * @param password A password with requirements as defined by social.userInfo.passwordNegativeFeedback().
      * @param userName A not yet taken username.
      */
-    public void createNewAccountAndLogIn(String email, String password, String userName) throws UserInfoException {
+    public void createNewAccountAndLogIn(String email, String password, String userName) throws UserInfoException, IOException {
         if(isLoggedIn()){
             throw new DataMapperException("A player is already logged in!");
         }
@@ -156,12 +157,12 @@ public class DataAccess {
     /**
      * Log out the player.
      */
-    public void logOut() {
+    public void logOut() throws IOException {
         currentPlayer = Optional.empty();
         ldm.setCurrentPlayerUserID(0);
     }
 
-    public void deleteAccount(String password) throws UserInfoException {
+    public void deleteAccount(String password) throws UserInfoException, IOException {
         Player player = getUnwrappedPlayer();
         player.isPasswordCorrect(password);
         playerMapper.delete(player);

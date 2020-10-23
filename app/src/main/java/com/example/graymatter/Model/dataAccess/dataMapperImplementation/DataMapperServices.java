@@ -4,15 +4,21 @@ import android.content.Context;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
 
-public class LocalDataMapper {
+public class DataMapperServices {
 
     private Context context;
 
-    public LocalDataMapper(Context context) {
+    public DataMapperServices(Context context) {
         this.context = context;
     }
 
@@ -21,18 +27,18 @@ public class LocalDataMapper {
         return Integer.parseInt(str.substring(0, str.indexOf("\n")));
     }
 
-    public void setCurrentPlayerUserID(int i) {
+    public void setCurrentPlayerUserID(int i) throws IOException {
         writeToCache("" + i);
     }
 
 
 
-    private void writeToCache(String str){
+    private void writeToCache(String str) throws IOException {
        /* try (FileOutputStream fos = context.openFileOutput("logIn.txt", Context.MODE_PRIVATE)) {
             fos.write(fileContents.toByteArray());
         }*/
 
-        File tempFile = findCache();
+        File tempFile = findFile();
         try {
             FileWriter writer = new FileWriter(tempFile);
             writer.write(str);
@@ -42,30 +48,23 @@ public class LocalDataMapper {
             e.printStackTrace();
         }
     }
+    private File findFile () throws IOException {
+        File file = new File(context.getFilesDir(), "logIn.txt");
+        if (!file.exists()){
+            OutputStream stream = new FileOutputStream(file);
+            stream.write("0".getBytes());
+            stream.close();
+            return file;
+        }
+        return file;
 
-    private File findCache(){
-        File tempFile;
-        tempFile = new File(context.getCacheDir(), "logIn.txt");
-        if (tempFile.exists()) {
-            return tempFile;
-        }
-        try {
-            tempFile = File.createTempFile("logIn.txt", null, context.getCacheDir());
-            FileWriter writer = new FileWriter(tempFile);
-            writer.write("0");
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return tempFile;
     }
 
     private String readCache() {
-        String strLine ="";
+        String strLine;
         StringBuilder text = new StringBuilder();
         try {
-            FileReader fReader = new FileReader(findCache());
+            FileReader fReader = new FileReader(findFile());
             BufferedReader bReader = new BufferedReader(fReader);
 
             while( (strLine=bReader.readLine()) != null  ){
