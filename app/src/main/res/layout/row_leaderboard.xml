@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="300dp"
+        android:layout_width="400dp"
         android:layout_height="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,18 +22,17 @@
 
             <TextView
                 android:id="@+id/friendsNameTextView"
-                android:layout_width="119dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="100dp"
-                android:layout_marginEnd="100dp"
+                android:layout_width="170dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="130dp"
                 android:text="Stefan"
                 android:textSize="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.906"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/friendsImageView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.625" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/friendsImageView"
@@ -49,7 +48,8 @@
             <TextView
                 android:id="@+id/placementTextView"
                 android:layout_width="36dp"
-                android:layout_height="32dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
                 android:text="10."
                 android:textSize="24dp"
                 android:textStyle="bold"
@@ -60,8 +60,9 @@
 
             <TextView
                 android:id="@+id/scoreTextView"
-                android:layout_width="78dp"
-                android:layout_height="33dp"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
                 android:text="23232"
                 android:textSize="24dp"
                 android:textStyle="bold"

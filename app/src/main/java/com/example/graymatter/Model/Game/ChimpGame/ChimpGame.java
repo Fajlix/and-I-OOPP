@@ -16,7 +16,7 @@ public class ChimpGame extends Game {
     private int lives;
 
 
-    private final String name = "ChimpGame";
+    private final static String gameString = "ChimpGame";
 
 
     public ChimpGame(){
@@ -117,7 +117,8 @@ public class ChimpGame extends Game {
         return lives;
     }
 
-    public String getGameName() {
-        return name;
+    public static String getGameString(){
+        return gameString;
     }
+
 }

@@ -35,18 +35,49 @@ public class ProfileViewModel extends ViewModel {
     }
 
 
+
+    public String getUsername(){
+        return playerAccess.getCurrentPlayer().getUserName();
+    }
+    public String getEmail() throws UserInfoException {
+        return playerAccess.getCurrentPlayer().getEmail();
+    }
+
+
+
+    public boolean isLoggedIn(){
+        return playerAccess.isLoggedIn();
+    }
+
+    /**
+     * This method is called from the gui when the user logs in
+     * @param username the entered username
+     * @param password the entered password
+     * @throws UserInfoException when username/password is wrong
+     */
+    public void login(String username, String password) throws UserInfoException {
+        playerAccess.logIn(username,password);
+    }
+    public void register(String username, String email, String password) throws UserInfoException {
+        playerAccess.createNewAccountAndLogIn(email,password,username);
+    }
+
+
+
+
     //Settings
     public void logoutUser(){
+        playerAccess.logOut();
+    }
+    public void changeEmail(String newEmail, String confirmNewEmail, String password) throws UserInfoException {
+        playerAccess.changeEmail(password,newEmail);
 
     }
-    public void changeEmail(String currentEmail, String newEmail, String confirmNewEmail){
-
-
-    }
-    public void changePassword(String currentPassword, String newPassword, String confirmNewPassword){
-
+    public void changePassword(String currentPassword, String newPassword, String confirmNewPassword) throws UserInfoException {
+        playerAccess.changePassword(currentPassword,newPassword);
 
     }
+
 
 
 

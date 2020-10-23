@@ -26,13 +26,13 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress"
+            android:id="@+id/editTextUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress" />
+            android:hint="Username"
+            android:inputType="textPersonName"/>
 
         <EditText
             android:id="@+id/editTextTextPassword"
@@ -41,6 +41,15 @@
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/textViewError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="#FF0000"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/btnLogin"

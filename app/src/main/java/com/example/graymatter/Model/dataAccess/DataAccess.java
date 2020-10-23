@@ -27,6 +27,7 @@ public class DataAccess {
 
     private DataMapper<GameSession> gsMapper;
     public DataMapper<Player> playerMapper;
+
     /**
      * can be Optional of null, if null - not logged in
      */
@@ -124,6 +125,8 @@ public class DataAccess {
         }
         currentPlayer = player;
         ldm.setCurrentPlayerUserID(player.get().getUserID());
+
+
     }
 
     /**
@@ -228,6 +231,17 @@ public class DataAccess {
      * @return true if anyone is logged in to the app.
      */
     public boolean isLoggedIn() {
+//        Optional<Player> optionalPlayer = playerMapper.find(ldm.getCurrentPlayerUserID());
+//        if (optionalPlayer.isPresent()){
+//            currentPlayer = optionalPlayer;
+//            try {
+//                updatePlayer();
+//            } catch (UserInfoException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            currentPlayer = Optional.empty();
+//        }
         return (currentPlayer.isPresent());
     }
 
@@ -387,14 +401,14 @@ public class DataAccess {
         return playerMapper.get().size();
     }
 
-    private Player getUnwrappedPlayer(){
+    private Player getUnwrappedPlayer() throws DataMapperException{
         if (!currentPlayer.isPresent()){
             throw new DataMapperException("Player not logged in!");
         }
         return currentPlayer.get();
     }
 
-    public Player getCurrentPlayer(){
+    public Player getCurrentPlayer() throws DataMapperException{
         if(currentPlayer.isPresent()){
             return new Player(currentPlayer.get());
         }
@@ -402,6 +416,13 @@ public class DataAccess {
     }
 
 
+    public Player getNonUserPlayer(int userID) throws DataMapperException{
+        Optional<Player> optionalPlayer = playerMapper.find(userID);
+        if(optionalPlayer.isPresent()){
+            return optionalPlayer.get();
+        }
+        throw new DataMapperException("Player not found in database");
+    }
 
 
 }

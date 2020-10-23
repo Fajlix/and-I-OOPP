@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.graymatter.Model.Game.GameStrings;
 import com.example.graymatter.Model.Game.TowerOfHanoi.HanoiRodPosition;
 import com.example.graymatter.Model.Game.TowerOfHanoi.TowerOfHanoi;
 import com.example.graymatter.Model.dataAccess.DataAccess;
@@ -55,7 +56,7 @@ public class TowerOfHanoiViewModel extends ViewModel {
             score = towerOfHanoi.endGame();
             gameOver.setValue(true);
             if(dataAccess.isLoggedIn()){
-                dataAccess.storeGameSession(score, towerOfHanoi.getGameName());
+                dataAccess.storeGameSession(score, GameStrings.getTowerString());
             }
         }
         else {

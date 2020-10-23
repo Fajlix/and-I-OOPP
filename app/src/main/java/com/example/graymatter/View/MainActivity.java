@@ -15,6 +15,8 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.graymatter.Model.Game.GameStrings;
+import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     private Dialog settingsDialog;
 
     private String game;
+    private DataAccess dataAccess;
 
 
     @Override
@@ -51,22 +54,30 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
                else bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
-      
+
+        dataAccess = new DataAccess(this);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
     }
 
 
+    @Override
     public String getGame(){
         return game;
     }
+    @Override
+    public DataAccess getDataAccess() {
+        return dataAccess;
+    }
+
 
 
     @Override
     public void reactionTestClicked() {
         //Checks if current fragment is StatisticsFragment, else it's GamesFragment
         if(navController.getCurrentDestination().getLabel().equals("fragment_statistics")){
-            game = "Reaction Test";
+            game = GameStrings.getReactionString();
             navController.navigate(R.id.statisticsTabFragment);
         }
         else navController.navigate(R.id.reactionTestActivity);
@@ -75,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     @Override
     public void chimpTestClicked() {
         if(navController.getCurrentDestination().getLabel().equals("fragment_statistics")){
-            game = "Chimp Test";
+            game = GameStrings.getChimpString();
             navController.navigate(R.id.statisticsTabFragment);
         }
         else navController.navigate(R.id.chimpGameActivity);
@@ -84,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     @Override
     public void visualGameClicked() {
         if(navController.getCurrentDestination().getLabel().equals("fragment_statistics")){
-            game = "Visual Test";
+            game = GameStrings.getMemoryString();
             navController.navigate(R.id.statisticsTabFragment);
         }
         else navController.navigate(R.id.visualGameFragment);
@@ -94,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
 
     @Override
     public void friendsDialogClicked() {
-        //friendsDialog = new FriendsDialog(this, );
+        friendsDialog = new FriendsDialog(this);
         friendsDialog.setContentView(R.layout.dialog_friends);
 
         friendsDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -116,7 +127,6 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     public void logoutClicked() {
         settingsDialog.dismiss();
         navController.navigate(R.id.profileFragment);  //TODO maby something else
-
     }
 
     @Override
@@ -133,6 +143,26 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
 
     @Override
     public void ToHClicked() {
-        navController.navigate(R.id.toHFragment);
+        if(navController.getCurrentDestination().getLabel().equals("fragment_statistics")){
+            game = GameStrings.getTowerString();
+            navController.navigate(R.id.statisticsTabFragment);
+        }
+        else navController.navigate(R.id.toHFragment);
+
+    }
+
+    @Override
+    public void notLoggedIn() {
+        navController.navigate(R.id.loginFragment);
+    }
+
+    @Override
+    public void registerClicked() {
+        navController.navigate(R.id.registerFragment);
+    }
+
+    @Override
+    public void backToProfile() {
+        navController.navigate(R.id.profileFragment);
     }
 }

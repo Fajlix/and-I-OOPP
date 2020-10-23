@@ -32,8 +32,13 @@ public class ScoreFront {
      * Additional information retained from PlayerAccess.
      * @throws UserInfoException if da attribute currentPlayer works incorrectly.
      */
-    public int[][] getSelectFriendTopScores(int resultTop, int resultLow, String gameType) throws UserInfoException {
-        List<Integer> friendIDs = da.getCurrentPlayer().getFriendUserIDs();
+    public int[][] getSelectFriendTopScores(int resultTop, int resultLow, String gameType){
+        List<Integer> friendIDs = null;
+        try {
+            friendIDs = da.getCurrentPlayer().getFriendUserIDs();
+        } catch (UserInfoException e) {
+            getSelectGlobalTopScores(resultTop,resultLow,gameType);
+        }
         friendIDs.add(da.getCurrentPlayer().getUserID());
         return NormLeaderboards.getSelectGroupTopScores(getGameData(gameType), resultTop, resultLow, friendIDs);
     }

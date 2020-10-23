@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.graymatter.Model.Game.GameStrings;
 import com.example.graymatter.Model.Game.MemoryGame.MemoryGame;
 import com.example.graymatter.Model.Game.MemoryGame.MemoryGrid;
 import com.example.graymatter.Model.dataAccess.DataAccess;
@@ -65,7 +66,7 @@ public class MemoryGameViewModel extends ViewModel {
         if (memoryGame.getGameOver()) {
             level = memoryGame.endGame();
             if(dataAccess.isLoggedIn()){
-                dataAccess.storeGameSession(level, memoryGame.getGameName());
+                dataAccess.storeGameSession(level, GameStrings.getMemoryString());
             }
             gameStarted.setValue(false);
             gameOver.setValue(true);

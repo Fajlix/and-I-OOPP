@@ -16,12 +16,12 @@ import com.example.graymatter.View.Adapters.StatisticsAdapter;
 //TODO almost the same as GamesFragment
 public class StatisticsFragment extends Fragment{
 
-    String[] gameName;
-    String[] gameDescription;
-    String[] colors;
-    int[] logos = {R.mipmap.ic_reaction_test_logo_foreground,
-            R.mipmap.ic_chimp_test_logo_foreground,
-            R.mipmap.ic_visual_memory_game_logo_foreground,};
+    private String[] gameName;
+    private String[] colors;
+    private int[] logos = {R.mipmap.ic_reaction_test_logo_foreground,
+            R.mipmap.ic_chimp_game_logo_foreground,
+            R.mipmap.ic_visual_memory_game_logo_foreground,
+            R.mipmap.ic_tower_of_hanoi_logo_foreground};
     RecyclerView recyclerView;
 
 
@@ -38,17 +38,11 @@ public class StatisticsFragment extends Fragment{
 
         recyclerView = view.findViewById(R.id.statisticsRecyclerView);
 
-//        gameName = getResources().getStringArray(R.array.games);
-//        gameDescription = getResources().getStringArray(R.array.gameDescription);
-//        colors = getResources().getStringArray(R.array.gameCardColors);
-
-        //TODO remove hardcode
-        gameName = new String[]{"Toer", "tes", "ss"};
-        gameDescription = new String[]{"Toer", "tes", "ss"};
-        colors = new String[]{"#636161", "#232323", "#999999"};
+        gameName = getResources().getStringArray(R.array.games);
+        colors = getResources().getStringArray(R.array.gameCardColors);
 
 
-        StatisticsAdapter statisticsAdapter = new StatisticsAdapter(inflater.getContext(), gameName, gameDescription, colors, logos);
+        StatisticsAdapter statisticsAdapter = new StatisticsAdapter(inflater.getContext(), gameName, colors, logos);
         recyclerView.setAdapter(statisticsAdapter);
         recyclerView.bringToFront();
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));

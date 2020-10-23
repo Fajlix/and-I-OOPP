@@ -15,12 +15,12 @@ import com.example.graymatter.R;
 public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.LeaderboardViewHolder> {
     //TODO Adapter inheritance should be implemented
 
-    private String[] names, score;
-    private int[] images;
+    private String[] names;
+    private int[] images, score;
     private Context context;
     private int placement = 1;
 
-    public LeaderboardAdapter(Context context, String[] names, int[] images ,String[] score){
+    public LeaderboardAdapter(Context context, String[] names, int[] images ,int[] score){
         this.names = names;
         this.images = images;
         this.score = score;
@@ -40,7 +40,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     public void onBindViewHolder(@NonNull LeaderboardViewHolder holder, int position) {
         holder.nameTextView.setText(names[position]);
         //holder.imageView.setImageResource(images[position]);
-        holder.scoreTextView.setText(score[position]);
+        holder.scoreTextView.setText(String.valueOf(score[position]) + " perc.");
         holder.placementTextView.setText(String.valueOf(placement));
 
         placement++;

@@ -18,7 +18,7 @@ public class TowerOfHanoi extends Game {
     private int gameTime;
     private boolean active;
 
-    private final String gameName = "TowerOfHanoiGame";
+    private final static String gameString = "TowerOfHanoiGame";
 
     public TowerOfHanoi(){
         gameOver = true;
@@ -104,8 +104,8 @@ public class TowerOfHanoi extends Game {
         return board.getState();
     }
 
-    @Override
-    public String getGameName(){
-        return gameName;
+    public static String getGameString(){
+        return gameString;
     }
+
 }

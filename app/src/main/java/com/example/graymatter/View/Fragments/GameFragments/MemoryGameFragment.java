@@ -18,6 +18,7 @@ import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.R;
 import com.example.graymatter.View.Adapters.GameFragment;
 import com.example.graymatter.View.Adapters.MemoryGridAdapter;
+import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.ViewModel.MemoryGameViewModel;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class MemoryGameFragment extends Fragment implements GameFragment {
     private MemoryGameViewModel visualMemoryVM;
     private boolean visibility = true;
     private ScreenState screenState;
+    private FragmentChangeListener listener;
 
     int lastPos = -1;
 
@@ -51,10 +53,11 @@ public class MemoryGameFragment extends Fragment implements GameFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_visual_game, container, false);
         super.onCreate(savedInstanceState);
+        listener = (FragmentChangeListener)getContext();
         screenState = ScreenState.START_NEW;
 
         visualMemoryVM = new ViewModelProvider(this).get(MemoryGameViewModel.class);
-        visualMemoryVM.init(new DataAccess(getContext()));
+        visualMemoryVM.init(listener.getDataAccess());
         visualMemoryVM.getVisibility().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean _visibility) {

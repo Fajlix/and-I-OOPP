@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.graymatter.Model.Game.ChimpGame.ChimpGame;
+import com.example.graymatter.Model.Game.GameStrings;
 import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 
@@ -63,13 +64,8 @@ public class ChimpGameViewModel extends ViewModel {
     private void update(){
         if (chimpGame.getGameOver()) {
             score = chimpGame.endGame();  //does score need to be global? i d think so
-            try {
-                dataAccess.logIn("Tuff-tuff22oHalvt", "hejNej88*");
-            } catch (UserInfoException e) {
-                e.printStackTrace();
-            }
             if(dataAccess.isLoggedIn()){
-                dataAccess.storeGameSession(score, chimpGame.getGameName());
+                dataAccess.storeGameSession(score, GameStrings.getChimpString());
             }
             gameOver.setValue(true);
         }

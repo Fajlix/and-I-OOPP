@@ -7,7 +7,7 @@ import com.example.graymatter.View.Adapters.StatisticsFragmentInterface;
 public class StatisticsFactory implements StatisticsFragmentInterface {
 
 
-    public Fragment getFragment(int pos,String[] names, String[] scores, int[] pictures, String game) {
+    public Fragment getFragment(int pos,String[] names, int[] scores, int[] pictures, String game) {
         switch (pos) {
             case 0:
                 return new StatisticsFriendsFragment(names, scores, pictures, game);

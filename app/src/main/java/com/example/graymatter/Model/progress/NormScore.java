@@ -12,7 +12,11 @@ public class NormScore { //TODO this should be renamed NormNumber
      * @param scores sorted with top scores at low indexes
      * @return int[][]: int[0] original scores, int[1] normated scores, both sorted with low scores at low indexes and v.v.
      */
-    public static int[][] normScores(int[] scores){
+    public static int[][] normScores(int[] scores) throws IllegalArgumentException{
+        if(scores.length == 0){
+            throw new IllegalArgumentException("No scores to norm");
+        }
+
         //what part of the gameDB does each game represent?
         double chunks = ((double)Math.pow(10, SIGNIFICANT_NUMBERS))/(double)scores.length;
         int[] normScores = new int[scores.length];

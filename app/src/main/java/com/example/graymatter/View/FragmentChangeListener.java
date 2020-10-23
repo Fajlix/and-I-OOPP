@@ -1,15 +1,25 @@
 package com.example.graymatter.View;
 
+import com.example.graymatter.Model.dataAccess.DataAccess;
+
 public interface FragmentChangeListener {
-    public void reactionTestClicked();
-    public void chimpTestClicked();
-    public void visualGameClicked();
+    void reactionTestClicked();
+    void chimpTestClicked();
+    void visualGameClicked();
 
-    public void friendsDialogClicked();
-    public void settingsDialogClicked();
+    void friendsDialogClicked();
+    void settingsDialogClicked();
 
-    public void logoutClicked();
-    public void changeEmailClicked();
-    public void changePasswordClicked();
-    public void ToHClicked();
+    void logoutClicked();
+    void changeEmailClicked();
+    void changePasswordClicked();
+    void ToHClicked();
+
+    void notLoggedIn();
+    void registerClicked();
+    void backToProfile();
+
+    //TODO Change name in interface or make another one?
+    String getGame();
+    DataAccess getDataAccess();
 }

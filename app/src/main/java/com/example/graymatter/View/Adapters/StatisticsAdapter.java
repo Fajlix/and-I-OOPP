@@ -19,35 +19,41 @@ import com.example.graymatter.View.FragmentChangeListener;
 //TODO This is basically a copy of RecyclerViewAdapter, so should prob do sum smart abstractions instead
 public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.StatisticsViewHolder> {
     String[] nameArray;
-    String[] descArray;
     String[] colors;
     int[] logos;
     Context context;
-    FragmentChangeListener fragmentChangeListener;
+    FragmentChangeListener listener;
 
-    public StatisticsAdapter (Context c, String[] gameName, String[] gameDescription, String[] colors, int[] logos) {
+    public StatisticsAdapter (Context c, String[] gameName, String[] colors, int[] logos) {
         context = c;
         nameArray = gameName;
-        descArray = gameDescription;
         this.logos = logos;
         this.colors = colors;
     }
 
+    /**
+     * Initializes the ViewHolders, an object that hold the view and represents it
+     * @return it returns the viewholder
+     */
     @NonNull
     @Override
     public StatisticsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.statistics_game_card, parent, false);
 
-        fragmentChangeListener = (FragmentChangeListener) parent.getContext();
+        listener = (FragmentChangeListener) parent.getContext();
 
         return new StatisticsViewHolder(view);
     }
 
+    /**
+     * This method is called for each ViewHolder to bind it to the adapter
+     * @param holder represents the specific viewHolder
+     * @param position represents the position of the view
+     */
     @Override
     public void onBindViewHolder(@NonNull StatisticsViewHolder holder, final int position) {
         holder.title.setText(nameArray[position]);
-        holder.description.setText(descArray[position]);
         holder.logo.setImageResource(logos[position]);
         holder.mainCard.setBackgroundColor(Color.parseColor(colors[position]));
 
@@ -57,19 +63,19 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
             {
                 if (position == 0)
                 {
-                    fragmentChangeListener.reactionTestClicked();
+                    listener.reactionTestClicked();
                 }
                 else if (position == 1)
                 {
-                    fragmentChangeListener.chimpTestClicked();
+                    listener.chimpTestClicked();
                 }
                 else if (position == 2)
                 {
-                    fragmentChangeListener.visualGameClicked();
+                    listener.visualGameClicked();
                 }
                 else if (position == 3)
                 {
-                    //fragmentChangeListener.towerOfHanoiClicked();
+                    listener.ToHClicked();
                 }
             }
         });
@@ -80,8 +86,11 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
         return logos.length;
     }
 
+    /**
+     * a class that navigate to the necessary components that are being modified
+     */
     public class StatisticsViewHolder extends RecyclerView.ViewHolder{
-        TextView title, description;
+        TextView title;
         ImageView logo;
         LinearLayout mainCard;
         ConstraintLayout mainLayout;
@@ -89,7 +98,6 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
         public StatisticsViewHolder (@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.statisticsGamesTxt);
-            description = itemView.findViewById(R.id.statisticsGamesDescTxt);
             logo = itemView.findViewById(R.id.statisticsGameLogo);
             mainCard = itemView.findViewById(R.id.statisticsMainCard);
             mainLayout = itemView.findViewById(R.id.statisticsMainLayout);

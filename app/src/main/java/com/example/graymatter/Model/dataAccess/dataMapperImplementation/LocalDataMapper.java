@@ -10,7 +10,6 @@ import java.io.IOException;
 
 public class LocalDataMapper {
 
-
     private Context context;
 
     public LocalDataMapper(Context context) {

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.graymatter.Model.Game.GameStrings;
 import com.example.graymatter.Model.Game.ReactionGame.ReactionTimeGame;
 import com.example.graymatter.Model.dataAccess.DataAccess;
 
@@ -56,7 +57,7 @@ public class ReactionTimeViewModel extends ViewModel {
             task.cancel();
         score = reactionTimeGame.endGame();
         if(dataAccess.isLoggedIn()){
-            dataAccess.storeGameSession(score, reactionTimeGame.getGameName());
+            dataAccess.storeGameSession(score, GameStrings.getReactionString());
         }
     }
     public int getScore(){

@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
+import com.example.graymatter.Model.dataAccess.social.UserInfoException;
 import com.example.graymatter.R;
 import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.ViewModel.ProfileViewModel;
@@ -32,8 +35,9 @@ public class ChangePasswordFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_change_password, container, false);
 
-        profileViewModel = new ProfileViewModel();
         listener = (FragmentChangeListener)getContext();
+        profileViewModel = new ProfileViewModel();
+        profileViewModel.init(listener.getDataAccess());
 
         final EditText editTextCurrentPassword = (EditText)view.findViewById(R.id.editTextCurrentPassword);
         final EditText editTextNewPassword = (EditText)view.findViewById(R.id.editTextNewPassword);
@@ -41,11 +45,20 @@ public class ChangePasswordFragment extends Fragment {
 
         Button buttonChangePassword = (Button)view.findViewById(R.id.btnChangePassword);
 
+        final TextView textViewError = (TextView)view.findViewById(R.id.textViewError);
+
+
         buttonChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                profileViewModel.changePassword(editTextCurrentPassword.getText().toString(), editTextNewPassword.getText().toString(), editTextConfirmNewPassword.getText().toString());
-                listener.logoutClicked();
+                try {
+                    profileViewModel.changePassword(editTextCurrentPassword.getText().toString(), editTextNewPassword.getText().toString(), editTextConfirmNewPassword.getText().toString());
+                    textViewError.setVisibility(View.INVISIBLE);
+                    listener.backToProfile();
+                }catch(DataMapperException | UserInfoException e){
+                    textViewError.setText(e.getMessage());
+                    textViewError.setVisibility(View.VISIBLE);
+                }
             }
         });
 

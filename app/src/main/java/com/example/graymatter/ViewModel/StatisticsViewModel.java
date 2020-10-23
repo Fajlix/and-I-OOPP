@@ -5,29 +5,80 @@ import android.content.Context;
 import androidx.lifecycle.ViewModel;
 
 import com.example.graymatter.Model.dataAccess.DataAccess;
+import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
+import com.example.graymatter.Model.progress.ScoreFront;
+import com.example.graymatter.View.FragmentChangeListener;
+
+import java.util.ArrayList;
 
 
 public class StatisticsViewModel extends ViewModel {
-    private Context context;
+    private String[] topFriendsUsernames = new String[]{"0"};
+    private String[] topGlobalUsernames = new String[]{"0"};
 
-    private String[] topFriendsUsernames, topFriendsUserScores, topGlobalUsernames, topGlobalUserScores;
     private int[] topFriendsUserImages, topGlobalUserImages;
+
+    private int[] topFriendsUserScores = new int[]{0};
+    private int[] topGlobalUserScores = new int[]{0};
+
+    private int[][] friendsScores, globalScores;
+
+
 
     private DataAccess playerAccess;
 
-    public void init(Context context, String game){
-        this.context = context;
+    public void init(DataAccess dataAccess, String game){
 
-        if(game.equals("Reaction Test")){
-            //TODO something with Social
+        playerAccess = dataAccess;
+
+        ScoreFront scoreFront = new ScoreFront(dataAccess);
+
+        //friendsScores[1] is score, [2] is ID:s
+
+
+        try {
+            globalScores = scoreFront.getSelectGlobalTopScores(1,10, game);
+        }catch (IllegalArgumentException e){
+            return;
         }
 
-        topFriendsUsernames = new String[]{"123", "456", "1234"};
-        topFriendsUserScores = new String[]{"hej", "så", "okej"};
+
+        try {
+            friendsScores = scoreFront.getSelectFriendTopScores(1,10, game);
+        }catch (DataMapperException e){
+            friendsScores = globalScores;
+        }
+
+        String[] friendsUsernames = new String[friendsScores[0].length];
+        String[] globalUsenames = new String[globalScores[0].length];
+
+
+
+        for (int i = 0; i < friendsScores[0].length; i++) {
+            try {
+                friendsUsernames[i] = playerAccess.getNonUserPlayer(friendsScores[0][i]).getUserName();
+            }catch (DataMapperException e){
+                friendsUsernames[i] = "TERMINATED";
+            }
+        }
+        for (int i = 0; i < globalScores[0].length; i++) {
+            try {
+                globalUsenames[i] = playerAccess.getNonUserPlayer(globalScores[0][i]).getUserName();
+            }catch (DataMapperException e){
+                globalUsenames[i] = "TERMINATED";
+            }
+        }
+
+
+
+
+
+        topFriendsUsernames = friendsUsernames;
+        topFriendsUserScores = friendsScores[1];
         topFriendsUserImages = new int[]{1,2,3};
 
-        topGlobalUsernames = new String[]{"123", "456", "1234"};
-        topGlobalUserScores = new String[]{"hej", "så", "okej"};
+        topGlobalUsernames = globalUsenames;
+        topGlobalUserScores = globalScores[1];
         topGlobalUserImages = new int[]{1,2,3};
     }
 
@@ -36,7 +87,7 @@ public class StatisticsViewModel extends ViewModel {
 
         return topFriendsUsernames;
     }
-    public String[] getTopFriendsUserScores(){
+    public int[] getTopFriendsUserScores(){
 
         return topFriendsUserScores;
     }
@@ -50,7 +101,7 @@ public class StatisticsViewModel extends ViewModel {
 
         return topGlobalUsernames;
     }
-    public String[] getTopGlobalUserScores(){
+    public int[] getTopGlobalUserScores(){
 
         return topGlobalUserScores;
     }

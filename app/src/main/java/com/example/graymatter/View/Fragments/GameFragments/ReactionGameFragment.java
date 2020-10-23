@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.R;
+import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.ViewModel.ReactionTimeViewModel;
 
 /**
@@ -22,6 +23,7 @@ public class ReactionGameFragment extends Fragment{
     private ScreenState screenState;
     private TextView reactionTestDescription;
     private ReactionTimeViewModel reactionTimeVM;
+    private FragmentChangeListener listener;
 
     // Different states to determine what will happen when the screen is touched
     enum ScreenState
@@ -38,9 +40,10 @@ public class ReactionGameFragment extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reaction_test, container, false);
         super.onCreate(savedInstanceState);
+        listener = (FragmentChangeListener)getContext();
         reactionTimeVM = new ViewModelProvider(this).get(ReactionTimeViewModel.class);
         screenState = ScreenState.START;
-        reactionTimeVM.init(new DataAccess(getContext()));
+        reactionTimeVM.init(listener.getDataAccess());
 
         reactionTimeVM.getIsWaiting().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override

@@ -16,7 +16,7 @@
 
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textView21"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Register"
@@ -31,7 +31,7 @@
             android:layout_marginTop="10dp"
             android:ems="10"
             android:hint="Username"
-            android:inputType="textPassword" />
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/editTextTextEmailAddress"
@@ -49,6 +49,15 @@
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/textViewError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="#FF0000"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/btnRegister"
