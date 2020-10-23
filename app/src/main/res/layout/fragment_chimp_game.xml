@@ -5,7 +5,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.Fragments.GameFragments.ChimpGameFragment">
+    tools:context=".view.fragments.gamefragments.ChimpGameFragment">
 
     <GridView
         android:id="@+id/chimpTestGrid"

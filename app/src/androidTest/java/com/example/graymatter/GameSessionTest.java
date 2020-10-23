@@ -3,10 +3,10 @@ package com.example.graymatter;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.graymatter.Model.dataAccess.DataAccess;
-import com.example.graymatter.Model.dataAccess.dataMapperImplementation.GameSessionMapper;
-import com.example.graymatter.Model.dataAccess.social.GameSession;
-import com.example.graymatter.Model.dataAccess.social.UserInfoException;
+import com.example.graymatter.model.dataAccess.DataAccess;
+import com.example.graymatter.model.dataAccess.dataMapperImplementation.GameSessionMapper;
+import com.example.graymatter.model.dataAccess.social.GameSession;
+import com.example.graymatter.model.dataAccess.social.UserInfoException;
 
 import org.junit.Assert;
 import org.junit.Before;

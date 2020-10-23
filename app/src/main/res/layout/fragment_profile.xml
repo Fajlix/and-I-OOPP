@@ -5,7 +5,7 @@
     android:id="@+id/fragmentProfile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.Fragments.ProfileFragment"
+    tools:context=".view.fragments.ProfileFragment"
     android:orientation="vertical"
     android:gravity="center">
 
