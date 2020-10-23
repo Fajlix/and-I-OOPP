@@ -1,6 +1,7 @@
 package com.example.graymatter.model.progress;
 
 /**
+ * @author Aline
  * Class containing static methods providing sorting for different kinds of arguments.
  */
 public class Sort {

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * @author Aline
  * Representing private user information. All fields and methods private or protected.
  */
 public class UserInfo {

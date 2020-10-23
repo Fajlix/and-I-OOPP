@@ -1,6 +1,7 @@
 package com.example.graymatter.model.dataAccess.social;
 
 /**
+ * @author Aline
  * Representing a game session, a.k.a all history stored from one instance of a game being played.
  */
 public class GameSession {

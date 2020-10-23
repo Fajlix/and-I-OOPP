@@ -22,6 +22,7 @@ import java.util.Optional;
 
 
 /**
+ * @author Aline
  * DataMapper concretisation for accessing Player database. Public methods cover all allowed public Player database interactions.
  * Package dataAccess contains class PLayerAccess for help with Player actions. External clients do not need to directly use PlayerMapper methods. //TODO maybe i shouldn't write this?
  */

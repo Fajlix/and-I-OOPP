@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @author Aline
  * Representing a player of the game. Aggregates additional class userInfo with information to be reached exclusively by current user.
  * Does not know of database.
  */

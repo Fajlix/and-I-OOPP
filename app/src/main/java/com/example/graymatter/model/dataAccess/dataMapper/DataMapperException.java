@@ -2,6 +2,7 @@ package com.example.graymatter.model.dataAccess.dataMapper;
 
 //TODO do not know if this should be RuntimeException or checked Exception
 /**
+ * @author Aline
  * A RuntimeException thrown if exception occurs during DataMapper<T> implementation operation.
  */
 public class DataMapperException extends RuntimeException {

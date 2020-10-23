@@ -2,6 +2,7 @@ package com.example.graymatter.model.progress;
 
 
 /**
+ * @author Aline
  * Class contains static methods use for normating numbers.
  */
 public class NormScore { //TODO this should be renamed NormNumber

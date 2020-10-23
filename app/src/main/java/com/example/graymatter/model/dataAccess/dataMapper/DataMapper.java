@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * @author Aline
  * Interface defined by DataMapper design pattern, one of Martin Fowler´s P of EAA patterns. Intended to limit the handling of database contacts to one implementation layer only.
  * Maps domain model to database.
  * All application database contact should be handled in a DataMapper implementation.

@@ -2,10 +2,9 @@ package com.example.graymatter.model.game.memoryGame;
 
 
 public class MemoryTile {
-    /*
-    *
-    *  Class represents a single tile in the visual memory game's grid.
-    *
+    /**
+     * @author Hugo
+     * Class represents a single tile in the visual memory game's grid.
      */
 
     final public Boolean correct; //Describes whether the player should select this tile or not

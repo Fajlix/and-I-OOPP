@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Vector;
 
 /**
+ * @author Hugo
  * Class represents a grid for the visual memory test.
  * The grid holds the tiles that can be selected by the player to
  */
