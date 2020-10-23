@@ -5,7 +5,7 @@
     android:id="@+id/chimpGameCard"
     android:layout_width="100dp"
     android:layout_height="100dp"
-    tools:context=".View.MainActivity">
+    tools:context=".view.MainActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/chimpCardView"

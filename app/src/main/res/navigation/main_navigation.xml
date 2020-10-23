@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/statisticsFragment"
-        android:name="com.example.graymatter.View.Fragments.StatisticsFragment"
+        android:name="com.example.graymatter.view.fragments.StatisticsFragment"
         android:label="fragment_statistics"
         tools:layout="@layout/fragment_statistics" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/gamesFragment"
-        android:name="com.example.graymatter.View.Fragments.GamesFragment"
+        android:name="com.example.graymatter.view.fragments.GamesFragment"
         android:label="fragment_games"
         tools:layout="@layout/fragment_games" >
         <action
@@ -34,35 +34,35 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.graymatter.View.Fragments.ProfileFragment"
+        android:name="com.example.graymatter.view.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/reactionTestActivity"
-        android:name="com.example.graymatter.View.Fragments.GameFragments.ReactionGameFragment"
+        android:name="com.example.graymatter.view.fragments.gamefragments.ReactionGameFragment"
         android:label="ReactionTestActivity" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.graymatter.View.Fragments.LoginFragment"
+        android:name="com.example.graymatter.view.fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.graymatter.View.Fragments.RegisterFragment"
+        android:name="com.example.graymatter.view.fragments.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/chimpGameActivity"
-        android:name="com.example.graymatter.View.Fragments.GameFragments.ChimpGameFragment"
+        android:name="com.example.graymatter.view.fragments.gamefragments.ChimpGameFragment"
         android:label="ChimpGameActivity" />
     <fragment
         android:id="@+id/visualGameFragment"
-        android:name="com.example.graymatter.View.Fragments.GameFragments.MemoryGameFragment"
+        android:name="com.example.graymatter.view.fragments.gamefragments.MemoryGameFragment"
         android:label="fragment_visual_game"
         tools:layout="@layout/fragment_visual_game" />
     <fragment
         android:id="@+id/statisticsTabFragment"
-        android:name="com.example.graymatter.View.Fragments.StatisticsTabFragment"
+        android:name="com.example.graymatter.view.fragments.StatisticsTabFragment"
         android:label="fragment_statistics_tab"
         tools:layout="@layout/fragment_statistics_tab" >
         <action
@@ -74,26 +74,26 @@
     </fragment>
     <fragment
         android:id="@+id/statisticsFriendsFragment"
-        android:name="com.example.graymatter.View.Fragments.StatisticsFriendsFragment"
+        android:name="com.example.graymatter.view.fragments.StatisticsFriendsFragment"
         android:label="fragment_statistics_friends"
         tools:layout="@layout/fragment_statistics_friends" />
     <fragment
         android:id="@+id/statisticsGlobalFragment"
-        android:name="com.example.graymatter.View.Fragments.StatisticsGlobalFragment"
+        android:name="com.example.graymatter.view.fragments.StatisticsGlobalFragment"
         android:label="fragment_statistics_global"
         tools:layout="@layout/fragment_statistics_global" />
     <fragment
         android:id="@+id/changeEmailFragment"
-        android:name="com.example.graymatter.View.Fragments.ChangeEmailFragment"
+        android:name="com.example.graymatter.view.fragments.ChangeEmailFragment"
         android:label="fragment_change_email"
         tools:layout="@layout/fragment_change_email" />
     <fragment
         android:id="@+id/changePasswordFragment"
-        android:name="com.example.graymatter.View.Fragments.ChangePasswordFragment"
+        android:name="com.example.graymatter.view.fragments.ChangePasswordFragment"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_change_password" />
     <fragment
         android:id="@+id/toHFragment"
-        android:name="com.example.graymatter.View.Fragments.GameFragments.ToHFragment"
+        android:name="com.example.graymatter.view.fragments.gamefragments.ToHFragment"
         android:label="ToHFragment" />
 </navigation>
