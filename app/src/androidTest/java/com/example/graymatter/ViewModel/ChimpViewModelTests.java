@@ -14,8 +14,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Objects;
-
 import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
@@ -65,14 +63,14 @@ public class ChimpViewModelTests {
             }
         }
 
-        viewModel.tileHasBeenClicked(first);
-        viewModel.tileHasBeenClicked(second);
-        viewModel.tileHasBeenClicked(third);
-        viewModel.tileHasBeenClicked(fourth);
+        viewModel.makeMove(first);
+        viewModel.makeMove(second);
+        viewModel.makeMove(third);
+        viewModel.makeMove(fourth);
         for (int j = 0; j<3; j++) {
             for (int i = 0; i < grid.getValue().length; i++) {
                 if (grid.getValue()[i] == 2) {
-                    viewModel.tileHasBeenClicked(i);
+                    viewModel.makeMove(i);
                     break;
                 }
             }

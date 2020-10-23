@@ -16,7 +16,7 @@ public class MemoryGame extends Game{
     private int level;
     private int lives;
 
-    private final String gameName = "MemoryGame";
+    private final static String gameString = "MemoryGame";
 
     public MemoryGame(){
         gameOver = true;
@@ -34,10 +34,6 @@ public class MemoryGame extends Game{
         return level;
     }
 
-    @Override
-    public String getGameName() {
-        return gameName;
-    }
 
     /**
      * Method to respond to player choosing a tile, called through an event bus
@@ -92,5 +88,9 @@ public class MemoryGame extends Game{
 
     public int getLives() {
         return lives;
+    }
+
+    public static String getGameString(){
+        return gameString;
     }
 }

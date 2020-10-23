@@ -14,37 +14,39 @@ import java.util.Map;
  */
 public class NormLeaderboards {
 
+
     /**
      * Returns a leaderboard of gamesessions, corresponding normated scores and players from a particular argument collection of game sessions.
      * Only includes entries where gameIDs are related to userIDs in argument userIDs. Cut after argument input.
      * @param userIDs List of userIDs of people whose scores are to be included in the leaderboard.
      * @param resultTop Top placement, not index, beginning the span of Map rows to return.
      * @param resultLow Low placement, not index, ending the span of Map rows to return.
-     * @param scoresAllData int[][] containing int[0] being a list of userIDs, int[1] normScores, int[2] gameIDs
+     * @param inputRes int[][] containing int[0] being a list of userIDs, int[1] scores, int[2] gameIDs
      * @return int[][] containing int[0] being a list of userIDs, int[1] normScores, int[2] gameIDs.
      * Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboard position.
      * @throws IllegalArgumentException if resultTop > resultLow, resultTop < 1 or resultLow <1.
      * Normated scores are given as an int above or equal to zero, below 1000.
      * int userID can be used to receive additional information about the Player of the matching GameSession. Additional information retained from PlayerAccess.
      */
-    public static int[][] getSelectGroupTopScores(int[][] scoresAllData, int resultTop, int resultLow, List<Integer> userIDs) throws IllegalArgumentException {
+    public static int[][] getSelectGroupTopScores(int[][] inputRes, int resultTop, int resultLow, List<Integer> userIDs) throws IllegalArgumentException {
         //check if the resultspan is legal
-        if(!isResultSpanLegal(resultTop, resultLow)){
+        if(isResultSpanIllegal(resultTop, resultLow)){
             throw new IllegalArgumentException("Illegal resultspan!");
         }
         //sort and norm matrix
-        int[][] normArraysWOwners = getGlobalTopScores(scoresAllData);
-        //filter out non-friends
-        int[][] friendTopScores = filterFriends(normArraysWOwners, 2, userIDs);
-        //fix illegal resultspan
-        resultLow = findResultsLow(resultLow, friendTopScores[0].length);
+        int[][] nScoresArr = Sort.multRowSort(inputRes, true, 1);
+        nScoresArr[1] = NormScore.normScores(nScoresArr[1])[1];
+        //filter out non-members of group
+        int[][] friendTopScores = filterUserIDs(nScoresArr, 0, userIDs);
+        //fix resultLow if result span is larger than the amount of leaderboard entries
+        resultLow = findResultsLow(resultTop, resultLow, friendTopScores[0].length);
         //cut out the unwanted rankings and return
-        return cutOutSelectedTopListPart(friendTopScores, resultTop, resultLow, 3); //TODO colUnCut till 0
+        return cutOutSelectedTopListPart(friendTopScores, resultTop, resultLow, 0);
     }
 
     /**
      * Returns a leaderboard of gamesessions, corresponding normated scores and players from a particular argument collection of game sessions, cut after argument input.
-     * @param scoresAllData int[][] containing int[0] being a list of userIDs, int[1] normScores, int[2] gameIDs
+     * @param inputRes int[][] containing int[0] being a list of userIDs, int[1] normScores, int[2] gameIDs
      * @param resultTop Top placement, not index, beginning the span of Map rows to return.
      * @param resultLow Low placement, not index, ending the span of Map rows to return.
      * @return int[][] containing int[0] being a list of gameIDs, int[1] normScores, int[2] userIDs.
@@ -53,25 +55,17 @@ public class NormLeaderboards {
      * Normated scores are given as an int above or equal to zero, below 1000.
      * int userID can be used to receive additional information about the Player of the matching GameSession. Additional information retained from PlayerAccess.
      */
-    public static int[][] getSelectGlobalTopScores(int[][] scoresAllData, int resultTop, int resultLow) throws IllegalArgumentException{
-        //much similar to getSelectFriendTopScores. See above for closer commenting
+    public static int[][] getSelectGlobalTopScores(int[][] inputRes, int resultTop, int resultLow) throws IllegalArgumentException{
         //check if the resultspan is legal
-        if(!isResultSpanLegal(resultTop, resultLow)){
+        if(isResultSpanIllegal(resultTop, resultLow)){
             throw new IllegalArgumentException("Illegal resultspan!");
         }
-        int[][] normArraysWOwners = getGlobalTopScores(scoresAllData);
-        resultLow = findResultsLow(resultLow, normArraysWOwners[0].length);
-        return cutOutSelectedTopListPart(normArraysWOwners, resultTop, resultLow, 3);
+        int[][] nScoresArr = Sort.multRowSort(inputRes, true, 1);
+        nScoresArr[1] = NormScore.normScores(nScoresArr[1])[1];
+        resultLow = findResultsLow(resultTop, resultLow, nScoresArr[0].length);
+        return cutOutSelectedTopListPart(nScoresArr, resultTop, resultLow, 0);
     }
 
-    private static int[][] getGlobalTopScores(int[][] IDsAndScores){
-        //below: normArrays[1] = normScores
-        //sort and norm the results
-        int[][] sortArrays = Sort.multRowSort(IDsAndScores, false, 1);
-        sortArrays[1] = NormScore.normScores(sortArrays[1])[1];
-        int[][] reverted = Sort.multRowSort(sortArrays, true, 1);
-        return reverted;
-    }
 
     /**
      * Returns a leaderboard of players and corresponding normated scores. Based on persona, a.k.a. overall topscoring player.
@@ -82,14 +76,14 @@ public class NormLeaderboards {
      * Normated scores are given as an int above or equal to zero, below 1000.
      * int userID can be used to receive additional information about the Player of the matching GameSession. Additional information retained from PlayerAccess.
      */
-    public static int[][] getSelectGlobalTopPersonas(int[][] allData, int resultTop, int resultLow) throws IllegalArgumentException{
+    public static int[][] getSelectGlobalTopPersonas(int[][] inputRes, int resultTop, int resultLow) throws IllegalArgumentException{
         //check if the resultspan is legal
-        if(!isResultSpanLegal(resultTop, resultLow)){
+        if(isResultSpanIllegal(resultTop, resultLow)){
             throw new IllegalArgumentException("Illegal resultspan!");
         }
-        int[][] normArrayWOwners = getGlobalTopPersonas(allData);
-        resultLow = findResultsLow(resultLow, normArrayWOwners.length);
-        return cutOutSelectedTopListPart(normArrayWOwners, resultTop, resultLow, 2);
+        int[][] topPersonas = getGlobalTopPersonas(inputRes);
+        resultLow = findResultsLow(resultTop, resultLow, topPersonas[0].length);
+        return cutOutSelectedTopListPart(topPersonas, resultTop, resultLow, 0);
     }
 
 
@@ -102,39 +96,47 @@ public class NormLeaderboards {
      * @return int[][] containing int[0] being a list of userIDs in currentPlayers friendbase, int[1] normScores. Ordered from top scores in low indexes to low scores in high indexes. Indexes does not match leaderboard position.
      * @throws UserInfoException
      */
-    public static int[][] getSelectFriendTopPersonas(int[][] scoresAllData, int resultTop, int resultLow, List<Integer> userIDsOfInterest) throws IllegalArgumentException {
+    public static int[][] getSelectFriendTopPersonas(int[][] scoresAllData, int resultTop, int resultLow, List<Integer> userIDs) throws IllegalArgumentException {
         //check if the resultspan is legal
-        if(!isResultSpanLegal(resultTop, resultLow)){
+        if(isResultSpanIllegal(resultTop, resultLow)){
             throw new IllegalArgumentException("Illegal resultspan!");
         }
-        int[][] normArrayWOwners = getGlobalTopPersonas(scoresAllData);
+        //sort, norm, make personas, sort and norm personas
+        int[][] topPersonas = getGlobalTopPersonas(scoresAllData);
         //cut out nonfriends from leaderboard
-        int[][] justfriends = filterFriends(normArrayWOwners, 0, userIDsOfInterest);
-        resultLow = findResultsLow(resultLow, justfriends.length);
-        return cutOutSelectedTopListPart(normArrayWOwners, resultTop, resultLow, 2);
+        int[][] justfriends = filterUserIDs(topPersonas, 0, userIDs);
+        //fixes resultLow if result span is larger than the amount of leaderboard entries
+        resultLow = findResultsLow(resultTop, resultLow, justfriends.length);
+        //cut out the unwanted rankings and return
+        return cutOutSelectedTopListPart(topPersonas, resultTop, resultLow, 0);
     }
 
     /**
-     *
-     * @param allData a gametypes, allData.length = 2*a, [a] = userIDs,  [a+1] = scores
+     * Note that this method rewards consistent high results over few high results.
+     * This is since we normate before we norm the results.
+     * This algorithm benefits frequent players.
+     * @param inputRes a gametypes, inputRes.length = 2*a, [a] = userIDs,  [a+1] = scores
      * @return matrix, int[1] norm scores
      */
-    private static int[][] getGlobalTopPersonas(int[][] allData){
-        int[][] normArray = new int[allData.length][];
+    private static int[][] getGlobalTopPersonas(int[][] inputRes){
+        int[][] addNScores = new int[inputRes.length][];
+        //index of next empty column
         int newNAI = 0;
-        for (int a = 0; a < allData.length; a = a+2) {
-            int[][] gameData = new int[2][];
-            gameData[0] = allData[a];
-            gameData[1] = allData[a+1];
-            //sorts and norms
-            gameData = getGlobalTopScores(gameData);
+        int[][] gameData = new int[2][];
+        for (int a = 0; a < inputRes.length; a = a+2) {
+            //put data from one game into a seperate matrix
+            gameData[0] = inputRes[a];
+            gameData[1] = inputRes[a+1];
+            //sort and norm
+            Sort.multRowSort(gameData, true, 1);
+            gameData[1] = NormScore.normScores(gameData[1])[1];
             //remove all entries except one from same users
             gameData = removeAllButPersonalTopScores(gameData);
-            normArray[newNAI] = gameData[0];
-            normArray[newNAI+1] = gameData[1];
+            addNScores[newNAI] = gameData[0];
+            addNScores[newNAI+1] = gameData[1];
             newNAI +=2;
         }
-        return normPersonas(normArray);
+        return normPersonas(addNScores);
     }
 
     /**
@@ -143,6 +145,7 @@ public class NormLeaderboards {
      * @return int[0] containing userIDs, int[1] containing normated scores
      */
     private static int[][] removeAllButPersonalTopScores(int[][] addArray) {
+        //here we use a map to avoid many for-loops
         //key is userID, value norm score
         Map<Integer, Integer> notedIDs = new HashMap<>();
         for (int i = 0; i < addArray[0].length; i++) {
@@ -212,18 +215,18 @@ public class NormLeaderboards {
                 }
             }
         }
-        //sort, norm, sort, return
-        int[][] sortedScores = Sort.multRowSort(addedScores, false, 1);
+        //sort, norm, return
+        int[][] sortedScores = Sort.multRowSort(addedScores, true, 1);
         sortedScores[1] = NormScore.normScores(sortedScores[1])[1];
-        return Sort.multRowSort(sortedScores, true, 1);
+        return sortedScores;
     }
 
     /**
      * Filter out rows from matrix where int[0][row] does not match an entry in current user´s (according to cache) friend list.
      * @param notJustFriends int matrix where notJustFriends[0] contains userIDs
      * @return int[notJustFriends.length][<length of current user´s friend list>], int[0] containing userIDs
-     */ //TODO bake together friendsIDs and currentUSerID
-    private static int[][] filterFriends(int[][] notJustFriends, int colWUserID, List<Integer> userIDsOfInterest) {
+     */
+    private static int[][] filterUserIDs(int[][] notJustFriends, int colWUserID, List<Integer> userIDsOfInterest) {
         int[][] justFriends = new int[notJustFriends.length][userIDsOfInterest.size()];
         int friendSpotsLeft = 0;
         for (int i = 0; i < notJustFriends[0].length; i++) {
@@ -237,6 +240,15 @@ public class NormLeaderboards {
         return justFriends;
     }
 
+    /**
+     * Cuts out unwanted parts of Top List.
+     * @param unCut
+     * @param resultTop
+     * @param resultsLow
+     * @param colUnCut desired width of returned matrix.
+     * If colUnCut is 0, returned width will be equal to unCut.length
+     * @return
+     */
     private static int[][] cutOutSelectedTopListPart(int[][] unCut, int resultTop, int resultsLow, int colUnCut){
         if (colUnCut == 0){
             colUnCut = unCut.length;
@@ -254,18 +266,24 @@ public class NormLeaderboards {
     }
 
 
-    private static boolean isResultSpanLegal(int resultTop, int resultLow){
-        return resultLow >= resultTop
-                && resultLow >= 1
-                && resultTop >= 1;
+    private static boolean isResultSpanIllegal(int resultTop, int resultLow){
+        return resultLow < resultTop
+                || resultLow < 1
+                || resultTop < 1;
     }
 
-    private static int findResultsLow(int resultsLow, int listlength) {
-        if(listlength < resultsLow){
+    /**
+     * Fixes resultLow if result span is larger than the amount of leaderboard entries.
+     */
+    private static int findResultsLow(int resultTop, int resultsLow, int listlength) {
+        if(listlength < resultsLow-resultTop+1){
             return listlength;
         }
         return resultsLow;
     }
 
 
+    public static void setSignificantNumber(int sigNum) {
+        NormScore.setSignificantNumbers(sigNum);
+    }
 }

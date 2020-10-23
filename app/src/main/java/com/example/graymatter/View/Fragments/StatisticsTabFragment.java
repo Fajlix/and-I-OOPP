@@ -42,7 +42,7 @@ public class StatisticsTabFragment extends Fragment{
         game = listener.getGame();
 
         statisticsViewModel = new StatisticsViewModel();
-        statisticsViewModel.init(getContext(), listener.getDataAccess(), game);
+        statisticsViewModel.init(listener.getDataAccess(), game);
 
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
@@ -52,7 +52,7 @@ public class StatisticsTabFragment extends Fragment{
         pagerAdapter = new PagerAdapter(getChildFragmentManager(), tabLayout.getTabCount(),
                 statisticsViewModel.getTopFriendsUsernames(), statisticsViewModel.getTopFriendsUserScores(),
                 statisticsViewModel.getTopFriendsUserImages(), statisticsViewModel.getTopGlobalUsernames(), statisticsViewModel.getTopGlobalUserScores(),
-                statisticsViewModel.getTopGlobalUserImages(), game);
+                statisticsViewModel.getTopGlobalUserImages(), game,new StatisticsFactory());
         viewPager.setAdapter(pagerAdapter);
 
 

@@ -31,6 +31,10 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
         this.colors = colors;
     }
 
+    /**
+     * Initializes the ViewHolders, an object that hold the view and represents it
+     * @return it returns the viewholder
+     */
     @NonNull
     @Override
     public StatisticsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,6 +46,11 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
         return new StatisticsViewHolder(view);
     }
 
+    /**
+     * This method is called for each ViewHolder to bind it to the adapter
+     * @param holder represents the specific viewHolder
+     * @param position represents the position of the view
+     */
     @Override
     public void onBindViewHolder(@NonNull StatisticsViewHolder holder, final int position) {
         holder.title.setText(nameArray[position]);
@@ -77,6 +86,9 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticsAdapter.St
         return logos.length;
     }
 
+    /**
+     * a class that navigate to the necessary components that are being modified
+     */
     public class StatisticsViewHolder extends RecyclerView.ViewHolder{
         TextView title;
         ImageView logo;

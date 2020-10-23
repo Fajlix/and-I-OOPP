@@ -15,6 +15,7 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.graymatter.Model.Game.GameStrings;
 import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     public void reactionTestClicked() {
         //Checks if current fragment is StatisticsFragment, else it's GamesFragment
         if(navController.getCurrentDestination().getLabel().equals("fragment_statistics")){
-            game = "ReactionTest";
+            game = GameStrings.getReactionString();
             navController.navigate(R.id.statisticsTabFragment);
         }
         else navController.navigate(R.id.reactionTestActivity);
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     @Override
     public void chimpTestClicked() {
         if(navController.getCurrentDestination().getLabel().equals("fragment_statistics")){
-            game = "ChimpTest";
+            game = GameStrings.getChimpString();
             navController.navigate(R.id.statisticsTabFragment);
         }
         else navController.navigate(R.id.chimpGameActivity);
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     @Override
     public void visualGameClicked() {
         if(navController.getCurrentDestination().getLabel().equals("fragment_statistics")){
-            game = "VisualTest";
+            game = GameStrings.getMemoryString();
             navController.navigate(R.id.statisticsTabFragment);
         }
         else navController.navigate(R.id.visualGameFragment);
@@ -143,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements FragmentChangeLis
     @Override
     public void ToHClicked() {
         if(navController.getCurrentDestination().getLabel().equals("fragment_statistics")){
-            game = "TowerOfHanoi";
+            game = GameStrings.getTowerString();
             navController.navigate(R.id.statisticsTabFragment);
         }
         else navController.navigate(R.id.toHFragment);

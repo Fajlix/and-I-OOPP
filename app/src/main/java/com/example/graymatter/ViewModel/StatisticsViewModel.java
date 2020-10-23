@@ -13,18 +13,21 @@ import java.util.ArrayList;
 
 
 public class StatisticsViewModel extends ViewModel {
-    private Context context;
+    private String[] topFriendsUsernames = new String[]{"0"};
+    private String[] topGlobalUsernames = new String[]{"0"};
 
-    private String[] topFriendsUsernames, topGlobalUsernames;
-    private int[] topFriendsUserImages, topGlobalUserImages, topFriendsUserScores, topGlobalUserScores;
+    private int[] topFriendsUserImages, topGlobalUserImages;
+
+    private int[] topFriendsUserScores = new int[]{0};
+    private int[] topGlobalUserScores = new int[]{0};
+
     private int[][] friendsScores, globalScores;
 
 
 
     private DataAccess playerAccess;
 
-    public void init(Context context, DataAccess dataAccess, String game){
-        this.context = context;
+    public void init(DataAccess dataAccess, String game){
 
         playerAccess = dataAccess;
 
@@ -33,40 +36,49 @@ public class StatisticsViewModel extends ViewModel {
         //friendsScores[1] is score, [2] is ID:s
 
 
+        try {
+            globalScores = scoreFront.getSelectGlobalTopScores(1,10, game);
+        }catch (IllegalArgumentException e){
+            return;
+        }
 
-        globalScores = scoreFront.getSelectGlobalTopScores(1,10, game);
+
         try {
             friendsScores = scoreFront.getSelectFriendTopScores(1,10, game);
         }catch (DataMapperException e){
             friendsScores = globalScores;
         }
 
-        String[] friendsUsernames = new String[10];
-        String[] globalUsenames = new String[10];
+        String[] friendsUsernames = new String[friendsScores[0].length];
+        String[] globalUsenames = new String[globalScores[0].length];
 
 
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < friendsScores[0].length; i++) {
             try {
                 friendsUsernames[i] = playerAccess.getNonUserPlayer(friendsScores[0][i]).getUserName();
             }catch (DataMapperException e){
                 friendsUsernames[i] = "TERMINATED";
             }
+        }
+        for (int i = 0; i < globalScores[0].length; i++) {
             try {
                 globalUsenames[i] = playerAccess.getNonUserPlayer(globalScores[0][i]).getUserName();
             }catch (DataMapperException e){
-                friendsUsernames[i] = "TERMINATED";
+                globalUsenames[i] = "TERMINATED";
             }
         }
 
 
 
+
+
         topFriendsUsernames = friendsUsernames;
-        topFriendsUserScores = friendsScores[2];
+        topFriendsUserScores = friendsScores[1];
         topFriendsUserImages = new int[]{1,2,3};
 
         topGlobalUsernames = globalUsenames;
-        topGlobalUserScores = globalScores[2];
+        topGlobalUserScores = globalScores[1];
         topGlobalUserImages = new int[]{1,2,3};
     }
 

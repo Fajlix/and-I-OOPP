@@ -16,7 +16,7 @@ public class ReactionTimeGame extends Game {
     //min wait time in ms
     private static int minWaitTime;
 
-    private final String gameName = "ReactionTimeGame";
+    private final static String gameString = "ReactionTimeGame";
     /**
      * Only constructor for ReactionTime. No parameters
      */
@@ -75,8 +75,7 @@ public class ReactionTimeGame extends Game {
         return randWaitTime;
     }
 
-    @Override
-    public String getGameName(){
-        return gameName;
+    public static String getGameString(){
+        return gameString;
     }
 }

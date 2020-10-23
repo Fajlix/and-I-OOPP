@@ -16,7 +16,9 @@ import android.widget.TextView;
 import com.example.graymatter.Model.Game.MemoryGame.MemoryGrid;
 import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.R;
+import com.example.graymatter.View.Adapters.GameFragment;
 import com.example.graymatter.View.Adapters.MemoryGridAdapter;
+import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.ViewModel.MemoryGameViewModel;
 
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ import java.util.ArrayList;
  * @author Viktor Felix
  * the class that represents the fragment for Memory Game
  */
-public class MemoryGameFragment extends Fragment {
+public class MemoryGameFragment extends Fragment implements GameFragment {
     private GridView gridView;
     private MemoryGridAdapter visualGameGridAdapter;
     private TextView visualGameDescription;
@@ -33,16 +35,17 @@ public class MemoryGameFragment extends Fragment {
     private MemoryGameViewModel visualMemoryVM;
     private boolean visibility = true;
     private ScreenState screenState;
+    private FragmentChangeListener listener;
 
     int lastPos = -1;
 
-    enum ScreenState
-    {
+    enum ScreenState {
         START_NEW, GAME_ONGOING
     }
 
     /**
      * Initializes the start screen, and the updates it depending on what the user does.
+     *
      * @return returns the view
      */
     @Override
@@ -50,10 +53,11 @@ public class MemoryGameFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_visual_game, container, false);
         super.onCreate(savedInstanceState);
+        listener = (FragmentChangeListener)getContext();
         screenState = ScreenState.START_NEW;
 
         visualMemoryVM = new ViewModelProvider(this).get(MemoryGameViewModel.class);
-        visualMemoryVM.init(new DataAccess(getContext()));
+        visualMemoryVM.init(listener.getDataAccess());
         visualMemoryVM.getVisibility().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean _visibility) {
@@ -67,10 +71,9 @@ public class MemoryGameFragment extends Fragment {
         visualMemoryVM.getGameOver().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean gameOver) {
-                if (gameOver)
-                {
+                if (gameOver) {
                     int levelQty = visualMemoryVM.getLevel();
-                    if(levelQty >= 20)
+                    if (levelQty >= 20)
                         showWonGame(levelQty);
                     else
                         showLostGame(levelQty);
@@ -96,8 +99,7 @@ public class MemoryGameFragment extends Fragment {
         visualGameDescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (screenState == ScreenState.START_NEW)
-                {
+                if (screenState == ScreenState.START_NEW) {
                     ClearScreen();
                     visualMemoryVM.startMemoryGame();
                     ShowBoard();
@@ -140,10 +142,10 @@ public class MemoryGameFragment extends Fragment {
 
     /**
      * When the game is lost this method is called to show the lost game screen
+     *
      * @param level is the score the user got
      */
-    public void showLostGame (int level)
-    {
+    public void showLostGame(int level) {
         visualGameDescription.bringToFront();
         visualGameDescription.setText("Game over... Your score was: " + level + " \n \nPress to play again");
         screenState = ScreenState.START_NEW;
@@ -151,10 +153,10 @@ public class MemoryGameFragment extends Fragment {
 
     /**
      * When the game is won this method is called to show the won game screen
+     *
      * @param level is the score the user got
      */
-    public void showWonGame (int level)
-    {
+    public void showWonGame(int level) {
         visualGameDescription.bringToFront();
         visualGameDescription.setText("Wow you completed the game! You got the max score of: " + level + " \n \nPress to play again");
         screenState = ScreenState.START_NEW;
@@ -162,9 +164,10 @@ public class MemoryGameFragment extends Fragment {
 
     /**
      * This method is called each time a tile han been clicked to notify the Viewmodel
+     *
      * @param position represents the position of the card that has been clicked
      */
-    public void tileHasBeenClicked(int position) {
+    public void makeMove(int position) {
         lastPos = position;
         visualMemoryVM.tileHasBeenClicked(position);
     }

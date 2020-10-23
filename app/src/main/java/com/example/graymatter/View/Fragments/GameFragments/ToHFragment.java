@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.graymatter.Model.Game.TowerOfHanoi.HanoiRodPosition;
 import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.R;
+import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.ViewModel.TowerOfHanoiViewModel;
 
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
 
     boolean firstClick = true;
 
+    private FragmentChangeListener listener;
+
     /**
      * Initializes the start screen, and the updates it depending on what the user does.
      * @return returns the view
@@ -57,7 +60,7 @@ public class ToHFragment extends Fragment implements View.OnClickListener {
 
         toHVM = new ViewModelProvider(this).get(TowerOfHanoiViewModel.class);
         toHDescription = view.findViewById(R.id.toHDescription);
-        toHVM.init(new DataAccess(getContext()));
+        toHVM.init(listener.getDataAccess());
 
         leftRod = view.findViewById(R.id.leftRod);
         middleRod = view.findViewById(R.id.middleRod);

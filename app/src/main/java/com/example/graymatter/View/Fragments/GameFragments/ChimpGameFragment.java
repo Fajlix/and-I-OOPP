@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.graymatter.R;
 import com.example.graymatter.View.Adapters.ChimpGridAdapter;
+import com.example.graymatter.View.Adapters.GameFragment;
+import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.ViewModel.ChimpGameViewModel;
 import com.example.graymatter.Model.dataAccess.DataAccess;
 
@@ -23,11 +25,12 @@ import java.util.ArrayList;
  * @author Viktor Felix
  * the class that represents the fragment for Chimp Game
  */
-public class ChimpGameFragment extends Fragment {
+public class ChimpGameFragment extends Fragment implements GameFragment {
     private GridView gridView;
     private ChimpGridAdapter chimpGameChimpGridAdapter;
     private TextView chimpTestDescription;
     private ChimpGameViewModel chimpGameVM;
+    private FragmentChangeListener listener;
 
     int lastPos = -1;
 
@@ -41,12 +44,12 @@ public class ChimpGameFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chimp_game, container, false);
         super.onCreate(savedInstanceState);
-
+        listener = (FragmentChangeListener)getContext();
 
         chimpGameVM = new ViewModelProvider(this).get(ChimpGameViewModel.class);
         gridView = view.findViewById(R.id.chimpTestGrid);
         chimpTestDescription = view.findViewById(R.id.chimpTestDescription);
-        chimpGameVM.init(new DataAccess(getContext()));
+        chimpGameVM.init(listener.getDataAccess());
 
         chimpGameVM.getGameOver().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
@@ -137,10 +140,6 @@ public class ChimpGameFragment extends Fragment {
      *
      * @param position represents the position of the card that has been clicked
      */
-    public void tileHasBeenClicked(int position) {
-        lastPos = position;
-        chimpGameVM.makeMove(position);
-    }
 
     /**
      * Changes the array to an ArrayList, which makes it possible to abstract more
@@ -156,5 +155,12 @@ public class ChimpGameFragment extends Fragment {
             array_list.add(new Integer(arr[i]));
 
         return array_list;
+    }
+
+    @Override
+    public void makeMove(int position) {
+        lastPos = position;
+        chimpGameVM.makeMove(position);
+
     }
 }

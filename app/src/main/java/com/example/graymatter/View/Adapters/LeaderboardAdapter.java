@@ -40,7 +40,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     public void onBindViewHolder(@NonNull LeaderboardViewHolder holder, int position) {
         holder.nameTextView.setText(names[position]);
         //holder.imageView.setImageResource(images[position]);
-        holder.scoreTextView.setText(String.valueOf(score[position]));
+        holder.scoreTextView.setText(String.valueOf(score[position]) + " perc.");
         holder.placementTextView.setText(String.valueOf(placement));
 
         placement++;
