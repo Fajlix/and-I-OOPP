@@ -18,6 +18,8 @@ import com.example.graymatter.R;
 import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.ViewModel.ProfileViewModel;
 
+import java.io.IOException;
+
 
 public class RegisterFragment extends Fragment {
     FragmentChangeListener listener;
@@ -54,7 +56,7 @@ public class RegisterFragment extends Fragment {
                     profileViewModel.register(editTextUsername.getText().toString(), editTextEmail.getText().toString(), editTextPassword.getText().toString());
                     textViewError.setVisibility(View.INVISIBLE);
                     listener.backToProfile();
-                }catch(DataMapperException | UserInfoException e){
+                }catch(DataMapperException | UserInfoException | IOException e){
                     textViewError.setText(e.getMessage());
                     textViewError.setVisibility(View.VISIBLE);
                 }

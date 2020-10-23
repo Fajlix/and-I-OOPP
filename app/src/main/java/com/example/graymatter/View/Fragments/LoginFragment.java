@@ -19,6 +19,8 @@ import com.example.graymatter.View.FragmentChangeListener;
 import com.example.graymatter.View.MainActivity;
 import com.example.graymatter.ViewModel.ProfileViewModel;
 
+import java.io.IOException;
+
 
 public class LoginFragment extends Fragment {
 
@@ -56,7 +58,7 @@ public class LoginFragment extends Fragment {
                     profileViewModel.login(editTextUsername.getText().toString(), editTextPassword.getText().toString());
                     textViewError.setVisibility(View.INVISIBLE);
                     listener.backToProfile();
-                }catch(DataMapperException | UserInfoException e){
+                }catch(DataMapperException | UserInfoException | IOException e){
                     textViewError.setText(e.getMessage());
                     textViewError.setVisibility(View.VISIBLE);
                 }

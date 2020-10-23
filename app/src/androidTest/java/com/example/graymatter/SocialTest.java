@@ -8,7 +8,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.graymatter.Model.dataAccess.DataAccess;
 import com.example.graymatter.Model.dataAccess.dataMapper.DataMapperException;
-import com.example.graymatter.Model.dataAccess.dataMapperImplementation.LocalDataMapper;
+import com.example.graymatter.Model.dataAccess.dataMapperImplementation.DataMapperServices;
 import com.example.graymatter.Model.dataAccess.dataMapperImplementation.PlayerMapper;
 import com.example.graymatter.Model.dataAccess.social.Player;
 import com.example.graymatter.Model.dataAccess.social.UserInfoException;
@@ -26,7 +26,7 @@ import java.util.Optional;
 public class SocialTest {
     Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
     DataAccess testPlayerAccess = new DataAccess(InstrumentationRegistry.getInstrumentation().getTargetContext());
-    LocalDataMapper ldm = new LocalDataMapper(InstrumentationRegistry.getInstrumentation().getTargetContext());
+    DataMapperServices ldm = new DataMapperServices(InstrumentationRegistry.getInstrumentation().getTargetContext());
 
 
     @Before

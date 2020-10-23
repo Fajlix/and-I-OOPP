@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import com.example.graymatter.R;
 import com.example.graymatter.ViewModel.ProfileViewModel;
 
+import java.io.IOException;
+
 public class SettingsDialog extends Dialog {
 
     private AlertDialog alertDialog;
@@ -44,7 +46,11 @@ public class SettingsDialog extends Dialog {
             @Override
             public void onClick(DialogInterface dialog, int which){
                 listener.logoutClicked();
-                profileViewModel.logoutUser();  //TODO make it do something
+                try {
+                    profileViewModel.logoutUser();  //TODO make it do something
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         builder.setNegativeButton("NO", new DialogInterface.OnClickListener(){

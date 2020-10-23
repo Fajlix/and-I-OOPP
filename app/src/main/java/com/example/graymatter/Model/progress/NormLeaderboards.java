@@ -230,6 +230,7 @@ public class NormLeaderboards {
         int[][] justFriends = new int[notJustFriends.length][userIDsOfInterest.size()];
         int friendSpotsLeft = 0;
         for (int i = 0; i < notJustFriends[0].length; i++) {
+            if(friendSpotsLeft >= userIDsOfInterest.size())break;
             if(userIDsOfInterest.contains(notJustFriends[colWUserID][i])){
                 for (int j = 0; j < notJustFriends.length; j++) {
                     justFriends[j][friendSpotsLeft] = notJustFriends[j][i];

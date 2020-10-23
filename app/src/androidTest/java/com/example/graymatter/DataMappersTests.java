@@ -42,9 +42,9 @@ public class DataMappersTests {
 
     @Test
     public void LocalDataMapperTest() {
-        //LocalDataMapper.setCurrentPlayerUserID(0);
+        //DataMapperServices.setCurrentPlayerUserID(0);
         Assert.assertEquals(0,0);
-        //LocalDataMapper.setCurrentPlayerUserID(15);
+        //DataMapperServices.setCurrentPlayerUserID(15);
     }
 
     @Test
