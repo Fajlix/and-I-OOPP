@@ -16,10 +16,10 @@
     </string-array>
 
     <string-array name="gameDescription">
-        <item>Reaction Test desc</item>
-        <item>Chimp Test desc</item>
-        <item>Visual Memory desc</item>
-        <item>Tower of Hanoi desc</item>
+        <item>Test your reaction time with this test</item>
+        <item>Press the numbers in order and get as far as you can</item>
+        <item>Remember and mimic the pattern for as long as you can</item>
+        <item>Move all the disks to the right in fewest possible moves</item>
     </string-array>
 
     <string-array name="gameCardColors">
